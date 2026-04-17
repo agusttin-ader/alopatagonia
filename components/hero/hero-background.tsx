@@ -4,7 +4,7 @@ import { useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { HERO_IMAGE, HERO_VIDEO } from "@/lib/constants";
+import { HERO_IMAGE, HERO_VIDEO, IMAGE_QUALITY_MAX } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 /**
@@ -34,6 +34,7 @@ export function HeroBackground() {
           alt={HERO_IMAGE.alt}
           fill
           priority
+          quality={IMAGE_QUALITY_MAX}
           sizes="100vw"
           className="object-cover"
         />

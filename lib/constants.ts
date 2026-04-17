@@ -135,20 +135,28 @@ export type GalleryImage = {
   height: number;
 };
 
+/** Calidad máxima para `<Image />` (AVIF/WebP sin compresión agresiva; requiere `qualities` en next.config). */
+export const IMAGE_QUALITY_MAX = 100 as const;
+
 /**
  * Imágenes en `public/images/`. La URL pública es `/images/archivo`.
  * Ajustá los nombres acá para que coincidan con tus archivos (incluida la extensión: .jpeg, .jpg, .webp, etc.).
+ * Los `width`/`height` reflejan relación de aspecto a escala 4K (borde largo 3840px) para que el optimizador
+ * pueda generar variantes grandes; el archivo real no se escala por encima de su resolución nativa.
  */
 const img = (file: string) => `/images/${file}`;
 
 export const HERO_IMAGE: GalleryImage = {
   src: img("IMG_1506.jpeg"),
   alt: "Montañas y valle al amanecer en la Patagonia",
-  width: 2400,
-  height: 1600,
+  width: 3840,
+  height: 2560,
 };
 
-/** Video de fondo del hero: archivo en `public/videos/`. */
+/**
+ * Video de fondo del hero: archivo en `public/videos/`.
+ * Para verse nítido en 4K, exportá el MP4 a esa resolución (o mayor); el `<video>` no recompresa el archivo.
+ */
 export const HERO_VIDEO = {
   src: "/videos/hero-video-2.mp4",
 } as const;
@@ -156,75 +164,75 @@ export const HERO_VIDEO = {
 export const EXPERIENCE_IMAGE: GalleryImage = {
   src: img("IMG_1459.jpeg"),
   alt: "Cumbres y lagos de la Patagonia",
-  width: 1600,
-  height: 1200,
+  width: 3840,
+  height: 2880,
 };
 
 export const GALLERY_IMAGES: GalleryImage[] = [
   {
     src: img("IMG_0915.jpeg"),
     alt: "Lago y montañas nevadas",
-    width: 900,
-    height: 900,
+    width: 3840,
+    height: 3840,
   },
   {
     src: img("IMG_1370.jpeg"),
     alt: "Cordillera al atardecer",
-    width: 900,
-    height: 675,
+    width: 3840,
+    height: 2880,
   },
   {
     src: img("IMG_1391.jpeg"),
     alt: "Sendero entre bosque y montaña",
-    width: 900,
-    height: 1200,
+    width: 2880,
+    height: 3840,
   },
   {
     src: img("IMG_1398.jpeg"),
     alt: "Vista panorámica de picos",
-    width: 900,
-    height: 600,
+    width: 3840,
+    height: 2560,
   },
   {
     src: img("IMG_1426.jpeg"),
     alt: "Lago turquesa y bosque",
-    width: 900,
-    height: 900,
+    width: 3840,
+    height: 3840,
   },
   {
     src: img("IMG_1437.jpeg"),
     alt: "Niebla suave sobre el valle",
-    width: 900,
-    height: 600,
+    width: 3840,
+    height: 2560,
   },
   {
     src: img("IMG_1446.jpeg"),
     alt: "Bosque y río de montaña",
-    width: 900,
-    height: 1125,
+    width: 3072,
+    height: 3840,
   },
   {
     src: img("IMG_1526.jpeg"),
     alt: "Cumbres rocosas y cielo despejado",
-    width: 900,
-    height: 900,
+    width: 3840,
+    height: 3840,
   },
   {
     src: img("IMG_1459.jpeg"),
     alt: "Cumbres y lagos de la Patagonia",
-    width: 900,
-    height: 600,
+    width: 3840,
+    height: 2560,
   },
   {
     src: img("IMG_1667.jpeg"),
     alt: "Luz y montañas en la Patagonia",
-    width: 900,
-    height: 675,
+    width: 3840,
+    height: 2880,
   },
   {
     src: img("IMG_1657.jpeg"),
     alt: "Nieve y cumbres patagónicas",
-    width: 900,
-    height: 600,
+    width: 3840,
+    height: 2560,
   },
 ];

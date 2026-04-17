@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import { Reveal } from "@/components/motion/reveal";
-import { EXPERIENCE_IMAGE, SECTION_IDS } from "@/lib/constants";
+import { EXPERIENCE_IMAGE, IMAGE_QUALITY_MAX, SECTION_IDS } from "@/lib/constants";
 
 export function Experience() {
   return (
@@ -17,6 +17,7 @@ export function Experience() {
             alt={EXPERIENCE_IMAGE.alt}
             width={EXPERIENCE_IMAGE.width}
             height={EXPERIENCE_IMAGE.height}
+            quality={IMAGE_QUALITY_MAX}
             className="size-full object-cover"
             sizes="(min-width: 1024px) 50vw, 100vw"
           />

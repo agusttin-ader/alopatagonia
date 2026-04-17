@@ -7,7 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { Reveal } from "@/components/motion/reveal";
-import type { GalleryImage } from "@/lib/constants";
+import { IMAGE_QUALITY_MAX, type GalleryImage } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const layouts = [
@@ -127,6 +127,7 @@ export function GalleryMosaic({ images }: GalleryMosaicProps) {
                     alt={active.alt}
                     width={active.width}
                     height={active.height}
+                    quality={IMAGE_QUALITY_MAX}
                     className="max-h-[100dvh] w-auto max-w-full object-contain pointer-events-none"
                     sizes="100vw"
                     priority
@@ -196,7 +197,8 @@ export function GalleryMosaic({ images }: GalleryMosaicProps) {
                 src={img.src}
                 alt=""
                 fill
-                sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 360px"
+                quality={IMAGE_QUALITY_MAX}
+                sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, (max-width: 1920px) 33vw, min(40vw, 1600px)"
                 className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 loading={index < 3 ? "eager" : "lazy"}
               />
