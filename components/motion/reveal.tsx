@@ -22,12 +22,12 @@ export function Reveal({
         reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 28 }
       }
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-72px", amount: 0.2 }}
+      viewport={{ once: true, margin: "-48px 0px", amount: 0.12 }}
       transition={
         reduceMotion
           ? { duration: 0 }
           : {
-              duration: 0.65,
+              duration: 0.5,
               delay,
               ease: [0.22, 1, 0.36, 1],
             }

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans, Fraunces } from "next/font/google";
 import "./globals.css";
 
@@ -7,6 +7,7 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
+  adjustFontFallback: true,
 });
 
 const fraunces = Fraunces({
@@ -14,7 +15,14 @@ const fraunces = Fraunces({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
+  adjustFontFallback: true,
 });
+
+export const viewport: Viewport = {
+  themeColor: "#2f5d50",
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: "Alo Patagonia | Viajes y experiencias en la Patagonia",
@@ -37,7 +45,7 @@ export default function RootLayout({
       lang="es"
       className={`${dmSans.variable} ${fraunces.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="flex min-h-dvh flex-col">{children}</body>
     </html>
   );
 }

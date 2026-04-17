@@ -127,6 +127,7 @@
     overflow-x: clip;
     text-rendering: optimizeLegibility;
     -webkit-tap-highlight-color: transparent;
+    color-scheme: light;
   }
   body {
     @apply bg-background text-foreground;
@@ -135,6 +136,9 @@
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
+    }
+    .animate-spin {
+      animation: none;
     }
   }
   ::selection {
