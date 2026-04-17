@@ -1,13 +1,8 @@
 "use client";
 
-/**
- * Fondo decorativo tipo mapa de trekking: curvas de nivel + sendero.
- * Cubre todo el bloque CTA; queda detrás del contenido.
- */
 import { useReducedMotion, useInView } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-/** Lucide `compass` (viewBox 24×24); centro en (12, 12) */
 const COMPASS_NEEDLE_D =
   "m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z";
 const COMPASS_CX = 12;
@@ -45,7 +40,6 @@ export function CtaTrailMap() {
         fill="none"
         stroke="none"
       />
-      {/* Curvas de nivel (topo) */}
       <g
         fill="none"
         stroke="currentColor"
@@ -73,7 +67,6 @@ export function CtaTrailMap() {
         <path d="M-40 235 C70 218 130 252 200 228 S360 198 500 220 S640 245 780 215 S920 190 1040 210" />
       </g>
 
-      {/* Sendero principal */}
       <path
         d="M80 280 C140 255 180 200 240 175 S360 145 440 165 S520 195 600 155 S700 115 780 135 S860 165 940 140"
         fill="none"
@@ -95,7 +88,6 @@ export function CtaTrailMap() {
         strokeOpacity={0.22}
       />
 
-      {/* Brújula en el sendero (casa → montaña); centro en el trazo; una vez al entrar */}
       <g>
         <g>
           <animateMotion
@@ -138,7 +130,6 @@ export function CtaTrailMap() {
         </g>
       </g>
 
-      {/* Casita / inicio del recorrido */}
       <g
         transform="translate(62, 236)"
         stroke="currentColor"
@@ -188,7 +179,6 @@ export function CtaTrailMap() {
         />
       </g>
 
-      {/* Waypoints */}
       <g fill="currentColor" fillOpacity={0.45}>
         <circle cx={240} cy={175} r={3.5} />
         <circle cx={440} cy={165} r={3} />
@@ -206,7 +196,6 @@ export function CtaTrailMap() {
         <circle cx={600} cy={155} r={6} />
       </g>
 
-      {/* Cumbre / meta — cordillera */}
       <g
         transform="translate(878, 72)"
         stroke="currentColor"
@@ -220,7 +209,6 @@ export function CtaTrailMap() {
           strokeOpacity={0.4}
           d="M6 62 L26 38 L42 50 L58 24 L74 46 L88 30 L104 52 L118 34 L132 58 H6z"
         />
-        {/* Cóndor (más chico, centrado en ~68,12) */}
         <g transform="translate(68, 12) scale(0.4) translate(-68, -12)">
           <g fill="currentColor" stroke="none" fillOpacity={0.4}>
             <animateTransform
@@ -255,7 +243,6 @@ export function CtaTrailMap() {
           strokeOpacity={0.35}
           d="M34 44 L42 50 M96 40 L104 52"
         />
-        {/* Pinos en la base (arista 6,62 → 132,58) */}
         <g fill="currentColor" fillOpacity={0.34} stroke="none">
           <path d="M16 61.5 L20 47 L24 61.5z" />
           <path d="M34 60.8 L38 46 L42 60.8z M36 60.8 L40 48 L44 60.8z" />

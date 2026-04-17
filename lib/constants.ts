@@ -9,7 +9,6 @@ export const SITE = {
   phoneDisplay: "+54 9 11 0000-0000",
 } as const;
 
-/** Copy principal del hero (demo alineada al mensaje del perfil). */
 export const HERO_COPY = {
   headline: "Tu viaje a la Patagonia, coordinado de punta a punta",
   subline:
@@ -77,7 +76,6 @@ export type DestinationItem = {
   description: string;
 };
 
-/** Destinos referenciales para la demo (contenido tipo Instagram / mercado argentino). */
 export const DESTINATIONS: DestinationItem[] = [
   {
     name: "San Carlos de Bariloche",
@@ -135,14 +133,12 @@ export type GalleryImage = {
   height: number;
 };
 
-/** Calidad máxima para `<Image />` (AVIF/WebP sin compresión agresiva; requiere `qualities` en next.config). */
+/** Calidad máxima para `next/image`; debe existir en `images.qualities` del `next.config`. */
 export const IMAGE_QUALITY_MAX = 100 as const;
 
 /**
- * Imágenes en `public/images/`. La URL pública es `/images/archivo`.
- * Ajustá los nombres acá para que coincidan con tus archivos (incluida la extensión: .jpeg, .jpg, .webp, etc.).
- * Los `width`/`height` reflejan relación de aspecto a escala 4K (borde largo 3840px) para que el optimizador
- * pueda generar variantes grandes; el archivo real no se escala por encima de su resolución nativa.
+ * Archivos en `public/images/` → URL `/images/nombre`.
+ * Los `width`/`height` son la relación de aspecto a escala 4K para el optimizador (no fuerzan ampliar el archivo).
  */
 const img = (file: string) => `/images/${file}`;
 
@@ -153,13 +149,13 @@ export const HERO_IMAGE: GalleryImage = {
   height: 2560,
 };
 
-/**
- * Video de fondo del hero: archivo en `public/videos/`.
- * Para verse nítido en 4K, exportá el MP4 a esa resolución (o mayor); el `<video>` no recompresa el archivo.
- */
+/** MP4 en `public/videos/`; conviene exportarlo en alta resolución (p. ej. 4K) para buena nitidez. */
 export const HERO_VIDEO = {
   src: "/videos/hero-video-2.mp4",
 } as const;
+
+/** Velocidad del video del hero: 1 = normal; valores menores = más lento (más pausado). */
+export const HERO_VIDEO_PLAYBACK_RATE = 0.82 as const;
 
 export const EXPERIENCE_IMAGE: GalleryImage = {
   src: img("IMG_1459.jpeg"),

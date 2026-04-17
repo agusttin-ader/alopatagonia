@@ -4,13 +4,14 @@ import { useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import { HERO_IMAGE, HERO_VIDEO, IMAGE_QUALITY_MAX } from "@/lib/constants";
+import {
+  HERO_IMAGE,
+  HERO_VIDEO,
+  HERO_VIDEO_PLAYBACK_RATE,
+  IMAGE_QUALITY_MAX,
+} from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-/**
- * Video de fondo con estado de carga: sin poster ni imagen duplicada hasta que reproduzca.
- * Si falla el video o hay prefers-reduced-motion, se usa la imagen estática.
- */
 export function HeroBackground() {
   const reduceMotion = useReducedMotion();
   const [videoReady, setVideoReady] = useState(false);
@@ -21,10 +22,19 @@ export function HeroBackground() {
     setVideoReady(true);
   }, []);
 
+  const applyPlaybackRate = useCallback((el: HTMLVideoElement) => {
+    el.playbackRate = HERO_VIDEO_PLAYBACK_RATE;
+  }, []);
+
   useEffect(() => {
     const v = videoRef.current;
     if (v && v.readyState >= 3) markReady();
   }, [markReady]);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (v) applyPlaybackRate(v);
+  }, [applyPlaybackRate]);
 
   if (reduceMotion || videoFailed) {
     return (
@@ -56,6 +66,7 @@ export function HeroBackground() {
         playsInline
         preload="auto"
         aria-hidden
+        onLoadedMetadata={(e) => applyPlaybackRate(e.currentTarget)}
         onCanPlay={markReady}
         onLoadedData={markReady}
         onPlaying={markReady}
