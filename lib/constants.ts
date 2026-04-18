@@ -5,6 +5,8 @@ export const SITE = {
   name: "Alo Patagonia",
   tagline: "Asesoramiento integral para tu viaje en la Patagonia",
   instagram: "https://www.instagram.com/alo_patagonia",
+  /** Sin @; para textos y enlaces al perfil. */
+  instagramHandle: "alo_patagonia",
   email: "hola@alopatagonia.com",
   phoneDisplay: "+54 9 11 0000-0000",
 } as const;
@@ -17,12 +19,23 @@ export const HERO_COPY = {
 
 export const SECTION_IDS = {
   services: "servicios",
+  community: "comunidad",
   destinations: "destinos",
   experience: "experiencia",
   gallery: "galeria",
   testimonials: "testimonios",
   cta: "contacto",
 } as const;
+
+/** Cifras del perfil @alo_patagonia (actualizar posts/seguidores si cambian en Instagram). */
+export type InstagramStatItem = {
+  id: string;
+  label: string;
+  description: string;
+  /** Valor final del contador: entero, o miles con un decimal para formato «12,7k». */
+  target: number;
+  variant: "integer" | "k";
+};
 
 const DEFAULT_WHATSAPP_MESSAGE =
   "Hola Alo Patagonia, quiero planificar mi viaje por la Patagonia (Bariloche, Calafate, Ushuaia, etc.).";
@@ -103,6 +116,33 @@ export const DESTINATIONS: DestinationItem[] = [
   },
 ];
 
+export const INSTAGRAM_STATS: InstagramStatItem[] = [
+  {
+    id: "posts",
+    label: "Contenido en el perfil",
+    target: 1408,
+    variant: "integer",
+    description:
+      "Rutas, paisajes y tips prácticos para planificar con información clara.",
+  },
+  {
+    id: "followers",
+    label: "Comunidad",
+    target: 12.7,
+    variant: "k",
+    description:
+      "Personas que siguen el día a día del sur y cómo armamos cada experiencia.",
+  },
+  {
+    id: "coverage",
+    label: "Cobertura en la Patagonia",
+    target: DESTINATIONS.length,
+    variant: "integer",
+    description:
+      "Grandes regiones que coordinamos en un mismo viaje, con un solo interlocutor.",
+  },
+];
+
 export type Testimonial = {
   name: string;
   quote: string;
@@ -151,11 +191,11 @@ export const HERO_IMAGE: GalleryImage = {
 
 /** MP4 en `public/videos/`; conviene exportarlo en alta resolución (p. ej. 4K) para buena nitidez. */
 export const HERO_VIDEO = {
-  src: "/videos/hero-video-2.mp4",
+  src: "/videos/hero-video-final.mp4",
 } as const;
 
 /** Velocidad del video del hero: 1 = normal; valores menores = más lento (más pausado). */
-export const HERO_VIDEO_PLAYBACK_RATE = 0.82 as const;
+export const HERO_VIDEO_PLAYBACK_RATE = 1 as const;
 
 export const EXPERIENCE_IMAGE: GalleryImage = {
   src: img("IMG_1459.jpeg"),

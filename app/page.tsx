@@ -1,4 +1,5 @@
 import { CTA } from "@/components/cta/CTA";
+import { InstagramStats } from "@/components/community/instagram-stats";
 import { Destinations } from "@/components/destinations/Destinations";
 import { Experience } from "@/components/experience/Experience";
 import { Footer } from "@/components/footer/Footer";
@@ -13,6 +14,7 @@ export default function Home() {
       <Hero />
       <main className="min-w-0 flex-1">
         <Services />
+        <InstagramStats />
         <Destinations />
         <Experience />
         <Gallery />
