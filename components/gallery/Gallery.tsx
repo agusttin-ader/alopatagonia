@@ -22,7 +22,7 @@ export function Gallery() {
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
             Escenas del sur —lagos, hielo, senderos y cielos— en la misma línea
-            que compartimos día a día en redes. Demo con material propio.
+            que compartimos día a día en redes.
           </p>
           <p className="mt-2 text-sm text-muted-foreground/90">
             Hacé clic en una foto para ampliarla.

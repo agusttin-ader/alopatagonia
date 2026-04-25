@@ -24,8 +24,8 @@ export function Destinations() {
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
             Trabajamos itinerarios en los puntos más buscados del sur. Esta es
-            una selección referencial para la demo; el plan final se adapta a
-            tus fechas y presupuesto.
+            una muestra orientativa; el plan final se adapta a tus fechas y
+            presupuesto.
           </p>
         </Reveal>
 

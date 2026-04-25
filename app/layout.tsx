@@ -27,7 +27,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Alo Patagonia | Viajes y experiencias en la Patagonia",
   description:
-    "Alojamientos, autos y transfers, excursiones y asesoramiento para toda la Patagonia. Demo de sitio.",
+    "Alojamientos, movilidad, excursiones y asesoramiento integral para viajar la Patagonia con un solo equipo.",
   openGraph: {
     title: "Alo Patagonia",
     description:
