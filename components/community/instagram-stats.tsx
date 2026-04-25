@@ -11,7 +11,7 @@ import {
   SITE,
   type InstagramStatItem,
 } from "@/lib/constants";
-import { cn } from "@/lib/utils";
+import { cn, interactiveCardHover } from "@/lib/utils";
 
 const STAT_ICONS = {
   posts: Images,
@@ -136,13 +136,13 @@ export function InstagramStats() {
               <Reveal key={item.id} delay={index * 0.07}>
                 <div
                   className={cn(
-                    "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.02] px-6 py-8 shadow-[0_0_0_1px_rgba(255,255,255,0.04)_inset] transition-all duration-300",
-                    "hover:-translate-y-0.5 hover:border-emerald-500/25 hover:shadow-lg hover:shadow-emerald-950/40",
+                    "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-white/[0.07] to-white/[0.02] px-6 py-8 shadow-[0_0_0_1px_rgba(255,255,255,0.04)_inset]",
+                    interactiveCardHover,
                   )}
                   aria-label={statAriaLabel(item)}
                 >
                   <div
-                    className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-400/35 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                     aria-hidden
                   />
                   <div className="flex items-start justify-between gap-3">
@@ -150,7 +150,7 @@ export function InstagramStats() {
                       {item.label}
                     </p>
                     <div
-                      className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-400/90 ring-1 ring-emerald-400/20 transition-colors duration-300 group-hover:bg-emerald-500/15"
+                      className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary ring-1 ring-primary/25 transition-colors duration-300 group-hover:bg-primary/20"
                       aria-hidden
                     >
                       <Icon className="size-[1.15rem]" strokeWidth={1.75} />

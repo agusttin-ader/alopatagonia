@@ -2,7 +2,7 @@ import { MapPin } from "lucide-react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { DESTINATIONS, SECTION_IDS } from "@/lib/constants";
-import { cn } from "@/lib/utils";
+import { cn, interactiveCardHover } from "@/lib/utils";
 
 export function Destinations() {
   return (
@@ -35,7 +35,7 @@ export function Destinations() {
               <article
                 className={cn(
                   "group relative h-full rounded-2xl border border-border/90 bg-card/60 p-6 shadow-sm",
-                  "transition-all duration-300 hover:border-primary/35 hover:shadow-md hover:shadow-primary/5",
+                  interactiveCardHover,
                 )}
               >
                 <div className="flex items-start gap-4">

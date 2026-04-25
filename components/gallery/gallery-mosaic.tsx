@@ -8,7 +8,7 @@ import { createPortal } from "react-dom";
 
 import { Reveal } from "@/components/motion/reveal";
 import { IMAGE_QUALITY_MAX, type GalleryImage } from "@/lib/constants";
-import { cn } from "@/lib/utils";
+import { cn, interactiveCardHover } from "@/lib/utils";
 
 const layouts = [
   "sm:col-span-2 sm:row-span-2",
@@ -31,14 +31,10 @@ type GalleryMosaicProps = {
 
 export function GalleryMosaic({ images }: GalleryMosaicProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const wasOpenRef = useRef(false);
-
-  useEffect(() => {
-    setPortalTarget(document.body);
-  }, []);
+  const portalTarget = typeof document !== "undefined" ? document.body : null;
 
   const close = useCallback(() => setOpenIndex(null), []);
 
@@ -187,8 +183,9 @@ export function GalleryMosaic({ images }: GalleryMosaicProps) {
               type="button"
               onClick={() => setOpenIndex(index)}
               className={cn(
-                "group relative block h-full min-h-[180px] w-full overflow-hidden rounded-xl bg-muted text-left ring-1 ring-black/5 sm:min-h-[200px] lg:min-h-[220px]",
+                "group relative block h-full min-h-[180px] w-full overflow-hidden rounded-xl bg-muted text-left shadow-sm ring-1 ring-black/5 sm:min-h-[200px] lg:min-h-[220px]",
                 "cursor-zoom-in focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+                interactiveCardHover,
               )}
               aria-haspopup="dialog"
               aria-label={`Ampliar: ${img.alt}`}
@@ -199,7 +196,7 @@ export function GalleryMosaic({ images }: GalleryMosaicProps) {
                 fill
                 quality={IMAGE_QUALITY_MAX}
                 sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, (max-width: 1920px) 33vw, min(40vw, 1600px)"
-                className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                className="object-cover transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105"
                 loading={index < 3 ? "eager" : "lazy"}
               />
             </button>

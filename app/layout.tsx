@@ -1,25 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Fraunces } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 
-const dmSans = DM_Sans({
+const manrope = Manrope({
   variable: "--font-dm-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
   adjustFontFallback: true,
 });
 
-const fraunces = Fraunces({
+const manropeHeading = Manrope({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "600", "700", "800"],
   display: "swap",
   adjustFontFallback: true,
 });
 
 export const viewport: Viewport = {
-  themeColor: "#2f5d50",
+  themeColor: "#717336",
   width: "device-width",
   initialScale: 1,
 };
@@ -27,7 +27,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Alo Patagonia | Viajes y experiencias en la Patagonia",
   description:
-    "Alojamientos, autos y transfers, excursiones y asesoramiento para Bariloche, El Calafate, Ushuaia y más. Demo de sitio.",
+    "Alojamientos, autos y transfers, excursiones y asesoramiento para toda la Patagonia. Demo de sitio.",
   openGraph: {
     title: "Alo Patagonia",
     description:
@@ -43,7 +43,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${dmSans.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${manrope.variable} ${manropeHeading.variable} h-full antialiased`}
     >
       <body className="flex min-h-dvh flex-col">{children}</body>
     </html>

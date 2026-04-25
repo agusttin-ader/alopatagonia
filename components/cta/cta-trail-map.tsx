@@ -11,7 +11,8 @@ const COMPASS_MARKER_SCALE = 0.62;
 
 export function CtaTrailMap() {
   const svgRef = useRef<SVGSVGElement | null>(null);
-  const dotMotionRef = useRef<SVGAnimateMotionElement | null>(null);
+  const desktopDotMotionRef = useRef<SVGAnimateMotionElement | null>(null);
+  const mobileDotMotionRef = useRef<SVGAnimateMotionElement | null>(null);
   const hasStartedRef = useRef(false);
   const reduceMotion = useReducedMotion();
   const isInView = useInView(svgRef, { once: true, amount: 0.28 });
@@ -20,188 +21,191 @@ export function CtaTrailMap() {
 
   useEffect(() => {
     if (!isInView || hasStartedRef.current) return;
-    const el = dotMotionRef.current;
-    if (!el) return;
+    const desktopEl = desktopDotMotionRef.current;
+    const mobileEl = mobileDotMotionRef.current;
+    if (!desktopEl && !mobileEl) return;
     hasStartedRef.current = true;
-    el.beginElement();
+    desktopEl?.beginElement();
+    mobileEl?.beginElement();
   }, [isInView]);
 
   return (
-    <svg
-      ref={svgRef}
-      className="pointer-events-none absolute inset-0 z-[1] h-full w-full text-primary-foreground"
-      viewBox="0 0 1000 320"
-      preserveAspectRatio="xMidYMid slice"
-      aria-hidden
-    >
-      <path
-        id="cta-trail-route"
-        d="M80 280 C140 255 180 200 240 175 S360 145 440 165 S520 195 600 155 S700 115 780 135 S860 165 940 140"
-        fill="none"
-        stroke="none"
-      />
-      <g
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={0.85}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeOpacity={0.14}
-      >
-        <path d="M-40 220 C80 200 120 260 220 230 S380 180 480 210 S620 250 720 215 S880 170 1040 200" />
-        <path d="M-40 250 C100 230 140 285 260 252 S420 205 540 235 S680 275 800 238 S920 195 1040 225" />
-        <path d="M-40 190 C90 175 150 215 240 188 S400 145 520 175 S660 210 780 178 S900 140 1040 165" />
-        <path d="M-40 160 C70 140 130 185 200 155 S360 115 480 145 S620 175 740 148 S880 110 1040 130" />
-        <path d="M-40 280 C110 265 160 305 280 275 S440 245 580 268 S720 295 860 262 S960 240 1040 255" />
-        <path d="M200 120 C280 100 340 140 420 115 S560 85 680 105 S780 125 880 95" />
-        <path d="M120 300 C220 285 280 320 400 295 S540 270 680 290 S820 310 920 285" />
-      </g>
-
-      <g
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={0.55}
-        strokeOpacity={0.1}
-      >
-        <path d="M-40 205 C60 190 100 230 180 205 S320 175 440 200 S580 225 700 195 S860 165 1040 185" />
-        <path d="M-40 235 C70 218 130 252 200 228 S360 198 500 220 S640 245 780 215 S920 190 1040 210" />
-      </g>
-
-      <path
-        d="M80 280 C140 255 180 200 240 175 S360 145 440 165 S520 195 600 155 S700 115 780 135 S860 165 940 140"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2.2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeOpacity={0.38}
-        strokeDasharray="10 14"
-      />
-
-      <path
-        d="M80 280 C140 255 180 200 240 175 S360 145 440 165 S520 195 600 155 S700 115 780 135 S860 165 940 140"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={0.9}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeOpacity={0.22}
-      />
-
-      <g>
-        <g>
-          <animateMotion
-            ref={dotMotionRef}
-            dur={`${durSec}s`}
-            repeatCount={1}
-            fill="freeze"
-            begin="indefinite"
-            rotate="none"
-            calcMode="spline"
-            keySplines="0.42 0 0.58 1"
-            keyPoints="0;1"
-            keyTimes="0;1"
-          >
-            <mpath href="#cta-trail-route" />
-          </animateMotion>
-          <g
-            transform={`scale(${COMPASS_MARKER_SCALE}) translate(${-COMPASS_CX} ${-COMPASS_CY})`}
-          >
-            <circle
-              cx={COMPASS_CX}
-              cy={COMPASS_CY}
-              r={10}
-              fill="currentColor"
-              fillOpacity={0.2}
-              stroke="black"
-              strokeOpacity={0.38}
-              strokeWidth={2}
-            />
-            <path
-              d={COMPASS_NEEDLE_D}
-              fill="currentColor"
-              fillOpacity={0.92}
-              stroke="black"
-              strokeOpacity={0.28}
-              strokeWidth={1.25}
-              strokeLinejoin="round"
-            />
-          </g>
-        </g>
-      </g>
-
-      <g
-        transform="translate(62, 236)"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+    <>
+      <svg
+        ref={svgRef}
+        className="pointer-events-none absolute inset-0 z-[1] hidden h-full w-full text-primary-foreground md:block"
+        viewBox="0 0 1000 320"
+        preserveAspectRatio="xMidYMid meet"
+        aria-hidden
       >
         <path
-          fill="currentColor"
-          fillOpacity={0.26}
-          strokeWidth={1}
-          strokeOpacity={0.48}
-          d="M2 34 L16 14 L30 34 V46 H2z"
-        />
-        <path
-          fill="currentColor"
-          fillOpacity={0.38}
+          id="cta-trail-route-desktop"
+          d="M118 280 C162 258 192 204 240 175 S360 145 440 165 S520 195 600 155 S700 115 780 135 S846 162 906 141"
+          fill="none"
           stroke="none"
-          d="M2 34 L16 14 L30 34"
         />
-        <rect
-          x={20}
-          y={14}
-          width={4}
-          height={8}
-          rx={0.5}
-          fill="currentColor"
-          fillOpacity={0.32}
+        <g
+          fill="none"
           stroke="currentColor"
           strokeWidth={0.85}
-          strokeOpacity={0.45}
-        />
-        <rect
-          x={11}
-          y={36}
-          width={6}
-          height={10}
-          rx={0.5}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeOpacity={0.14}
+        >
+          <path d="M-40 220 C80 200 120 260 220 230 S380 180 480 210 S620 250 720 215 S880 170 1040 200" />
+          <path d="M-40 250 C100 230 140 285 260 252 S420 205 540 235 S680 275 800 238 S920 195 1040 225" />
+          <path d="M-40 190 C90 175 150 215 240 188 S400 145 520 175 S660 210 780 178 S900 140 1040 165" />
+          <path d="M-40 160 C70 140 130 185 200 155 S360 115 480 145 S620 175 740 148 S880 110 1040 130" />
+          <path d="M-40 280 C110 265 160 305 280 275 S440 245 580 268 S720 295 860 262 S960 240 1040 255" />
+          <path d="M200 120 C280 100 340 140 420 115 S560 85 680 105 S780 125 880 95" />
+          <path d="M120 300 C220 285 280 320 400 295 S540 270 680 290 S820 310 920 285" />
+        </g>
+
+        <g
           fill="none"
-          strokeWidth={1}
-          strokeOpacity={0.52}
-        />
+          stroke="currentColor"
+          strokeWidth={0.55}
+          strokeOpacity={0.1}
+        >
+          <path d="M-40 205 C60 190 100 230 180 205 S320 175 440 200 S580 225 700 195 S860 165 1040 185" />
+          <path d="M-40 235 C70 218 130 252 200 228 S360 198 500 220 S640 245 780 215 S920 190 1040 210" />
+        </g>
+
         <path
+          d="M118 280 C162 258 192 204 240 175 S360 145 440 165 S520 195 600 155 S700 115 780 135 S846 162 906 141"
           fill="none"
-          strokeWidth={0.75}
-          strokeOpacity={0.4}
-          d="M5.5 38h5v5h-5z M8 38v5 M5.5 40.5h5"
+          stroke="currentColor"
+          strokeWidth={2.2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeOpacity={0.38}
+          strokeDasharray="10 14"
         />
-      </g>
 
-      <g fill="currentColor" fillOpacity={0.45}>
-        <circle cx={240} cy={175} r={3.5} />
-        <circle cx={440} cy={165} r={3} />
-        <circle cx={600} cy={155} r={3.5} />
-        <circle cx={780} cy={135} r={3} />
-        <circle cx={940} cy={140} r={2.8} />
-      </g>
-      <g
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={1}
-        strokeOpacity={0.5}
-      >
-        <circle cx={240} cy={175} r={6} />
-        <circle cx={600} cy={155} r={6} />
-      </g>
+        <path
+          d="M118 280 C162 258 192 204 240 175 S360 145 440 165 S520 195 600 155 S700 115 780 135 S846 162 906 141"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={0.9}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeOpacity={0.22}
+        />
 
-      <g
-        transform="translate(878, 72)"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
+        <g>
+          <g>
+            <animateMotion
+              ref={desktopDotMotionRef}
+              dur={`${durSec}s`}
+              repeatCount={1}
+              fill="freeze"
+              begin="indefinite"
+              rotate="none"
+              calcMode="spline"
+              keySplines="0.42 0 0.58 1"
+              keyPoints="0;1"
+              keyTimes="0;1"
+            >
+              <mpath href="#cta-trail-route-desktop" />
+            </animateMotion>
+            <g
+              transform={`scale(${COMPASS_MARKER_SCALE}) translate(${-COMPASS_CX} ${-COMPASS_CY})`}
+            >
+              <circle
+                cx={COMPASS_CX}
+                cy={COMPASS_CY}
+                r={10}
+                fill="currentColor"
+                fillOpacity={0.2}
+                stroke="black"
+                strokeOpacity={0.38}
+                strokeWidth={2}
+              />
+              <path
+                d={COMPASS_NEEDLE_D}
+                fill="currentColor"
+                fillOpacity={0.92}
+                stroke="black"
+                strokeOpacity={0.28}
+                strokeWidth={1.25}
+                strokeLinejoin="round"
+              />
+            </g>
+          </g>
+        </g>
+
+        <g
+          transform="translate(90, 236)"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path
+            fill="currentColor"
+            fillOpacity={0.26}
+            strokeWidth={1}
+            strokeOpacity={0.48}
+            d="M2 34 L16 14 L30 34 V46 H2z"
+          />
+          <path
+            fill="currentColor"
+            fillOpacity={0.38}
+            stroke="none"
+            d="M2 34 L16 14 L30 34"
+          />
+          <rect
+            x={20}
+            y={14}
+            width={4}
+            height={8}
+            rx={0.5}
+            fill="currentColor"
+            fillOpacity={0.32}
+            stroke="currentColor"
+            strokeWidth={0.85}
+            strokeOpacity={0.45}
+          />
+          <rect
+            x={11}
+            y={36}
+            width={6}
+            height={10}
+            rx={0.5}
+            fill="none"
+            strokeWidth={1}
+            strokeOpacity={0.52}
+          />
+          <path
+            fill="none"
+            strokeWidth={0.75}
+            strokeOpacity={0.4}
+            d="M5.5 38h5v5h-5z M8 38v5 M5.5 40.5h5"
+          />
+        </g>
+
+        <g fill="currentColor" fillOpacity={0.45}>
+          <circle cx={240} cy={175} r={3.5} />
+          <circle cx={440} cy={165} r={3} />
+          <circle cx={600} cy={155} r={3.5} />
+          <circle cx={780} cy={135} r={3} />
+          <circle cx={906} cy={141} r={2.8} />
+        </g>
+        <g
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1}
+          strokeOpacity={0.5}
+        >
+          <circle cx={240} cy={175} r={6} />
+          <circle cx={600} cy={155} r={6} />
+        </g>
+
+        <g
+          transform="translate(838, 72)"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
         <path
           fill="currentColor"
           fillOpacity={0.14}
@@ -251,7 +255,160 @@ export function CtaTrailMap() {
           <path d="M98 58.2 L102 45 L106 58.2z M100 58.2 L104 47 L108 58.2z" />
           <path d="M118 57.3 L122 46 L126 57.3z" />
         </g>
-      </g>
-    </svg>
+        </g>
+      </svg>
+
+      <svg
+        className="pointer-events-none absolute inset-0 z-[1] h-full w-full text-primary-foreground md:hidden"
+        viewBox="0 0 390 520"
+        preserveAspectRatio="xMidYMid meet"
+        aria-hidden
+      >
+        <path
+          id="cta-trail-route-mobile"
+          d="M42 428 C74 398 102 360 142 336 S222 292 248 252 S278 190 320 166"
+          fill="none"
+          stroke="none"
+        />
+        <g
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={1}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeOpacity={0.12}
+        >
+          <path d="M-20 348 C68 320 118 368 202 338 S314 296 418 320" />
+          <path d="M-20 388 C78 358 128 408 220 376 S328 332 420 352" />
+          <path d="M-20 430 C88 402 148 440 242 414 S344 376 420 394" />
+          <path d="M-20 470 C88 442 152 478 258 452 S360 416 420 432" />
+          <path d="M32 220 C120 196 176 232 266 206 S354 168 418 182" />
+        </g>
+
+        <path
+          d="M42 428 C74 398 102 360 142 336 S222 292 248 252 S278 190 320 166"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeOpacity={0.4}
+          strokeDasharray="8 12"
+        />
+        <path
+          d="M42 428 C74 398 102 360 142 336 S222 292 248 252 S278 190 320 166"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={0.9}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeOpacity={0.24}
+        />
+
+        <g>
+          <animateMotion
+            ref={mobileDotMotionRef}
+            dur={`${durSec}s`}
+            repeatCount={1}
+            fill="freeze"
+            begin="indefinite"
+            rotate="none"
+            calcMode="spline"
+            keySplines="0.42 0 0.58 1"
+            keyPoints="0;1"
+            keyTimes="0;1"
+          >
+            <mpath href="#cta-trail-route-mobile" />
+          </animateMotion>
+          <g
+            transform={`scale(${COMPASS_MARKER_SCALE}) translate(${-COMPASS_CX} ${-COMPASS_CY})`}
+          >
+            <circle
+              cx={COMPASS_CX}
+              cy={COMPASS_CY}
+              r={10}
+              fill="currentColor"
+              fillOpacity={0.2}
+              stroke="black"
+              strokeOpacity={0.38}
+              strokeWidth={2}
+            />
+            <path
+              d={COMPASS_NEEDLE_D}
+              fill="currentColor"
+              fillOpacity={0.92}
+              stroke="black"
+              strokeOpacity={0.28}
+              strokeWidth={1.25}
+              strokeLinejoin="round"
+            />
+          </g>
+        </g>
+
+        <g
+          transform="translate(24, 392)"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path
+            fill="currentColor"
+            fillOpacity={0.26}
+            strokeWidth={1}
+            strokeOpacity={0.48}
+            d="M2 34 L16 14 L30 34 V46 H2z"
+          />
+          <path
+            fill="currentColor"
+            fillOpacity={0.38}
+            stroke="none"
+            d="M2 34 L16 14 L30 34"
+          />
+          <rect
+            x={20}
+            y={14}
+            width={4}
+            height={8}
+            rx={0.5}
+            fill="currentColor"
+            fillOpacity={0.32}
+            stroke="currentColor"
+            strokeWidth={0.85}
+            strokeOpacity={0.45}
+          />
+          <rect
+            x={11}
+            y={36}
+            width={6}
+            height={10}
+            rx={0.5}
+            fill="none"
+            strokeWidth={1}
+            strokeOpacity={0.52}
+          />
+        </g>
+
+        <g
+          transform="translate(252, 102)"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path
+            fill="currentColor"
+            fillOpacity={0.14}
+            strokeWidth={1}
+            strokeOpacity={0.4}
+            d="M6 62 L26 38 L42 50 L58 24 L74 46 L88 30 L104 52 L118 34 L132 58 H6z"
+          />
+          <path
+            fill="none"
+            strokeWidth={1.1}
+            strokeOpacity={0.5}
+            d="M6 62 L26 38 L42 50 L58 24 L74 46 L88 30 L104 52 L118 34 L132 58"
+          />
+        </g>
+      </svg>
+    </>
   );
 }

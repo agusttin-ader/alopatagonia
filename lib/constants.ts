@@ -12,18 +12,21 @@ export const SITE = {
 } as const;
 
 export const HERO_COPY = {
-  headline: "Tu viaje a la Patagonia, coordinado de punta a punta",
-  subline:
-    "Alojamientos, autos y transfers, excursiones y asesoramiento para recorrer los grandes destinos del sur: vos elegís el ritmo, nosotros el itinerario.",
+  headline: "Organizá tu viaje a Patagonia sin complicaciones",
+  subline: "Auto + alojamiento + excursiones. Todo en un solo lugar.",
 } as const;
 
 export const SECTION_IDS = {
-  services: "servicios",
+  planner: "planear-viaje",
   community: "comunidad",
+  signature: "esencia-alo",
+  gallery: "postales-reales",
+  testimonials: "testimonios",
+  howItWorks: "como-funciona",
+  services: "beneficios",
   destinations: "destinos",
   experience: "experiencia",
-  gallery: "galeria",
-  testimonials: "testimonios",
+  urgency: "urgencia",
   cta: "contacto",
 } as const;
 
@@ -38,15 +41,26 @@ export type InstagramStatItem = {
 };
 
 const DEFAULT_WHATSAPP_MESSAGE =
-  "Hola Alo Patagonia, quiero planificar mi viaje por la Patagonia (Bariloche, Calafate, Ushuaia, etc.).";
+  "Hola! Quiero planear mi viaje a Patagonia. ¿Me ayudan?";
 
-export function getWhatsAppUrl(): string {
+const SECONDARY_WHATSAPP_MESSAGE =
+  "Hola! Quiero consultar disponibilidad y precios";
+
+export const WHATSAPP_MESSAGES = {
+  primary: DEFAULT_WHATSAPP_MESSAGE,
+  secondary: SECONDARY_WHATSAPP_MESSAGE,
+} as const;
+
+export function getWhatsAppUrl(message = DEFAULT_WHATSAPP_MESSAGE): string {
   const preset = process.env.NEXT_PUBLIC_WHATSAPP_URL;
-  if (preset?.trim()) return preset.trim();
+  if (preset?.trim()) {
+    const separator = preset.includes("?") ? "&" : "?";
+    return `${preset.trim()}${separator}text=${encodeURIComponent(message)}`;
+  }
 
-  const raw = process.env.NEXT_PUBLIC_WHATSAPP_E164 ?? "5491112345678";
+  const raw = process.env.NEXT_PUBLIC_WHATSAPP_E164 ?? "5491168696491";
   const digits = raw.replace(/\D/g, "");
-  const text = encodeURIComponent(DEFAULT_WHATSAPP_MESSAGE);
+  const text = encodeURIComponent(message);
   return `https://wa.me/${digits}?text=${text}`;
 }
 
@@ -58,27 +72,27 @@ export type ServiceItem = {
 
 export const SERVICES: ServiceItem[] = [
   {
-    title: "Alojamientos",
+    title: "Movete con libertad",
     description:
-      "Hoteles, lodges y estancias en Bariloche, Calafate, Ushuaia y el resto del sur, según tu estilo y presupuesto.",
-    icon: Hotel,
-  },
-  {
-    title: "Autos y transfers",
-    description:
-      "Alquiler de autos con tips de ruta y traslados entre aeropuertos, ciudades y excursiones.",
+      "Te resolvemos el auto ideal para tu plan, con entrega clara y recomendaciones de ruta para aprovechar cada día.",
     icon: Car,
   },
   {
-    title: "Excursiones",
+    title: "Hospedaje a tu medida",
     description:
-      "Glaciares, trekking, navegación y experiencias icónicas —incluidas opciones compartidas cuando aplica.",
+      "Seleccionamos alojamientos por zona, estilo y presupuesto para que descanses bien y estés donde te conviene.",
+    icon: Hotel,
+  },
+  {
+    title: "Excursiones imperdibles",
+    description:
+      "Armamos actividades que realmente valen la pena según temporada, clima y tipo de viaje que querés hacer.",
     icon: Mountain,
   },
   {
-    title: "Asesoramiento integral",
+    title: "Asesoramiento personalizado",
     description:
-      "Armamos el viaje a toda la Patagonia: fechas, conexiones, reservas y soporte antes y durante el viaje.",
+      "Tenés un solo contacto para ordenar fechas, traslados y reservas sin perder tiempo comparando por tu cuenta.",
     icon: Compass,
   },
 ];
@@ -145,24 +159,34 @@ export const INSTAGRAM_STATS: InstagramStatItem[] = [
 
 export type Testimonial = {
   name: string;
+  highlight: string;
   quote: string;
 };
 
 export const TESTIMONIALS: Testimonial[] = [
   {
-    name: "María & Lucas",
+    name: "Florencia y Tomás, Buenos Aires",
+    highlight: "Viaje de 8 días",
     quote:
-      "Bariloche y Calafate en un solo viaje, sin estrés con los traslados. Solo tuvimos que mirar el paisaje.",
+      "Llegamos con todo cerrado en una sola propuesta. Auto, hotel y excursiones coordinadas perfecto.",
   },
   {
-    name: "Andrea P.",
+    name: "Camila R., Córdoba",
+    highlight: "Escapada en pareja",
     quote:
-      "WhatsApp impecable y excursiones que no hubiéramos encontrado solos. Se nota el conocimiento local.",
+      "Nos respondieron rapidísimo por WhatsApp y nos recomendaron planes que terminaron siendo lo mejor del viaje.",
   },
   {
-    name: "Familia Díaz",
+    name: "Familia Quiroga, Rosario",
+    highlight: "Viaje familiar",
     quote:
-      "Con niños necesitábamos orden; el ritmo fue perfecto y los alojamientos tal cual nos prometieron.",
+      "Con chicos necesitábamos practicidad. Nos armaron un itinerario cómodo, sin corridas y con alojamientos excelentes.",
+  },
+  {
+    name: "Nicolás M., Mendoza",
+    highlight: "Primera vez en Patagonia",
+    quote:
+      "Se sintió súper confiable desde el primer mensaje. En dos días ya teníamos todo resuelto para viajar tranquilos.",
   },
 ];
 
@@ -173,8 +197,8 @@ export type GalleryImage = {
   height: number;
 };
 
-/** Calidad máxima para `next/image`; debe existir en `images.qualities` del `next.config`. */
-export const IMAGE_QUALITY_MAX = 100 as const;
+/** Calidad optimizada para `next/image`; debe existir en `images.qualities` del `next.config`. */
+export const IMAGE_QUALITY_MAX = 80 as const;
 
 /**
  * Archivos en `public/images/` → URL `/images/nombre`.
