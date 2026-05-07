@@ -58,6 +58,23 @@ export function GalleryMosaic({ images }: GalleryMosaicProps) {
       if (e.key === "Escape") close();
       if (e.key === "ArrowLeft") goPrev();
       if (e.key === "ArrowRight") goNext();
+      if (e.key === "Tab" && dialogRef.current) {
+        const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
+          'button,[href],[tabindex]:not([tabindex="-1"])',
+        );
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const active = document.activeElement as HTMLElement | null;
+
+        if (e.shiftKey && active === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && (active === last || !active)) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -92,7 +109,7 @@ export function GalleryMosaic({ images }: GalleryMosaicProps) {
             aria-modal="true"
             aria-label="Vista ampliada de la galería"
             tabIndex={-1}
-            className="fixed inset-0 z-[200]"
+            className="fixed inset-0 z-[1500]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -138,7 +155,7 @@ export function GalleryMosaic({ images }: GalleryMosaicProps) {
                 e.stopPropagation();
                 close();
               }}
-              className="absolute right-3 top-3 z-[2] flex size-11 cursor-pointer items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70 sm:right-5 sm:top-5 sm:size-12"
+              className="absolute right-3 top-3 z-[2] flex size-11 cursor-pointer items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-5 sm:top-5 sm:size-12"
               aria-label="Cerrar galería"
             >
               <X className="size-5 sm:size-6" aria-hidden />
@@ -149,7 +166,7 @@ export function GalleryMosaic({ images }: GalleryMosaicProps) {
                 e.stopPropagation();
                 goPrev();
               }}
-              className="absolute left-2 top-1/2 z-[2] flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70 sm:left-4 sm:size-12"
+              className="absolute left-2 top-1/2 z-[2] flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:left-4 sm:size-12"
               aria-label="Imagen anterior"
             >
               <ChevronLeft className="size-6 sm:size-7" aria-hidden />
@@ -160,7 +177,7 @@ export function GalleryMosaic({ images }: GalleryMosaicProps) {
                 e.stopPropagation();
                 goNext();
               }}
-              className="absolute right-2 top-1/2 z-[2] flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70 sm:right-4 sm:size-12"
+              className="absolute right-2 top-1/2 z-[2] flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-4 sm:size-12"
               aria-label="Imagen siguiente"
             >
               <ChevronRight className="size-6 sm:size-7" aria-hidden />

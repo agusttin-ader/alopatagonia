@@ -8,7 +8,7 @@ export const SITE = {
   /** Sin @; para textos y enlaces al perfil. */
   instagramHandle: "alo_patagonia",
   email: "hola@alopatagonia.com",
-  phoneDisplay: "+54 9 11 0000-0000",
+  phoneDisplay: "",
 } as const;
 
 export const HERO_COPY = {
@@ -26,8 +26,42 @@ export const SECTION_IDS = {
   services: "beneficios",
   destinations: "destinos",
   experience: "experiencia",
+  winterShop: "tienda-invierno",
   urgency: "urgencia",
   cta: "contacto",
+} as const;
+
+/** URL fallback de tienda; priorizar `NEXT_PUBLIC_WINTER_STORE_URL` en producción. */
+const DEFAULT_WINTER_STORE_URL = "https://www.laguaridainstrumentos.com";
+
+export function getWinterStoreUrl(): string {
+  const fromEnv = process.env.NEXT_PUBLIC_WINTER_STORE_URL?.trim();
+  return fromEnv || DEFAULT_WINTER_STORE_URL;
+}
+
+export const WINTER_STORE_WHATSAPP_MESSAGE =
+  "Hola! Quiero consultar por la tienda de invierno / equipamiento para mi viaje.";
+
+export const WINTER_STORE_COPY = {
+  metaTitle: "Alo Patagonia | Equipamiento de invierno",
+  metaDescription:
+    "Abrigos y equipo pensados para el frío patagónico. Curamos una selección para que viajes cómodo y seguro.",
+  heroTitle: "Equipate para el frío patagónico",
+  heroSubtitle:
+    "Una selección curada de invierno para combinar con tu viaje: menos improvisación, más calor y estilo en la montaña.",
+  ctaPrimary: "Ir a la tienda",
+  ctaSecondaryHome: "Volver al inicio",
+  ctaWhatsApp: "Consultar por WhatsApp",
+  homeEyebrow: "Tienda de invierno",
+  homeHeading: "El frío no es excusa. Es parte del viaje.",
+  homeBody:
+    "Antes de salir, revisá abrigos y capas que marcan la diferencia entre disfrutar el paisaje y pasarla mal. Te llevamos a nuestra tienda en un clic.",
+  homeCta: "Ver tienda de invierno",
+  bullets: [
+    "Selección pensada para temperaturas reales del sur",
+    "Consultas rápidas por WhatsApp si dudás con talles o envíos",
+    "Complementa tu itinerario Alo con equipo confiable",
+  ],
 } as const;
 
 /** Cifras del perfil @alo_patagonia (actualizar posts/seguidores si cambian en Instagram). */
@@ -130,6 +164,119 @@ export const DESTINATIONS: DestinationItem[] = [
   },
 ];
 
+export type PlannerDestinationKey =
+  | "bariloche"
+  | "ushuaia"
+  | "calafate"
+  | "san-martin-andes"
+  | "villa-la-angostura"
+  | "puerto-madryn"
+  | "el-bolson"
+  | "esquel"
+  | "mendoza";
+
+export type PlannerDestinationValue = PlannerDestinationKey | "none";
+
+type PlannerDestinationConfig = {
+  key: PlannerDestinationKey;
+  label: string;
+  mapCenter: [number, number];
+  mapZoom: number;
+};
+
+export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
+  {
+    key: "bariloche",
+    label: "Bariloche",
+    mapCenter: [-41.1335, -71.3103],
+    mapZoom: 12,
+  },
+  {
+    key: "ushuaia",
+    label: "Ushuaia",
+    mapCenter: [-54.8019, -68.303],
+    mapZoom: 12.2,
+  },
+  {
+    key: "calafate",
+    label: "El Calafate",
+    mapCenter: [-50.3379, -72.2648],
+    mapZoom: 12.2,
+  },
+  {
+    key: "san-martin-andes",
+    label: "San Martin de los Andes",
+    mapCenter: [-40.1579, -71.3534],
+    mapZoom: 12.2,
+  },
+  {
+    key: "villa-la-angostura",
+    label: "Villa La Angostura",
+    mapCenter: [-40.7617, -71.6463],
+    mapZoom: 13,
+  },
+  {
+    key: "puerto-madryn",
+    label: "Puerto Madryn",
+    mapCenter: [-42.7692, -65.0385],
+    mapZoom: 12.4,
+  },
+  {
+    key: "el-bolson",
+    label: "El Bolson",
+    mapCenter: [-41.9664, -71.5336],
+    mapZoom: 12.8,
+  },
+  {
+    key: "esquel",
+    label: "Esquel",
+    mapCenter: [-42.9115, -71.3195],
+    mapZoom: 12.8,
+  },
+  {
+    key: "mendoza",
+    label: "Mendoza",
+    mapCenter: [-32.8895, -68.8458],
+    mapZoom: 12.2,
+  },
+];
+
+export const PLANNER_DEFAULT_FOCUS = {
+  center: [-44.5, -70.2] as [number, number],
+  zoom: 4.6,
+};
+
+export const PLANNER_DESTINATION_OPTIONS: Array<{
+  value: PlannerDestinationValue;
+  label: string;
+}> = [
+  { value: "none", label: "Sin destino definido" },
+  ...PLANNER_DESTINATIONS.map((destination) => ({
+    value: destination.key,
+    label: destination.label,
+  })),
+];
+
+const plannerDestinationLabels = {
+  none: "sin destino definido",
+} as Record<PlannerDestinationValue, string>;
+
+const plannerDestinationFocus = {} as Record<
+  PlannerDestinationKey,
+  { center: [number, number]; zoom: number }
+>;
+
+for (const destination of PLANNER_DESTINATIONS) {
+  plannerDestinationLabels[destination.key] = destination.label;
+  plannerDestinationFocus[destination.key] = {
+    center: destination.mapCenter,
+    zoom: destination.mapZoom,
+  };
+}
+
+export const PLANNER_DESTINATION_LABELS = plannerDestinationLabels;
+export const PLANNER_DESTINATION_FOCUS = plannerDestinationFocus;
+
 export const INSTAGRAM_STATS: InstagramStatItem[] = [
   {
     id: "posts",
@@ -150,7 +297,7 @@ export const INSTAGRAM_STATS: InstagramStatItem[] = [
   {
     id: "coverage",
     label: "Cobertura en la Patagonia",
-    target: DESTINATIONS.length,
+    target: PLANNER_DESTINATIONS.length,
     variant: "integer",
     description:
       "Grandes regiones que coordinamos en un mismo viaje, con un solo interlocutor.",
@@ -226,6 +373,14 @@ export const EXPERIENCE_IMAGE: GalleryImage = {
   alt: "Cumbres y lagos de la Patagonia",
   width: 3840,
   height: 2880,
+};
+
+/** Imagen nevada para la tienda de invierno (reusa archivo de galería). */
+export const WINTER_STORE_IMAGE: GalleryImage = {
+  src: img("IMG_1657.jpeg"),
+  alt: "Nieve y cumbres patagónicas",
+  width: 3840,
+  height: 2560,
 };
 
 export const GALLERY_IMAGES: GalleryImage[] = [

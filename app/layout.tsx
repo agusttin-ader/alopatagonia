@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
+
+import { GlobalNav } from "@/components/navigation/GlobalNav";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -22,6 +24,8 @@ export const viewport: Viewport = {
   themeColor: "#717336",
   width: "device-width",
   initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export const metadata: Metadata = {
@@ -45,7 +49,10 @@ export default function RootLayout({
       lang="es"
       className={`${manrope.variable} ${manropeHeading.variable} h-full antialiased`}
     >
-      <body className="flex min-h-dvh flex-col">{children}</body>
+      <body className="flex min-h-dvh flex-col">
+        <GlobalNav />
+        {children}
+      </body>
     </html>
   );
 }

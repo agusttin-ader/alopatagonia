@@ -5,37 +5,13 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useEffect, useMemo, useRef } from "react";
 
-type DestinationKey =
-  | "none"
-  | "bariloche"
-  | "ushuaia"
-  | "calafate"
-  | "san-martin-andes"
-  | "villa-la-angostura"
-  | "puerto-madryn"
-  | "el-bolson"
-  | "esquel"
-  | "mendoza";
+import {
+  PLANNER_DEFAULT_FOCUS,
+  PLANNER_DESTINATION_FOCUS,
+  type PlannerDestinationValue,
+} from "@/lib/constants";
 
-type FocusConfig = {
-  center: [number, number];
-  zoom: number;
-};
-
-const MAP_FOCUS: Record<DestinationKey, FocusConfig> = {
-  none: { center: [-44.5, -70.2], zoom: 4.6 },
-  bariloche: { center: [-41.1335, -71.3103], zoom: 12 },
-  ushuaia: { center: [-54.8019, -68.303], zoom: 12.2 },
-  calafate: { center: [-50.3379, -72.2648], zoom: 12.2 },
-  "san-martin-andes": { center: [-40.1579, -71.3534], zoom: 12.2 },
-  "villa-la-angostura": { center: [-40.7617, -71.6463], zoom: 13 },
-  "puerto-madryn": { center: [-42.7692, -65.0385], zoom: 12.4 },
-  "el-bolson": { center: [-41.9664, -71.5336], zoom: 12.8 },
-  esquel: { center: [-42.9115, -71.3195], zoom: 12.8 },
-  mendoza: { center: [-32.8895, -68.8458], zoom: 12.2 },
-};
-
-export function PlannerMap({ destination }: { destination: DestinationKey }) {
+export function PlannerMap({ destination }: { destination: PlannerDestinationValue }) {
   const mapNodeRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
@@ -55,11 +31,17 @@ export function PlannerMap({ destination }: { destination: DestinationKey }) {
   );
 
   useEffect(() => {
-    const focus = MAP_FOCUS[destination];
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const focus =
+      destination === "none"
+        ? PLANNER_DEFAULT_FOCUS
+        : PLANNER_DESTINATION_FOCUS[destination];
 
     if (!mapRef.current && mapNodeRef.current) {
       const map = L.map(mapNodeRef.current, {
-        zoomControl: false,
+        zoomControl: true,
         scrollWheelZoom: false,
         attributionControl: true,
       }).setView(focus.center, focus.zoom);
@@ -75,11 +57,15 @@ export function PlannerMap({ destination }: { destination: DestinationKey }) {
     const map = mapRef.current;
     if (!map) return;
 
-    map.flyTo(focus.center, focus.zoom, {
-      duration: 1.1,
-      easeLinearity: 0.35,
-      animate: true,
-    });
+    if (prefersReducedMotion) {
+      map.setView(focus.center, focus.zoom);
+    } else {
+      map.flyTo(focus.center, focus.zoom, {
+        duration: 1.1,
+        easeLinearity: 0.35,
+        animate: true,
+      });
+    }
 
     if (destination === "none") {
       markerRef.current?.remove();
@@ -97,7 +83,7 @@ export function PlannerMap({ destination }: { destination: DestinationKey }) {
   return (
     <div
       ref={mapNodeRef}
-      className="h-full min-h-[420px] w-full"
+      className="h-full min-h-[360px] w-full"
       aria-label="Mapa interactivo de Patagonia Argentina"
     />
   );

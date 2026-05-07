@@ -35,6 +35,10 @@
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  --color-brand-forest: var(--brand-forest);
+  --color-brand-forest-foreground: var(--brand-forest-foreground);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-hover: var(--whatsapp-hover);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -50,24 +54,28 @@
 
 :root {
   /* Tema claro (paleta Bosque Patagonia, fondo crema) */
-  --background: #f3f0e2;
-  --foreground: #222601;
-  --card: #faf8ef;
-  --card-foreground: #222601;
-  --popover: #faf8ef;
-  --popover-foreground: #222601;
-  --primary: #728c8a;
-  --primary-foreground: #faf8ef;
-  --secondary: #ece6d2;
+  --background: #f6f3e8;
+  --foreground: #22270e;
+  --card: #fbf9f1;
+  --card-foreground: #22270e;
+  --popover: #fbf9f1;
+  --popover-foreground: #22270e;
+  --primary: #5f7f7a;
+  --primary-foreground: #f8f6ee;
+  --secondary: #eee8d7;
   --secondary-foreground: #222601;
-  --muted: #ece6d2;
-  --muted-foreground: #5f5b49;
-  --accent: #728c8a;
-  --accent-foreground: #faf8ef;
+  --muted: #f1ebdb;
+  --muted-foreground: #5c5a4a;
+  --accent: #6f8e88;
+  --accent-foreground: #f8f6ee;
+  --brand-forest: #2d5a47;
+  --brand-forest-foreground: #faf8ef;
+  --whatsapp: #25d366;
+  --whatsapp-hover: #1fb85a;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #d8cfb7;
-  --input: #d8cfb7;
-  --ring: #717336;
+  --border: #d9d0bb;
+  --input: #d6cdb7;
+  --ring: #6f7450;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -99,6 +107,10 @@
   --muted-foreground: #b8b396;
   --accent: #728c8a;
   --accent-foreground: #d9d4ba;
+  --brand-forest: #2d5a47;
+  --brand-forest-foreground: #d9d4ba;
+  --whatsapp: #25d366;
+  --whatsapp-hover: #1fb85a;
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
@@ -132,6 +144,9 @@
   body {
     @apply bg-background text-foreground font-medium;
     overflow-x: clip;
+    background-image:
+      radial-gradient(circle at 10% -10%, rgba(111, 142, 136, 0.08), transparent 38%),
+      radial-gradient(circle at 100% 10%, rgba(80, 95, 52, 0.07), transparent 34%);
   }
   @media (prefers-reduced-motion: reduce) {
     html {

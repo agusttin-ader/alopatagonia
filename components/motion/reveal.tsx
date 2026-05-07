@@ -28,7 +28,7 @@ export function Reveal({
           ? { duration: 0 }
           : {
               type: "tween",
-              duration: 1.05,
+              duration: 0.56,
               delay,
               ease: [0.16, 1, 0.3, 1],
             }

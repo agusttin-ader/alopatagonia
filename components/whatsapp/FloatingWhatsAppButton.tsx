@@ -9,7 +9,7 @@ export function FloatingWhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Hablar por WhatsApp"
-      className="fixed bottom-5 right-5 z-50 inline-flex size-14 items-center justify-center rounded-full bg-[#25d366] text-white shadow-xl transition-[transform,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:scale-[1.04] hover:bg-[#1fb85a] hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25d366]/60 focus-visible:ring-offset-2 motion-reduce:transition-none sm:bottom-7 sm:right-7"
+      className="fixed bottom-[max(1.25rem,env(safe-area-inset-bottom))] right-[max(1.25rem,env(safe-area-inset-right))] z-[1100] inline-flex size-14 items-center justify-center rounded-full bg-[#25d366] text-white shadow-xl transition-[transform,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:scale-[1.04] hover:bg-[#1fb85a] hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25d366]/60 focus-visible:ring-offset-2 motion-reduce:transition-none sm:bottom-[max(1.75rem,env(safe-area-inset-bottom))] sm:right-[max(1.75rem,env(safe-area-inset-right))]"
     >
       <span className="sr-only">WhatsApp</span>
       <svg

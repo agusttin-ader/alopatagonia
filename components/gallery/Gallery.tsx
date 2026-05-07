@@ -6,10 +6,10 @@ export function Gallery() {
   return (
     <section
       id={SECTION_IDS.gallery}
-      className="scroll-mt-6 bg-background px-6 py-20 sm:px-10 lg:px-16"
+      className="scroll-mt-24 bg-background px-4 py-20 sm:px-8 lg:px-16"
       aria-labelledby="galeria-heading"
     >
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
         <Reveal className="max-w-2xl">
           <p className="text-sm font-medium uppercase tracking-[0.18em] text-primary">
             Galería

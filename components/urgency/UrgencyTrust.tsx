@@ -29,7 +29,7 @@ export function UrgencyTrust() {
   return (
     <section
       id={SECTION_IDS.urgency}
-      className="scroll-mt-6 border-y border-border/70 bg-secondary/30 px-4 py-20 sm:px-8 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 border-y border-border/70 bg-secondary/30 px-4 py-20 sm:px-8 lg:px-14 2xl:px-20"
       aria-labelledby="urgencia-heading"
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">

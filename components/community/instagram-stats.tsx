@@ -91,7 +91,7 @@ export function InstagramStats() {
     <section
       ref={sectionRef}
       id={SECTION_IDS.community}
-      className="relative scroll-mt-6 overflow-hidden bg-zinc-950 px-6 py-24 text-zinc-100 sm:px-10 lg:px-16"
+      className="relative scroll-mt-24 overflow-hidden bg-zinc-950 px-4 py-20 text-zinc-100 sm:px-8 lg:px-16"
       aria-labelledby="comunidad-heading"
     >
       <div
@@ -107,7 +107,7 @@ export function InstagramStats() {
         aria-hidden
       />
 
-      <div className="relative mx-auto max-w-6xl">
+      <div className="relative mx-auto max-w-7xl 2xl:max-w-[90rem]">
         <Reveal className="max-w-2xl">
           <p className="text-sm font-medium uppercase tracking-[0.18em] text-emerald-400/90">
             Comunidad
@@ -128,7 +128,7 @@ export function InstagramStats() {
           </p>
         </Reveal>
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-3">
+        <div className="mt-12 grid gap-5 sm:mt-14 sm:grid-cols-3">
           {INSTAGRAM_STATS.map((item, index) => {
             const Icon =
               STAT_ICONS[item.id as keyof typeof STAT_ICONS] ?? Images;

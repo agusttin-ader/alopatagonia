@@ -8,10 +8,10 @@ export function Destinations() {
   return (
     <section
       id={SECTION_IDS.destinations}
-      className="scroll-mt-6 bg-background px-6 py-20 sm:px-10 lg:px-16"
+      className="scroll-mt-24 bg-background px-4 py-18 sm:px-8 sm:py-20 lg:px-16"
       aria-labelledby="destinos-heading"
     >
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
         <Reveal className="max-w-2xl">
           <p className="text-sm font-medium uppercase tracking-[0.18em] text-primary">
             Destinos
@@ -29,7 +29,7 @@ export function Destinations() {
           </p>
         </Reveal>
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2">
+        <div className="mt-12 grid gap-5 sm:mt-14 sm:grid-cols-2">
           {DESTINATIONS.map((d, index) => (
             <Reveal key={d.name} delay={index * 0.06}>
               <article

@@ -2,55 +2,24 @@
 
 import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight, Mail } from "lucide-react";
 import dynamic from "next/dynamic";
-import { useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
-import { SECTION_IDS, SITE, getWhatsAppUrl } from "@/lib/constants";
+import {
+  PLANNER_DESTINATION_LABELS,
+  PLANNER_DESTINATION_OPTIONS,
+  SECTION_IDS,
+  SITE,
+  getWhatsAppUrl,
+  type PlannerDestinationValue,
+} from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 const PlannerMap = dynamic(
   () => import("@/components/planner/PlannerMap").then((mod) => mod.PlannerMap),
   { ssr: false },
 );
-
-type DestinationKey =
-  | "none"
-  | "bariloche"
-  | "ushuaia"
-  | "calafate"
-  | "san-martin-andes"
-  | "villa-la-angostura"
-  | "puerto-madryn"
-  | "el-bolson"
-  | "esquel"
-  | "mendoza";
-
-const destinationLabel: Record<DestinationKey, string> = {
-  none: "sin destino definido",
-  bariloche: "Bariloche",
-  ushuaia: "Ushuaia",
-  calafate: "El Calafate",
-  "san-martin-andes": "San Martin de los Andes",
-  "villa-la-angostura": "Villa La Angostura",
-  "puerto-madryn": "Puerto Madryn",
-  "el-bolson": "El Bolson",
-  esquel: "Esquel",
-  mendoza: "Mendoza",
-};
-
-const DESTINATION_OPTIONS: Array<{ value: DestinationKey; label: string }> = [
-  { value: "none", label: "Sin destino definido" },
-  { value: "bariloche", label: "Bariloche" },
-  { value: "ushuaia", label: "Ushuaia" },
-  { value: "calafate", label: "El Calafate" },
-  { value: "san-martin-andes", label: "San Martin de los Andes" },
-  { value: "villa-la-angostura", label: "Villa La Angostura" },
-  { value: "puerto-madryn", label: "Puerto Madryn" },
-  { value: "el-bolson", label: "El Bolson" },
-  { value: "esquel", label: "Esquel" },
-  { value: "mendoza", label: "Mendoza" },
-];
 
 const MONTHS = [
   "Enero",
@@ -66,6 +35,9 @@ const MONTHS = [
   "Noviembre",
   "Diciembre",
 ];
+
+const fieldClassName =
+  "h-11 w-full rounded-2xl border border-input/80 bg-card/85 px-3.5 text-sm text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] outline-none transition duration-200 placeholder:text-muted-foreground/90 hover:border-primary/35 focus-visible:border-primary/70 focus-visible:ring-4 focus-visible:ring-primary/15";
 
 function toISODate(date: Date) {
   const y = date.getFullYear();
@@ -101,6 +73,10 @@ function DateField({
   const selectedDate = fromISODate(value);
   const [open, setOpen] = useState(false);
   const [viewDate, setViewDate] = useState(selectedDate ?? today);
+  const triggerId = useId();
+  const panelId = useId();
+  const fieldRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   const monthStart = new Date(viewDate.getFullYear(), viewDate.getMonth(), 1);
   const startWeekDay = (monthStart.getDay() + 6) % 7;
@@ -116,13 +92,45 @@ function DateField({
     return new Date(viewDate.getFullYear(), viewDate.getMonth(), dayNumber);
   });
 
+  useEffect(() => {
+    if (!open) return;
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (!fieldRef.current?.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        triggerRef.current?.focus();
+      }
+    };
+
+    window.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
   return (
-    <div className="relative space-y-1.5">
+    <div ref={fieldRef} className="relative space-y-1.5">
       <span className="text-sm font-semibold text-foreground">{label}</span>
       <button
+        id={triggerId}
+        ref={triggerRef}
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="flex h-11 w-full items-center justify-between rounded-xl border border-input bg-background px-3.5 text-sm text-foreground outline-none transition focus:border-ring focus:ring-2 focus:ring-ring/30"
+        className={cn(
+          fieldClassName,
+          "flex min-h-11 items-center justify-between focus-visible:ring-primary/30",
+        )}
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        aria-controls={panelId}
       >
         <span className={value ? "text-foreground" : "text-muted-foreground"}>
           {value ? formatDate(value) : "dd/mm/aaaa"}
@@ -131,7 +139,13 @@ function DateField({
       </button>
 
       {open && (
-        <div className="absolute left-0 top-[calc(100%+8px)] z-30 w-[290px] rounded-2xl border border-border bg-card p-3 shadow-xl">
+        <div
+          id={panelId}
+          role="dialog"
+          aria-modal="false"
+          aria-labelledby={triggerId}
+          className="absolute left-0 top-[calc(100%+8px)] z-30 w-full max-w-[290px] rounded-2xl border border-border/80 bg-card/95 p-3 shadow-xl ring-1 ring-white/70 backdrop-blur-sm sm:w-[290px]"
+        >
           <div className="mb-2 flex items-center justify-between">
             <button
               type="button"
@@ -140,7 +154,8 @@ function DateField({
                   new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1),
                 )
               }
-              className="rounded-md p-1.5 text-foreground hover:bg-secondary"
+              className="inline-flex size-11 items-center justify-center rounded-lg text-foreground transition hover:bg-secondary/85"
+              aria-label="Mes anterior"
             >
               <ChevronLeft className="size-4" />
             </button>
@@ -154,7 +169,8 @@ function DateField({
                   new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1),
                 )
               }
-              className="rounded-md p-1.5 text-foreground hover:bg-secondary"
+              className="inline-flex size-11 items-center justify-center rounded-lg text-foreground transition hover:bg-secondary/85"
+              aria-label="Mes siguiente"
             >
               <ChevronRight className="size-4" />
             </button>
@@ -182,9 +198,9 @@ function DateField({
                     setOpen(false);
                   }}
                   className={cn(
-                    "h-8 rounded-md text-xs font-medium",
+                    "h-11 rounded-lg text-xs font-medium transition",
                     day
-                      ? "text-foreground hover:bg-secondary"
+                      ? "text-foreground hover:bg-secondary/85"
                       : "cursor-default opacity-0",
                     isSelected && "bg-primary text-primary-foreground hover:bg-primary",
                   )}
@@ -202,15 +218,19 @@ function DateField({
 
 export function TripPlannerSection() {
   const [name, setName] = useState("");
-  const [destination, setDestination] = useState<DestinationKey>("none");
+  const [destination, setDestination] = useState<PlannerDestinationValue>("none");
   const [travelers, setTravelers] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [destinationOpen, setDestinationOpen] = useState(false);
+  const destinationButtonId = useId();
+  const destinationPanelId = useId();
+  const destinationContainerRef = useRef<HTMLDivElement>(null);
+  const destinationButtonRef = useRef<HTMLButtonElement>(null);
 
   const message = useMemo(() => {
     const personName = name.trim() || "sin nombre";
-    const destinationText = destinationLabel[destination];
+    const destinationText = PLANNER_DESTINATION_LABELS[destination];
     const people = travelers.trim() || "sin definir";
     const from = formatDate(fromDate);
     const to = formatDate(toDate);
@@ -218,13 +238,50 @@ export function TripPlannerSection() {
     return `Hola, vengo desde la web de Alo Patagonia. Mi nombre es ${personName}, viajo a ${destinationText}, somos ${people} personas, desde ${from} hasta ${to}. ¿Planeamos mi viaje?`;
   }, [name, destination, travelers, fromDate, toDate]);
 
+  const completionCount = useMemo(() => {
+    const checks = [
+      name.trim().length > 1,
+      destination !== "none",
+      travelers.trim().length > 0,
+      Boolean(fromDate),
+      Boolean(toDate),
+    ];
+    return checks.filter(Boolean).length;
+  }, [name, destination, travelers, fromDate, toDate]);
+
+  const plannerReady = completionCount >= 4;
+
   const whatsappUrl = getWhatsAppUrl(message);
   const mailUrl = `mailto:${SITE.email}?subject=${encodeURIComponent("Consulta viaje Patagonia")}&body=${encodeURIComponent(message)}`;
+
+  useEffect(() => {
+    if (!destinationOpen) return;
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (!destinationContainerRef.current?.contains(event.target as Node)) {
+        setDestinationOpen(false);
+      }
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setDestinationOpen(false);
+        destinationButtonRef.current?.focus();
+      }
+    };
+
+    window.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [destinationOpen]);
 
   return (
     <section
       id={SECTION_IDS.planner}
-      className="scroll-mt-8 bg-background px-4 py-20 sm:px-8 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 bg-background px-4 py-18 sm:px-8 sm:py-20 lg:px-14 2xl:px-20"
       aria-labelledby="planner-heading"
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
@@ -253,19 +310,32 @@ export function TripPlannerSection() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Tu nombre"
-                  className="h-11 w-full rounded-xl border border-input bg-background px-3.5 text-sm outline-none transition focus:border-ring focus:ring-2 focus:ring-ring/30"
+                  className={fieldClassName}
                 />
               </label>
 
               <label className="block space-y-1.5">
                 <span className="text-sm font-semibold text-foreground">Destino</span>
-                <div className="relative">
+                <div ref={destinationContainerRef} className="relative">
                   <button
+                    id={destinationButtonId}
+                    ref={destinationButtonRef}
                     type="button"
                     onClick={() => setDestinationOpen((prev) => !prev)}
-                    className="flex h-11 w-full items-center justify-between rounded-xl border border-input bg-background px-3.5 text-sm text-foreground outline-none transition focus:border-ring focus:ring-2 focus:ring-ring/30"
+                    className={cn(
+                      fieldClassName,
+                      "flex min-h-11 items-center justify-between focus-visible:ring-primary/30",
+                    )}
+                    aria-haspopup="listbox"
+                    aria-expanded={destinationOpen}
+                    aria-controls={destinationPanelId}
                   >
-                    <span>{DESTINATION_OPTIONS.find((o) => o.value === destination)?.label}</span>
+                    <span>
+                      {
+                        PLANNER_DESTINATION_OPTIONS.find((option) => option.value === destination)
+                          ?.label
+                      }
+                    </span>
                     <ChevronDown
                       className={cn(
                         "size-4 text-muted-foreground transition-transform",
@@ -275,9 +345,14 @@ export function TripPlannerSection() {
                   </button>
 
                   {destinationOpen && (
-                    <div className="absolute left-0 top-[calc(100%+8px)] z-30 w-full rounded-2xl border border-border bg-card p-2 shadow-xl">
+                    <div
+                      id={destinationPanelId}
+                      role="listbox"
+                      aria-labelledby={destinationButtonId}
+                      className="absolute left-0 top-[calc(100%+8px)] z-30 w-full rounded-2xl border border-border/80 bg-card/95 p-2 shadow-xl ring-1 ring-white/70 backdrop-blur-sm"
+                    >
                       <div className="max-h-64 overflow-auto">
-                        {DESTINATION_OPTIONS.map((option) => (
+                        {PLANNER_DESTINATION_OPTIONS.map((option) => (
                           <button
                             key={option.value}
                             type="button"
@@ -286,11 +361,13 @@ export function TripPlannerSection() {
                               setDestinationOpen(false);
                             }}
                             className={cn(
-                              "w-full rounded-xl px-3 py-2 text-left text-sm transition",
+                              "w-full rounded-xl px-3 py-2.5 text-left text-sm transition",
                               destination === option.value
                                 ? "bg-primary text-primary-foreground"
-                                : "text-foreground hover:bg-secondary",
+                                : "text-foreground hover:bg-secondary/80",
                             )}
+                            role="option"
+                            aria-selected={destination === option.value}
                           >
                             {option.label}
                           </button>
@@ -310,7 +387,7 @@ export function TripPlannerSection() {
                   onChange={(e) => setTravelers(e.target.value)}
                   placeholder="Ej: 2"
                   inputMode="numeric"
-                  className="h-11 w-full rounded-xl border border-input bg-background px-3.5 text-sm outline-none transition focus:border-ring focus:ring-2 focus:ring-ring/30"
+                  className={fieldClassName}
                 />
               </label>
 
@@ -323,6 +400,18 @@ export function TripPlannerSection() {
                 <p className="text-xs text-muted-foreground">
                   Armamos el mensaje automaticamente para que consultes en un clic.
                 </p>
+                <p
+                  className={cn(
+                    "mt-2 inline-flex rounded-full px-2.5 py-1 text-xs font-semibold",
+                    plannerReady
+                      ? "bg-primary/15 text-primary"
+                      : "bg-secondary text-muted-foreground",
+                  )}
+                >
+                  {plannerReady
+                    ? "Mensaje listo para enviar"
+                    : `Completá ${5 - completionCount} dato${5 - completionCount === 1 ? "" : "s"} para enviar más completo`}
+                </p>
               </div>
             </form>
 
@@ -333,7 +422,7 @@ export function TripPlannerSection() {
                 rel="noopener noreferrer"
                 className={cn(
                   buttonVariants({ size: "lg" }),
-                  "h-12 rounded-full bg-[#25d366] text-white hover:bg-[#1fb85a] 2xl:h-14 2xl:text-lg",
+                  "h-12 whitespace-normal rounded-full bg-whatsapp text-center leading-tight text-white hover:bg-whatsapp-hover 2xl:h-14 2xl:text-lg",
                 )}
               >
                 <svg
@@ -344,7 +433,7 @@ export function TripPlannerSection() {
                 >
                   <path d="M19.11 4.93A9.88 9.88 0 0 0 12.03 2C6.58 2 2.14 6.43 2.14 11.89c0 1.74.46 3.44 1.33 4.94L2 22l5.29-1.39a9.85 9.85 0 0 0 4.72 1.2h.01c5.45 0 9.89-4.43 9.89-9.9a9.81 9.81 0 0 0-2.8-6.98ZM12.02 20.1h-.01a8.14 8.14 0 0 1-4.15-1.14l-.3-.18-3.14.82.84-3.06-.2-.31a8.2 8.2 0 0 1-1.27-4.33c0-4.51 3.68-8.18 8.22-8.18a8.15 8.15 0 0 1 5.8 2.39 8.08 8.08 0 0 1 2.4 5.8c0 4.51-3.69 8.19-8.19 8.19Zm4.48-6.14c-.25-.13-1.46-.72-1.68-.8-.22-.08-.38-.12-.54.13-.16.25-.62.8-.76.96-.14.16-.28.18-.53.06-.25-.13-1.04-.38-1.99-1.22-.74-.65-1.24-1.45-1.38-1.7-.14-.25-.01-.39.11-.51.11-.11.25-.28.37-.42.12-.14.16-.25.24-.41.08-.16.04-.31-.02-.44-.06-.13-.54-1.3-.74-1.78-.2-.48-.4-.4-.54-.4h-.46c-.16 0-.41.06-.63.31-.22.25-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.1.16 1.52.1.46-.07 1.46-.6 1.67-1.17.21-.57.21-1.05.15-1.17-.06-.12-.22-.19-.47-.32Z" />
                 </svg>
-                Consultar por WhatsApp
+                {plannerReady ? "Enviar por WhatsApp" : "Completar y enviar por WhatsApp"}
               </a>
               <a
                 href={mailUrl}
@@ -365,7 +454,7 @@ export function TripPlannerSection() {
                 Mapa Patagonia Argentina
               </p>
               <p className="text-xs text-muted-foreground">
-                Foco: {destinationLabel[destination]}
+                Foco: {PLANNER_DESTINATION_LABELS[destination]}
               </p>
             </div>
 

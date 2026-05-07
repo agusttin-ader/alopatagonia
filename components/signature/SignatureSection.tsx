@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 
 import { Reveal } from "@/components/motion/reveal";
@@ -20,10 +20,12 @@ const EXPERIENCE_CHIPS = [
 ] as const;
 
 export function SignatureSection() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section
       id={SECTION_IDS.signature}
-      className="scroll-mt-6 bg-background px-4 py-18 sm:px-8 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 bg-background px-4 py-18 sm:px-8 lg:px-14 2xl:px-20"
       aria-labelledby="signature-heading"
     >
       <div className="mx-auto grid max-w-7xl 2xl:max-w-[90rem] gap-8 lg:grid-cols-[1.15fr_1fr] lg:items-center 2xl:gap-12">
@@ -50,7 +52,7 @@ export function SignatureSection() {
             viewport={{ once: true }}
             transition={{
               type: "tween",
-              duration: 1.28,
+              duration: reduceMotion ? 0 : 0.72,
               ease: [0.16, 1, 0.3, 1],
             }}
             aria-hidden
@@ -98,8 +100,8 @@ export function SignatureSection() {
             <a
               href={`#${SECTION_IDS.planner}`}
               className={cn(
-                buttonVariants({ size: "lg" }),
-                "mt-8 inline-flex h-12 rounded-full px-8 text-base font-semibold shadow-md 2xl:h-14 2xl:px-10 2xl:text-lg",
+                buttonVariants({ variant: "marketing", size: "lg" }),
+                "mt-8 inline-flex h-12 px-8 text-base font-semibold shadow-md 2xl:h-14 2xl:px-10 2xl:text-lg",
               )}
             >
               Quiero mi propuesta por WhatsApp

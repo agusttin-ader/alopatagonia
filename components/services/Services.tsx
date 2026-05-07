@@ -12,7 +12,7 @@ export function Services() {
   return (
     <section
       id={SECTION_IDS.services}
-      className="scroll-mt-6 bg-background px-4 py-20 sm:px-8 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 bg-background px-4 py-20 sm:px-8 lg:px-14 2xl:px-20"
       aria-labelledby="servicios-heading"
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">

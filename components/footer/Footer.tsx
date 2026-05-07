@@ -1,4 +1,5 @@
 import { Share2 } from "lucide-react";
+import Link from "next/link";
 
 import { SITE, WHATSAPP_MESSAGES, getWhatsAppUrl } from "@/lib/constants";
 
@@ -19,23 +20,29 @@ export function Footer() {
             href={SITE.instagram}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 font-medium text-foreground underline-offset-4 hover:underline"
+            className="inline-flex items-center gap-2 font-medium text-foreground underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2"
           >
             <Share2 className="size-4" aria-hidden />
             Instagram
           </a>
+          <Link
+            href="/invierno"
+            className="font-medium text-foreground underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2"
+          >
+            Tienda de invierno
+          </Link>
           <a
             href={`mailto:${SITE.email}`}
-            className="hover:text-foreground"
+            className="hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2"
           >
             {SITE.email}
           </a>
-          <p>{SITE.phoneDisplay}</p>
+          {SITE.phoneDisplay ? <p>{SITE.phoneDisplay}</p> : null}
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-primary hover:underline"
+            className="font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2"
           >
             WhatsApp
           </a>

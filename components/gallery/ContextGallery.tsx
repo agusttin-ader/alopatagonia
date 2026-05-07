@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { buttonVariants } from "@/components/ui/button";
@@ -50,6 +50,8 @@ const CONTEXT_ITEMS = [
 export function ContextGallery() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const [lightboxLoaded, setLightboxLoaded] = useState(false);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const activeItem = openIndex !== null ? CONTEXT_ITEMS[openIndex] : null;
 
   const closeLightbox = useCallback(() => {
@@ -83,6 +85,23 @@ export function ContextGallery() {
       if (event.key === "Escape") closeLightbox();
       if (event.key === "ArrowLeft") showPrev();
       if (event.key === "ArrowRight") showNext();
+      if (event.key === "Tab" && dialogRef.current) {
+        const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
+          'button,[href],[tabindex]:not([tabindex="-1"])',
+        );
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const active = document.activeElement as HTMLElement | null;
+
+        if (event.shiftKey && active === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (active === last || !active)) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
 
     window.addEventListener("keydown", onKeyDown);
@@ -92,10 +111,15 @@ export function ContextGallery() {
     };
   }, [openIndex, closeLightbox, showPrev, showNext]);
 
+  useEffect(() => {
+    if (openIndex === null) return;
+    closeButtonRef.current?.focus();
+  }, [openIndex]);
+
   return (
     <section
       id={SECTION_IDS.gallery}
-      className="scroll-mt-6 bg-secondary/20 px-4 py-20 sm:px-8 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 bg-secondary/20 px-4 py-20 sm:px-8 lg:px-14 2xl:px-20"
       aria-labelledby="context-gallery-heading"
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
@@ -174,11 +198,12 @@ export function ContextGallery() {
       <AnimatePresence>
         {activeItem && (
           <motion.div
-            className="fixed inset-0 z-[80] hidden items-center justify-center bg-black/88 p-8 lg:flex"
+            ref={dialogRef}
+            className="fixed inset-0 z-[1400] flex items-center justify-center bg-black/88 p-3 sm:p-6 lg:p-8"
             role="dialog"
             aria-modal="true"
             aria-label={`Vista ampliada: ${activeItem.title}`}
-            onClick={closeLightbox}
+            tabIndex={-1}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -186,7 +211,14 @@ export function ContextGallery() {
           >
             <button
               type="button"
-              className="absolute right-6 top-6 inline-flex size-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+              className="absolute inset-0 z-0"
+              aria-label="Cerrar imagen ampliada"
+              onClick={closeLightbox}
+            />
+            <button
+              ref={closeButtonRef}
+              type="button"
+              className="absolute right-3 top-3 inline-flex size-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-6 sm:top-6"
               onClick={closeLightbox}
               aria-label="Cerrar imagen ampliada"
             >
@@ -195,7 +227,7 @@ export function ContextGallery() {
 
             <button
               type="button"
-              className="absolute left-6 top-1/2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+              className="absolute left-2 top-1/2 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:left-6 sm:size-11"
               onClick={(event) => {
                 event.stopPropagation();
                 showPrev();
@@ -207,7 +239,7 @@ export function ContextGallery() {
 
             <button
               type="button"
-              className="absolute right-6 top-1/2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
+              className="absolute right-2 top-1/2 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-6 sm:size-11"
               onClick={(event) => {
                 event.stopPropagation();
                 showNext();
@@ -218,7 +250,7 @@ export function ContextGallery() {
             </button>
 
             <motion.div
-              className="relative max-h-[90vh] max-w-[90vw]"
+              className="relative z-[1] max-h-[86vh] max-w-[94vw] sm:max-h-[90vh] sm:max-w-[90vw]"
               onClick={(event) => event.stopPropagation()}
               initial={{ opacity: 0, scale: 0.985, y: 8 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -232,7 +264,7 @@ export function ContextGallery() {
                 height={activeItem.image.height}
                 quality={75}
                 className={cn(
-                  "max-h-[90vh] w-auto max-w-[90vw] rounded-2xl bg-black/20 object-contain transition-opacity duration-200",
+                  "max-h-[86vh] w-auto max-w-[94vw] rounded-2xl bg-black/20 object-contain transition-opacity duration-200 sm:max-h-[90vh] sm:max-w-[90vw]",
                   lightboxLoaded ? "opacity-100" : "opacity-0",
                 )}
                 sizes="(min-width: 1600px) 1280px, (min-width: 1280px) 80vw, 100vw"
