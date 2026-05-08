@@ -262,7 +262,7 @@ export function ContextGallery() {
                 alt={activeItem.image.alt}
                 width={activeItem.image.width}
                 height={activeItem.image.height}
-                quality={75}
+                quality={IMAGE_QUALITY_MAX}
                 className={cn(
                   "max-h-[86vh] w-auto max-w-[94vw] rounded-2xl bg-black/20 object-contain transition-opacity duration-200 sm:max-h-[90vh] sm:max-w-[90vw]",
                   lightboxLoaded ? "opacity-100" : "opacity-0",

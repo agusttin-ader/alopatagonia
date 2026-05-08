@@ -8,6 +8,7 @@ import {
   HERO_IMAGE,
   HERO_VIDEO,
   HERO_VIDEO_MOBILE,
+  HERO_VIDEO_MOBILE_LITE,
   HERO_VIDEO_PLAYBACK_RATE,
   IMAGE_QUALITY_MAX,
 } from "@/lib/constants";
@@ -81,6 +82,7 @@ export function HeroBackground() {
       onPlaying={markReady}
       onError={() => setVideoFailed(true)}
     >
+      <source src={HERO_VIDEO_MOBILE_LITE.src} type="video/mp4" media="(max-width: 390px)" />
       <source src={HERO_VIDEO_MOBILE.src} type="video/mp4" media="(max-width: 900px)" />
       <source src={HERO_VIDEO.src} type="video/mp4" />
     </video>

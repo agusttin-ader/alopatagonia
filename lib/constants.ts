@@ -345,7 +345,7 @@ export type GalleryImage = {
 };
 
 /** Calidad optimizada para `next/image`; debe existir en `images.qualities` del `next.config`. */
-export const IMAGE_QUALITY_MAX = 80 as const;
+export const IMAGE_QUALITY_MAX = 100 as const;
 
 /**
  * Archivos en `public/images/` → URL `/images/nombre`.
@@ -367,7 +367,12 @@ export const HERO_VIDEO = {
 
 /** Versión liviana para móviles/iOS para mejorar estabilidad de reproducción. */
 export const HERO_VIDEO_MOBILE = {
-  src: "/videos/hero-video-mobile-540.mp4",
+  src: "/videos/hero-video-mobile-1080-premium.mp4",
+} as const;
+
+/** Fallback más liviano para móviles muy chicos o con menor rendimiento. */
+export const HERO_VIDEO_MOBILE_LITE = {
+  src: "/videos/hero-video-mobile-720-hq.mp4",
 } as const;
 
 /** Velocidad del video del hero: 1 = normal; valores menores = más lento (más pausado). */
