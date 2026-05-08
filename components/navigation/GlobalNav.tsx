@@ -273,7 +273,7 @@ export function GlobalNav() {
                   href={link.href}
                   onClick={(event) => onNavLinkClick(event, link.href, link.id)}
                   className={cn(
-                    "motion-link-underline motion-cta relative inline-flex min-h-11 cursor-pointer select-none items-center justify-center rounded-md px-3.5 py-2 text-[0.98rem] font-medium text-foreground/72 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-0",
+                    "motion-link-underline motion-cta relative inline-flex min-h-11 cursor-pointer select-none items-center justify-center rounded-md px-3.5 py-2 text-[0.98rem] font-medium text-foreground/72 hover:text-footer-lake focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake/45 focus-visible:ring-offset-0",
                   )}
                 >
                   {link.label}

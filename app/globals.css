@@ -37,6 +37,8 @@
   --color-primary: var(--primary);
   --color-brand-forest: var(--brand-forest);
   --color-brand-forest-foreground: var(--brand-forest-foreground);
+  --color-footer-lake: var(--footer-lake);
+  --color-footer-lake-foreground: var(--footer-lake-foreground);
   --color-whatsapp: var(--whatsapp);
   --color-whatsapp-hover: var(--whatsapp-hover);
   --color-popover-foreground: var(--popover-foreground);
@@ -72,6 +74,7 @@
   --brand-forest-foreground: #f5f2e8;
   --footer-lake: #0f7f79;
   --footer-lake-foreground: #eef8f6;
+  --footer-lake-soft: #d8eeeb;
   --whatsapp: #25d366;
   --whatsapp-hover: #1fb85a;
   --destructive: oklch(0.577 0.245 27.325);
@@ -118,6 +121,7 @@
   --brand-forest-foreground: #d9d4ba;
   --footer-lake: #0f7f79;
   --footer-lake-foreground: #eef8f6;
+  --footer-lake-soft: #184744;
   --whatsapp: #25d366;
   --whatsapp-hover: #1fb85a;
   --destructive: oklch(0.704 0.191 22.216);
@@ -159,6 +163,7 @@
     @apply bg-background text-foreground font-medium;
     overflow-x: clip;
     background-image:
+      radial-gradient(circle at 82% 8%, color-mix(in oklch, var(--footer-lake) 10%, transparent), transparent 36%),
       radial-gradient(circle at 10% -10%, rgba(111, 142, 136, 0.08), transparent 38%),
       radial-gradient(circle at 100% 10%, rgba(80, 95, 52, 0.07), transparent 34%);
   }
@@ -188,7 +193,7 @@
 @layer utilities {
   .motion-link-underline {
     @apply relative inline-flex bg-[length:0%_2px] bg-[position:left_calc(100%-2px)] bg-no-repeat transition-[color,background-size,transform] hover:bg-[length:100%_2px];
-    background-image: linear-gradient(var(--color-primary), var(--color-primary));
+    background-image: linear-gradient(var(--color-footer-lake), var(--color-footer-lake));
     transition-duration: var(--motion-duration-base);
     transition-timing-function: var(--motion-ease-emphasis);
   }

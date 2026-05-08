@@ -1,7 +1,7 @@
 import { Share2 } from "lucide-react";
 import Link from "next/link";
 
-import { SITE, WHATSAPP_MESSAGES, getWhatsAppUrl } from "@/lib/constants";
+import { SITE } from "@/lib/constants";
 
 export function Footer() {
   return (

@@ -296,7 +296,7 @@ export function TripPlannerSection() {
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
         <Reveal className="max-w-2xl 2xl:max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
+          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-footer-lake">
             Planificacion personalizada
           </p>
           <h2
@@ -460,7 +460,7 @@ export function TripPlannerSection() {
 
           <Reveal className="hidden h-full flex-col overflow-hidden rounded-3xl border border-border/80 bg-secondary/30 p-4 sm:p-6 md:flex 2xl:p-7">
             <div className="mb-4 flex items-center justify-between">
-              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">
+              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-footer-lake">
                 Mapa Patagonia Argentina
               </p>
               <p className="text-xs text-muted-foreground">
