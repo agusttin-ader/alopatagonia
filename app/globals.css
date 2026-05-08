@@ -70,6 +70,8 @@
   --accent-foreground: #f5f2e8;
   --brand-forest: #2d5a47;
   --brand-forest-foreground: #f5f2e8;
+  --footer-lake: #0f7f79;
+  --footer-lake-foreground: #eef8f6;
   --whatsapp: #25d366;
   --whatsapp-hover: #1fb85a;
   --destructive: oklch(0.577 0.245 27.325);
@@ -82,6 +84,11 @@
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
+  --motion-duration-fast: 0.18s;
+  --motion-duration-base: 0.32s;
+  --motion-duration-slow: 0.52s;
+  --motion-ease-emphasis: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -109,6 +116,8 @@
   --accent-foreground: #d9d4ba;
   --brand-forest: #2d5a47;
   --brand-forest-foreground: #d9d4ba;
+  --footer-lake: #0f7f79;
+  --footer-lake-foreground: #eef8f6;
   --whatsapp: #25d366;
   --whatsapp-hover: #1fb85a;
   --destructive: oklch(0.704 0.191 22.216);
@@ -120,6 +129,11 @@
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
+  --motion-duration-fast: 0.18s;
+  --motion-duration-base: 0.32s;
+  --motion-duration-slow: 0.52s;
+  --motion-ease-emphasis: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
   --sidebar: oklch(0.205 0 0);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
@@ -152,6 +166,11 @@
     html {
       scroll-behavior: auto;
     }
+    :root {
+      --motion-duration-fast: 0.01ms;
+      --motion-duration-base: 0.01ms;
+      --motion-duration-slow: 0.01ms;
+    }
     .animate-spin {
       animation: none;
     }
@@ -167,6 +186,29 @@
 }
 
 @layer utilities {
+  .motion-link-underline {
+    @apply relative inline-flex bg-[length:0%_2px] bg-[position:left_calc(100%-2px)] bg-no-repeat transition-[color,background-size,transform] hover:bg-[length:100%_2px];
+    background-image: linear-gradient(var(--color-primary), var(--color-primary));
+    transition-duration: var(--motion-duration-base);
+    transition-timing-function: var(--motion-ease-emphasis);
+  }
+
+  .motion-cta {
+    @apply transition-[transform,box-shadow,background-color,color];
+    transition-duration: var(--motion-duration-base);
+    transition-timing-function: var(--motion-ease-emphasis);
+  }
+
+  .motion-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -16px color-mix(in oklch, var(--foreground) 52%, transparent);
+  }
+
+  .motion-cta:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -16px color-mix(in oklch, var(--foreground) 52%, transparent);
+  }
+
   .gallery-dense {
     grid-auto-flow: row dense;
   }

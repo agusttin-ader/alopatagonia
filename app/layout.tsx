@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
 
+import { MotionProvider } from "@/components/motion/motion-provider";
+import { SiteIntro } from "@/components/motion/site-intro";
 import { GlobalNav } from "@/components/navigation/GlobalNav";
 import "./globals.css";
 
@@ -50,8 +52,11 @@ export default function RootLayout({
       className={`${manrope.variable} ${manropeHeading.variable} h-full antialiased`}
     >
       <body className="flex min-h-dvh flex-col">
-        <GlobalNav />
-        {children}
+        <MotionProvider>
+          <SiteIntro />
+          <GlobalNav />
+          {children}
+        </MotionProvider>
       </body>
     </html>
   );

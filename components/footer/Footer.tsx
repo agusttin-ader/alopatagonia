@@ -4,53 +4,77 @@ import Link from "next/link";
 import { SITE, WHATSAPP_MESSAGES, getWhatsAppUrl } from "@/lib/constants";
 
 export function Footer() {
-  const whatsappUrl = getWhatsAppUrl(WHATSAPP_MESSAGES.secondary);
-
   return (
-    <footer className="border-t border-border bg-background px-4 py-12 sm:px-8 lg:px-14 2xl:px-20">
-      <div className="mx-auto flex max-w-7xl 2xl:max-w-[90rem] flex-col gap-8 sm:flex-row sm:items-center sm:justify-between 2xl:py-2">
-        <div>
-          <p className="font-heading text-lg font-medium text-foreground 2xl:text-xl">
-            {SITE.name}
-          </p>
-          <p className="mt-1 text-sm text-muted-foreground 2xl:text-base">{SITE.tagline}</p>
-        </div>
-        <div className="flex flex-col gap-3 text-sm text-muted-foreground sm:items-end 2xl:text-base">
-          <a
-            href={SITE.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 font-medium text-foreground underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2"
-          >
-            <Share2 className="size-4" aria-hidden />
-            Instagram
-          </a>
-          <Link
-            href="/invierno"
-            className="font-medium text-foreground underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2"
-          >
-            Tienda de invierno
-          </Link>
-          <a
-            href={`mailto:${SITE.email}`}
-            className="hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2"
-          >
-            {SITE.email}
-          </a>
-          {SITE.phoneDisplay ? <p>{SITE.phoneDisplay}</p> : null}
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2"
-          >
-            WhatsApp
-          </a>
-        </div>
+    <footer className="relative z-30 -mt-18 sm:-mt-24">
+      <div className="h-22 w-full overflow-hidden sm:h-24" aria-hidden>
+        <svg
+          className="h-full w-full"
+          viewBox="0 0 1440 120"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill="var(--footer-lake)"
+            d="M0,50 C170,20 330,86 530,62 C730,38 900,88 1105,60 C1260,38 1360,74 1440,66 L1440,120 L0,120 Z"
+          />
+        </svg>
       </div>
-      <p className="mx-auto mt-10 max-w-7xl 2xl:max-w-[90rem] text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} {SITE.name}. Todos los derechos reservados.
-      </p>
+      <div className="bg-[var(--footer-lake)] px-4 pb-9 pt-8 sm:px-8 lg:px-14 2xl:px-20">
+        <div className="mx-auto grid max-w-7xl gap-8 text-[var(--footer-lake-foreground)] md:grid-cols-3 2xl:max-w-[90rem]">
+          <div className="space-y-4">
+            <p className="text-[0.92rem] font-semibold text-white">{SITE.name}</p>
+            <p className="max-w-sm text-[0.92rem] leading-relaxed text-white/88">
+              Somos {SITE.name}: organizamos experiencias en Patagonia con
+              alojamiento, movilidad y actividades en un mismo plan.
+            </p>
+            <p className="text-[0.9rem] text-white/78">
+              San Carlos de Bariloche, Río Negro, Argentina
+            </p>
+          </div>
+
+          <div className="space-y-2.5 text-[0.92rem] text-white/88">
+            <p className="text-[0.74rem] font-semibold uppercase tracking-[0.12em] text-white">
+              Consultas
+            </p>
+            <a
+              href={`mailto:${SITE.email}`}
+              className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            >
+              Email: {SITE.email}
+            </a>
+            {SITE.phoneDisplay ? (
+              <p>Teléfono: {SITE.phoneDisplay}</p>
+            ) : null}
+            <a
+              href={SITE.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            >
+              <Share2 className="size-4" aria-hidden />
+              Instagram: @{SITE.instagramHandle}
+            </a>
+          </div>
+
+          <div className="space-y-2.5 text-[0.92rem] text-white/88">
+            <p className="text-[0.74rem] font-semibold uppercase tracking-[0.12em] text-white">
+              Legales
+            </p>
+            <Link
+              href="/invierno"
+              className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            >
+              Tienda de invierno
+            </Link>
+            <p>Privacidad y términos</p>
+            <p>Información importante</p>
+          </div>
+        </div>
+
+        <p className="mx-auto mt-7 max-w-7xl border-t border-white/14 pt-4 text-[0.72rem] text-white/62 2xl:max-w-[90rem]">
+          © {new Date().getFullYear()} {SITE.name}. Todos los derechos reservados.
+        </p>
+      </div>
     </footer>
   );
 }

@@ -8,7 +8,7 @@ export const SITE = {
   /** Sin @; para textos y enlaces al perfil. */
   instagramHandle: "alo_patagonia",
   email: "hola@alopatagonia.com",
-  phoneDisplay: "",
+  phoneDisplay: "+54 9 11 6869 6491",
 } as const;
 
 export const HERO_COPY = {

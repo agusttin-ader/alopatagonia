@@ -62,7 +62,7 @@ export function HeroClient() {
             href={`#${SECTION_IDS.planner}`}
             className={cn(
               buttonVariants({ variant: "marketing", size: "lg" }),
-              "h-12 w-full border border-primary px-8 text-base font-semibold sm:w-auto 2xl:h-14 2xl:px-10 2xl:text-lg",
+              "motion-cta h-12 w-full border border-primary px-8 text-base font-semibold sm:w-auto 2xl:h-14 2xl:px-10 2xl:text-lg",
               "bg-primary text-primary-foreground hover:bg-primary",
             )}
           >
@@ -73,7 +73,7 @@ export function HeroClient() {
 
       <motion.a
         href={`#${SECTION_IDS.testimonials}`}
-        className="absolute bottom-8 left-1/2 flex min-h-11 -translate-x-1/2 flex-col items-center justify-center gap-1 text-white/90 hover:text-white sm:bottom-8"
+        className="motion-cta absolute bottom-8 left-1/2 flex min-h-11 -translate-x-1/2 flex-col items-center justify-center gap-1 text-white/90 hover:text-white sm:bottom-8"
         aria-label="Ir a testimonios"
         initial={reduceMotion ? false : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}

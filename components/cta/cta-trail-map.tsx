@@ -16,21 +16,21 @@ export function CtaTrailMap() {
   const reduceMotion = useReducedMotion();
   const isInView = useInView(svgRef, { once: true, amount: 0.28 });
 
-  const durSec = reduceMotion ? 0.12 : 4.6;
+  const durSec = 4.6;
 
   useEffect(() => {
-    if (!isInView || hasStartedRef.current) return;
+    if (!isInView || hasStartedRef.current || reduceMotion) return;
     const desktopEl = desktopDotMotionRef.current;
     if (!desktopEl) return;
     hasStartedRef.current = true;
     desktopEl?.beginElement();
-  }, [isInView]);
+  }, [isInView, reduceMotion]);
 
   return (
     <>
       <svg
         ref={svgRef}
-        className="pointer-events-none absolute inset-0 z-[1] hidden h-full w-full text-primary-foreground md:block"
+        className="pointer-events-none absolute inset-0 z-[1] hidden h-full w-full -translate-y-10 text-brand-forest md:block"
         viewBox="0 0 1000 320"
         preserveAspectRatio="xMidYMid meet"
         aria-hidden
@@ -41,33 +41,6 @@ export function CtaTrailMap() {
           fill="none"
           stroke="none"
         />
-        <g
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={0.85}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeOpacity={0.14}
-        >
-          <path d="M-40 220 C80 200 120 260 220 230 S380 180 480 210 S620 250 720 215 S880 170 1040 200" />
-          <path d="M-40 250 C100 230 140 285 260 252 S420 205 540 235 S680 275 800 238 S920 195 1040 225" />
-          <path d="M-40 190 C90 175 150 215 240 188 S400 145 520 175 S660 210 780 178 S900 140 1040 165" />
-          <path d="M-40 160 C70 140 130 185 200 155 S360 115 480 145 S620 175 740 148 S880 110 1040 130" />
-          <path d="M-40 280 C110 265 160 305 280 275 S440 245 580 268 S720 295 860 262 S960 240 1040 255" />
-          <path d="M200 120 C280 100 340 140 420 115 S560 85 680 105 S780 125 880 95" />
-          <path d="M120 300 C220 285 280 320 400 295 S540 270 680 290 S820 310 920 285" />
-        </g>
-
-        <g
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={0.55}
-          strokeOpacity={0.1}
-        >
-          <path d="M-40 205 C60 190 100 230 180 205 S320 175 440 200 S580 225 700 195 S860 165 1040 185" />
-          <path d="M-40 235 C70 218 130 252 200 228 S360 198 500 220 S640 245 780 215 S920 190 1040 210" />
-        </g>
-
         <path
           d="M118 280 C162 258 192 204 240 175 S360 145 440 165 S520 195 600 155 S700 115 780 135 S846 162 906 141"
           fill="none"
@@ -75,7 +48,7 @@ export function CtaTrailMap() {
           strokeWidth={2.2}
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeOpacity={0.38}
+          strokeOpacity={0.26}
           strokeDasharray="10 14"
         />
 
@@ -86,7 +59,7 @@ export function CtaTrailMap() {
           strokeWidth={0.9}
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeOpacity={0.22}
+          strokeOpacity={0.14}
         />
 
         <g>
@@ -114,16 +87,16 @@ export function CtaTrailMap() {
                 r={10}
                 fill="currentColor"
                 fillOpacity={0.2}
-                stroke="black"
-                strokeOpacity={0.38}
+                stroke="currentColor"
+                strokeOpacity={0.45}
                 strokeWidth={2}
               />
               <path
                 d={COMPASS_NEEDLE_D}
                 fill="currentColor"
                 fillOpacity={0.92}
-                stroke="black"
-                strokeOpacity={0.28}
+                stroke="currentColor"
+                strokeOpacity={0.36}
                 strokeWidth={1.25}
                 strokeLinejoin="round"
               />
@@ -256,7 +229,7 @@ export function CtaTrailMap() {
       </svg>
 
       <svg
-        className="pointer-events-none absolute inset-0 z-[1] h-full w-full text-primary-foreground md:hidden"
+        className="pointer-events-none absolute inset-0 z-[1] h-full w-full -translate-y-12 text-brand-forest md:hidden"
         viewBox="0 0 390 520"
         preserveAspectRatio="xMidYMid meet"
         aria-hidden
@@ -267,21 +240,6 @@ export function CtaTrailMap() {
           fill="none"
           stroke="none"
         />
-        <g
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={1}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeOpacity={0.12}
-        >
-          <path d="M-20 348 C68 320 118 368 202 338 S314 296 418 320" />
-          <path d="M-20 388 C78 358 128 408 220 376 S328 332 420 352" />
-          <path d="M-20 430 C88 402 148 440 242 414 S344 376 420 394" />
-          <path d="M-20 470 C88 442 152 478 258 452 S360 416 420 432" />
-          <path d="M32 220 C120 196 176 232 266 206 S354 168 418 182" />
-        </g>
-
         <path
           d="M42 428 C74 398 102 360 142 336 S222 292 248 252 S278 190 320 166"
           fill="none"
@@ -289,7 +247,7 @@ export function CtaTrailMap() {
           strokeWidth={2}
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeOpacity={0.4}
+          strokeOpacity={0.28}
           strokeDasharray="8 12"
         />
         <path
@@ -299,7 +257,7 @@ export function CtaTrailMap() {
           strokeWidth={0.9}
           strokeLinecap="round"
           strokeLinejoin="round"
-          strokeOpacity={0.24}
+          strokeOpacity={0.16}
         />
 
         <g>
@@ -312,16 +270,16 @@ export function CtaTrailMap() {
               r={10}
               fill="currentColor"
               fillOpacity={0.2}
-              stroke="black"
-              strokeOpacity={0.38}
+              stroke="currentColor"
+              strokeOpacity={0.45}
               strokeWidth={2}
             />
             <path
               d={COMPASS_NEEDLE_D}
               fill="currentColor"
               fillOpacity={0.92}
-              stroke="black"
-              strokeOpacity={0.28}
+              stroke="currentColor"
+              strokeOpacity={0.36}
               strokeWidth={1.25}
               strokeLinejoin="round"
             />

@@ -1,11 +1,10 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { MouseEvent } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
-import { useReducedMotion } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
 import { SECTION_IDS, SITE } from "@/lib/constants";
@@ -24,16 +23,24 @@ const HOME_LINKS = [
   { label: "Invierno", href: `#${SECTION_IDS.winterShop}`, id: SECTION_IDS.winterShop },
 ] as const;
 
+const MOTION_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const HEADER_TRANSITION = { duration: 0.34, ease: MOTION_EASE };
+const ICON_LINE_TRANSITION = { duration: 0.28, ease: MOTION_EASE };
+const DRAWER_TRANSITION = { duration: 0.42, ease: MOTION_EASE };
+
 export function GlobalNav() {
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
   const isHome = pathname === "/";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [navHidden, setNavHidden] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const menuPanelId = useId();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
+  const lastScrollYRef = useRef(0);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -76,8 +83,33 @@ export function GlobalNav() {
   }, [mobileOpen]);
 
   useEffect(() => {
+    const updateIsDesktop = () => setIsDesktop(window.matchMedia("(min-width: 768px)").matches);
+    updateIsDesktop();
+    window.addEventListener("resize", updateIsDesktop);
+    return () => window.removeEventListener("resize", updateIsDesktop);
+  }, []);
+
+  useEffect(() => {
     let rafId = 0;
-    const updateScrolled = () => setScrolled(window.scrollY > 16);
+    const updateScrolled = () => {
+      const currentScrollY = window.scrollY;
+      const delta = currentScrollY - lastScrollYRef.current;
+      const shouldIgnoreDirection = Math.abs(delta) < 6;
+
+      setScrolled(currentScrollY > 16);
+
+      if (mobileOpen) {
+        setNavHidden(false);
+      } else if (currentScrollY <= 24) {
+        setNavHidden(false);
+      } else if (!shouldIgnoreDirection && delta > 0 && currentScrollY > 96) {
+        setNavHidden(true);
+      } else if (!shouldIgnoreDirection && delta < 0) {
+        setNavHidden(false);
+      }
+
+      lastScrollYRef.current = currentScrollY;
+    };
     const onScroll = () => {
       if (rafId) return;
       rafId = window.requestAnimationFrame(() => {
@@ -92,7 +124,7 @@ export function GlobalNav() {
       window.removeEventListener("scroll", onScroll);
       if (rafId) window.cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [mobileOpen]);
 
   const links = useMemo(() => {
     if (isHome) return HOME_LINKS;
@@ -130,10 +162,15 @@ export function GlobalNav() {
 
   const headerTransition = reduceMotion
     ? { duration: 0 }
-    : { duration: 0.36, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] };
+    : HEADER_TRANSITION;
   const iconLineTransition = reduceMotion
     ? { duration: 0 }
-    : { duration: 0.34, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] };
+    : ICON_LINE_TRANSITION;
+  const navVisibilityTransition = reduceMotion
+    ? { duration: 0 }
+    : isDesktop
+      ? { duration: 0.48, ease: MOTION_EASE }
+      : { duration: 0.3, ease: MOTION_EASE };
 
   useEffect(() => {
     if (!isHome) return;
@@ -157,8 +194,12 @@ export function GlobalNav() {
     <motion.nav
       className="fixed inset-x-0 top-0 z-[1200]"
       initial={reduceMotion ? undefined : { y: -14, opacity: 0 }}
-      animate={reduceMotion ? undefined : { y: 0, opacity: 1 }}
-      transition={reduceMotion ? { duration: 0 } : { duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
+      animate={
+        reduceMotion
+          ? undefined
+          : { y: navHidden ? "-105%" : "0%", opacity: navHidden ? 0.98 : 1 }
+      }
+      transition={navVisibilityTransition}
     >
       <motion.div
         className={cn(
@@ -185,7 +226,10 @@ export function GlobalNav() {
             size="icon"
             variant="ghost"
             className="min-h-11 min-w-11"
-            onClick={() => setMobileOpen((prev) => !prev)}
+            onClick={() => {
+              setNavHidden(false);
+              setMobileOpen((prev) => !prev);
+            }}
           >
             <span className="relative block size-5">
               <motion.span
@@ -229,7 +273,7 @@ export function GlobalNav() {
                   href={link.href}
                   onClick={(event) => onNavLinkClick(event, link.href, link.id)}
                   className={cn(
-                    "relative inline-flex min-h-11 cursor-pointer select-none items-center justify-center rounded-md bg-[length:0%_3px] bg-[position:center_calc(100%-3px)] bg-no-repeat px-3.5 py-2 text-[0.98rem] font-medium text-foreground/72 transition-[color,background-size] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] [background-image:linear-gradient(var(--color-primary),var(--color-primary))] hover:bg-[length:100%_3px] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-0",
+                    "motion-link-underline motion-cta relative inline-flex min-h-11 cursor-pointer select-none items-center justify-center rounded-md px-3.5 py-2 text-[0.98rem] font-medium text-foreground/72 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-0",
                   )}
                 >
                   {link.label}
@@ -263,7 +307,7 @@ export function GlobalNav() {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={reduceMotion ? { duration: 0 } : { duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+              transition={reduceMotion ? { duration: 0 } : DRAWER_TRANSITION}
             >
               <div className="flex h-full flex-col px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))]">
                 <div className="mb-7 flex items-center justify-between">
@@ -300,7 +344,7 @@ export function GlobalNav() {
                     visible: {
                       transition: reduceMotion
                         ? { staggerChildren: 0 }
-                        : { staggerChildren: 0.07, delayChildren: 0.08 },
+                        : { staggerChildren: 0.07, delayChildren: 0.06 },
                     },
                   }}
                 >
@@ -315,7 +359,7 @@ export function GlobalNav() {
                           scale: 1,
                           transition: reduceMotion
                             ? { duration: 0 }
-                            : { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
+                            : { duration: 0.26, ease: MOTION_EASE },
                         },
                       }}
                     >
@@ -328,7 +372,7 @@ export function GlobalNav() {
                             setMobileOpen(false);
                           }
                         }}
-                        className="block rounded-xl px-4 py-4 text-[1.24rem] font-semibold leading-tight text-foreground transition-all duration-200 hover:bg-secondary/65 hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-2"
+                        className="motion-cta block rounded-xl px-4 py-4 text-[1.24rem] font-semibold leading-tight text-foreground hover:bg-secondary/65 hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-2"
                       >
                         {link.label}
                       </Link>
