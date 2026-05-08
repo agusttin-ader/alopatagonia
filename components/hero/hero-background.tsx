@@ -75,7 +75,6 @@ export function HeroBackground() {
       className={`absolute inset-0 z-0 size-full object-cover transition-opacity duration-700 ease-out ${videoReady ? "opacity-100" : "opacity-0"}`}
       autoPlay
       muted
-      defaultMuted
       loop
       playsInline
       preload="metadata"
