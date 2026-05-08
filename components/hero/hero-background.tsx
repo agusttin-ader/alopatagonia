@@ -16,11 +16,6 @@ export function HeroBackground() {
   const [videoReady, setVideoReady] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const isIOSDevice =
-    typeof navigator !== "undefined" &&
-    (/iP(hone|od|ad)/.test(navigator.userAgent) ||
-      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1));
-  const videoSrc = isIOSDevice ? HERO_VIDEO_MOBILE.src : HERO_VIDEO.src;
 
   const markReady = useCallback(() => {
     setVideoReady(true);
@@ -51,7 +46,7 @@ export function HeroBackground() {
         setVideoFailed(true);
       });
     }
-  }, [reduceMotion, videoSrc]);
+  }, [reduceMotion]);
 
   if (reduceMotion || videoFailed) {
     return (
@@ -77,8 +72,8 @@ export function HeroBackground() {
       muted
       loop
       playsInline
-      preload="metadata"
-      poster={HERO_IMAGE.src}
+      preload="none"
+      poster="/videos/hero-poster.jpg"
       aria-hidden
       onLoadedMetadata={(e) => applyPlaybackRate(e.currentTarget)}
       onCanPlay={markReady}
@@ -86,7 +81,8 @@ export function HeroBackground() {
       onPlaying={markReady}
       onError={() => setVideoFailed(true)}
     >
-      <source src={videoSrc} type="video/mp4" />
+      <source src={HERO_VIDEO_MOBILE.src} type="video/mp4" media="(max-width: 900px)" />
+      <source src={HERO_VIDEO.src} type="video/mp4" />
     </video>
   );
 }

@@ -1,7 +1,7 @@
-import { CtaTrailMap } from "@/components/cta/cta-trail-map";
 import { buttonVariants } from "@/components/ui/button";
 import { SECTION_IDS, WHATSAPP_MESSAGES, getWhatsAppUrl } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { CtaTrailMapClient } from "@/components/cta/CtaTrailMapClient";
 
 export function CTA() {
   const whatsappUrl = getWhatsAppUrl(WHATSAPP_MESSAGES.primary);
@@ -16,7 +16,7 @@ export function CTA() {
         className="relative flex min-h-[56dvh] w-full items-center justify-center overflow-hidden rounded-none bg-[var(--brand-forest)] px-6 py-14 text-center shadow-xl ring-1 ring-black/10 sm:min-h-[72dvh] sm:px-10 sm:py-20 2xl:px-20"
         style={{ backgroundColor: "var(--brand-forest)" }}
       >
-        <CtaTrailMap />
+        <CtaTrailMapClient />
         <div className="relative z-10">
           <h2
             id="cta-heading"

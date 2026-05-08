@@ -166,7 +166,7 @@ export function ContextGallery() {
                     quality={IMAGE_QUALITY_MAX}
                     className="size-full object-cover transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
                     sizes="(min-width: 1280px) 380px, (min-width: 1024px) 32vw, (min-width: 640px) 50vw, 100vw"
-                    loading={index < 3 ? "eager" : "lazy"}
+                    loading={index < 1 ? "eager" : "lazy"}
                   />
                 </button>
                 <div className="space-y-2 px-5 py-5">

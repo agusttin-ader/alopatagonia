@@ -223,6 +223,7 @@ export function TripPlannerSection() {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [destinationOpen, setDestinationOpen] = useState(false);
+  const [showDesktopMap, setShowDesktopMap] = useState(false);
   const destinationButtonId = useId();
   const destinationPanelId = useId();
   const destinationContainerRef = useRef<HTMLDivElement>(null);
@@ -253,6 +254,15 @@ export function TripPlannerSection() {
 
   const whatsappUrl = getWhatsAppUrl(message);
   const mailUrl = `mailto:${SITE.email}?subject=${encodeURIComponent("Consulta viaje Patagonia")}&body=${encodeURIComponent(message)}`;
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setShowDesktopMap(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   useEffect(() => {
     if (!destinationOpen) return;
@@ -459,7 +469,7 @@ export function TripPlannerSection() {
             </div>
 
             <div className="relative min-h-[360px] flex-1 overflow-hidden rounded-2xl border border-border/60 bg-background sm:min-h-[420px] 2xl:min-h-[500px]">
-              <PlannerMap destination={destination} />
+              {showDesktopMap ? <PlannerMap destination={destination} /> : null}
             </div>
           </Reveal>
         </div>

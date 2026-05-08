@@ -12,7 +12,6 @@ const COMPASS_MARKER_SCALE = 0.62;
 export function CtaTrailMap() {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const desktopDotMotionRef = useRef<SVGAnimateMotionElement | null>(null);
-  const mobileDotMotionRef = useRef<SVGAnimateMotionElement | null>(null);
   const hasStartedRef = useRef(false);
   const reduceMotion = useReducedMotion();
   const isInView = useInView(svgRef, { once: true, amount: 0.28 });
@@ -22,11 +21,9 @@ export function CtaTrailMap() {
   useEffect(() => {
     if (!isInView || hasStartedRef.current) return;
     const desktopEl = desktopDotMotionRef.current;
-    const mobileEl = mobileDotMotionRef.current;
-    if (!desktopEl && !mobileEl) return;
+    if (!desktopEl) return;
     hasStartedRef.current = true;
     desktopEl?.beginElement();
-    mobileEl?.beginElement();
   }, [isInView]);
 
   return (
@@ -306,20 +303,6 @@ export function CtaTrailMap() {
         />
 
         <g>
-          <animateMotion
-            ref={mobileDotMotionRef}
-            dur={`${durSec}s`}
-            repeatCount={1}
-            fill="freeze"
-            begin="indefinite"
-            rotate="none"
-            calcMode="spline"
-            keySplines="0.42 0 0.58 1"
-            keyPoints="0;1"
-            keyTimes="0;1"
-          >
-            <mpath href="#cta-trail-route-mobile" />
-          </animateMotion>
           <g
             transform={`scale(${COMPASS_MARKER_SCALE}) translate(${-COMPASS_CX} ${-COMPASS_CY})`}
           >

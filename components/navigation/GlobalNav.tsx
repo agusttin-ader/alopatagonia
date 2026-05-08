@@ -29,19 +29,11 @@ export function GlobalNav() {
   const reduceMotion = useReducedMotion();
   const isHome = pathname === "/";
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>("");
-  const [allowSectionHighlight, setAllowSectionHighlight] = useState(true);
-  const [isUserScrolling, setIsUserScrolling] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuPanelId = useId();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
-  const activeSectionRef = useRef(activeSection);
-
-  useEffect(() => {
-    activeSectionRef.current = activeSection;
-  }, [activeSection]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -84,99 +76,23 @@ export function GlobalNav() {
   }, [mobileOpen]);
 
   useEffect(() => {
-    if (!isHome) return;
-
-    const enableSectionHighlight = () => {
-      setAllowSectionHighlight(true);
-    };
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      const manualScrollKeys = ["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "];
-      if (manualScrollKeys.includes(event.key)) {
-        enableSectionHighlight();
-      }
-    };
-
-    window.addEventListener("wheel", enableSectionHighlight, { passive: true });
-    window.addEventListener("touchmove", enableSectionHighlight, { passive: true });
-    window.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      window.removeEventListener("wheel", enableSectionHighlight);
-      window.removeEventListener("touchmove", enableSectionHighlight);
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  }, [isHome]);
-
-  useEffect(() => {
     let rafId = 0;
-    let scrollStopTimeoutId = 0;
-
-    const updateNavState = () => {
-      setScrolled(window.scrollY > 16);
-      if (!isHome) return;
-
-      const heroCutoff = window.innerHeight * 0.55;
-      if (window.scrollY < heroCutoff) {
-        if (activeSectionRef.current !== HOME_SECTION_IDS.inicio) {
-          setActiveSection(HOME_SECTION_IDS.inicio);
-        }
-        return;
-      }
-
-      const viewportReference = window.innerHeight * 0.42;
-      const sectionLinks = HOME_LINKS.filter((link) => link.id !== HOME_SECTION_IDS.inicio);
-      let matchedSectionId = "";
-      let lastPassedSectionId = "";
-
-      for (const link of sectionLinks) {
-        const section = document.getElementById(link.id);
-        if (!section) continue;
-
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= viewportReference && rect.bottom >= viewportReference) {
-          matchedSectionId = link.id;
-          break;
-        }
-
-        if (rect.top <= viewportReference) {
-          lastPassedSectionId = link.id;
-        }
-      }
-
-      const nextActiveSection = matchedSectionId || lastPassedSectionId || HOME_SECTION_IDS.inicio;
-      if (nextActiveSection !== activeSectionRef.current) {
-        setActiveSection(nextActiveSection);
-      }
-    };
-
+    const updateScrolled = () => setScrolled(window.scrollY > 16);
     const onScroll = () => {
-      if (!isUserScrolling) {
-        setIsUserScrolling(true);
-      }
-
-      if (scrollStopTimeoutId) {
-        window.clearTimeout(scrollStopTimeoutId);
-      }
-      scrollStopTimeoutId = window.setTimeout(() => {
-        setIsUserScrolling(false);
-      }, 140);
-
       if (rafId) return;
       rafId = window.requestAnimationFrame(() => {
         rafId = 0;
-        updateNavState();
+        updateScrolled();
       });
     };
 
-    updateNavState();
+    updateScrolled();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
       if (rafId) window.cancelAnimationFrame(rafId);
-      if (scrollStopTimeoutId) window.clearTimeout(scrollStopTimeoutId);
     };
-  }, [isHome, isUserScrolling]);
+  }, []);
 
   const links = useMemo(() => {
     if (isHome) return HOME_LINKS;
@@ -190,7 +106,6 @@ export function GlobalNav() {
   const scrollSectionIntoView = (sectionId: string) => {
     if (sectionId === HOME_SECTION_IDS.inicio) {
       window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
-      setActiveSection(HOME_SECTION_IDS.inicio);
       return;
     }
 
@@ -208,8 +123,6 @@ export function GlobalNav() {
     if (!isHome || !href.startsWith("#")) return;
 
     event.preventDefault();
-    setAllowSectionHighlight(false);
-    setActiveSection("");
     scrollSectionIntoView(sectionId);
     window.history.replaceState(null, "", href);
     setMobileOpen(false);
@@ -230,31 +143,15 @@ export function GlobalNav() {
       window.history.replaceState(null, "", window.location.pathname);
     }
     window.scrollTo({ top: 0, behavior: "auto" });
-    setActiveSection(HOME_SECTION_IDS.inicio);
 
     // Restore normal browser scroll restoration after forcing the top position once.
     const previousScrollRestoration = window.history.scrollRestoration;
     window.history.scrollRestoration = "manual";
 
-    const hash = window.location.hash;
-    if (!hash) {
-      setActiveSection(HOME_SECTION_IDS.inicio);
-      return () => {
-        window.history.scrollRestoration = previousScrollRestoration;
-      };
-    }
-
-    const sectionId = decodeURIComponent(hash.replace("#", ""));
-    setActiveSection(sectionId);
-    const timer = window.setTimeout(() => {
-      scrollSectionIntoView(sectionId);
-    }, 120);
-
     return () => {
-      window.clearTimeout(timer);
       window.history.scrollRestoration = previousScrollRestoration;
     };
-  }, [isHome, reduceMotion]);
+  }, [isHome]);
 
   return (
     <motion.nav
