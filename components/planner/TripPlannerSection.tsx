@@ -448,7 +448,7 @@ export function TripPlannerSection() {
             </div>
           </Reveal>
 
-          <Reveal className="flex h-full flex-col overflow-hidden rounded-3xl border border-border/80 bg-secondary/30 p-4 sm:p-6 2xl:p-7">
+          <Reveal className="hidden h-full flex-col overflow-hidden rounded-3xl border border-border/80 bg-secondary/30 p-4 sm:p-6 md:flex 2xl:p-7">
             <div className="mb-4 flex items-center justify-between">
               <p className="text-sm font-semibold uppercase tracking-[0.14em] text-primary">
                 Mapa Patagonia Argentina

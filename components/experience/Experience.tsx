@@ -44,7 +44,7 @@ export function Experience() {
           <Reveal delay={0.08} className="mt-6 space-y-4 text-lg text-muted-foreground 2xl:text-xl">
             <p>
               Desde una escapada romantica hasta un viaje familiar de varios
-              destinos, diseniamos una experiencia equilibrada para que vivas
+              destinos, dieñamos una experiencia equilibrada para que vivas
               Patagonia sin perder tiempo en logistica.
             </p>
             <p>

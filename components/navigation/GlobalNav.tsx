@@ -11,7 +11,12 @@ import { Button } from "@/components/ui/button";
 import { SECTION_IDS, SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
+const HOME_SECTION_IDS = {
+  inicio: "inicio",
+} as const;
+
 const HOME_LINKS = [
+  { label: "Inicio", href: `#${HOME_SECTION_IDS.inicio}`, id: HOME_SECTION_IDS.inicio },
   { label: "Sobre nosotros", href: `#${SECTION_IDS.signature}`, id: SECTION_IDS.signature },
   { label: "Testimonios", href: `#${SECTION_IDS.testimonials}`, id: SECTION_IDS.testimonials },
   { label: "Servicios", href: `#${SECTION_IDS.services}`, id: SECTION_IDS.services },
@@ -25,11 +30,18 @@ export function GlobalNav() {
   const isHome = pathname === "/";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
+  const [allowSectionHighlight, setAllowSectionHighlight] = useState(true);
+  const [isUserScrolling, setIsUserScrolling] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuPanelId = useId();
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
+  const activeSectionRef = useRef(activeSection);
+
+  useEffect(() => {
+    activeSectionRef.current = activeSection;
+  }, [activeSection]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -74,36 +86,97 @@ export function GlobalNav() {
   useEffect(() => {
     if (!isHome) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible?.target?.id) setActiveSection(visible.target.id);
-      },
-      {
-        rootMargin: "-40% 0px -45% 0px",
-        threshold: [0.2, 0.4, 0.7],
-      },
-    );
+    const enableSectionHighlight = () => {
+      setAllowSectionHighlight(true);
+    };
 
-    HOME_LINKS.forEach((link) => {
-      const section = document.getElementById(link.id);
-      if (section) observer.observe(section);
-    });
+    const onKeyDown = (event: KeyboardEvent) => {
+      const manualScrollKeys = ["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "];
+      if (manualScrollKeys.includes(event.key)) {
+        enableSectionHighlight();
+      }
+    };
 
-    return () => observer.disconnect();
+    window.addEventListener("wheel", enableSectionHighlight, { passive: true });
+    window.addEventListener("touchmove", enableSectionHighlight, { passive: true });
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      window.removeEventListener("wheel", enableSectionHighlight);
+      window.removeEventListener("touchmove", enableSectionHighlight);
+      window.removeEventListener("keydown", onKeyDown);
+    };
   }, [isHome]);
 
   useEffect(() => {
-    const onScroll = () => {
+    let rafId = 0;
+    let scrollStopTimeoutId = 0;
+
+    const updateNavState = () => {
       setScrolled(window.scrollY > 16);
+      if (!isHome) return;
+
+      const heroCutoff = window.innerHeight * 0.55;
+      if (window.scrollY < heroCutoff) {
+        if (activeSectionRef.current !== HOME_SECTION_IDS.inicio) {
+          setActiveSection(HOME_SECTION_IDS.inicio);
+        }
+        return;
+      }
+
+      const viewportReference = window.innerHeight * 0.42;
+      const sectionLinks = HOME_LINKS.filter((link) => link.id !== HOME_SECTION_IDS.inicio);
+      let matchedSectionId = "";
+      let lastPassedSectionId = "";
+
+      for (const link of sectionLinks) {
+        const section = document.getElementById(link.id);
+        if (!section) continue;
+
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= viewportReference && rect.bottom >= viewportReference) {
+          matchedSectionId = link.id;
+          break;
+        }
+
+        if (rect.top <= viewportReference) {
+          lastPassedSectionId = link.id;
+        }
+      }
+
+      const nextActiveSection = matchedSectionId || lastPassedSectionId || HOME_SECTION_IDS.inicio;
+      if (nextActiveSection !== activeSectionRef.current) {
+        setActiveSection(nextActiveSection);
+      }
     };
 
-    onScroll();
+    const onScroll = () => {
+      if (!isUserScrolling) {
+        setIsUserScrolling(true);
+      }
+
+      if (scrollStopTimeoutId) {
+        window.clearTimeout(scrollStopTimeoutId);
+      }
+      scrollStopTimeoutId = window.setTimeout(() => {
+        setIsUserScrolling(false);
+      }, 140);
+
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(() => {
+        rafId = 0;
+        updateNavState();
+      });
+    };
+
+    updateNavState();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafId) window.cancelAnimationFrame(rafId);
+      if (scrollStopTimeoutId) window.clearTimeout(scrollStopTimeoutId);
+    };
+  }, [isHome, isUserScrolling]);
 
   const links = useMemo(() => {
     if (isHome) return HOME_LINKS;
@@ -115,6 +188,12 @@ export function GlobalNav() {
   }, [isHome]);
 
   const scrollSectionIntoView = (sectionId: string) => {
+    if (sectionId === HOME_SECTION_IDS.inicio) {
+      window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+      setActiveSection(HOME_SECTION_IDS.inicio);
+      return;
+    }
+
     const section = document.getElementById(sectionId);
     if (!section) return;
 
@@ -129,6 +208,8 @@ export function GlobalNav() {
     if (!isHome || !href.startsWith("#")) return;
 
     event.preventDefault();
+    setAllowSectionHighlight(false);
+    setActiveSection("");
     scrollSectionIntoView(sectionId);
     window.history.replaceState(null, "", href);
     setMobileOpen(false);
@@ -143,15 +224,36 @@ export function GlobalNav() {
 
   useEffect(() => {
     if (!isHome) return;
+
+    // On every hard reload in home, always reset to top/start.
+    if (window.location.hash) {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+    window.scrollTo({ top: 0, behavior: "auto" });
+    setActiveSection(HOME_SECTION_IDS.inicio);
+
+    // Restore normal browser scroll restoration after forcing the top position once.
+    const previousScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
     const hash = window.location.hash;
-    if (!hash) return;
+    if (!hash) {
+      setActiveSection(HOME_SECTION_IDS.inicio);
+      return () => {
+        window.history.scrollRestoration = previousScrollRestoration;
+      };
+    }
 
     const sectionId = decodeURIComponent(hash.replace("#", ""));
+    setActiveSection(sectionId);
     const timer = window.setTimeout(() => {
       scrollSectionIntoView(sectionId);
     }, 120);
 
-    return () => window.clearTimeout(timer);
+    return () => {
+      window.clearTimeout(timer);
+      window.history.scrollRestoration = previousScrollRestoration;
+    };
   }, [isHome, reduceMotion]);
 
   return (
@@ -165,8 +267,8 @@ export function GlobalNav() {
         className={cn(
           "relative border-b px-4 py-3 md:hidden",
           scrolled
-            ? "border-border/70 bg-[color-mix(in_oklch,var(--background)_96%,white)] shadow-[0_8px_22px_-18px_rgba(34,39,14,0.35)]"
-            : "border-border/55 bg-[color-mix(in_oklch,var(--background)_98%,white)] shadow-[0_6px_18px_-16px_rgba(34,39,14,0.3)]",
+            ? "border-border/80 bg-background shadow-[0_8px_20px_-18px_rgba(0,0,0,0.35)]"
+            : "border-border/70 bg-background shadow-[0_6px_18px_-16px_rgba(0,0,0,0.28)]",
         )}
         animate={{
           paddingTop: scrolled ? "0.58rem" : "0.75rem",
@@ -175,7 +277,7 @@ export function GlobalNav() {
         transition={headerTransition}
       >
         <div className="mx-auto flex h-11 max-w-7xl items-center justify-between">
-          <Link href="/" className="font-heading text-[1.12rem] font-semibold tracking-[0.02em] text-foreground">
+          <Link href="/" className="font-heading text-[1.12rem] font-semibold tracking-[0.02em] text-primary">
             {SITE.name}
           </Link>
           <Button
@@ -209,36 +311,28 @@ export function GlobalNav() {
         </div>
       </motion.div>
 
-      <motion.div
-        className="hidden px-4 sm:px-8 lg:px-14 2xl:px-20 md:block"
-        animate={{ paddingTop: scrolled ? "0.65rem" : "1rem" }}
-        transition={headerTransition}
-      >
+      <motion.div className="hidden md:block" transition={headerTransition}>
         <motion.div
           className={cn(
-            "relative mx-auto flex max-w-[80rem] items-center justify-between overflow-hidden rounded-2xl border px-6 ring-1 md:px-8 2xl:max-w-[96rem]",
+            "relative flex items-center justify-between border-b px-4 sm:px-8 lg:px-14 2xl:px-20",
             scrolled
-              ? "h-13 border-white/25 bg-[rgba(24,33,28,0.74)] shadow-[0_24px_42px_-24px_rgba(8,12,10,0.68)] ring-white/18 backdrop-blur-xl"
-              : "h-15 border-white/20 bg-[rgba(24,33,28,0.68)] shadow-[0_22px_38px_-24px_rgba(8,12,10,0.62)] ring-white/14 backdrop-blur-xl",
+              ? "h-17 border-border/80 bg-background shadow-[0_10px_24px_-22px_rgba(0,0,0,0.5)]"
+              : "h-18 border-border/75 bg-background",
           )}
-          transition={headerTransition}
         >
-          <div className="pointer-events-none absolute inset-x-8 top-0 h-[2px] bg-gradient-to-r from-transparent via-white/45 to-transparent" />
-          <Link href="/" className="font-heading text-[1.02rem] font-semibold tracking-[0.03em] text-white">
+          <Link href="/" className="font-heading text-[1.08rem] font-semibold tracking-[0.02em] text-primary">
             {SITE.name}
           </Link>
 
           <div className="hidden items-center gap-1.5 md:flex">
             {links.map((link) => {
-              const isActive = isHome && link.id === activeSection;
               return (
                 <Link
                   key={link.id}
                   href={link.href}
                   onClick={(event) => onNavLinkClick(event, link.href, link.id)}
                   className={cn(
-                    "relative inline-flex items-center px-3.5 py-2 text-[0.98rem] text-white/78 transition-colors duration-200 hover:text-white focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-0 after:pointer-events-none after:absolute after:bottom-[3px] after:left-2 after:right-2 after:h-[2px] after:origin-left after:scale-x-0 after:rounded-full after:bg-white after:opacity-0 after:transition-[transform,opacity] after:duration-300 after:ease-[cubic-bezier(0.22,1,0.36,1)] hover:after:scale-x-100 hover:after:opacity-100",
-                    isActive && "text-white after:scale-x-100 after:opacity-100",
+                    "relative inline-flex min-h-11 cursor-pointer select-none items-center justify-center rounded-md bg-[length:0%_3px] bg-[position:center_calc(100%-3px)] bg-no-repeat px-3.5 py-2 text-[0.98rem] font-medium text-foreground/72 transition-[color,background-size] duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] [background-image:linear-gradient(var(--color-primary),var(--color-primary))] hover:bg-[length:100%_3px] hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-0",
                   )}
                 >
                   {link.label}

@@ -53,29 +53,29 @@
 }
 
 :root {
-  /* Tema claro (paleta Bosque Patagonia, fondo crema) */
-  --background: #f6f3e8;
-  --foreground: #22270e;
-  --card: #fbf9f1;
-  --card-foreground: #22270e;
-  --popover: #fbf9f1;
-  --popover-foreground: #22270e;
-  --primary: #5f7f7a;
-  --primary-foreground: #f8f6ee;
-  --secondary: #eee8d7;
-  --secondary-foreground: #222601;
-  --muted: #f1ebdb;
-  --muted-foreground: #5c5a4a;
+  /* Tema claro (paleta inspirada en @alo_patagonia) */
+  --background: #f5f2e8;
+  --foreground: #1f2a1f;
+  --card: #fbf8ef;
+  --card-foreground: #1f2a1f;
+  --popover: #fbf8ef;
+  --popover-foreground: #1f2a1f;
+  --primary: #2d5a47;
+  --primary-foreground: #f5f2e8;
+  --secondary: #e9dfcc;
+  --secondary-foreground: #1f2a1f;
+  --muted: #efe7d6;
+  --muted-foreground: #6a746d;
   --accent: #6f8e88;
-  --accent-foreground: #f8f6ee;
+  --accent-foreground: #f5f2e8;
   --brand-forest: #2d5a47;
-  --brand-forest-foreground: #faf8ef;
+  --brand-forest-foreground: #f5f2e8;
   --whatsapp: #25d366;
   --whatsapp-hover: #1fb85a;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #d9d0bb;
-  --input: #d6cdb7;
-  --ring: #6f7450;
+  --border: #dccfb8;
+  --input: #dccfb8;
+  --ring: #6f8e88;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
