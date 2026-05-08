@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   HERO_IMAGE,
   HERO_VIDEO,
+  HERO_VIDEO_MOBILE,
   HERO_VIDEO_PLAYBACK_RATE,
   IMAGE_QUALITY_MAX,
 } from "@/lib/constants";
@@ -15,6 +16,11 @@ export function HeroBackground() {
   const [videoReady, setVideoReady] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const isIOSDevice =
+    typeof navigator !== "undefined" &&
+    (/iP(hone|od|ad)/.test(navigator.userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1));
+  const videoSrc = isIOSDevice ? HERO_VIDEO_MOBILE.src : HERO_VIDEO.src;
 
   const markReady = useCallback(() => {
     setVideoReady(true);
@@ -33,6 +39,19 @@ export function HeroBackground() {
     const v = videoRef.current;
     if (v) applyPlaybackRate(v);
   }, [applyPlaybackRate]);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v || reduceMotion) return;
+
+    v.muted = true;
+    const maybePlay = v.play();
+    if (maybePlay?.catch) {
+      maybePlay.catch(() => {
+        setVideoFailed(true);
+      });
+    }
+  }, [reduceMotion, videoSrc]);
 
   if (reduceMotion || videoFailed) {
     return (
@@ -56,6 +75,7 @@ export function HeroBackground() {
       className={`absolute inset-0 z-0 size-full object-cover transition-opacity duration-700 ease-out ${videoReady ? "opacity-100" : "opacity-0"}`}
       autoPlay
       muted
+      defaultMuted
       loop
       playsInline
       preload="metadata"
@@ -67,7 +87,7 @@ export function HeroBackground() {
       onPlaying={markReady}
       onError={() => setVideoFailed(true)}
     >
-      <source src={HERO_VIDEO.src} type="video/mp4" />
+      <source src={videoSrc} type="video/mp4" />
     </video>
   );
 }

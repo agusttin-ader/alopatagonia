@@ -365,6 +365,11 @@ export const HERO_VIDEO = {
   src: "/videos/hero-video-final.mp4",
 } as const;
 
+/** Versión liviana para móviles/iOS para mejorar estabilidad de reproducción. */
+export const HERO_VIDEO_MOBILE = {
+  src: "/videos/hero-video-2.mp4",
+} as const;
+
 /** Velocidad del video del hero: 1 = normal; valores menores = más lento (más pausado). */
 export const HERO_VIDEO_PLAYBACK_RATE = 1 as const;
 
