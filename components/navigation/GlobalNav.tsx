@@ -175,11 +175,10 @@ export function GlobalNav() {
   useEffect(() => {
     if (!isHome) return;
 
-    // On every hard reload in home, always reset to top/start.
-    if (window.location.hash) {
-      window.history.replaceState(null, "", window.location.pathname);
+    // Keep deep links (#seccion) intact for shareable URLs.
+    if (!window.location.hash) {
+      window.scrollTo({ top: 0, behavior: "auto" });
     }
-    window.scrollTo({ top: 0, behavior: "auto" });
 
     // Restore normal browser scroll restoration after forcing the top position once.
     const previousScrollRestoration = window.history.scrollRestoration;

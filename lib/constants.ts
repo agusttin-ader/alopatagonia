@@ -3,12 +3,11 @@ import { Car, Compass, Hotel, Mountain } from "lucide-react";
 
 export const SITE = {
   name: "Alo Patagonia",
-  tagline: "Asesoramiento integral para tu viaje en la Patagonia",
   instagram: "https://www.instagram.com/alo_patagonia",
   /** Sin @; para textos y enlaces al perfil. */
   instagramHandle: "alo_patagonia",
-  email: "hola@alopatagonia.com",
-  phoneDisplay: "+54 9 11 6869 6491",
+  email: "alopatagonia.arg@gmail.com",
+  phoneDisplay: "+54 9 11 7095 4933",
 } as const;
 
 export const HERO_COPY = {
@@ -33,9 +32,33 @@ export const SECTION_IDS = {
 
 /** URL fallback de tienda; priorizar `NEXT_PUBLIC_WINTER_STORE_URL` en producción. */
 const DEFAULT_WINTER_STORE_URL = "https://www.laguaridainstrumentos.com";
+const DEFAULT_WHATSAPP_E164 = "5491170954933";
+const ALLOWED_WINTER_STORE_HOSTS = new Set([
+  "www.laguaridainstrumentos.com",
+  "laguaridainstrumentos.com",
+]);
+const ALLOWED_WHATSAPP_HOSTS = new Set(["wa.me", "api.whatsapp.com"]);
+
+function getTrustedHttpsUrl(
+  rawUrl: string | undefined,
+  allowedHosts: Set<string>,
+): string | null {
+  if (!rawUrl) return null;
+  try {
+    const parsedUrl = new URL(rawUrl);
+    if (parsedUrl.protocol !== "https:") return null;
+    if (!allowedHosts.has(parsedUrl.hostname)) return null;
+    return parsedUrl.toString();
+  } catch {
+    return null;
+  }
+}
 
 export function getWinterStoreUrl(): string {
-  const fromEnv = process.env.NEXT_PUBLIC_WINTER_STORE_URL?.trim();
+  const fromEnv = getTrustedHttpsUrl(
+    process.env.NEXT_PUBLIC_WINTER_STORE_URL?.trim(),
+    ALLOWED_WINTER_STORE_HOSTS,
+  );
   return fromEnv || DEFAULT_WINTER_STORE_URL;
 }
 
@@ -45,10 +68,10 @@ export const WINTER_STORE_WHATSAPP_MESSAGE =
 export const WINTER_STORE_COPY = {
   metaTitle: "Alo Patagonia | Equipamiento de invierno",
   metaDescription:
-    "Abrigos y equipo pensados para el frío patagónico. Curamos una selección para que viajes cómodo y seguro.",
+    "Abrigos y equipo pensados para el frío patagónico. Elegimos prendas para que viajes cómodo y seguro.",
   heroTitle: "Equipate para el frío patagónico",
   heroSubtitle:
-    "Una selección curada de invierno para combinar con tu viaje: menos improvisación, más calor y estilo en la montaña.",
+    "Una selección de invierno para combinar con tu viaje: menos improvisación, más calor y estilo en la montaña.",
   ctaPrimary: "Ir a la tienda",
   ctaSecondaryHome: "Volver al inicio",
   ctaWhatsApp: "Consultar por WhatsApp",
@@ -77,25 +100,26 @@ export type InstagramStatItem = {
 const DEFAULT_WHATSAPP_MESSAGE =
   "Hola! Quiero planear mi viaje a Patagonia. ¿Me ayudan?";
 
-const SECONDARY_WHATSAPP_MESSAGE =
-  "Hola! Quiero consultar disponibilidad y precios";
-
 export const WHATSAPP_MESSAGES = {
   primary: DEFAULT_WHATSAPP_MESSAGE,
-  secondary: SECONDARY_WHATSAPP_MESSAGE,
 } as const;
 
 export function getWhatsAppUrl(message = DEFAULT_WHATSAPP_MESSAGE): string {
-  const preset = process.env.NEXT_PUBLIC_WHATSAPP_URL;
-  if (preset?.trim()) {
-    const separator = preset.includes("?") ? "&" : "?";
-    return `${preset.trim()}${separator}text=${encodeURIComponent(message)}`;
+  const preset = getTrustedHttpsUrl(
+    process.env.NEXT_PUBLIC_WHATSAPP_URL?.trim(),
+    ALLOWED_WHATSAPP_HOSTS,
+  );
+  if (preset) {
+    const presetUrl = new URL(preset);
+    presetUrl.searchParams.set("text", message);
+    return presetUrl.toString();
   }
 
-  const raw = process.env.NEXT_PUBLIC_WHATSAPP_E164 ?? "5491168696491";
+  const raw = process.env.NEXT_PUBLIC_WHATSAPP_E164 ?? DEFAULT_WHATSAPP_E164;
   const digits = raw.replace(/\D/g, "");
+  const safeDigits = /^\d{10,15}$/.test(digits) ? digits : DEFAULT_WHATSAPP_E164;
   const text = encodeURIComponent(message);
-  return `https://wa.me/${digits}?text=${text}`;
+  return `https://wa.me/${safeDigits}?text=${text}`;
 }
 
 export type ServiceItem = {

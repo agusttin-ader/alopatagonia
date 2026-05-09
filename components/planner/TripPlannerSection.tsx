@@ -38,6 +38,8 @@ const MONTHS = [
 
 const fieldClassName =
   "h-11 w-full rounded-2xl border border-input/80 bg-card/85 px-3.5 text-sm text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] outline-none transition duration-200 placeholder:text-muted-foreground/90 hover:border-primary/35 focus-visible:border-primary/70 focus-visible:ring-4 focus-visible:ring-primary/15";
+const MAX_NAME_LENGTH = 70;
+const MAX_TRAVELERS_LENGTH = 2;
 
 function toISODate(date: Date) {
   const y = date.getFullYear();
@@ -220,6 +222,7 @@ export function TripPlannerSection() {
   const [name, setName] = useState("");
   const [destination, setDestination] = useState<PlannerDestinationValue>("none");
   const [travelers, setTravelers] = useState("");
+  const [website, setWebsite] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [destinationOpen, setDestinationOpen] = useState(false);
@@ -230,9 +233,9 @@ export function TripPlannerSection() {
   const destinationButtonRef = useRef<HTMLButtonElement>(null);
 
   const message = useMemo(() => {
-    const personName = name.trim() || "sin nombre";
+    const personName = name.trim().slice(0, MAX_NAME_LENGTH) || "sin nombre";
     const destinationText = PLANNER_DESTINATION_LABELS[destination];
-    const people = travelers.trim() || "sin definir";
+    const people = travelers.trim().slice(0, MAX_TRAVELERS_LENGTH) || "sin definir";
     const from = formatDate(fromDate);
     const to = formatDate(toDate);
 
@@ -250,7 +253,10 @@ export function TripPlannerSection() {
     return checks.filter(Boolean).length;
   }, [name, destination, travelers, fromDate, toDate]);
 
-  const plannerReady = completionCount >= 4;
+  const invalidDateRange = Boolean(fromDate && toDate && fromDate > toDate);
+  const plannerReady = completionCount >= 4 && !invalidDateRange;
+  const honeypotTriggered = website.trim().length > 0;
+  const canSubmit = plannerReady && !honeypotTriggered;
 
   const whatsappUrl = getWhatsAppUrl(message);
   const mailUrl = `mailto:${SITE.email}?subject=${encodeURIComponent("Consulta viaje Patagonia")}&body=${encodeURIComponent(message)}`;
@@ -318,8 +324,11 @@ export function TripPlannerSection() {
                 <span className="text-sm font-semibold text-foreground">Nombre</span>
                 <input
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value.slice(0, MAX_NAME_LENGTH))}
                   placeholder="Tu nombre"
+                  required
+                  maxLength={MAX_NAME_LENGTH}
+                  autoComplete="name"
                   className={fieldClassName}
                 />
               </label>
@@ -394,9 +403,13 @@ export function TripPlannerSection() {
                 </span>
                 <input
                   value={travelers}
-                  onChange={(e) => setTravelers(e.target.value)}
+                  onChange={(e) =>
+                    setTravelers(e.target.value.replace(/[^\d]/g, "").slice(0, MAX_TRAVELERS_LENGTH))
+                  }
                   placeholder="Ej: 2"
                   inputMode="numeric"
+                  required
+                  maxLength={MAX_TRAVELERS_LENGTH}
                   className={fieldClassName}
                 />
               </label>
@@ -406,10 +419,25 @@ export function TripPlannerSection() {
                 <DateField label="Hasta" value={toDate} onChange={setToDate} />
               </div>
 
+              <label className="hidden" aria-hidden>
+                Sitio web
+                <input
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(event) => setWebsite(event.target.value)}
+                />
+              </label>
+
               <div className="pt-2">
                 <p className="text-xs text-muted-foreground">
                   Armamos el mensaje automaticamente para que consultes en un clic.
                 </p>
+                {invalidDateRange ? (
+                  <p className="mt-2 text-xs font-semibold text-destructive">
+                    Revisá las fechas: la fecha de regreso debe ser posterior al inicio.
+                  </p>
+                ) : null}
                 <p
                   className={cn(
                     "mt-2 inline-flex rounded-full px-2.5 py-1 text-xs font-semibold",
@@ -430,9 +458,15 @@ export function TripPlannerSection() {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={(event) => {
+                  if (canSubmit) return;
+                  event.preventDefault();
+                }}
+                aria-disabled={!canSubmit}
                 className={cn(
                   buttonVariants({ size: "lg" }),
                   "h-12 whitespace-normal rounded-full bg-whatsapp text-center leading-tight text-white hover:bg-whatsapp-hover 2xl:h-14 2xl:text-lg",
+                  !canSubmit && "pointer-events-none opacity-60",
                 )}
               >
                 <svg
@@ -447,9 +481,15 @@ export function TripPlannerSection() {
               </a>
               <a
                 href={mailUrl}
+                onClick={(event) => {
+                  if (canSubmit) return;
+                  event.preventDefault();
+                }}
+                aria-disabled={!canSubmit}
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
                   "h-12 rounded-full border-foreground/20 bg-background 2xl:h-14 2xl:text-lg",
+                  !canSubmit && "pointer-events-none opacity-60",
                 )}
               >
                 <Mail className="mr-1 size-4" />
