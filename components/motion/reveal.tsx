@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 type RevealProps = HTMLMotionProps<"div"> & {
   delay?: number;
   variant?: "fade" | "up" | "scale-soft";
+  staggerChildren?: boolean;
   once?: boolean;
   amount?: number;
   margin?: string;
@@ -17,12 +18,14 @@ export function Reveal({
   className,
   delay = 0,
   variant = "up",
+  staggerChildren = false,
   once = true,
   amount = 0.16,
   margin = "-40px 0px",
   ...props
 }: RevealProps) {
   const reduceMotion = useReducedMotion();
+  const useStagger = staggerChildren;
   const variants = {
     fade: {
       hidden: { opacity: 0 },
@@ -41,10 +44,26 @@ export function Reveal({
 
   return (
     <motion.div
-      initial={reduceMotion ? "visible" : "hidden"}
+      initial={useStagger ? (reduceMotion ? undefined : "hidden") : reduceMotion ? "visible" : "hidden"}
       whileInView="visible"
       viewport={{ once, margin, amount }}
-      variants={selectedVariant}
+      variants={
+        useStagger
+          ? {
+              hidden: {},
+              visible: {
+                transition: reduceMotion
+                  ? { staggerChildren: 0 }
+                  : { staggerChildren: 0.07, delayChildren: delay },
+              },
+            }
+          : selectedVariant
+      }
+      {...(useStagger
+        ? {
+            transition: undefined,
+          }
+        : {})}
       transition={
         reduceMotion
           ? { duration: 0 }

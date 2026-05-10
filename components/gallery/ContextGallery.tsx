@@ -140,9 +140,9 @@ export function ContextGallery() {
           </p>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:gap-7">
+        <Reveal staggerChildren className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 2xl:gap-7">
           {CONTEXT_ITEMS.map((item, index) => (
-            <Reveal key={item.title} delay={index * 0.05} className="h-full">
+            <Reveal key={item.title} variant="scale-soft" className="h-full">
               <article
                 className={cn(
                   "group h-full overflow-hidden rounded-2xl border border-border/70 bg-card shadow-sm",
@@ -180,7 +180,7 @@ export function ContextGallery() {
               </article>
             </Reveal>
           ))}
-        </div>
+        </Reveal>
 
         <Reveal delay={0.1} className="mt-10 text-center">
           <a

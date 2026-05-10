@@ -37,7 +37,7 @@ const MONTHS = [
 ];
 
 const fieldClassName =
-  "h-11 w-full rounded-2xl border border-input/80 bg-card/85 px-3.5 text-sm text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] outline-none transition duration-200 placeholder:text-muted-foreground/90 hover:border-primary/35 focus-visible:border-primary/70 focus-visible:ring-4 focus-visible:ring-primary/15";
+  "h-11 w-full rounded-2xl border border-input/80 bg-card/85 px-3.5 text-base sm:text-sm text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] outline-none transition duration-200 placeholder:text-muted-foreground/90 hover:border-primary/35 focus-visible:border-primary/70 focus-visible:ring-4 focus-visible:ring-primary/15";
 const MAX_NAME_LENGTH = 70;
 const MAX_TRAVELERS_LENGTH = 2;
 
@@ -305,6 +305,11 @@ export function TripPlannerSection() {
     };
   }, [destinationOpen]);
 
+  const selectDestination = (value: PlannerDestinationValue) => {
+    setDestination(value);
+    setDestinationOpen(false);
+  };
+
   return (
     <section
       id={SECTION_IDS.planner}
@@ -386,10 +391,12 @@ export function TripPlannerSection() {
                           <button
                             key={option.value}
                             type="button"
-                            onClick={() => {
-                              setDestination(option.value);
-                              setDestinationOpen(false);
+                            onPointerDown={(event) => {
+                              event.preventDefault();
+                              event.stopPropagation();
+                              selectDestination(option.value);
                             }}
+                            onClick={() => selectDestination(option.value)}
                             className={cn(
                               "w-full rounded-xl px-3 py-2.5 text-left text-sm transition",
                               destination === option.value

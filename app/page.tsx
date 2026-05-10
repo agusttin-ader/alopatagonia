@@ -8,6 +8,7 @@ import { Footer } from "@/components/footer/Footer";
 import { ContextGallery } from "@/components/gallery/ContextGallery";
 import { Hero } from "@/components/hero/Hero";
 import { HowItWorks } from "@/components/how-it-works/HowItWorks";
+import { AlternatingSectionReveal } from "@/components/motion/alternating-section-reveal";
 import { TripPlannerSection } from "@/components/planner/TripPlannerSection";
 import { Services } from "@/components/services/Services";
 import { SignatureSection } from "@/components/signature/SignatureSection";
@@ -30,18 +31,42 @@ export default function Home() {
     <>
       <Hero />
       <main className="min-w-0 flex-1">
-        <SignatureSection />
-        <TripPlannerSection />
-        <ContextGallery />
-        <Testimonials />
-        <HowItWorks />
-        <Services />
-        <Destinations />
-        <InstagramStats />
-        <Experience />
-        <WinterStoreSection />
-        <UrgencyTrust />
-        <CTA />
+        <AlternatingSectionReveal from="right">
+          <SignatureSection />
+        </AlternatingSectionReveal>
+        <AlternatingSectionReveal from="left">
+          <TripPlannerSection />
+        </AlternatingSectionReveal>
+        <AlternatingSectionReveal from="right">
+          <ContextGallery />
+        </AlternatingSectionReveal>
+        <AlternatingSectionReveal from="left">
+          <Testimonials />
+        </AlternatingSectionReveal>
+        <AlternatingSectionReveal from="right">
+          <HowItWorks />
+        </AlternatingSectionReveal>
+        <AlternatingSectionReveal from="left">
+          <Services />
+        </AlternatingSectionReveal>
+        <AlternatingSectionReveal from="right">
+          <Destinations />
+        </AlternatingSectionReveal>
+        <AlternatingSectionReveal from="left">
+          <InstagramStats />
+        </AlternatingSectionReveal>
+        <AlternatingSectionReveal from="right">
+          <Experience />
+        </AlternatingSectionReveal>
+        <AlternatingSectionReveal from="left">
+          <WinterStoreSection />
+        </AlternatingSectionReveal>
+        <AlternatingSectionReveal from="right">
+          <UrgencyTrust />
+        </AlternatingSectionReveal>
+        <AlternatingSectionReveal from="left">
+          <CTA />
+        </AlternatingSectionReveal>
       </main>
       <FloatingWhatsAppButton />
       <Footer />

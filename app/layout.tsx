@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 
 import { MotionProvider } from "@/components/motion/motion-provider";
+import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { SiteIntro } from "@/components/motion/site-intro";
 import { GlobalNav } from "@/components/navigation/GlobalNav";
 import { SITE } from "@/lib/constants";
@@ -31,6 +32,8 @@ export const viewport: Viewport = {
   themeColor: "#717336",
   width: "device-width",
   initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
   viewportFit: "cover",
 };
 
@@ -106,6 +109,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <MotionProvider>
+          <ScrollProgress />
           <SiteIntro />
           <GlobalNav />
           {children}
