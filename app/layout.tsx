@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 
 import { MotionProvider } from "@/components/motion/motion-provider";
+import { NoZoomLock } from "@/components/mobile/no-zoom-lock";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { SiteIntro } from "@/components/motion/site-intro";
 import { GlobalNav } from "@/components/navigation/GlobalNav";
@@ -109,6 +110,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <MotionProvider>
+          <NoZoomLock />
           <ScrollProgress />
           <SiteIntro />
           <GlobalNav />

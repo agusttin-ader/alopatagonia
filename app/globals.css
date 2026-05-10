@@ -157,10 +157,12 @@
     text-rendering: optimizeLegibility;
     -webkit-tap-highlight-color: transparent;
     color-scheme: light;
+    touch-action: pan-x pan-y;
   }
   body {
     @apply bg-background text-foreground font-medium;
     overflow-x: clip;
+    touch-action: pan-x pan-y;
     background-image:
       radial-gradient(circle at 82% 8%, color-mix(in oklch, var(--footer-lake) 10%, transparent), transparent 36%),
       radial-gradient(circle at 10% -10%, rgba(111, 142, 136, 0.08), transparent 38%),
