@@ -98,7 +98,9 @@ export function GlobalNav() {
 
       setScrolled(currentScrollY > 16);
 
-      if (mobileOpen) {
+      if (!isDesktop) {
+        setNavHidden(false);
+      } else if (mobileOpen) {
         setNavHidden(false);
       } else if (currentScrollY <= 24) {
         setNavHidden(false);
@@ -124,7 +126,7 @@ export function GlobalNav() {
       window.removeEventListener("scroll", onScroll);
       if (rafId) window.cancelAnimationFrame(rafId);
     };
-  }, [mobileOpen]);
+  }, [isDesktop, mobileOpen]);
 
   const links = useMemo(() => {
     if (isHome) return HOME_LINKS;
@@ -146,7 +148,7 @@ export function GlobalNav() {
 
     section.scrollIntoView({
       behavior: reduceMotion ? "auto" : "smooth",
-      block: "center",
+      block: "start",
       inline: "nearest",
     });
   };
@@ -202,13 +204,15 @@ export function GlobalNav() {
     >
       <motion.div
         className={cn(
-          "relative border-b px-4 py-3 md:hidden",
+          "relative border-b px-4 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))] md:hidden",
           scrolled
             ? "border-border/80 bg-background shadow-[0_8px_20px_-18px_rgba(0,0,0,0.35)]"
             : "border-border/70 bg-background shadow-[0_6px_18px_-16px_rgba(0,0,0,0.28)]",
         )}
         animate={{
-          paddingTop: scrolled ? "0.58rem" : "0.75rem",
+          paddingTop: scrolled
+            ? "max(0.58rem, env(safe-area-inset-top))"
+            : "max(0.75rem, env(safe-area-inset-top))",
           paddingBottom: scrolled ? "0.58rem" : "0.75rem",
         }}
         transition={headerTransition}

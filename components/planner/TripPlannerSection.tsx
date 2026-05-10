@@ -79,6 +79,7 @@ function DateField({
   const panelId = useId();
   const fieldRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const [openUpward, setOpenUpward] = useState(false);
 
   const monthStart = new Date(viewDate.getFullYear(), viewDate.getMonth(), 1);
   const startWeekDay = (monthStart.getDay() + 6) % 7;
@@ -96,6 +97,13 @@ function DateField({
 
   useEffect(() => {
     if (!open) return;
+
+    const triggerRect = triggerRef.current?.getBoundingClientRect();
+    const panelHeight = 320;
+    if (triggerRect) {
+      const spaceBelow = window.innerHeight - triggerRect.bottom;
+      setOpenUpward(spaceBelow < panelHeight);
+    }
 
     const onPointerDown = (event: PointerEvent) => {
       if (!fieldRef.current?.contains(event.target as Node)) {
@@ -146,7 +154,10 @@ function DateField({
           role="dialog"
           aria-modal="false"
           aria-labelledby={triggerId}
-          className="absolute left-0 top-[calc(100%+8px)] z-30 w-full max-w-[290px] rounded-2xl border border-border/80 bg-card/95 p-3 shadow-xl ring-1 ring-white/70 backdrop-blur-sm sm:w-[290px]"
+          className={cn(
+            "absolute left-0 z-30 w-full max-w-[290px] rounded-2xl border border-border/80 bg-card/95 p-3 shadow-xl ring-1 ring-white/70 backdrop-blur-sm sm:w-[290px]",
+            openUpward ? "bottom-[calc(100%+8px)]" : "top-[calc(100%+8px)]",
+          )}
         >
           <div className="mb-2 flex items-center justify-between">
             <button

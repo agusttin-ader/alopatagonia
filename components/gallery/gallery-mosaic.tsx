@@ -125,7 +125,7 @@ export function GalleryMosaic({ images }: GalleryMosaicProps) {
               exit={{ opacity: 0 }}
               onClick={close}
             />
-            <div className="absolute inset-0 z-[1] flex min-h-0 items-center justify-center px-3 py-3 sm:px-6">
+            <div className="absolute inset-0 z-[1] flex min-h-0 items-center justify-center px-[max(0.75rem,env(safe-area-inset-left))] py-[max(0.75rem,env(safe-area-inset-top))] sm:px-6">
               <AnimatePresence initial={false} mode="wait">
                 <motion.div
                   key={active.src}
@@ -155,7 +155,7 @@ export function GalleryMosaic({ images }: GalleryMosaicProps) {
                 e.stopPropagation();
                 close();
               }}
-              className="absolute right-3 top-3 z-[2] flex size-11 cursor-pointer items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-5 sm:top-5 sm:size-12"
+              className="absolute right-[max(0.75rem,env(safe-area-inset-right))] top-[max(0.75rem,env(safe-area-inset-top))] z-[2] flex size-11 cursor-pointer items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-5 sm:top-5 sm:size-12"
               aria-label="Cerrar galería"
             >
               <X className="size-5 sm:size-6" aria-hidden />
@@ -166,7 +166,7 @@ export function GalleryMosaic({ images }: GalleryMosaicProps) {
                 e.stopPropagation();
                 goPrev();
               }}
-              className="absolute left-2 top-1/2 z-[2] flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:left-4 sm:size-12"
+              className="absolute left-[max(0.6rem,env(safe-area-inset-left))] top-1/2 z-[2] flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:left-4 sm:size-12"
               aria-label="Imagen anterior"
             >
               <ChevronLeft className="size-6 sm:size-7" aria-hidden />
@@ -177,7 +177,7 @@ export function GalleryMosaic({ images }: GalleryMosaicProps) {
                 e.stopPropagation();
                 goNext();
               }}
-              className="absolute right-2 top-1/2 z-[2] flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-4 sm:size-12"
+              className="absolute right-[max(0.6rem,env(safe-area-inset-right))] top-1/2 z-[2] flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/50 text-white transition hover:bg-black/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-4 sm:size-12"
               aria-label="Imagen siguiente"
             >
               <ChevronRight className="size-6 sm:size-7" aria-hidden />

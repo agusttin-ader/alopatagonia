@@ -29,7 +29,7 @@ export function HeroClient() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <div className="relative z-10 flex min-h-[100dvh] flex-col justify-end px-4 pb-24 pt-24 sm:px-8 sm:pb-24 lg:px-14 2xl:px-20">
+    <div className="relative z-10 flex min-h-[100dvh] flex-col justify-end px-4 pb-[max(7rem,calc(env(safe-area-inset-bottom)+6rem))] pt-24 sm:px-8 sm:pb-[max(6rem,calc(env(safe-area-inset-bottom)+5rem))] lg:px-14 2xl:px-20">
       <motion.div
         className="max-w-3xl 2xl:max-w-4xl [text-shadow:0_1px_4px_rgba(0,0,0,0.22)]"
         variants={container}
@@ -73,7 +73,7 @@ export function HeroClient() {
 
       <motion.a
         href={`#${SECTION_IDS.testimonials}`}
-        className="motion-cta absolute bottom-8 left-1/2 flex min-h-11 -translate-x-1/2 flex-col items-center justify-center gap-1 text-white/90 hover:text-white sm:bottom-8"
+        className="motion-cta absolute bottom-[max(4.5rem,calc(env(safe-area-inset-bottom)+4rem))] left-1/2 flex min-h-11 -translate-x-1/2 flex-col items-center justify-center gap-1 text-white/90 hover:text-white sm:bottom-[max(2rem,env(safe-area-inset-bottom))]"
         aria-label="Ir a testimonios"
         initial={reduceMotion ? false : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}

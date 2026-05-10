@@ -5,7 +5,7 @@ import { SITE } from "@/lib/constants";
 
 export function Footer() {
   return (
-    <footer className="relative z-30 -mt-18 sm:-mt-24">
+    <footer className="relative z-30 -mt-12 sm:-mt-20">
       <div className="h-22 w-full overflow-hidden sm:h-24" aria-hidden>
         <svg
           className="h-full w-full"

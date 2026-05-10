@@ -199,7 +199,7 @@ export function ContextGallery() {
         {activeItem && (
           <motion.div
             ref={dialogRef}
-            className="fixed inset-0 z-[1400] flex items-center justify-center bg-black/88 p-3 sm:p-6 lg:p-8"
+            className="fixed inset-0 z-[1400] flex items-center justify-center bg-black/88 p-3 pt-[max(0.75rem,env(safe-area-inset-top))] sm:p-6 lg:p-8"
             role="dialog"
             aria-modal="true"
             aria-label={`Vista ampliada: ${activeItem.title}`}
@@ -218,7 +218,7 @@ export function ContextGallery() {
             <button
               ref={closeButtonRef}
               type="button"
-              className="absolute right-3 top-3 inline-flex size-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-6 sm:top-6"
+              className="absolute right-[max(0.75rem,env(safe-area-inset-right))] top-[max(0.75rem,env(safe-area-inset-top))] inline-flex size-11 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-6 sm:top-6"
               onClick={closeLightbox}
               aria-label="Cerrar imagen ampliada"
             >
@@ -227,7 +227,7 @@ export function ContextGallery() {
 
             <button
               type="button"
-              className="absolute left-2 top-1/2 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:left-6 sm:size-11"
+              className="absolute left-[max(0.75rem,env(safe-area-inset-left))] top-1/2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:left-6"
               onClick={(event) => {
                 event.stopPropagation();
                 showPrev();
@@ -239,7 +239,7 @@ export function ContextGallery() {
 
             <button
               type="button"
-              className="absolute right-2 top-1/2 inline-flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-6 sm:size-11"
+              className="absolute right-[max(0.75rem,env(safe-area-inset-right))] top-1/2 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-6"
               onClick={(event) => {
                 event.stopPropagation();
                 showNext();
