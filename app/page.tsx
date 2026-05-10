@@ -31,16 +31,16 @@ export default function Home() {
     <>
       <Hero />
       <main className="min-w-0 flex-1">
-        <AlternatingSectionReveal from="right">
+        <AlternatingSectionReveal from="right" delay={0.02}>
           <SignatureSection />
         </AlternatingSectionReveal>
         <AlternatingSectionReveal from="left">
           <TripPlannerSection />
         </AlternatingSectionReveal>
-        <AlternatingSectionReveal from="right">
+        <AlternatingSectionReveal from="right" delay={0.04}>
           <ContextGallery />
         </AlternatingSectionReveal>
-        <AlternatingSectionReveal from="left">
+        <AlternatingSectionReveal from="left" delay={0.03}>
           <Testimonials />
         </AlternatingSectionReveal>
         <AlternatingSectionReveal from="right">
@@ -52,7 +52,7 @@ export default function Home() {
         <AlternatingSectionReveal from="right">
           <Destinations />
         </AlternatingSectionReveal>
-        <AlternatingSectionReveal from="left">
+        <AlternatingSectionReveal from="left" delay={0.02}>
           <InstagramStats />
         </AlternatingSectionReveal>
         <AlternatingSectionReveal from="right">
