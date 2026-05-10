@@ -38,7 +38,7 @@ export function HeroBackground() {
 
   useEffect(() => {
     const v = videoRef.current;
-    if (!v || reduceMotion) return;
+    if (!v) return;
 
     v.muted = true;
     const maybePlay = v.play();
@@ -49,7 +49,7 @@ export function HeroBackground() {
     }
   }, [reduceMotion]);
 
-  if (reduceMotion || videoFailed) {
+  if (videoFailed) {
     return (
       <div className="absolute inset-0 z-0">
         <Image
@@ -68,7 +68,7 @@ export function HeroBackground() {
   return (
     <video
       ref={videoRef}
-      className={`absolute inset-0 z-0 size-full object-cover transition-opacity duration-700 ease-out ${videoReady ? "opacity-100" : "opacity-0"}`}
+      className={`absolute inset-0 z-0 size-full object-cover transition-opacity duration-700 ease-out ${videoReady ? "opacity-100" : "opacity-85"}`}
       autoPlay
       muted
       loop

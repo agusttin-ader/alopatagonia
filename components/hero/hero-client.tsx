@@ -73,7 +73,7 @@ export function HeroClient() {
 
       <motion.a
         href={`#${SECTION_IDS.testimonials}`}
-        className="motion-cta absolute bottom-[max(4.5rem,calc(env(safe-area-inset-bottom)+4rem))] left-1/2 flex min-h-11 -translate-x-1/2 flex-col items-center justify-center gap-1 text-white/90 hover:text-white sm:bottom-[max(2rem,env(safe-area-inset-bottom))]"
+        className="motion-cta absolute bottom-[max(2.4rem,calc(env(safe-area-inset-bottom)+1.8rem))] left-1/2 hidden min-h-11 -translate-x-1/2 flex-col items-center justify-center gap-1 text-white/90 hover:text-white min-[430px]:flex sm:bottom-[max(2rem,env(safe-area-inset-bottom))]"
         aria-label="Ir a testimonios"
         initial={reduceMotion ? false : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
