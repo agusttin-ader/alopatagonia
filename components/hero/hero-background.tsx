@@ -43,9 +43,9 @@ export function HeroBackground() {
     v.muted = true;
     const maybePlay = v.play();
     if (maybePlay?.catch) {
-      maybePlay.catch(() => {
-        setVideoFailed(true);
-      });
+      // On some mobile browsers autoplay can be rejected transiently.
+      // We keep the video/poster instead of treating it as a hard load failure.
+      maybePlay.catch(() => {});
     }
   }, [reduceMotion]);
 
