@@ -193,7 +193,7 @@ export function Destinations() {
   return (
     <section
       id={SECTION_IDS.destinations}
-      className="scroll-mt-24 bg-background px-4 py-14 sm:px-8 sm:py-20 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 bg-background px-4 py-12 sm:px-8 sm:py-20 lg:px-14 2xl:px-20"
       aria-labelledby="destinos-heading"
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
@@ -213,7 +213,7 @@ export function Destinations() {
           </p>
         </Reveal>
 
-        <div className="mt-9 grid gap-8 lg:mt-12 lg:grid-cols-[minmax(260px,0.9fr)_1.1fr] lg:items-start 2xl:gap-12">
+        <div className="mt-7 grid gap-6 lg:mt-12 lg:grid-cols-[minmax(260px,0.9fr)_1.1fr] lg:items-start 2xl:gap-12">
           <Reveal className="lg:hidden">
             <motion.ul
               ref={mobileListRef}

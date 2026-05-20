@@ -314,7 +314,7 @@ export function TripPlannerSection() {
   return (
     <section
       id={SECTION_IDS.planner}
-      className="scroll-mt-24 bg-background px-4 py-14 sm:px-8 sm:py-20 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 bg-background px-4 py-12 sm:px-8 sm:py-20 lg:px-14 2xl:px-20"
       aria-labelledby="planner-heading"
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
@@ -334,7 +334,7 @@ export function TripPlannerSection() {
           </p>
         </Reveal>
 
-        <div className="mt-8 grid gap-6 lg:mt-10 lg:grid-cols-[1fr_1.05fr] 2xl:gap-8">
+        <div className="mt-7 grid gap-6 lg:mt-10 lg:grid-cols-[1fr_1.05fr] 2xl:gap-8">
           <Reveal className="rounded-[2rem] border border-[#ddd5c8]/80 bg-[linear-gradient(160deg,rgba(255,255,255,0.98),rgba(247,242,233,0.9))] p-5 shadow-[0_28px_52px_-36px_rgba(48,40,28,0.34)] sm:p-7 2xl:p-8">
             <div
               className="mb-6 h-px w-28 bg-[linear-gradient(to_right,rgba(13,148,136,0.72),rgba(13,148,136,0.08))]"

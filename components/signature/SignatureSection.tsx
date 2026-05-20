@@ -25,10 +25,10 @@ export function SignatureSection() {
   return (
     <section
       id={SECTION_IDS.signature}
-      className="scroll-mt-24 bg-background px-4 py-14 sm:px-8 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 bg-background px-4 py-12 sm:px-8 lg:px-14 2xl:px-20"
       aria-labelledby="signature-heading"
     >
-      <div className="mx-auto grid max-w-7xl 2xl:max-w-[90rem] gap-8 lg:grid-cols-[1.15fr_1fr] lg:items-center 2xl:gap-12">
+      <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.15fr_1fr] lg:items-center 2xl:max-w-[90rem] 2xl:gap-12">
         <Reveal
           className={cn(
             "relative isolate overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/8",
@@ -79,13 +79,13 @@ export function SignatureSection() {
             >
               No es solo destino. Es como lo vivis.
             </h2>
-            <p className="mt-5 text-lg leading-relaxed text-muted-foreground 2xl:text-xl">
+            <p className="mt-4 text-lg leading-relaxed text-muted-foreground 2xl:text-xl">
               Desde el primer WhatsApp, organizamos auto, alojamiento y
               experiencias para que disfrutes con todo resuelto.
             </p>
           </Reveal>
 
-          <Reveal delay={0.08} className="mt-7 flex flex-wrap gap-2.5">
+          <Reveal delay={0.08} className="mt-6 flex flex-wrap gap-2.5">
             {EXPERIENCE_CHIPS.map((chip) => (
               <span
                 key={chip}
@@ -101,7 +101,7 @@ export function SignatureSection() {
               href={`#${SECTION_IDS.planner}`}
               className={cn(
                 buttonVariants({ variant: "marketing", size: "lg" }),
-                "mt-8 inline-flex h-12 px-8 text-base font-semibold shadow-md 2xl:h-14 2xl:px-10 2xl:text-lg",
+                "mt-7 inline-flex h-12 px-8 text-base font-semibold shadow-md 2xl:h-14 2xl:px-10 2xl:text-lg",
               )}
             >
               Quiero mi propuesta por WhatsApp

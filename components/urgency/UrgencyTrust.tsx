@@ -29,7 +29,7 @@ export function UrgencyTrust() {
   return (
     <section
       id={SECTION_IDS.urgency}
-      className="scroll-mt-24 border-y border-border/70 bg-secondary/30 px-4 py-14 sm:px-8 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 border-y border-border/70 bg-secondary/30 px-4 py-12 sm:px-8 lg:px-14 2xl:px-20"
       aria-labelledby="urgencia-heading"
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
@@ -45,7 +45,7 @@ export function UrgencyTrust() {
           </h2>
         </Reveal>
 
-        <ul className="mt-12 grid gap-6 md:grid-cols-3 2xl:gap-8">
+        <ul className="mt-8 grid gap-6 md:grid-cols-3 2xl:gap-8">
           {SIGNALS.map((signal, index) => {
             const Icon = signal.icon;
             return (
