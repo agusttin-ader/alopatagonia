@@ -1,9 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { GALLERY_IMAGES, IMAGE_QUALITY_MAX, SECTION_IDS } from "@/lib/constants";
@@ -16,6 +16,8 @@ type DestinationEditorialItem = {
   description: string;
   imageIndexes: [number, number, number, number];
 };
+
+const BASE_DESTINATIONS_COUNT = 4;
 
 const DESTINATION_EDITORIAL_ITEMS: DestinationEditorialItem[] = [
   {
@@ -58,13 +60,48 @@ const DESTINATION_EDITORIAL_ITEMS: DestinationEditorialItem[] = [
       "Fauna marina, playas extensas y excursiones icónicas para sumar naturaleza y mar a tu itinerario.",
     imageIndexes: [0, 4, 5, 9],
   },
+  {
+    id: "villa-la-angostura",
+    name: "Villa La Angostura",
+    region: "Neuquen",
+    description:
+      "Lagos cristalinos, bosque andino y rutas escenicas para una experiencia tranquila y muy fotografiable.",
+    imageIndexes: [0, 1, 4, 6],
+  },
+  {
+    id: "el-bolson",
+    name: "El Bolson",
+    region: "Rio Negro",
+    description:
+      "Valle, cerros y aire de montaña para combinar naturaleza, senderos y pausas con ritmo relajado.",
+    imageIndexes: [2, 5, 8, 9],
+  },
+  {
+    id: "esquel",
+    name: "Esquel",
+    region: "Chubut",
+    description:
+      "Cordillera y paisajes patagonicos autenticos para sumar recorridos de naturaleza y aventura suave.",
+    imageIndexes: [3, 6, 7, 10],
+  },
+  {
+    id: "mendoza",
+    name: "Mendoza",
+    region: "Mendoza",
+    description:
+      "Montaña, rutas y experiencias al aire libre para integrar una extension con gran atractivo visual.",
+    imageIndexes: [1, 3, 8, 10],
+  },
 ];
 
 export function Destinations() {
   const [activeDestinationId, setActiveDestinationId] = useState(
     DESTINATION_EDITORIAL_ITEMS[0].id,
   );
+  const [showAllDestinations, setShowAllDestinations] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const mobileToggleRef = useRef<HTMLButtonElement>(null);
+  const desktopToggleRef = useRef<HTMLButtonElement>(null);
 
   const activeDestination = useMemo(
     () =>
@@ -81,6 +118,45 @@ export function Destinations() {
 
   const activeLightboxImage =
     lightboxIndex !== null ? activeImages[lightboxIndex] : null;
+
+  const primaryDestinations = useMemo(
+    () => DESTINATION_EDITORIAL_ITEMS.slice(0, BASE_DESTINATIONS_COUNT),
+    [],
+  );
+
+  const extraDestinations = useMemo(
+    () => DESTINATION_EDITORIAL_ITEMS.slice(BASE_DESTINATIONS_COUNT),
+    [],
+  );
+
+  const onToggleDestinations = (source: "mobile" | "desktop") => {
+    const anchor =
+      source === "mobile" ? mobileToggleRef.current : desktopToggleRef.current;
+    const topBefore = anchor?.getBoundingClientRect().top ?? null;
+
+    setShowAllDestinations((current) => {
+      const next = !current;
+      if (
+        !next &&
+        !primaryDestinations.some((item) => item.id === activeDestinationId)
+      ) {
+        setActiveDestinationId(primaryDestinations[0].id);
+      }
+      return next;
+    });
+
+    if (topBefore === null || !anchor) return;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const topAfter = anchor.getBoundingClientRect().top;
+        const delta = topBefore - topAfter;
+        if (Math.abs(delta) > 1) {
+          window.scrollBy({ top: delta, behavior: "auto" });
+        }
+      });
+    });
+  };
 
   useEffect(() => {
     setLightboxIndex(null);
@@ -140,11 +216,11 @@ export function Destinations() {
 
         <div className="mt-9 grid gap-8 lg:mt-12 lg:grid-cols-[minmax(260px,0.9fr)_1.1fr] lg:items-start 2xl:gap-12">
           <Reveal className="lg:hidden">
-            <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-              {DESTINATION_EDITORIAL_ITEMS.map((item) => {
+            <motion.ul layout className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+              {primaryDestinations.map((item) => {
                 const isActive = item.id === activeDestination.id;
                 return (
-                  <li key={item.id}>
+                  <motion.li key={item.id} layout>
                     <button
                       type="button"
                       onClick={() => setActiveDestinationId(item.id)}
@@ -174,18 +250,82 @@ export function Destinations() {
                         {item.region}
                       </span>
                     </button>
-                  </li>
+                  </motion.li>
                 );
               })}
-            </ul>
+              <AnimatePresence initial={false}>
+                {showAllDestinations
+                  ? extraDestinations.map((item) => {
+                      const isActive = item.id === activeDestination.id;
+                      return (
+                        <motion.li
+                          key={item.id}
+                          layout
+                          className="overflow-hidden"
+                          initial={{ opacity: 0, height: 0, y: -6 }}
+                          animate={{ opacity: 1, height: "auto", y: 0 }}
+                          exit={{ opacity: 0, height: 0, y: -4 }}
+                          transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                          <button
+                            type="button"
+                            onClick={() => setActiveDestinationId(item.id)}
+                            aria-pressed={isActive}
+                            className={cn(
+                              "group h-full w-full rounded-2xl border px-4 py-3 text-left transition",
+                              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2",
+                              isActive
+                                ? "border-black/18 bg-black/[0.03]"
+                                : "border-border/65 bg-card/70",
+                            )}
+                          >
+                            <span
+                              className={cn(
+                                "font-heading block text-[clamp(1.5rem,8vw,2.2rem)] font-semibold uppercase leading-[0.9] tracking-[-0.02em]",
+                                isActive ? "text-black" : "text-black/58",
+                              )}
+                            >
+                              {item.name}
+                            </span>
+                            <span
+                              className={cn(
+                                "mt-1.5 block text-[0.62rem] font-semibold uppercase tracking-[0.16em]",
+                                isActive ? "text-black/70" : "text-black/48",
+                              )}
+                            >
+                              {item.region}
+                            </span>
+                          </button>
+                        </motion.li>
+                      );
+                    })
+                  : null}
+              </AnimatePresence>
+            </motion.ul>
+            <div className="mt-3 flex justify-center">
+              <button
+                ref={mobileToggleRef}
+                type="button"
+                onClick={() => onToggleDestinations("mobile")}
+                className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-card/70 px-4 py-2 text-sm font-semibold text-foreground transition hover:bg-card"
+              >
+                {showAllDestinations ? "Ver menos" : "Ver mas destinos"}
+                <ChevronDown
+                  className={cn(
+                    "size-4 transition-transform duration-300",
+                    showAllDestinations && "rotate-180",
+                  )}
+                />
+              </button>
+            </div>
           </Reveal>
 
-          <Reveal className="lg:sticky lg:top-28">
-            <ul className="hidden space-y-2 lg:block">
-              {DESTINATION_EDITORIAL_ITEMS.map((item) => {
+          <Reveal>
+            <motion.ul layout className="hidden space-y-2 lg:block">
+              {primaryDestinations.map((item) => {
                 const isActive = item.id === activeDestination.id;
                 return (
-                  <li key={item.id}>
+                  <motion.li key={item.id} layout>
                     <button
                       type="button"
                       onClick={() => setActiveDestinationId(item.id)}
@@ -217,13 +357,78 @@ export function Destinations() {
                         {item.region}
                       </span>
                     </button>
-                  </li>
+                  </motion.li>
                 );
               })}
-            </ul>
+              <AnimatePresence initial={false}>
+                {showAllDestinations
+                  ? extraDestinations.map((item) => {
+                      const isActive = item.id === activeDestination.id;
+                      return (
+                        <motion.li
+                          key={item.id}
+                          layout
+                          className="overflow-hidden"
+                          initial={{ opacity: 0, height: 0, y: -8 }}
+                          animate={{ opacity: 1, height: "auto", y: 0 }}
+                          exit={{ opacity: 0, height: 0, y: -6 }}
+                          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                          <button
+                            type="button"
+                            onClick={() => setActiveDestinationId(item.id)}
+                            aria-pressed={isActive}
+                            className={cn(
+                              "group relative w-full rounded-xl px-1 py-2 text-left transition",
+                              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-4",
+                            )}
+                          >
+                            <span
+                              className={cn(
+                                "font-heading block text-[clamp(2rem,6.2vw,5.2rem)] font-semibold uppercase leading-[0.88] tracking-[-0.02em] transition-colors",
+                                isActive
+                                  ? "text-black"
+                                  : "text-black/32 group-hover:text-black/60",
+                              )}
+                            >
+                              {item.name}
+                            </span>
+                            <span
+                              className={cn(
+                                "mt-1 block text-xs font-semibold uppercase tracking-[0.18em] transition-colors",
+                                isActive
+                                  ? "text-black/70"
+                                  : "text-black/35 group-hover:text-black/55",
+                              )}
+                            >
+                              {item.region}
+                            </span>
+                          </button>
+                        </motion.li>
+                      );
+                    })
+                  : null}
+              </AnimatePresence>
+            </motion.ul>
+            <div className="mt-4 hidden lg:flex">
+              <button
+                ref={desktopToggleRef}
+                type="button"
+                onClick={() => onToggleDestinations("desktop")}
+                className="inline-flex items-center gap-2 rounded-full border border-black/15 bg-black/[0.03] px-4 py-2 text-sm font-semibold text-black/80 transition hover:bg-black/[0.06]"
+              >
+                {showAllDestinations ? "Ver menos" : "Ver mas destinos"}
+                <ChevronDown
+                  className={cn(
+                    "size-4 transition-transform duration-300",
+                    showAllDestinations && "rotate-180",
+                  )}
+                />
+              </button>
+            </div>
           </Reveal>
 
-          <Reveal>
+          <Reveal className="lg:sticky lg:top-28 lg:self-start">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeDestination.id}
