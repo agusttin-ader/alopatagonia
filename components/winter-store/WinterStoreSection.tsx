@@ -18,7 +18,7 @@ export function WinterStoreSection() {
   return (
     <section
       id={SECTION_IDS.winterShop}
-      className="scroll-mt-24 border-y border-border/70 bg-secondary/30 px-4 py-18 sm:px-8 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 border-y border-border/70 bg-secondary/30 px-4 py-14 sm:px-8 lg:px-14 2xl:px-20"
       aria-labelledby="winter-shop-heading"
     >
       <div className="mx-auto grid max-w-7xl 2xl:max-w-[90rem] gap-10 lg:grid-cols-2 lg:items-center lg:gap-14">

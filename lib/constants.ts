@@ -19,7 +19,6 @@ export const SECTION_IDS = {
   planner: "planear-viaje",
   community: "comunidad",
   signature: "esencia-alo",
-  gallery: "postales-reales",
   testimonials: "testimonios",
   howItWorks: "como-funciona",
   services: "beneficios",
@@ -152,39 +151,6 @@ export const SERVICES: ServiceItem[] = [
     description:
       "Tenés un solo contacto para ordenar fechas, traslados y reservas sin perder tiempo comparando por tu cuenta.",
     icon: Compass,
-  },
-];
-
-export type DestinationItem = {
-  name: string;
-  region: string;
-  description: string;
-};
-
-export const DESTINATIONS: DestinationItem[] = [
-  {
-    name: "San Carlos de Bariloche",
-    region: "Patagonia norte · Lagos",
-    description:
-      "Nahuel Huapi, Llao Llao, cerros y pistas: el clásico portal patagónico entre bosques y aguas turquesas.",
-  },
-  {
-    name: "El Calafate",
-    region: "Santa Cruz · Glaciares",
-    description:
-      "Hielo milenario, estancias y la escala del sur profundo; base ideal para el Perito Moreno y el entorno.",
-  },
-  {
-    name: "Ushuaia",
-    region: "Tierra del Fuego",
-    description:
-      "El fin del mundo: canales, senderos y cielos dramáticos en la ciudad más austral del continente.",
-  },
-  {
-    name: "El Chaltén y más",
-    region: "Ruta de los trekking",
-    description:
-      "Fitz Roy, senderos y cordillera; sumamos conexiones y extensiones según tu tiempo y energía.",
   },
 ];
 

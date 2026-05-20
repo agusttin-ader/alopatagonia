@@ -204,21 +204,21 @@ export function GlobalNav() {
     >
       <motion.div
         className={cn(
-          "relative border-b px-4 pb-3 pt-[max(0.75rem,env(safe-area-inset-top))] md:hidden",
+          "relative border-b px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] md:hidden",
           scrolled
             ? "border-border/80 bg-background shadow-[0_8px_20px_-18px_rgba(0,0,0,0.35)]"
             : "border-border/70 bg-background shadow-[0_6px_18px_-16px_rgba(0,0,0,0.28)]",
         )}
         animate={{
           paddingTop: scrolled
-            ? "max(0.58rem, env(safe-area-inset-top))"
-            : "max(0.75rem, env(safe-area-inset-top))",
+            ? "calc(env(safe-area-inset-top) + 0.58rem)"
+            : "calc(env(safe-area-inset-top) + 0.75rem)",
           paddingBottom: scrolled ? "0.58rem" : "0.75rem",
         }}
         transition={headerTransition}
       >
-        <div className="mx-auto flex h-11 max-w-7xl items-center justify-between">
-          <Link href="/" className="font-heading text-[1.12rem] font-semibold tracking-[0.02em] text-primary">
+        <div className="mx-auto flex h-12 max-w-7xl items-center justify-between">
+          <Link href="/" className="font-heading text-[1.22rem] font-semibold tracking-[0.02em] text-primary">
             {SITE.name}
           </Link>
           <Button
@@ -228,26 +228,26 @@ export function GlobalNav() {
             aria-expanded={mobileOpen}
             size="icon"
             variant="ghost"
-            className="min-h-11 min-w-11"
+            className="min-h-12 min-w-12"
             onClick={() => {
               setNavHidden(false);
               setMobileOpen((prev) => !prev);
             }}
           >
-            <span className="relative block size-5">
+            <span className="relative block size-6">
               <motion.span
-                className="absolute left-0 top-1/2 h-0.5 w-5 origin-center rounded-full bg-foreground"
-                animate={mobileOpen ? { rotate: 45, y: 0 } : { rotate: 0, y: -6 }}
+                className="absolute left-0 top-1/2 h-0.5 w-6 origin-center rounded-full bg-foreground"
+                animate={mobileOpen ? { rotate: 45, y: 0 } : { rotate: 0, y: -7 }}
                 transition={iconLineTransition}
               />
               <motion.span
-                className="absolute left-0 top-1/2 h-0.5 w-5 origin-center rounded-full bg-foreground"
+                className="absolute left-0 top-1/2 h-0.5 w-6 origin-center rounded-full bg-foreground"
                 animate={mobileOpen ? { opacity: 0, x: 4 } : { opacity: 1, x: 0 }}
                 transition={iconLineTransition}
               />
               <motion.span
-                className="absolute left-0 top-1/2 h-0.5 w-5 origin-center rounded-full bg-foreground"
-                animate={mobileOpen ? { rotate: -45, y: 0 } : { rotate: 0, y: 6 }}
+                className="absolute left-0 top-1/2 h-0.5 w-6 origin-center rounded-full bg-foreground"
+                animate={mobileOpen ? { rotate: -45, y: 0 } : { rotate: 0, y: 7 }}
                 transition={iconLineTransition}
               />
             </span>
@@ -317,7 +317,7 @@ export function GlobalNav() {
                   <Link
                     href="/"
                     onClick={() => setMobileOpen(false)}
-                    className="font-heading text-[1.36rem] font-semibold tracking-[0.015em] text-foreground"
+                    className="font-heading text-[1.48rem] font-semibold tracking-[0.015em] text-foreground"
                   >
                     {SITE.name}
                   </Link>
@@ -326,15 +326,15 @@ export function GlobalNav() {
                     variant="ghost"
                     size="icon"
                     aria-label="Cerrar menú"
-                    className="min-h-11 min-w-11"
+                    className="min-h-12 min-w-12"
                     onClick={() => {
                       setMobileOpen(false);
                       menuButtonRef.current?.focus();
                     }}
                   >
-                    <span className="relative block size-5">
-                      <span className="absolute left-0 top-1/2 h-0.5 w-5 -translate-y-1/2 rotate-45 rounded-full bg-foreground" />
-                      <span className="absolute left-0 top-1/2 h-0.5 w-5 -translate-y-1/2 -rotate-45 rounded-full bg-foreground" />
+                    <span className="relative block size-6">
+                      <span className="absolute left-0 top-1/2 h-0.5 w-6 -translate-y-1/2 rotate-45 rounded-full bg-foreground" />
+                      <span className="absolute left-0 top-1/2 h-0.5 w-6 -translate-y-1/2 -rotate-45 rounded-full bg-foreground" />
                     </span>
                   </Button>
                 </div>
@@ -375,7 +375,7 @@ export function GlobalNav() {
                             setMobileOpen(false);
                           }
                         }}
-                        className="motion-cta block rounded-xl px-4 py-4 text-[1.24rem] font-semibold leading-tight text-foreground hover:bg-secondary/65 hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-2"
+                        className="motion-cta block rounded-xl px-4 py-4 text-[1.32rem] font-semibold leading-tight text-foreground hover:bg-secondary/65 hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-2"
                       >
                         {link.label}
                       </Link>

@@ -8,7 +8,7 @@ export function Experience() {
   return (
     <section
       id={SECTION_IDS.experience}
-      className="scroll-mt-24 border-y border-border/70 bg-secondary/40 px-4 py-20 sm:px-8 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 border-y border-border/70 bg-secondary/40 px-4 py-14 sm:px-8 lg:px-14 2xl:px-20"
       aria-labelledby="experiencia-heading"
     >
       <div className="mx-auto grid max-w-7xl 2xl:max-w-[90rem] gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">

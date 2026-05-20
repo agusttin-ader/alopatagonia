@@ -25,7 +25,7 @@ export function SignatureSection() {
   return (
     <section
       id={SECTION_IDS.signature}
-      className="scroll-mt-24 bg-background px-4 py-18 sm:px-8 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 bg-background px-4 py-14 sm:px-8 lg:px-14 2xl:px-20"
       aria-labelledby="signature-heading"
     >
       <div className="mx-auto grid max-w-7xl 2xl:max-w-[90rem] gap-8 lg:grid-cols-[1.15fr_1fr] lg:items-center 2xl:gap-12">

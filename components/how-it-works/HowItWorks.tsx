@@ -29,7 +29,7 @@ export function HowItWorks() {
   return (
     <section
       id={SECTION_IDS.howItWorks}
-      className="scroll-mt-24 bg-background px-4 py-20 sm:px-8 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 bg-background px-4 py-14 sm:px-8 lg:px-14 2xl:px-20"
       aria-labelledby="como-funciona-heading"
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
@@ -45,7 +45,7 @@ export function HowItWorks() {
           </h2>
         </Reveal>
 
-        <ol className="mt-14 grid list-none gap-6 py-2 sm:mt-16 md:mt-20 md:grid-cols-3 md:items-stretch md:gap-6 lg:gap-8 2xl:gap-10">
+        <ol className="mt-10 grid list-none gap-6 py-2 sm:mt-16 md:mt-20 md:grid-cols-3 md:items-stretch md:gap-6 lg:gap-8 2xl:gap-10">
           {STEPS.map((step, index) => {
             const Icon = step.icon;
             return (

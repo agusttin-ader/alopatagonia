@@ -6,7 +6,7 @@ export function Testimonials() {
   return (
     <section
       id={SECTION_IDS.testimonials}
-      className="scroll-mt-24 bg-background px-4 py-20 sm:px-8 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 bg-background px-4 py-14 sm:px-8 lg:px-14 2xl:px-20"
       aria-labelledby="testimonios-heading"
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
@@ -26,7 +26,7 @@ export function Testimonials() {
           </p>
         </Reveal>
 
-        <ul className="mt-12 grid gap-6 sm:mt-14 sm:grid-cols-2 lg:gap-10 2xl:gap-12">
+        <ul className="mt-9 grid gap-6 sm:mt-14 sm:grid-cols-2 lg:gap-10 2xl:gap-12">
           {TESTIMONIALS.map((t, index) => (
             <li key={t.name}>
               <Reveal delay={index * 0.06}>

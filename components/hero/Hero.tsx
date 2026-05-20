@@ -15,6 +15,14 @@ export function Hero() {
         }}
         aria-hidden
       />
+      <div
+        className="pointer-events-none absolute -bottom-20 left-1/2 z-[4] h-28 w-[195%] -translate-x-1/2 rounded-t-[100%] bg-background sm:hidden"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute left-1/2 z-[4] hidden -translate-x-1/2 rounded-t-[100%] bg-background sm:block sm:-bottom-28 sm:h-32 sm:w-[140%] md:-bottom-32 md:h-36 md:w-[145%] lg:-bottom-36 lg:h-44 lg:w-[150%] 2xl:-bottom-44 2xl:h-56 2xl:w-[165%]"
+        aria-hidden
+      />
       <HeroClient />
     </header>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight, Mail } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
@@ -37,7 +38,7 @@ const MONTHS = [
 ];
 
 const fieldClassName =
-  "h-11 w-full rounded-2xl border border-input/80 bg-card/85 px-3.5 text-base sm:text-sm text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] outline-none transition duration-200 placeholder:text-muted-foreground/90 hover:border-primary/35 focus-visible:border-primary/70 focus-visible:ring-4 focus-visible:ring-primary/15";
+  "h-12 w-full rounded-xl border border-[#d9d2c5]/80 bg-[linear-gradient(160deg,rgba(255,255,255,0.97),rgba(251,248,242,0.93))] px-3.5 text-base sm:text-[0.98rem] text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_12px_26px_-24px_rgba(48,40,28,0.32)] outline-none transition duration-200 placeholder:text-muted-foreground/75 hover:border-[#cabfae] hover:bg-[linear-gradient(160deg,rgba(255,255,255,0.99),rgba(252,248,241,0.96))] focus-visible:border-primary/40 focus-visible:ring-4 focus-visible:ring-primary/14";
 const MAX_NAME_LENGTH = 70;
 const MAX_TRAVELERS_LENGTH = 2;
 
@@ -155,7 +156,7 @@ function DateField({
           aria-modal="false"
           aria-labelledby={triggerId}
           className={cn(
-            "absolute left-0 z-30 w-full max-w-[290px] rounded-2xl border border-border/80 bg-card/95 p-3 shadow-xl ring-1 ring-white/70 backdrop-blur-sm sm:w-[290px]",
+            "absolute left-0 z-30 w-full max-w-[290px] rounded-2xl border border-[#d9d2c5]/90 bg-[linear-gradient(150deg,rgba(255,255,255,0.99),rgba(249,245,237,0.96))] p-3 shadow-[0_20px_36px_-28px_rgba(44,36,25,0.3)] ring-1 ring-white/85 backdrop-blur-sm sm:w-[290px]",
             openUpward ? "bottom-[calc(100%+8px)]" : "top-[calc(100%+8px)]",
           )}
         >
@@ -167,7 +168,7 @@ function DateField({
                   new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1),
                 )
               }
-              className="inline-flex size-11 items-center justify-center rounded-lg text-foreground transition hover:bg-secondary/85"
+              className="inline-flex size-11 items-center justify-center rounded-lg text-foreground transition hover:bg-[#f2ede3]"
               aria-label="Mes anterior"
             >
               <ChevronLeft className="size-4" />
@@ -182,7 +183,7 @@ function DateField({
                   new Date(viewDate.getFullYear(), viewDate.getMonth() + 1, 1),
                 )
               }
-              className="inline-flex size-11 items-center justify-center rounded-lg text-foreground transition hover:bg-secondary/85"
+              className="inline-flex size-11 items-center justify-center rounded-lg text-foreground transition hover:bg-[#f2ede3]"
               aria-label="Mes siguiente"
             >
               <ChevronRight className="size-4" />
@@ -213,7 +214,7 @@ function DateField({
                   className={cn(
                     "h-11 rounded-lg text-xs font-medium transition",
                     day
-                      ? "text-foreground hover:bg-secondary/85"
+                      ? "text-foreground hover:bg-[#f2ede3]"
                       : "cursor-default opacity-0",
                     isSelected && "bg-primary text-primary-foreground hover:bg-primary",
                   )}
@@ -313,7 +314,7 @@ export function TripPlannerSection() {
   return (
     <section
       id={SECTION_IDS.planner}
-      className="scroll-mt-24 bg-background px-4 py-18 sm:px-8 sm:py-20 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 bg-background px-4 py-14 sm:px-8 sm:py-20 lg:px-14 2xl:px-20"
       aria-labelledby="planner-heading"
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
@@ -333,8 +334,12 @@ export function TripPlannerSection() {
           </p>
         </Reveal>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_1.05fr] 2xl:gap-8">
-          <Reveal className="rounded-3xl border border-border/80 bg-card p-5 shadow-sm sm:p-7 2xl:p-8">
+        <div className="mt-8 grid gap-6 lg:mt-10 lg:grid-cols-[1fr_1.05fr] 2xl:gap-8">
+          <Reveal className="rounded-[2rem] border border-[#ddd5c8]/80 bg-[linear-gradient(160deg,rgba(255,255,255,0.98),rgba(247,242,233,0.9))] p-5 shadow-[0_28px_52px_-36px_rgba(48,40,28,0.34)] sm:p-7 2xl:p-8">
+            <div
+              className="mb-6 h-px w-28 bg-[linear-gradient(to_right,rgba(13,148,136,0.72),rgba(13,148,136,0.08))]"
+              aria-hidden
+            />
             <form className="space-y-4">
               <label className="block space-y-1.5">
                 <span className="text-sm font-semibold text-foreground">Nombre</span>
@@ -360,6 +365,8 @@ export function TripPlannerSection() {
                     className={cn(
                       fieldClassName,
                       "flex min-h-11 items-center justify-between focus-visible:ring-primary/30",
+                      destinationOpen &&
+                        "border-primary/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.92),0_18px_36px_-28px_rgba(13,148,136,0.45)]",
                     )}
                     aria-haspopup="listbox"
                     aria-expanded={destinationOpen}
@@ -373,45 +380,51 @@ export function TripPlannerSection() {
                     </span>
                     <ChevronDown
                       className={cn(
-                        "size-4 text-muted-foreground transition-transform",
+                        "size-4 text-muted-foreground transition-transform duration-300",
                         destinationOpen && "rotate-180",
                       )}
                     />
                   </button>
 
-                  {destinationOpen && (
-                    <div
-                      id={destinationPanelId}
-                      role="listbox"
-                      aria-labelledby={destinationButtonId}
-                      className="absolute left-0 top-[calc(100%+8px)] z-30 w-full rounded-2xl border border-border/80 bg-card/95 p-2 shadow-xl ring-1 ring-white/70 backdrop-blur-sm"
-                    >
-                      <div className="max-h-64 overflow-auto">
-                        {PLANNER_DESTINATION_OPTIONS.map((option) => (
-                          <button
-                            key={option.value}
-                            type="button"
-                            onPointerDown={(event) => {
-                              event.preventDefault();
-                              event.stopPropagation();
-                              selectDestination(option.value);
-                            }}
-                            onClick={() => selectDestination(option.value)}
-                            className={cn(
-                              "w-full rounded-xl px-3 py-2.5 text-left text-sm transition",
-                              destination === option.value
-                                ? "bg-primary text-primary-foreground"
-                                : "text-foreground hover:bg-secondary/80",
-                            )}
-                            role="option"
-                            aria-selected={destination === option.value}
-                          >
-                            {option.label}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                  <AnimatePresence>
+                    {destinationOpen && (
+                      <motion.div
+                        id={destinationPanelId}
+                        role="listbox"
+                        aria-labelledby={destinationButtonId}
+                        className="absolute left-0 top-[calc(100%+8px)] z-30 w-full rounded-2xl border border-[#d9d2c5]/90 bg-[linear-gradient(150deg,rgba(255,255,255,0.99),rgba(249,245,237,0.96))] p-2 shadow-[0_20px_36px_-28px_rgba(44,36,25,0.3)] ring-1 ring-white/85 backdrop-blur-sm"
+                        initial={{ opacity: 0, y: -8, scale: 0.985 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: -6, scale: 0.99 }}
+                        transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                      >
+                        <div className="max-h-64 overflow-auto">
+                          {PLANNER_DESTINATION_OPTIONS.map((option) => (
+                            <button
+                              key={option.value}
+                              type="button"
+                              onPointerDown={(event) => {
+                                event.preventDefault();
+                                event.stopPropagation();
+                                selectDestination(option.value);
+                              }}
+                              onClick={() => selectDestination(option.value)}
+                              className={cn(
+                                "w-full rounded-xl px-3 py-2.5 text-left text-sm transition",
+                                destination === option.value
+                                  ? "bg-primary text-primary-foreground"
+                                  : "text-foreground hover:bg-[#f2ede3]",
+                              )}
+                              role="option"
+                              aria-selected={destination === option.value}
+                            >
+                              {option.label}
+                            </button>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               </label>
 
@@ -471,7 +484,7 @@ export function TripPlannerSection() {
               </div>
             </form>
 
-              <div className="mt-6 grid gap-3 sm:grid-cols-2 2xl:gap-4">
+            <div className="mt-6 grid gap-3 sm:grid-cols-2 2xl:gap-4">
               <a
                 href={whatsappUrl}
                 target="_blank"
@@ -506,7 +519,7 @@ export function TripPlannerSection() {
                 aria-disabled={!canSubmit}
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
-                  "h-12 rounded-full border-foreground/20 bg-background 2xl:h-14 2xl:text-lg",
+                  "h-12 rounded-full border-[#cfc5b4] bg-[#faf6ef] text-foreground hover:bg-white 2xl:h-14 2xl:text-lg",
                   !canSubmit && "pointer-events-none opacity-60",
                 )}
               >

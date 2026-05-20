@@ -91,7 +91,7 @@ export function InstagramStats() {
     <section
       ref={sectionRef}
       id={SECTION_IDS.community}
-      className="relative scroll-mt-24 overflow-hidden bg-zinc-950 px-4 py-20 text-zinc-100 sm:px-8 lg:px-16"
+      className="relative scroll-mt-24 overflow-hidden bg-zinc-950 px-4 py-14 text-zinc-100 sm:px-8 lg:px-16"
       aria-labelledby="comunidad-heading"
     >
       <div
@@ -128,7 +128,7 @@ export function InstagramStats() {
           </p>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 sm:mt-14 sm:grid-cols-3">
+        <div className="mt-9 grid gap-5 sm:mt-14 sm:grid-cols-3">
           {INSTAGRAM_STATS.map((item, index) => {
             const Icon =
               STAT_ICONS[item.id as keyof typeof STAT_ICONS] ?? Images;
@@ -168,7 +168,7 @@ export function InstagramStats() {
           })}
         </div>
 
-        <Reveal delay={0.2} className="mt-12 flex flex-col items-center gap-4">
+        <Reveal delay={0.2} className="mt-9 flex flex-col items-center gap-4 sm:mt-12">
           <p className="max-w-xl text-center text-sm text-zinc-500">
             Preferís ver reels, historias o el feed completo: es el mismo equipo
             que responde por WhatsApp cuando querés armar tu itinerario.

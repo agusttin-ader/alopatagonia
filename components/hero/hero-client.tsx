@@ -29,7 +29,7 @@ export function HeroClient() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <div className="relative z-10 flex min-h-[100dvh] flex-col justify-end px-4 pb-[max(7rem,calc(env(safe-area-inset-bottom)+6rem))] pt-24 sm:px-8 sm:pb-[max(6rem,calc(env(safe-area-inset-bottom)+5rem))] lg:px-14 2xl:px-20">
+    <div className="relative z-10 flex min-h-[100dvh] flex-col justify-end px-4 pb-[max(7rem,calc(env(safe-area-inset-bottom)+6rem))] pt-24 sm:px-8 sm:pb-[max(8rem,calc(env(safe-area-inset-bottom)+6.2rem))] lg:px-14 lg:pb-[max(8.8rem,calc(env(safe-area-inset-bottom)+6.8rem))] 2xl:px-20">
       <motion.div
         className="max-w-3xl 2xl:max-w-4xl [text-shadow:0_1px_4px_rgba(0,0,0,0.22)]"
         variants={container}
@@ -73,7 +73,7 @@ export function HeroClient() {
 
       <motion.a
         href={`#${SECTION_IDS.testimonials}`}
-        className="motion-cta absolute bottom-[max(2.4rem,calc(env(safe-area-inset-bottom)+1.8rem))] left-1/2 hidden min-h-11 -translate-x-1/2 flex-col items-center justify-center gap-1 text-white/90 hover:text-white min-[430px]:flex sm:bottom-[max(2rem,env(safe-area-inset-bottom))]"
+        className="motion-cta absolute bottom-[max(2.4rem,calc(env(safe-area-inset-bottom)+1.8rem))] left-1/2 hidden min-h-11 -translate-x-1/2 flex-col items-center justify-center gap-1 text-white/90 hover:text-white min-[430px]:flex sm:bottom-[max(4rem,calc(env(safe-area-inset-bottom)+3rem))] lg:bottom-[max(4.8rem,calc(env(safe-area-inset-bottom)+3.4rem))]"
         aria-label="Ir a testimonios"
         initial={reduceMotion ? false : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}

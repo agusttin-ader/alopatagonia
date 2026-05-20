@@ -5,7 +5,6 @@ import { InstagramStats } from "@/components/community/instagram-stats";
 import { Destinations } from "@/components/destinations/Destinations";
 import { Experience } from "@/components/experience/Experience";
 import { Footer } from "@/components/footer/Footer";
-import { ContextGallery } from "@/components/gallery/ContextGallery";
 import { Hero } from "@/components/hero/Hero";
 import { HowItWorks } from "@/components/how-it-works/HowItWorks";
 import { AlternatingSectionReveal } from "@/components/motion/alternating-section-reveal";
@@ -36,9 +35,6 @@ export default function Home() {
         </AlternatingSectionReveal>
         <AlternatingSectionReveal from="left">
           <TripPlannerSection />
-        </AlternatingSectionReveal>
-        <AlternatingSectionReveal from="right" delay={0.04}>
-          <ContextGallery />
         </AlternatingSectionReveal>
         <AlternatingSectionReveal from="left" delay={0.03}>
           <Testimonials />
