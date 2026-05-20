@@ -100,8 +100,8 @@ export function Destinations() {
   );
   const [showAllDestinations, setShowAllDestinations] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const mobileToggleRef = useRef<HTMLButtonElement>(null);
-  const desktopToggleRef = useRef<HTMLButtonElement>(null);
+  const mobileListRef = useRef<HTMLUListElement>(null);
+  const desktopListRef = useRef<HTMLUListElement>(null);
 
   const activeDestination = useMemo(
     () =>
@@ -130,9 +130,7 @@ export function Destinations() {
   );
 
   const onToggleDestinations = (source: "mobile" | "desktop") => {
-    const anchor =
-      source === "mobile" ? mobileToggleRef.current : desktopToggleRef.current;
-    const topBefore = anchor?.getBoundingClientRect().top ?? null;
+    const willCollapse = showAllDestinations;
 
     setShowAllDestinations((current) => {
       const next = !current;
@@ -145,17 +143,18 @@ export function Destinations() {
       return next;
     });
 
-    if (topBefore === null || !anchor) return;
+    if (!willCollapse) return;
 
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        const topAfter = anchor.getBoundingClientRect().top;
-        const delta = topBefore - topAfter;
-        if (Math.abs(delta) > 1) {
-          window.scrollBy({ top: delta, behavior: "auto" });
-        }
-      });
-    });
+    const target =
+      source === "mobile" ? mobileListRef.current : desktopListRef.current;
+    if (!target) return;
+
+    window.setTimeout(() => {
+      const offset = source === "mobile" ? 108 : 124;
+      const rect = target.getBoundingClientRect();
+      const top = Math.max(window.scrollY + rect.top - offset, 0);
+      window.scrollTo({ top, behavior: "smooth" });
+    }, 40);
   };
 
   useEffect(() => {
@@ -216,7 +215,11 @@ export function Destinations() {
 
         <div className="mt-9 grid gap-8 lg:mt-12 lg:grid-cols-[minmax(260px,0.9fr)_1.1fr] lg:items-start 2xl:gap-12">
           <Reveal className="lg:hidden">
-            <motion.ul layout className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+            <motion.ul
+              ref={mobileListRef}
+              layout
+              className="grid grid-cols-1 gap-2.5 sm:grid-cols-2"
+            >
               {primaryDestinations.map((item) => {
                 const isActive = item.id === activeDestination.id;
                 return (
@@ -272,7 +275,7 @@ export function Destinations() {
                             onClick={() => setActiveDestinationId(item.id)}
                             aria-pressed={isActive}
                             className={cn(
-                              "group h-full w-full rounded-2xl border px-4 py-3 text-left transition",
+                              "group h-full w-full cursor-pointer rounded-2xl border px-4 py-3 text-left transition",
                               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2",
                               isActive
                                 ? "border-black/18 bg-black/[0.03]"
@@ -304,7 +307,6 @@ export function Destinations() {
             </motion.ul>
             <div className="mt-3 flex justify-center">
               <button
-                ref={mobileToggleRef}
                 type="button"
                 onClick={() => onToggleDestinations("mobile")}
                 className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-card/70 px-4 py-2 text-sm font-semibold text-foreground transition hover:bg-card"
@@ -321,7 +323,11 @@ export function Destinations() {
           </Reveal>
 
           <Reveal>
-            <motion.ul layout className="hidden space-y-2 lg:block">
+            <motion.ul
+              ref={desktopListRef}
+              layout
+              className="hidden space-y-2 lg:block"
+            >
               {primaryDestinations.map((item) => {
                 const isActive = item.id === activeDestination.id;
                 return (
@@ -379,7 +385,7 @@ export function Destinations() {
                             onClick={() => setActiveDestinationId(item.id)}
                             aria-pressed={isActive}
                             className={cn(
-                              "group relative w-full rounded-xl px-1 py-2 text-left transition",
+                              "group relative w-full cursor-pointer rounded-xl px-1 py-2 text-left transition",
                               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-4",
                             )}
                           >
@@ -412,7 +418,6 @@ export function Destinations() {
             </motion.ul>
             <div className="mt-4 hidden lg:flex">
               <button
-                ref={desktopToggleRef}
                 type="button"
                 onClick={() => onToggleDestinations("desktop")}
                 className="inline-flex items-center gap-2 rounded-full border border-black/15 bg-black/[0.03] px-4 py-2 text-sm font-semibold text-black/80 transition hover:bg-black/[0.06]"
