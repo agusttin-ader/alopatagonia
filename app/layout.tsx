@@ -113,19 +113,16 @@ export default function RootLayout({
         <link rel="preload" href={SITE_INTRO_IMAGE} as="image" fetchPriority="high" />
         <style
           dangerouslySetInnerHTML={{
-            __html: `html{background-color:#0a0f0d}#site-intro-placeholder{background-color:#0a0f0d;background-image:url("${SITE_INTRO_IMAGE}");background-size:cover;background-position:center}body.site-intro-pending #site-intro-placeholder{display:block}`,
+            __html: `#site-intro-placeholder{background-image:url("${SITE_INTRO_IMAGE}");background-size:cover;background-position:center;background-repeat:no-repeat}body.site-intro-pending #site-intro-placeholder{display:block}`,
           }}
         />
-      </head>
-      <body
-        suppressHydrationWarning
-        className="flex min-h-dvh flex-col"
-      >
         <Script
           id="alo-site-intro-boot"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: SITE_INTRO_BOOT_SCRIPT }}
         />
+      </head>
+      <body suppressHydrationWarning className="flex min-h-dvh flex-col">
         <div
           id="site-intro-placeholder"
           suppressHydrationWarning

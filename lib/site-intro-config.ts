@@ -13,7 +13,7 @@ export const SITE_INTRO_OVERLAY_CSS =
 export const SITE_INTRO_ALWAYS_SHOW = true;
 
 /** Quita intro si no aplica; si aplica, asegura pending (keep in sync with SITE_INTRO_ALWAYS_SHOW) */
-export const SITE_INTRO_BOOT_SCRIPT = `(function(){try{var d="${SITE_INTRO_FALLBACK_BG}";document.documentElement.style.backgroundColor=d;document.body.style.backgroundColor=d;var r=window.matchMedia("(prefers-reduced-motion: reduce)").matches;var a=${SITE_INTRO_ALWAYS_SHOW};var s=sessionStorage.getItem("${SITE_INTRO_STORAGE_KEY}")==="1";if(r||(!a&&s)){document.body.classList.remove("site-intro-pending");document.documentElement.style.backgroundColor="";document.body.style.backgroundColor="";return;}document.body.classList.add("site-intro-pending");var i=new Image();i.src="${SITE_INTRO_IMAGE}";}catch(e){document.body.classList.remove("site-intro-pending");}})();`;
+export const SITE_INTRO_BOOT_SCRIPT = `(function(){try{var r=window.matchMedia("(prefers-reduced-motion: reduce)").matches;var a=${SITE_INTRO_ALWAYS_SHOW};var s=sessionStorage.getItem("${SITE_INTRO_STORAGE_KEY}")==="1";if(r||(!a&&s)){document.body.classList.remove("site-intro-pending");return;}document.body.classList.add("site-intro-pending");var i=new Image();i.src="${SITE_INTRO_IMAGE}";}catch(e){document.body.classList.remove("site-intro-pending");}})();`;
 
 /** A grande → palabra completa → capa sube */
 export const SITE_INTRO_TIMELINE_MS = {
@@ -37,10 +37,6 @@ export function shouldPlaySiteIntro(): boolean {
 export function setSiteIntroPending(pending: boolean) {
   if (typeof document === "undefined") return;
   document.body.classList.toggle("site-intro-pending", pending);
-  if (!pending) {
-    document.documentElement.style.backgroundColor = "";
-    document.body.style.backgroundColor = "";
-  }
 }
 
 /** Oculta el placeholder SSR cuando la intro animada de React ya está activa */

@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import Image from "next/image";
 import { useLayoutEffect, useState } from "react";
 
 import { SITE } from "@/lib/constants";
@@ -11,12 +10,9 @@ import {
   shouldPlaySiteIntro,
   SITE_INTRO_ALWAYS_SHOW,
   SITE_INTRO_HIDE_AFTER_MS,
-  SITE_INTRO_IMAGE,
-  SITE_INTRO_OVERLAY_CSS,
   SITE_INTRO_STORAGE_KEY,
   SITE_INTRO_TIMELINE_MS,
 } from "@/lib/site-intro-config";
-import { cn } from "@/lib/utils";
 
 const easeFlow = [0.22, 0.03, 0.26, 1] as const;
 const easeWipe = [0.4, 0, 0.2, 1] as const;
@@ -26,8 +22,6 @@ const WORD_SUFFIX = SITE.name.slice(1);
 const WORDMARK_BASE =
   "font-heading font-medium leading-[1.22] tracking-[-0.02em] text-white [text-shadow:0_4px_32px_rgba(0,0,0,0.8),0_2px_8px_rgba(0,0,0,0.55)]";
 
-const INTRO_OVERLAY_CLASS = "absolute inset-0";
-
 type IntroPhase = "letter" | "word" | "exit";
 
 function markIntroReveal() {
@@ -35,26 +29,35 @@ function markIntroReveal() {
   window.dispatchEvent(new CustomEvent("alo-site-intro-reveal"));
 }
 
+function setIntroExiting(exiting: boolean) {
+  if (typeof document === "undefined") return;
+  document.body.classList.toggle("site-intro-exiting", exiting);
+}
+
 export function SiteIntro() {
   const reduceMotion = useReducedMotion();
   const [isVisible, setIsVisible] = useState(false);
-  const [imageReady, setImageReady] = useState(false);
   const [phase, setPhase] = useState<IntroPhase>("letter");
 
   useLayoutEffect(() => {
     if (reduceMotion) {
       setSiteIntroPending(false);
+      setIntroExiting(false);
+      setSiteIntroPlaceholderHidden(true);
       markIntroReveal();
       return;
     }
 
     if (!shouldPlaySiteIntro()) {
       setSiteIntroPending(false);
+      setIntroExiting(false);
+      setSiteIntroPlaceholderHidden(true);
       markIntroReveal();
       return;
     }
 
     setSiteIntroPending(true);
+    setIntroExiting(false);
     setIsVisible(true);
     setPhase("letter");
 
@@ -64,6 +67,7 @@ export function SiteIntro() {
     const wordTimeoutId = window.setTimeout(() => setPhase("word"), wordAt);
     const exitTimeoutId = window.setTimeout(() => {
       setPhase("exit");
+      setIntroExiting(true);
       setSiteIntroPending(false);
       markIntroReveal();
     }, exitAt);
@@ -73,6 +77,7 @@ export function SiteIntro() {
         window.sessionStorage.setItem(SITE_INTRO_STORAGE_KEY, "1");
       }
       setIsVisible(false);
+      setIntroExiting(false);
       setSiteIntroPlaceholderHidden(true);
     }, SITE_INTRO_HIDE_AFTER_MS);
 
@@ -80,6 +85,7 @@ export function SiteIntro() {
       window.clearTimeout(wordTimeoutId);
       window.clearTimeout(exitTimeoutId);
       window.clearTimeout(hideTimeoutId);
+      setIntroExiting(false);
     };
   }, [reduceMotion]);
 
@@ -90,7 +96,8 @@ export function SiteIntro() {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[2200] overflow-hidden bg-[#0a0f0d]"
+      id="site-intro-overlay"
+      className="pointer-events-none fixed inset-0 z-[2200] overflow-hidden"
       initial={{ y: 0 }}
       animate={phase === "exit" ? { y: "-100%" } : { y: 0 }}
       transition={{
@@ -99,26 +106,6 @@ export function SiteIntro() {
       }}
       aria-hidden
     >
-      <Image
-        src={SITE_INTRO_IMAGE}
-        alt=""
-        fill
-        priority
-        sizes="100vw"
-        className={cn(
-          "object-cover transition-opacity duration-200",
-          imageReady ? "opacity-100" : "opacity-0",
-        )}
-        onLoadingComplete={() => {
-          setImageReady(true);
-          setSiteIntroPlaceholderHidden(true);
-        }}
-      />
-      <div
-        className={INTRO_OVERLAY_CLASS}
-        style={{ background: SITE_INTRO_OVERLAY_CSS }}
-      />
-
       <div className="absolute inset-0 flex items-center justify-center px-6 py-10 sm:px-10">
         <div
           className="relative z-10 inline-grid max-w-[min(100%,52rem)] items-center overflow-visible py-[0.14em] transition-[grid-template-columns] duration-[880ms] ease-[cubic-bezier(0.22,0.03,0.26,1)]"

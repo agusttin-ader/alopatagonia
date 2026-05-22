@@ -3,7 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { GALLERY_IMAGES, IMAGE_QUALITY_MAX, SECTION_IDS } from "@/lib/constants";
@@ -97,6 +97,12 @@ const DESTINATION_NAME_MOTION = {
   idle: { scale: 1 },
 };
 
+const MOBILE_PANEL_EASE = [0.22, 0.03, 0.26, 1] as const;
+const MOBILE_PANEL_OPEN_MS = 880;
+const MOBILE_IMAGE_STAGGER_MS = 110;
+
+const MOBILE_DESTINATIONS_MQ = "(max-width: 1023px)";
+
 function DestinationName({
   name,
   isActive,
@@ -124,12 +130,16 @@ function DestinationGallery({
   destination,
   images,
   onImageClick,
+  relaxedMotion = false,
 }: {
   destination: DestinationEditorialItem;
   images: (typeof GALLERY_IMAGES)[number][];
   onImageClick: (index: number) => void;
+  relaxedMotion?: boolean;
 }) {
   const reduceMotion = useReducedMotion();
+  const imageDuration = relaxedMotion ? 0.58 : 0.32;
+  const imageStagger = relaxedMotion ? MOBILE_IMAGE_STAGGER_MS / 1000 : 0.04;
 
   return (
     <>
@@ -140,12 +150,14 @@ function DestinationGallery({
             key={`${destination.id}-${image.src}`}
             onClick={() => onImageClick(index)}
             aria-label={`Expandir imagen de ${destination.name}`}
-            initial={reduceMotion ? false : { opacity: 0, scale: 0.985 }}
-            animate={{ opacity: 1, scale: 1 }}
+            initial={
+              reduceMotion ? false : { opacity: 0, y: relaxedMotion ? 14 : 0, scale: 0.985 }
+            }
+            animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{
-              duration: 0.32,
-              delay: reduceMotion ? 0 : 0.04 * index,
-              ease: [0.16, 1, 0.3, 1],
+              duration: reduceMotion ? 0 : imageDuration,
+              delay: reduceMotion ? 0 : imageStagger * index,
+              ease: MOBILE_PANEL_EASE,
             }}
             className="relative aspect-[5/4] overflow-hidden rounded-2xl bg-muted shadow-[0_16px_30px_-20px_rgba(15,23,42,0.32)] transition-transform hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2 sm:aspect-[4/3]"
           >
@@ -169,10 +181,13 @@ function DestinationGallery({
 }
 
 export function Destinations() {
+  const reduceMotion = useReducedMotion();
   const [activeDestinationId, setActiveDestinationId] = useState(
     DESTINATION_EDITORIAL_ITEMS[0].id,
   );
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const mobileItemRefs = useRef(new Map<string, HTMLLIElement>());
+  const skipNextMobileScroll = useRef(true);
 
   const activeDestination = useMemo(
     () =>
@@ -193,6 +208,30 @@ export function Destinations() {
   useEffect(() => {
     setLightboxIndex(null);
   }, [activeDestinationId]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!window.matchMedia(MOBILE_DESTINATIONS_MQ).matches) return;
+    if (skipNextMobileScroll.current) {
+      skipNextMobileScroll.current = false;
+      return;
+    }
+
+    const activeItem = mobileItemRefs.current.get(activeDestinationId);
+    if (!activeItem) return;
+
+    const scrollDelay = reduceMotion ? 0 : Math.round(MOBILE_PANEL_OPEN_MS * 0.42);
+
+    const timeoutId = window.setTimeout(() => {
+      activeItem.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "center",
+        inline: "nearest",
+      });
+    }, scrollDelay);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [activeDestinationId, reduceMotion]);
 
   useEffect(() => {
     if (lightboxIndex === null) return;
@@ -256,7 +295,14 @@ export function Destinations() {
                 );
 
                 return (
-                  <li key={item.id}>
+                  <li
+                    key={item.id}
+                    ref={(node) => {
+                      if (node) mobileItemRefs.current.set(item.id, node);
+                      else mobileItemRefs.current.delete(item.id);
+                    }}
+                    className={cn(isActive && "scroll-mt-4")}
+                  >
                     <button
                       type="button"
                       onClick={() => setActiveDestinationId(item.id)}
@@ -291,18 +337,32 @@ export function Destinations() {
                     <AnimatePresence initial={false}>
                       {isActive ? (
                         <motion.div
-                          key={item.id}
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+                          key={`${item.id}-panel`}
+                          initial={
+                            reduceMotion
+                              ? false
+                              : { opacity: 0, height: 0, y: -10 }
+                          }
+                          animate={{ opacity: 1, height: "auto", y: 0 }}
+                          exit={
+                            reduceMotion
+                              ? { opacity: 0, height: 0 }
+                              : { opacity: 0, height: 0, y: -6 }
+                          }
+                          transition={{
+                            duration: reduceMotion ? 0.01 : MOBILE_PANEL_OPEN_MS / 1000,
+                            ease: MOBILE_PANEL_EASE,
+                            opacity: { duration: reduceMotion ? 0.01 : 0.72 },
+                          }}
                           className="overflow-hidden"
+                          style={{ transformOrigin: "top center" }}
                         >
-                          <div className="pt-3">
+                          <div className="pt-4">
                             <DestinationGallery
                               destination={item}
                               images={itemImages}
                               onImageClick={setLightboxIndex}
+                              relaxedMotion
                             />
                           </div>
                         </motion.div>

@@ -221,14 +221,9 @@
   }
 }
 
-/* Site intro: foto desde el primer frame; sin flash del fondo crema del sitio */
+/* Site intro: una sola capa con foto (placeholder); sin flash negro/crema */
 body.site-intro-pending {
-  background-color: #0a0f0d !important;
   background-image: none !important;
-}
-
-html:has(body.site-intro-pending) {
-  background-color: #0a0f0d;
 }
 
 body.site-intro-pending #site-app-shell {
@@ -237,11 +232,11 @@ body.site-intro-pending #site-app-shell {
 
 #site-intro-placeholder {
   display: none;
-  background-color: #0a0f0d;
   background-image: url("/images/intro.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  will-change: transform;
 }
 
 #site-intro-placeholder::after {
@@ -257,6 +252,16 @@ body.site-intro-pending #site-app-shell {
   pointer-events: none;
 }
 
-body.site-intro-pending:not(.site-intro-placeholder-off) #site-intro-placeholder {
+body.site-intro-pending #site-intro-placeholder,
+body.site-intro-exiting #site-intro-placeholder {
   display: block;
+}
+
+body.site-intro-exiting #site-intro-placeholder {
+  transform: translateY(-100%);
+  transition: transform 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.site-intro-placeholder-off #site-intro-placeholder {
+  display: none !important;
 }
