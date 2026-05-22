@@ -15,6 +15,11 @@ export const HERO_COPY = {
   subline: "Auto + alojamiento + excursiones. Todo en un solo lugar.",
 } as const;
 
+export const SITE_INTRO_COPY = {
+  eyebrow: "Viajes y experiencias en la Patagonia",
+  tagline: HERO_COPY.subline,
+} as const;
+
 export const SECTION_IDS = {
   planner: "planear-viaje",
   community: "comunidad",

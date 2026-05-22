@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { NoZoomLock } from "@/components/mobile/no-zoom-lock";
@@ -7,6 +8,10 @@ import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { SiteIntro } from "@/components/motion/site-intro";
 import { GlobalNav } from "@/components/navigation/GlobalNav";
 import { SITE } from "@/lib/constants";
+import {
+  SITE_INTRO_BOOT_SCRIPT,
+  SITE_INTRO_IMAGE,
+} from "@/lib/site-intro-config";
 import "./globals.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://alopatagonia.com";
@@ -104,17 +109,45 @@ export default function RootLayout({
       lang="es"
       className={`${inter.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
-      <body className="flex min-h-dvh flex-col">
-        <script
+      <head>
+        <link rel="preload" href={SITE_INTRO_IMAGE} as="image" fetchPriority="high" />
+      </head>
+      <body suppressHydrationWarning className="flex min-h-dvh flex-col">
+        <Script
+          id="alo-site-intro-boot"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: SITE_INTRO_BOOT_SCRIPT }}
+        />
+        <div
+          id="site-intro-placeholder"
+          className="pointer-events-none fixed inset-0 z-[2199] overflow-hidden bg-[#161616]"
+          aria-hidden
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={SITE_INTRO_IMAGE}
+            alt=""
+            fetchPriority="high"
+            decoding="sync"
+            className="absolute inset-0 size-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/62 via-black/48 to-black/66" />
+          <div className="absolute inset-0 bg-black/18" />
+        </div>
+        <Script
+          id="alo-organization-jsonld"
           type="application/ld+json"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <MotionProvider>
           <NoZoomLock />
           <ScrollProgress />
           <SiteIntro />
-          <GlobalNav />
-          {children}
+          <div id="site-app-shell" className="flex min-h-dvh flex-1 flex-col">
+            <GlobalNav />
+            {children}
+          </div>
         </MotionProvider>
       </body>
     </html>

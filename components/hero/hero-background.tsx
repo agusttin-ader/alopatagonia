@@ -15,11 +15,13 @@ import {
 export function HeroBackground() {
   const reduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
-  const parallaxY = useTransform(scrollY, [0, 700], [0, 52]);
-  const parallaxScale = useTransform(scrollY, [0, 700], [1, 1.08]);
+  const parallaxY = useTransform(scrollY, [0, 640], [0, 40]);
+  const parallaxScale = useTransform(scrollY, [0, 640], [1, 1.04]);
   const [videoReady, setVideoReady] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
+  const [allowParallax, setAllowParallax] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const shouldAnimateBackground = !reduceMotion && allowParallax;
 
   const markReady = useCallback(() => {
     setVideoReady(true);
@@ -51,11 +53,27 @@ export function HeroBackground() {
     }
   }, []);
 
+  useEffect(() => {
+    if (reduceMotion) return;
+
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    const syncParallaxPreference = () => {
+      setAllowParallax(mediaQuery.matches);
+    };
+
+    syncParallaxPreference();
+    mediaQuery.addEventListener("change", syncParallaxPreference);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncParallaxPreference);
+    };
+  }, [reduceMotion]);
+
   if (videoFailed) {
     return (
       <motion.div
-        className="absolute inset-0 z-0"
-        style={reduceMotion ? undefined : { y: parallaxY, scale: parallaxScale }}
+        className="absolute inset-0 z-0 will-change-transform"
+        style={shouldAnimateBackground ? { y: parallaxY, scale: parallaxScale } : undefined}
       >
         <Image
           src={HERO_IMAGE.src}
@@ -73,8 +91,8 @@ export function HeroBackground() {
   return (
     <motion.video
       ref={videoRef}
-      className={`absolute inset-0 z-0 size-full object-cover transition-opacity duration-700 ease-out ${videoReady ? "opacity-100" : "opacity-85"}`}
-      style={reduceMotion ? undefined : { y: parallaxY, scale: parallaxScale }}
+      className={`absolute inset-0 z-0 size-full object-cover transition-opacity duration-700 ease-out will-change-transform ${videoReady ? "opacity-100" : "opacity-85"}`}
+      style={shouldAnimateBackground ? { y: parallaxY, scale: parallaxScale } : undefined}
       autoPlay
       muted
       loop

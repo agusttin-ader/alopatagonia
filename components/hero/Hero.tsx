@@ -1,3 +1,4 @@
+import { HeroAccent } from "./hero-accent";
 import { HeroBackground } from "./hero-background";
 import { HeroClient } from "./hero-client";
 
@@ -5,6 +6,7 @@ export function Hero() {
   return (
     <header className="relative isolate min-h-[100dvh] overflow-hidden bg-[#222601]">
       <HeroBackground />
+      <HeroAccent />
       <div
         className="pointer-events-none absolute inset-0 z-[2]"
         style={{

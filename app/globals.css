@@ -220,3 +220,16 @@
     grid-auto-flow: row dense;
   }
 }
+
+/* Site intro: hide app shell before React hydrates (see layout boot script) */
+body.site-intro-pending #site-app-shell {
+  visibility: hidden;
+}
+
+body.site-intro-pending #site-intro-placeholder {
+  display: block;
+}
+
+#site-intro-placeholder {
+  display: none;
+}
