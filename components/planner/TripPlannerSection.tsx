@@ -38,7 +38,7 @@ const MONTHS = [
 ];
 
 const fieldClassName =
-  "h-12 w-full rounded-xl border border-[#d9d2c5]/80 bg-[linear-gradient(160deg,rgba(255,255,255,0.97),rgba(251,248,242,0.93))] px-3.5 text-base sm:text-[0.98rem] text-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.9),0_12px_26px_-24px_rgba(48,40,28,0.32)] outline-none transition duration-200 placeholder:text-muted-foreground/75 hover:border-[#cabfae] hover:bg-[linear-gradient(160deg,rgba(255,255,255,0.99),rgba(252,248,241,0.96))] focus-visible:border-primary/40 focus-visible:ring-4 focus-visible:ring-primary/14";
+  "h-12 w-full rounded-xl border border-[#d9d2c5]/80 bg-[linear-gradient(160deg,rgba(248,242,232,0.97),rgba(241,234,220,0.93))] px-3.5 text-base sm:text-[0.98rem] text-foreground shadow-[inset_0_1px_0_rgba(252,246,236,0.9),0_12px_26px_-24px_rgba(48,40,28,0.32)] outline-none transition duration-200 placeholder:text-muted-foreground/75 hover:border-[#cabfae] hover:bg-[linear-gradient(160deg,rgba(250,244,234,0.99),rgba(244,237,224,0.96))] focus-visible:border-primary/40 focus-visible:ring-4 focus-visible:ring-primary/14";
 const MAX_NAME_LENGTH = 70;
 const MAX_TRAVELERS_LENGTH = 2;
 
@@ -156,7 +156,7 @@ function DateField({
           aria-modal="false"
           aria-labelledby={triggerId}
           className={cn(
-            "absolute left-0 z-30 w-full max-w-[290px] rounded-2xl border border-[#d9d2c5]/90 bg-[linear-gradient(150deg,rgba(255,255,255,0.99),rgba(249,245,237,0.96))] p-3 shadow-[0_20px_36px_-28px_rgba(44,36,25,0.3)] ring-1 ring-white/85 backdrop-blur-sm sm:w-[290px]",
+            "absolute left-0 z-30 w-full max-w-[290px] rounded-2xl border border-[#d9d2c5]/90 bg-[linear-gradient(150deg,rgba(250,244,234,0.99),rgba(243,236,222,0.96))] p-3 shadow-[0_20px_36px_-28px_rgba(44,36,25,0.3)] ring-1 ring-[#faf6ef]/85 backdrop-blur-sm sm:w-[290px]",
             openUpward ? "bottom-[calc(100%+8px)]" : "top-[calc(100%+8px)]",
           )}
         >
@@ -335,7 +335,7 @@ export function TripPlannerSection() {
         </Reveal>
 
         <div className="mt-7 grid gap-6 lg:mt-10 lg:grid-cols-[1fr_1.05fr] 2xl:gap-8">
-          <Reveal className="rounded-[2rem] border border-[#ddd5c8]/80 bg-[linear-gradient(160deg,rgba(255,255,255,0.98),rgba(247,242,233,0.9))] p-5 shadow-[0_28px_52px_-36px_rgba(48,40,28,0.34)] sm:p-7 2xl:p-8">
+          <Reveal className="rounded-[2rem] border border-[#ddd5c8]/80 bg-[linear-gradient(160deg,rgba(248,243,232,0.98),rgba(240,233,218,0.94))] p-5 shadow-[0_28px_52px_-36px_rgba(48,40,28,0.34)] sm:p-7 2xl:p-8">
             <div
               className="mb-6 h-px w-28 bg-[linear-gradient(to_right,rgba(13,148,136,0.72),rgba(13,148,136,0.08))]"
               aria-hidden
@@ -392,7 +392,7 @@ export function TripPlannerSection() {
                         id={destinationPanelId}
                         role="listbox"
                         aria-labelledby={destinationButtonId}
-                        className="absolute left-0 top-[calc(100%+8px)] z-30 w-full rounded-2xl border border-[#d9d2c5]/90 bg-[linear-gradient(150deg,rgba(255,255,255,0.99),rgba(249,245,237,0.96))] p-2 shadow-[0_20px_36px_-28px_rgba(44,36,25,0.3)] ring-1 ring-white/85 backdrop-blur-sm"
+                        className="absolute left-0 top-[calc(100%+8px)] z-30 w-full rounded-2xl border border-[#d9d2c5]/90 bg-[linear-gradient(150deg,rgba(250,244,234,0.99),rgba(243,236,222,0.96))] p-2 shadow-[0_20px_36px_-28px_rgba(44,36,25,0.3)] ring-1 ring-[#faf6ef]/85 backdrop-blur-sm"
                         initial={{ opacity: 0, y: -8, scale: 0.985 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -6, scale: 0.99 }}
@@ -519,7 +519,7 @@ export function TripPlannerSection() {
                 aria-disabled={!canSubmit}
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
-                  "h-12 rounded-full border-[#cfc5b4] bg-[#faf6ef] text-foreground hover:bg-white 2xl:h-14 2xl:text-lg",
+                  "h-12 rounded-full border-[#cfc5b4] bg-[#f5efe2] text-foreground hover:bg-[#faf6ef] 2xl:h-14 2xl:text-lg",
                   !canSubmit && "pointer-events-none opacity-60",
                 )}
               >

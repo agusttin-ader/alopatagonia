@@ -1,13 +1,13 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useLayoutEffect, useState } from "react";
 
 import { SITE } from "@/lib/constants";
 import {
   setSiteIntroPending,
-  setSiteIntroPlaceholderVisible,
+  setSiteIntroPlaceholderHidden,
   shouldPlaySiteIntro,
   SITE_INTRO_ALWAYS_SHOW,
   SITE_INTRO_HIDE_AFTER_MS,
@@ -20,10 +20,14 @@ const easeFlow = [0.22, 0.03, 0.26, 1] as const;
 const easeWipe = [0.4, 0, 0.2, 1] as const;
 
 const WORD_SUFFIX = SITE.name.slice(1);
-const WORDMARK_CLASS =
-  "font-heading text-[clamp(3.25rem,12vw,7rem)] font-medium leading-[1.12] tracking-[-0.025em] text-white [text-shadow:0_4px_28px_rgba(0,0,0,0.72),0_1px_3px_rgba(0,0,0,0.55)]";
 
-type IntroPhase = "letter" | "word" | "hold" | "exit";
+const WORDMARK_BASE =
+  "font-heading font-medium leading-[1.22] tracking-[-0.02em] text-white [text-shadow:0_4px_32px_rgba(0,0,0,0.8),0_2px_8px_rgba(0,0,0,0.55)]";
+
+const INTRO_OVERLAY =
+  "absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.62)_45%,rgba(0,0,0,0.8)_100%)]";
+
+type IntroPhase = "letter" | "word" | "exit";
 
 function markIntroReveal() {
   window.__aloIntroReveal = true;
@@ -50,104 +54,106 @@ export function SiteIntro() {
 
     setSiteIntroPending(true);
     setIsVisible(true);
-    setSiteIntroPlaceholderVisible(false);
+    setSiteIntroPlaceholderHidden(true);
     setPhase("letter");
 
-    const wordTimeoutId = window.setTimeout(() => {
-      setPhase("word");
-    }, SITE_INTRO_TIMELINE_MS.letter);
+    const wordAt = SITE_INTRO_TIMELINE_MS.letter;
+    const exitAt = wordAt + SITE_INTRO_TIMELINE_MS.word;
 
-    const holdTimeoutId = window.setTimeout(() => {
-      setPhase("hold");
-    }, SITE_INTRO_TIMELINE_MS.letter + SITE_INTRO_TIMELINE_MS.word);
-
+    const wordTimeoutId = window.setTimeout(() => setPhase("word"), wordAt);
     const exitTimeoutId = window.setTimeout(() => {
       setPhase("exit");
-      setSiteIntroPlaceholderVisible(false);
       setSiteIntroPending(false);
       markIntroReveal();
-    }, SITE_INTRO_TIMELINE_MS.letter + SITE_INTRO_TIMELINE_MS.word + SITE_INTRO_TIMELINE_MS.hold);
+    }, exitAt);
 
     const hideTimeoutId = window.setTimeout(() => {
       if (!SITE_INTRO_ALWAYS_SHOW) {
         window.sessionStorage.setItem(SITE_INTRO_STORAGE_KEY, "1");
       }
       setIsVisible(false);
-      setSiteIntroPlaceholderVisible(false);
-      window.dispatchEvent(new CustomEvent("alo-site-intro-complete"));
+      setSiteIntroPlaceholderHidden(true);
     }, SITE_INTRO_HIDE_AFTER_MS);
 
     return () => {
       window.clearTimeout(wordTimeoutId);
-      window.clearTimeout(holdTimeoutId);
       window.clearTimeout(exitTimeoutId);
       window.clearTimeout(hideTimeoutId);
     };
   }, [reduceMotion]);
 
-  const isWord = phase !== "letter";
-  const showText = phase === "letter" || phase === "word" || phase === "hold";
+  const isLetter = phase === "letter";
+  const isWord = phase === "word";
+
+  if (!isVisible) return null;
 
   return (
-    <AnimatePresence>
-      {isVisible ? (
-        <motion.div
-          className="fixed inset-0 z-[2200] overflow-hidden will-change-transform"
-          initial={{ y: 0 }}
-          animate={phase === "exit" ? { y: "-100%" } : { y: 0 }}
-          transition={{
-            duration: SITE_INTRO_TIMELINE_MS.exit / 1000,
-            ease: easeWipe,
-          }}
-          aria-hidden
-        >
-          <Image
-            src={SITE_INTRO_IMAGE}
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/62 via-black/48 to-black/66" />
-          <div className="absolute inset-0 bg-black/18" />
+    <motion.div
+      className="fixed inset-0 z-[2200] overflow-hidden"
+      initial={{ y: 0 }}
+      animate={phase === "exit" ? { y: "-100%" } : { y: 0 }}
+      transition={{
+        duration: SITE_INTRO_TIMELINE_MS.exit / 1000,
+        ease: easeWipe,
+      }}
+      aria-hidden
+    >
+      <Image
+        src={SITE_INTRO_IMAGE}
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+      />
+      <div className={INTRO_OVERLAY} />
 
-          <motion.div
-            className="absolute inset-0 flex items-center justify-center"
-            animate={{ opacity: showText ? 1 : 0 }}
-            transition={{ duration: 0.45, ease: easeFlow }}
+      <div className="absolute inset-0 flex items-center justify-center px-6 py-10 sm:px-10">
+        <div
+          className="relative z-10 inline-grid max-w-[min(100%,52rem)] items-center overflow-visible py-[0.14em] transition-[grid-template-columns] duration-[880ms] ease-[cubic-bezier(0.22,0.03,0.26,1)]"
+          style={{
+            gridTemplateColumns: isWord ? "auto 1fr" : "auto 0fr",
+          }}
+        >
+          <motion.span
+            className={`inline-block origin-center justify-self-center ${WORDMARK_BASE} text-[clamp(3rem,11vw,6.5rem)]`}
+            initial={reduceMotion ? false : { opacity: 0, scale: 3.4 }}
+            animate={{
+              opacity: 1,
+              scale: isLetter ? 4.1 : 1,
+            }}
+            transition={{
+              opacity: { duration: 0.65, ease: easeFlow },
+              scale: {
+                duration: isWord ? 0.95 : 0.8,
+                ease: easeFlow,
+              },
+            }}
           >
-            <div className="relative z-10 overflow-visible px-4 py-12 sm:px-8 sm:py-14">
-              <motion.div className="flex items-end justify-center overflow-visible">
-                <motion.span
-                  className={`inline-block origin-center ${WORDMARK_CLASS}`}
-                  initial={false}
-                  animate={{
-                    scale: isWord ? 1 : 3.6,
-                    x: 0,
-                  }}
-                  transition={{ duration: 1.05, ease: easeFlow }}
-                >
-                  {SITE.name.charAt(0)}
-                </motion.span>
-                <motion.span
-                  className={`inline-block overflow-visible ${WORDMARK_CLASS}`}
-                  initial={false}
-                  animate={{
-                    opacity: isWord ? 1 : 0,
-                    x: isWord ? 0 : 18,
-                    filter: isWord ? "blur(0px)" : "blur(4px)",
-                  }}
-                  transition={{ duration: 0.98, ease: easeFlow }}
-                  style={{ pointerEvents: isWord ? "auto" : "none" }}
-                >
-                  {WORD_SUFFIX}
-                </motion.span>
-              </motion.div>
-            </div>
-          </motion.div>
-        </motion.div>
-      ) : null}
-    </AnimatePresence>
+            {SITE.name.charAt(0)}
+          </motion.span>
+          <motion.span
+            className={`min-w-0 overflow-visible whitespace-nowrap ${WORDMARK_BASE} text-[clamp(3rem,11vw,6.5rem)]`}
+            initial={false}
+            animate={{
+              opacity: isWord ? 1 : 0,
+              x: isWord ? 0 : 14,
+              clipPath: isWord
+                ? "inset(-12% 0% -12% 0%)"
+                : "inset(-12% 100% -12% 0%)",
+            }}
+            transition={{
+              opacity: { duration: 0.75, ease: easeFlow },
+              clipPath: { duration: 0.88, ease: easeFlow },
+              x: { duration: 0.82, ease: easeFlow },
+            }}
+            style={{ pointerEvents: isWord ? "auto" : "none" }}
+            aria-hidden={!isWord}
+          >
+            {WORD_SUFFIX}
+          </motion.span>
+        </div>
+      </div>
+    </motion.div>
   );
 }

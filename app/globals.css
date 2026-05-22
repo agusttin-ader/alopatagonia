@@ -55,30 +55,30 @@
 
 :root {
   /* Tema claro (paleta inspirada en @alo_patagonia) */
-  --background: #f5f2e8;
+  --background: #f0eadc;
   --foreground: #1f2a1f;
-  --card: #fbf8ef;
+  --card: #f5efe2;
   --card-foreground: #1f2a1f;
-  --popover: #fbf8ef;
+  --popover: #f5efe2;
   --popover-foreground: #1f2a1f;
   --primary: #2d5a47;
-  --primary-foreground: #f5f2e8;
-  --secondary: #e9dfcc;
+  --primary-foreground: #f5efe2;
+  --secondary: #e5dac8;
   --secondary-foreground: #1f2a1f;
-  --muted: #efe7d6;
+  --muted: #e8dece;
   --muted-foreground: #6a746d;
   --accent: #6f8e88;
-  --accent-foreground: #f5f2e8;
+  --accent-foreground: #f5efe2;
   --brand-forest: #2d5a47;
-  --brand-forest-foreground: #f5f2e8;
+  --brand-forest-foreground: #f5efe2;
   --footer-lake: #0f7f79;
   --footer-lake-foreground: #eef8f6;
   --footer-lake-soft: #d8eeeb;
   --whatsapp: #25d366;
   --whatsapp-hover: #1fb85a;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #dccfb8;
-  --input: #dccfb8;
+  --border: #d4c5ad;
+  --input: #d4c5ad;
   --ring: #6f8e88;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
@@ -221,15 +221,16 @@
   }
 }
 
-/* Site intro: hide app shell before React hydrates (see layout boot script) */
+/* Site intro: visible desde el primer HTML; boot script quita pending si no aplica */
 body.site-intro-pending #site-app-shell {
   visibility: hidden;
 }
 
-body.site-intro-pending #site-intro-placeholder {
-  display: block;
-}
-
 #site-intro-placeholder {
   display: none;
+  background-color: #121816;
+}
+
+body.site-intro-pending:not(.site-intro-placeholder-off) #site-intro-placeholder {
+  display: block;
 }

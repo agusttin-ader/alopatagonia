@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 
 import { Reveal } from "@/components/motion/reveal";
+import { ScrollParallax } from "@/components/motion/scroll-parallax";
 import { buttonVariants } from "@/components/ui/button";
 import {
   IMAGE_QUALITY_MAX,
@@ -35,18 +36,20 @@ export function SignatureSection() {
             interactiveCardHover,
           )}
         >
-          <Image
-            src={EXPERIENCE_IMAGE.src}
-            alt="Ruta de lago y montana en Patagonia"
-            width={EXPERIENCE_IMAGE.width}
-            height={EXPERIENCE_IMAGE.height}
-            quality={IMAGE_QUALITY_MAX}
-            className="aspect-[16/11] size-full object-cover"
-            sizes="(min-width: 1024px) 52vw, 100vw"
-          />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+          <ScrollParallax strength={42} className="relative size-full">
+            <Image
+              src={EXPERIENCE_IMAGE.src}
+              alt="Ruta de lago y montana en Patagonia"
+              width={EXPERIENCE_IMAGE.width}
+              height={EXPERIENCE_IMAGE.height}
+              quality={IMAGE_QUALITY_MAX}
+              className="aspect-[16/11] size-full object-cover"
+              sizes="(min-width: 1024px) 52vw, 100vw"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+          </ScrollParallax>
           <motion.div
-            className="pointer-events-none absolute bottom-5 left-5 h-1 rounded-full bg-white/90"
+            className="pointer-events-none absolute bottom-5 left-5 z-10 h-1 rounded-full bg-white/90"
             initial={{ width: "20%" }}
             whileInView={{ width: "62%" }}
             viewport={{ once: true }}

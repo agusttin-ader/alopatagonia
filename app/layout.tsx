@@ -112,7 +112,10 @@ export default function RootLayout({
       <head>
         <link rel="preload" href={SITE_INTRO_IMAGE} as="image" fetchPriority="high" />
       </head>
-      <body suppressHydrationWarning className="flex min-h-dvh flex-col">
+      <body
+        suppressHydrationWarning
+        className="flex min-h-dvh flex-col"
+      >
         <Script
           id="alo-site-intro-boot"
           strategy="beforeInteractive"
@@ -120,20 +123,10 @@ export default function RootLayout({
         />
         <div
           id="site-intro-placeholder"
-          className="pointer-events-none fixed inset-0 z-[2199] overflow-hidden bg-[#161616]"
+          suppressHydrationWarning
+          className="pointer-events-none fixed inset-0 z-[2199]"
           aria-hidden
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={SITE_INTRO_IMAGE}
-            alt=""
-            fetchPriority="high"
-            decoding="sync"
-            className="absolute inset-0 size-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/62 via-black/48 to-black/66" />
-          <div className="absolute inset-0 bg-black/18" />
-        </div>
+        />
         <Script
           id="alo-organization-jsonld"
           type="application/ld+json"

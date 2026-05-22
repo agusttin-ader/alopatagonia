@@ -19,6 +19,7 @@ const HOME_LINKS = [
   { label: "Sobre nosotros", href: `#${SECTION_IDS.signature}`, id: SECTION_IDS.signature },
   { label: "Testimonios", href: `#${SECTION_IDS.testimonials}`, id: SECTION_IDS.testimonials },
   { label: "Servicios", href: `#${SECTION_IDS.services}`, id: SECTION_IDS.services },
+  { label: "Destinos", href: `#${SECTION_IDS.destinations}`, id: SECTION_IDS.destinations },
   { label: "Tu viaje", href: `#${SECTION_IDS.planner}`, id: SECTION_IDS.planner },
   { label: "Invierno", href: `#${SECTION_IDS.winterShop}`, id: SECTION_IDS.winterShop },
 ] as const;

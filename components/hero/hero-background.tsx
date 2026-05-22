@@ -12,6 +12,7 @@ import {
   HERO_VIDEO_PLAYBACK_RATE,
   IMAGE_QUALITY_MAX,
 } from "@/lib/constants";
+
 export function HeroBackground() {
   const reduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
@@ -48,7 +49,6 @@ export function HeroBackground() {
     v.muted = true;
     const maybePlay = v.play();
     if (maybePlay?.catch) {
-      // iOS can reject autoplay transiently; avoid switching to hard failure.
       maybePlay.catch(() => {});
     }
   }, []);
@@ -69,12 +69,13 @@ export function HeroBackground() {
     };
   }, [reduceMotion]);
 
+  const parallaxStyle = shouldAnimateBackground
+    ? { y: parallaxY, scale: parallaxScale }
+    : undefined;
+
   if (videoFailed) {
     return (
-      <motion.div
-        className="absolute inset-0 z-0 will-change-transform"
-        style={shouldAnimateBackground ? { y: parallaxY, scale: parallaxScale } : undefined}
-      >
+      <motion.div className="absolute inset-0 z-0" style={parallaxStyle}>
         <Image
           src={HERO_IMAGE.src}
           alt={HERO_IMAGE.alt}
@@ -91,13 +92,13 @@ export function HeroBackground() {
   return (
     <motion.video
       ref={videoRef}
-      className={`absolute inset-0 z-0 size-full object-cover transition-opacity duration-700 ease-out will-change-transform ${videoReady ? "opacity-100" : "opacity-85"}`}
-      style={shouldAnimateBackground ? { y: parallaxY, scale: parallaxScale } : undefined}
+      className={`absolute inset-0 z-0 size-full object-cover transition-opacity duration-700 ease-out ${videoReady ? "opacity-100" : "opacity-85"}`}
+      style={parallaxStyle}
       autoPlay
       muted
       loop
       playsInline
-      preload="metadata"
+      preload="auto"
       poster="/videos/hero-poster.jpg"
       aria-hidden
       onLoadedMetadata={(e) => applyPlaybackRate(e.currentTarget)}

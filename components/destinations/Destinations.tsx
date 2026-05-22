@@ -1,9 +1,9 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { GALLERY_IMAGES, IMAGE_QUALITY_MAX, SECTION_IDS } from "@/lib/constants";
@@ -16,8 +16,6 @@ type DestinationEditorialItem = {
   description: string;
   imageIndexes: [number, number, number, number];
 };
-
-const BASE_DESTINATIONS_COUNT = 4;
 
 const DESTINATION_EDITORIAL_ITEMS: DestinationEditorialItem[] = [
   {
@@ -94,14 +92,87 @@ const DESTINATION_EDITORIAL_ITEMS: DestinationEditorialItem[] = [
   },
 ];
 
+const DESTINATION_NAME_MOTION = {
+  active: { scale: 1.06 },
+  idle: { scale: 1 },
+};
+
+function DestinationName({
+  name,
+  isActive,
+  className,
+}: {
+  name: string;
+  isActive: boolean;
+  className?: string;
+}) {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <motion.span
+      className={cn("inline-block origin-left", className)}
+      initial={false}
+      animate={reduceMotion ? undefined : isActive ? DESTINATION_NAME_MOTION.active : DESTINATION_NAME_MOTION.idle}
+      transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {name}
+    </motion.span>
+  );
+}
+
+function DestinationGallery({
+  destination,
+  images,
+  onImageClick,
+}: {
+  destination: DestinationEditorialItem;
+  images: (typeof GALLERY_IMAGES)[number][];
+  onImageClick: (index: number) => void;
+}) {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <>
+      <div className="grid grid-cols-2 gap-3">
+        {images.map((image, index) => (
+          <motion.button
+            type="button"
+            key={`${destination.id}-${image.src}`}
+            onClick={() => onImageClick(index)}
+            aria-label={`Expandir imagen de ${destination.name}`}
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.985 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 0.32,
+              delay: reduceMotion ? 0 : 0.04 * index,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="relative aspect-[5/4] overflow-hidden rounded-2xl bg-muted shadow-[0_16px_30px_-20px_rgba(15,23,42,0.32)] transition-transform hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2 sm:aspect-[4/3]"
+          >
+            <Image
+              src={image.src}
+              alt={image.alt}
+              fill
+              quality={IMAGE_QUALITY_MAX}
+              className="object-cover"
+              sizes="(min-width: 1280px) 28vw, (min-width: 1024px) 36vw, 100vw"
+              loading="lazy"
+            />
+          </motion.button>
+        ))}
+      </div>
+      <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:mt-5 sm:text-lg">
+        {destination.description}
+      </p>
+    </>
+  );
+}
+
 export function Destinations() {
   const [activeDestinationId, setActiveDestinationId] = useState(
     DESTINATION_EDITORIAL_ITEMS[0].id,
   );
-  const [showAllDestinations, setShowAllDestinations] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const mobileListRef = useRef<HTMLUListElement>(null);
-  const desktopListRef = useRef<HTMLUListElement>(null);
 
   const activeDestination = useMemo(
     () =>
@@ -118,44 +189,6 @@ export function Destinations() {
 
   const activeLightboxImage =
     lightboxIndex !== null ? activeImages[lightboxIndex] : null;
-
-  const primaryDestinations = useMemo(
-    () => DESTINATION_EDITORIAL_ITEMS.slice(0, BASE_DESTINATIONS_COUNT),
-    [],
-  );
-
-  const extraDestinations = useMemo(
-    () => DESTINATION_EDITORIAL_ITEMS.slice(BASE_DESTINATIONS_COUNT),
-    [],
-  );
-
-  const onToggleDestinations = (source: "mobile" | "desktop") => {
-    const willCollapse = showAllDestinations;
-
-    setShowAllDestinations((current) => {
-      const next = !current;
-      if (
-        !next &&
-        !primaryDestinations.some((item) => item.id === activeDestinationId)
-      ) {
-        setActiveDestinationId(primaryDestinations[0].id);
-      }
-      return next;
-    });
-
-    if (!willCollapse) return;
-
-    const target =
-      source === "mobile" ? mobileListRef.current : desktopListRef.current;
-    if (!target) return;
-
-    window.setTimeout(() => {
-      const offset = source === "mobile" ? 108 : 124;
-      const rect = target.getBoundingClientRect();
-      const top = Math.max(window.scrollY + rect.top - offset, 0);
-      window.scrollTo({ top, behavior: "smooth" });
-    }, 40);
-  };
 
   useEffect(() => {
     setLightboxIndex(null);
@@ -215,35 +248,36 @@ export function Destinations() {
 
         <div className="mt-7 grid gap-6 lg:mt-12 lg:grid-cols-[minmax(260px,0.9fr)_1.1fr] lg:items-start 2xl:gap-12">
           <Reveal className="lg:hidden">
-            <motion.ul
-              ref={mobileListRef}
-              layout
-              className="grid grid-cols-1 gap-2.5 sm:grid-cols-2"
-            >
-              {primaryDestinations.map((item) => {
+            <ul className="flex flex-col gap-2.5">
+              {DESTINATION_EDITORIAL_ITEMS.map((item) => {
                 const isActive = item.id === activeDestination.id;
+                const itemImages = item.imageIndexes.map(
+                  (imageIndex) => GALLERY_IMAGES[imageIndex],
+                );
+
                 return (
-                  <motion.li key={item.id} layout>
+                  <li key={item.id}>
                     <button
                       type="button"
                       onClick={() => setActiveDestinationId(item.id)}
                       aria-pressed={isActive}
+                      aria-expanded={isActive}
                       className={cn(
-                        "group h-full w-full rounded-2xl border px-4 py-3 text-left transition",
+                        "group w-full rounded-2xl border px-4 py-3 text-left transition",
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2",
                         isActive
                           ? "border-black/18 bg-black/[0.03]"
                           : "border-border/65 bg-card/70",
                       )}
                     >
-                      <span
+                      <DestinationName
+                        name={item.name}
+                        isActive={isActive}
                         className={cn(
                           "font-heading block text-[clamp(1.5rem,8vw,2.2rem)] font-semibold uppercase leading-[0.9] tracking-[-0.02em]",
                           isActive ? "text-black" : "text-black/58",
                         )}
-                      >
-                        {item.name}
-                      </span>
+                      />
                       <span
                         className={cn(
                           "mt-1.5 block text-[0.62rem] font-semibold uppercase tracking-[0.16em]",
@@ -253,82 +287,36 @@ export function Destinations() {
                         {item.region}
                       </span>
                     </button>
-                  </motion.li>
+
+                    <AnimatePresence initial={false}>
+                      {isActive ? (
+                        <motion.div
+                          key={item.id}
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pt-3">
+                            <DestinationGallery
+                              destination={item}
+                              images={itemImages}
+                              onImageClick={setLightboxIndex}
+                            />
+                          </div>
+                        </motion.div>
+                      ) : null}
+                    </AnimatePresence>
+                  </li>
                 );
               })}
-              <AnimatePresence initial={false}>
-                {showAllDestinations
-                  ? extraDestinations.map((item) => {
-                      const isActive = item.id === activeDestination.id;
-                      return (
-                        <motion.li
-                          key={item.id}
-                          layout
-                          className="overflow-hidden"
-                          initial={{ opacity: 0, height: 0, y: -6 }}
-                          animate={{ opacity: 1, height: "auto", y: 0 }}
-                          exit={{ opacity: 0, height: 0, y: -4 }}
-                          transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-                        >
-                          <button
-                            type="button"
-                            onClick={() => setActiveDestinationId(item.id)}
-                            aria-pressed={isActive}
-                            className={cn(
-                              "group h-full w-full cursor-pointer rounded-2xl border px-4 py-3 text-left transition",
-                              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2",
-                              isActive
-                                ? "border-black/18 bg-black/[0.03]"
-                                : "border-border/65 bg-card/70",
-                            )}
-                          >
-                            <span
-                              className={cn(
-                                "font-heading block text-[clamp(1.5rem,8vw,2.2rem)] font-semibold uppercase leading-[0.9] tracking-[-0.02em]",
-                                isActive ? "text-black" : "text-black/58",
-                              )}
-                            >
-                              {item.name}
-                            </span>
-                            <span
-                              className={cn(
-                                "mt-1.5 block text-[0.62rem] font-semibold uppercase tracking-[0.16em]",
-                                isActive ? "text-black/70" : "text-black/48",
-                              )}
-                            >
-                              {item.region}
-                            </span>
-                          </button>
-                        </motion.li>
-                      );
-                    })
-                  : null}
-              </AnimatePresence>
-            </motion.ul>
-            <div className="mt-3 flex justify-center">
-              <button
-                type="button"
-                onClick={() => onToggleDestinations("mobile")}
-                className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-card/70 px-4 py-2 text-sm font-semibold text-foreground transition hover:bg-card"
-              >
-                {showAllDestinations ? "Ver menos" : "Ver mas destinos"}
-                <ChevronDown
-                  className={cn(
-                    "size-4 transition-transform duration-300",
-                    showAllDestinations && "rotate-180",
-                  )}
-                />
-              </button>
-            </div>
+            </ul>
           </Reveal>
 
           <Reveal>
-            <motion.ul
-              ref={desktopListRef}
-              layout
-              className="hidden space-y-2 lg:block"
-            >
-              {primaryDestinations.map((item) => {
+            <motion.ul layout className="hidden space-y-2 lg:block">
+              {DESTINATION_EDITORIAL_ITEMS.map((item) => {
                 const isActive = item.id === activeDestination.id;
                 return (
                   <motion.li key={item.id} layout>
@@ -342,16 +330,16 @@ export function Destinations() {
                         "rounded-xl px-1 py-2",
                       )}
                     >
-                      <span
+                      <DestinationName
+                        name={item.name}
+                        isActive={isActive}
                         className={cn(
                           "font-heading block text-[clamp(2rem,6.2vw,5.2rem)] font-semibold uppercase leading-[0.88] tracking-[-0.02em] transition-colors",
                           isActive
                             ? "text-black"
                             : "text-black/32 group-hover:text-black/60",
                         )}
-                      >
-                        {item.name}
-                      </span>
+                      />
                       <span
                         className={cn(
                           "mt-1 block text-xs font-semibold uppercase tracking-[0.18em] transition-colors",
@@ -366,74 +354,10 @@ export function Destinations() {
                   </motion.li>
                 );
               })}
-              <AnimatePresence initial={false}>
-                {showAllDestinations
-                  ? extraDestinations.map((item) => {
-                      const isActive = item.id === activeDestination.id;
-                      return (
-                        <motion.li
-                          key={item.id}
-                          layout
-                          className="overflow-hidden"
-                          initial={{ opacity: 0, height: 0, y: -8 }}
-                          animate={{ opacity: 1, height: "auto", y: 0 }}
-                          exit={{ opacity: 0, height: 0, y: -6 }}
-                          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                        >
-                          <button
-                            type="button"
-                            onClick={() => setActiveDestinationId(item.id)}
-                            aria-pressed={isActive}
-                            className={cn(
-                              "group relative w-full cursor-pointer rounded-xl px-1 py-2 text-left transition",
-                              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-4",
-                            )}
-                          >
-                            <span
-                              className={cn(
-                                "font-heading block text-[clamp(2rem,6.2vw,5.2rem)] font-semibold uppercase leading-[0.88] tracking-[-0.02em] transition-colors",
-                                isActive
-                                  ? "text-black"
-                                  : "text-black/32 group-hover:text-black/60",
-                              )}
-                            >
-                              {item.name}
-                            </span>
-                            <span
-                              className={cn(
-                                "mt-1 block text-xs font-semibold uppercase tracking-[0.18em] transition-colors",
-                                isActive
-                                  ? "text-black/70"
-                                  : "text-black/35 group-hover:text-black/55",
-                              )}
-                            >
-                              {item.region}
-                            </span>
-                          </button>
-                        </motion.li>
-                      );
-                    })
-                  : null}
-              </AnimatePresence>
             </motion.ul>
-            <div className="mt-4 hidden lg:flex">
-              <button
-                type="button"
-                onClick={() => onToggleDestinations("desktop")}
-                className="inline-flex items-center gap-2 rounded-full border border-black/15 bg-black/[0.03] px-4 py-2 text-sm font-semibold text-black/80 transition hover:bg-black/[0.06]"
-              >
-                {showAllDestinations ? "Ver menos" : "Ver mas destinos"}
-                <ChevronDown
-                  className={cn(
-                    "size-4 transition-transform duration-300",
-                    showAllDestinations && "rotate-180",
-                  )}
-                />
-              </button>
-            </div>
           </Reveal>
 
-          <Reveal className="lg:sticky lg:top-28 lg:self-start">
+          <Reveal className="hidden lg:sticky lg:block lg:top-28 lg:self-start">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeDestination.id}
@@ -442,38 +366,11 @@ export function Destinations() {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
               >
-                <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                  {activeImages.map((image, index) => (
-                    <motion.button
-                      type="button"
-                      key={`${activeDestination.id}-${image.src}`}
-                      onClick={() => setLightboxIndex(index)}
-                      aria-label={`Expandir imagen de ${activeDestination.name}`}
-                      initial={{ opacity: 0, scale: 0.985 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{
-                        duration: 0.32,
-                        delay: 0.04 * index,
-                        ease: [0.16, 1, 0.3, 1],
-                      }}
-                      className="relative aspect-[5/4] overflow-hidden rounded-2xl bg-muted shadow-[0_16px_30px_-20px_rgba(15,23,42,0.32)] transition-transform hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2 sm:aspect-[4/3]"
-                    >
-                      <Image
-                        src={image.src}
-                        alt={image.alt}
-                        fill
-                        quality={IMAGE_QUALITY_MAX}
-                        className="object-cover"
-                        sizes="(min-width: 1280px) 28vw, (min-width: 1024px) 36vw, (min-width: 640px) 50vw, 100vw"
-                        loading="lazy"
-                      />
-                    </motion.button>
-                  ))}
-                </div>
-
-                <p className="mt-5 text-base leading-relaxed text-muted-foreground sm:text-lg">
-                  {activeDestination.description}
-                </p>
+                <DestinationGallery
+                  destination={activeDestination}
+                  images={activeImages}
+                  onImageClick={setLightboxIndex}
+                />
               </motion.div>
             </AnimatePresence>
           </Reveal>

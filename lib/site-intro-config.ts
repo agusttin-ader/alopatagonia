@@ -2,26 +2,26 @@
 export const SITE_INTRO_STORAGE_KEY = "alo-site-intro-seen-v2";
 
 export const SITE_INTRO_IMAGE = "/images/intro.jpg";
+/** Tono oscuro cercano a intro.jpg mientras carga (evitar gris neutro) */
+export const SITE_INTRO_FALLBACK_BG = "#121816";
 
-/** Inline boot script — use only via next/script `beforeInteractive` in root layout */
-export const SITE_INTRO_BOOT_SCRIPT = `(function(){try{var r=window.matchMedia("(prefers-reduced-motion: reduce)").matches;var a=true;var s=sessionStorage.getItem("${SITE_INTRO_STORAGE_KEY}")==="1";if(!r&&(a||!s)){document.body.classList.add("site-intro-pending");var i=new Image();i.src="${SITE_INTRO_IMAGE}";}}catch(e){}})();`;
+/** Set false for production: show intro once per browser session */
+export const SITE_INTRO_ALWAYS_SHOW = true;
 
-/** letter → word → hold (texto sobre imagen) → exit (capa sube) */
+/** Quita intro si no aplica; si aplica, asegura pending (keep in sync with SITE_INTRO_ALWAYS_SHOW) */
+export const SITE_INTRO_BOOT_SCRIPT = `(function(){try{var r=window.matchMedia("(prefers-reduced-motion: reduce)").matches;var a=${SITE_INTRO_ALWAYS_SHOW};var s=sessionStorage.getItem("${SITE_INTRO_STORAGE_KEY}")==="1";if(r||(!a&&s)){document.body.classList.remove("site-intro-pending");return;}document.body.classList.add("site-intro-pending");}catch(e){document.body.classList.remove("site-intro-pending");}})();`;
+
+/** A grande → palabra completa → capa sube */
 export const SITE_INTRO_TIMELINE_MS = {
-  letter: 980,
-  word: 1100,
-  hold: 900,
-  exit: 1200,
+  letter: 1100,
+  word: 1700,
+  exit: 1100,
 } as const;
 
 export const SITE_INTRO_HIDE_AFTER_MS =
   SITE_INTRO_TIMELINE_MS.letter +
   SITE_INTRO_TIMELINE_MS.word +
-  SITE_INTRO_TIMELINE_MS.hold +
   SITE_INTRO_TIMELINE_MS.exit;
-
-/** Set false for production: show intro once per browser session */
-export const SITE_INTRO_ALWAYS_SHOW = true;
 
 export function shouldPlaySiteIntro(): boolean {
   if (typeof window === "undefined") return false;
@@ -35,9 +35,8 @@ export function setSiteIntroPending(pending: boolean) {
   document.body.classList.toggle("site-intro-pending", pending);
 }
 
-export function setSiteIntroPlaceholderVisible(visible: boolean) {
+/** Oculta el placeholder SSR cuando la intro animada de React ya está activa */
+export function setSiteIntroPlaceholderHidden(hidden: boolean) {
   if (typeof document === "undefined") return;
-  const placeholder = document.getElementById("site-intro-placeholder");
-  if (!placeholder) return;
-  placeholder.style.display = visible ? "block" : "none";
+  document.body.classList.toggle("site-intro-placeholder-off", hidden);
 }

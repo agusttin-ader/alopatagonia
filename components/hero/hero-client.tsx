@@ -37,12 +37,7 @@ export function HeroClient() {
   );
 
   useEffect(() => {
-    if (reduceMotion || !shouldPlaySiteIntro()) {
-      setHeroRevealed(true);
-      return;
-    }
-
-    if (window.__aloIntroReveal) {
+    if (reduceMotion || !shouldPlaySiteIntro() || window.__aloIntroReveal) {
       setHeroRevealed(true);
       return;
     }
@@ -55,9 +50,10 @@ export function HeroClient() {
     const onReveal = () => setHeroRevealed(true);
     window.addEventListener("alo-site-intro-reveal", onReveal);
 
-    const fallbackId = window.setTimeout(() => {
-      setHeroRevealed(true);
-    }, SITE_INTRO_HIDE_AFTER_MS + 120);
+    const fallbackId = window.setTimeout(
+      () => setHeroRevealed(true),
+      SITE_INTRO_HIDE_AFTER_MS + 80,
+    );
 
     return () => {
       window.removeEventListener("alo-site-intro-reveal", onReveal);
@@ -75,35 +71,27 @@ export function HeroClient() {
         initial="hidden"
         animate={showHero ? "show" : "hidden"}
       >
-        <motion.div
-          animate={reduceMotion ? undefined : { y: [0, -2, 0] }}
-          transition={
-            reduceMotion
-              ? undefined
-              : { duration: 6.4, repeat: Infinity, ease: [0.45, 0, 0.55, 1] }
-          }
-          className="will-change-transform"
+        <motion.p
+          variants={item}
+          className="mb-2 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-white sm:mb-3 sm:text-xs sm:tracking-[0.22em] [text-shadow:0_1px_6px_rgba(0,0,0,0.32)]"
         >
-          <motion.p
-            variants={item}
-            className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-white [text-shadow:0_1px_6px_rgba(0,0,0,0.32)]"
-          >
-            {SITE.name}
-          </motion.p>
-          <motion.h1
-            variants={item}
-            className="font-heading text-[1.95rem] font-medium leading-[1.08] tracking-tight text-white min-[430px]:text-[2.2rem] sm:text-5xl lg:text-6xl 2xl:text-7xl"
-          >
-            {HERO_COPY.headline}
-          </motion.h1>
-          <motion.p
-            variants={item}
-            className="mt-5 max-w-xl text-base leading-relaxed text-white/90 sm:text-xl 2xl:max-w-2xl 2xl:text-2xl"
-          >
-            {HERO_COPY.subline}
-          </motion.p>
-        </motion.div>
-        <motion.div variants={item} className="mt-10 flex">
+          {SITE.name}
+        </motion.p>
+        <motion.h1
+          variants={item}
+          className="font-heading max-w-[11.5rem] text-[2.2rem] font-medium leading-[1.06] tracking-tight text-white min-[390px]:max-w-none min-[390px]:text-[2.35rem] sm:max-w-none sm:text-5xl sm:leading-[1.08] lg:text-6xl 2xl:text-7xl"
+        >
+          <span className="sm:hidden">{HERO_COPY.headlineMobile}</span>
+          <span className="hidden sm:inline">{HERO_COPY.headline}</span>
+        </motion.h1>
+        <motion.p
+          variants={item}
+          className="mt-3 max-w-[17rem] text-[1.0625rem] leading-snug text-white/90 min-[390px]:max-w-[19rem] min-[390px]:text-lg sm:mt-5 sm:max-w-xl sm:text-xl sm:leading-relaxed 2xl:max-w-2xl 2xl:text-2xl"
+        >
+          <span className="sm:hidden">{HERO_COPY.sublineMobile}</span>
+          <span className="hidden sm:inline">{HERO_COPY.subline}</span>
+        </motion.p>
+        <motion.div variants={item} className="mt-7 flex sm:mt-10">
           <motion.a
             href={`#${SECTION_IDS.planner}`}
             className={cn(

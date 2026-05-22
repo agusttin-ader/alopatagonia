@@ -12,7 +12,9 @@ export const SITE = {
 
 export const HERO_COPY = {
   headline: "Organizá tu viaje a Patagonia sin complicaciones",
+  headlineMobile: "Patagonia sin complicaciones",
   subline: "Auto + alojamiento + excursiones. Todo en un solo lugar.",
+  sublineMobile: "Auto, alojamiento y excursiones. Un solo equipo.",
 } as const;
 
 export const SITE_INTRO_COPY = {

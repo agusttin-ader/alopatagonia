@@ -32,11 +32,11 @@ export function Reveal({
       visible: { opacity: 1 },
     },
     up: {
-      hidden: { opacity: 0, y: 14 },
+      hidden: { opacity: 0, y: 22 },
       visible: { opacity: 1, y: 0 },
     },
     "scale-soft": {
-      hidden: { opacity: 0, y: 10, scale: 0.982 },
+      hidden: { opacity: 0, y: 16, scale: 0.978 },
       visible: { opacity: 1, y: 0, scale: 1 },
     },
   } as const;
@@ -69,7 +69,7 @@ export function Reveal({
           ? { duration: 0 }
           : {
               type: "tween",
-              duration: 0.46,
+              duration: 0.54,
               delay,
               ease: [0.16, 1, 0.3, 1],
             }

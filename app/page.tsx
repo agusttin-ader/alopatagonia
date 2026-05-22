@@ -7,7 +7,6 @@ import { Experience } from "@/components/experience/Experience";
 import { Footer } from "@/components/footer/Footer";
 import { Hero } from "@/components/hero/Hero";
 import { HowItWorks } from "@/components/how-it-works/HowItWorks";
-import { AlternatingSectionReveal } from "@/components/motion/alternating-section-reveal";
 import { TripPlannerSection } from "@/components/planner/TripPlannerSection";
 import { Services } from "@/components/services/Services";
 import { SignatureSection } from "@/components/signature/SignatureSection";
@@ -30,39 +29,17 @@ export default function Home() {
     <>
       <Hero />
       <main className="min-w-0 flex-1">
-        <AlternatingSectionReveal from="right" delay={0.02}>
-          <SignatureSection />
-        </AlternatingSectionReveal>
-        <AlternatingSectionReveal from="left">
-          <TripPlannerSection />
-        </AlternatingSectionReveal>
-        <AlternatingSectionReveal from="left" delay={0.03}>
-          <Testimonials />
-        </AlternatingSectionReveal>
-        <AlternatingSectionReveal from="right">
-          <HowItWorks />
-        </AlternatingSectionReveal>
-        <AlternatingSectionReveal from="left">
-          <Services />
-        </AlternatingSectionReveal>
-        <AlternatingSectionReveal from="right">
-          <Destinations />
-        </AlternatingSectionReveal>
-        <AlternatingSectionReveal from="left" delay={0.02}>
-          <InstagramStats />
-        </AlternatingSectionReveal>
-        <AlternatingSectionReveal from="right">
-          <Experience />
-        </AlternatingSectionReveal>
-        <AlternatingSectionReveal from="left">
-          <WinterStoreSection />
-        </AlternatingSectionReveal>
-        <AlternatingSectionReveal from="right">
-          <UrgencyTrust />
-        </AlternatingSectionReveal>
-        <AlternatingSectionReveal from="left">
-          <CTA />
-        </AlternatingSectionReveal>
+        <SignatureSection />
+        <TripPlannerSection />
+        <Testimonials />
+        <HowItWorks />
+        <Services />
+        <Destinations />
+        <InstagramStats />
+        <Experience />
+        <WinterStoreSection />
+        <UrgencyTrust />
+        <CTA />
       </main>
       <FloatingWhatsAppButton />
       <Footer />
