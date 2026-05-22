@@ -221,14 +221,40 @@
   }
 }
 
-/* Site intro: visible desde el primer HTML; boot script quita pending si no aplica */
+/* Site intro: foto desde el primer frame; sin flash del fondo crema del sitio */
+body.site-intro-pending {
+  background-color: #0a0f0d !important;
+  background-image: none !important;
+}
+
+html:has(body.site-intro-pending) {
+  background-color: #0a0f0d;
+}
+
 body.site-intro-pending #site-app-shell {
   visibility: hidden;
 }
 
 #site-intro-placeholder {
   display: none;
-  background-color: #121816;
+  background-color: #0a0f0d;
+  background-image: url("/images/intro.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#site-intro-placeholder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.62) 45%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  pointer-events: none;
 }
 
 body.site-intro-pending:not(.site-intro-placeholder-off) #site-intro-placeholder {

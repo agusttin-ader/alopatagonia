@@ -12,9 +12,11 @@ import {
   SITE_INTRO_ALWAYS_SHOW,
   SITE_INTRO_HIDE_AFTER_MS,
   SITE_INTRO_IMAGE,
+  SITE_INTRO_OVERLAY_CSS,
   SITE_INTRO_STORAGE_KEY,
   SITE_INTRO_TIMELINE_MS,
 } from "@/lib/site-intro-config";
+import { cn } from "@/lib/utils";
 
 const easeFlow = [0.22, 0.03, 0.26, 1] as const;
 const easeWipe = [0.4, 0, 0.2, 1] as const;
@@ -24,8 +26,7 @@ const WORD_SUFFIX = SITE.name.slice(1);
 const WORDMARK_BASE =
   "font-heading font-medium leading-[1.22] tracking-[-0.02em] text-white [text-shadow:0_4px_32px_rgba(0,0,0,0.8),0_2px_8px_rgba(0,0,0,0.55)]";
 
-const INTRO_OVERLAY =
-  "absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.62)_45%,rgba(0,0,0,0.8)_100%)]";
+const INTRO_OVERLAY_CLASS = "absolute inset-0";
 
 type IntroPhase = "letter" | "word" | "exit";
 
@@ -37,6 +38,7 @@ function markIntroReveal() {
 export function SiteIntro() {
   const reduceMotion = useReducedMotion();
   const [isVisible, setIsVisible] = useState(false);
+  const [imageReady, setImageReady] = useState(false);
   const [phase, setPhase] = useState<IntroPhase>("letter");
 
   useLayoutEffect(() => {
@@ -54,7 +56,6 @@ export function SiteIntro() {
 
     setSiteIntroPending(true);
     setIsVisible(true);
-    setSiteIntroPlaceholderHidden(true);
     setPhase("letter");
 
     const wordAt = SITE_INTRO_TIMELINE_MS.letter;
@@ -89,7 +90,7 @@ export function SiteIntro() {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[2200] overflow-hidden"
+      className="fixed inset-0 z-[2200] overflow-hidden bg-[#0a0f0d]"
       initial={{ y: 0 }}
       animate={phase === "exit" ? { y: "-100%" } : { y: 0 }}
       transition={{
@@ -104,9 +105,19 @@ export function SiteIntro() {
         fill
         priority
         sizes="100vw"
-        className="object-cover"
+        className={cn(
+          "object-cover transition-opacity duration-200",
+          imageReady ? "opacity-100" : "opacity-0",
+        )}
+        onLoadingComplete={() => {
+          setImageReady(true);
+          setSiteIntroPlaceholderHidden(true);
+        }}
       />
-      <div className={INTRO_OVERLAY} />
+      <div
+        className={INTRO_OVERLAY_CLASS}
+        style={{ background: SITE_INTRO_OVERLAY_CSS }}
+      />
 
       <div className="absolute inset-0 flex items-center justify-center px-6 py-10 sm:px-10">
         <div

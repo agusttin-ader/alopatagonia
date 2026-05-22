@@ -111,6 +111,11 @@ export default function RootLayout({
     >
       <head>
         <link rel="preload" href={SITE_INTRO_IMAGE} as="image" fetchPriority="high" />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `html{background-color:#0a0f0d}#site-intro-placeholder{background-color:#0a0f0d;background-image:url("${SITE_INTRO_IMAGE}");background-size:cover;background-position:center}body.site-intro-pending #site-intro-placeholder{display:block}`,
+          }}
+        />
       </head>
       <body
         suppressHydrationWarning
