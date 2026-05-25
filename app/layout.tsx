@@ -7,8 +7,14 @@ import { NoZoomLock } from "@/components/mobile/no-zoom-lock";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
 import { SiteIntro } from "@/components/motion/site-intro";
 import { GlobalNav } from "@/components/navigation/GlobalNav";
-import { SITE } from "@/lib/constants";
+import { EXPERIENCE_IMAGE, SITE } from "@/lib/constants";
 import {
+  buildNextImageUrl,
+  IMAGE_PRELOAD_WIDTH,
+  IMAGE_QUALITY,
+} from "@/lib/image-config";
+import {
+  HERO_POSTER,
   SITE_INTRO_BOOT_SCRIPT,
   SITE_INTRO_IMAGE,
 } from "@/lib/site-intro-config";
@@ -46,11 +52,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase,
   title: {
-    default: "Alo Patagonia | Viajes y experiencias en la Patagonia",
+    default: "Alo Patagonia | Organizá tu viaje a Patagonia",
     template: "%s | Alo Patagonia",
   },
   description:
-    "Alojamientos, movilidad, excursiones y asesoramiento integral para viajar la Patagonia con un solo equipo.",
+    "Auto, alojamiento y excursiones en un solo plan. Coordinamos tu viaje por la Patagonia Argentina.",
   alternates: {
     canonical: "/",
   },
@@ -63,23 +69,23 @@ export const metadata: Metadata = {
     locale: "es_AR",
     url: "/",
     siteName: SITE.name,
-    title: "Alo Patagonia | Viajes y experiencias en la Patagonia",
+    title: "Alo Patagonia | Organizá tu viaje a Patagonia",
     description:
-      "Coordinamos tu viaje en la Patagonia: destinos icónicos, movilidad y excursiones con un solo contacto.",
+      "Auto, alojamiento y excursiones en un solo plan. Coordinamos tu viaje por la Patagonia Argentina.",
     images: [
       {
         url: ogImage,
         width: 1200,
         height: 630,
-        alt: "Paisajes de Patagonia con propuesta de viaje de Alo Patagonia",
+        alt: "Paisajes de Patagonia — Alo Patagonia",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alo Patagonia | Viajes y experiencias en la Patagonia",
+    title: "Alo Patagonia | Organizá tu viaje a Patagonia",
     description:
-      "Coordinamos tu viaje en la Patagonia: destinos icónicos, movilidad y excursiones con un solo contacto.",
+      "Auto, alojamiento y excursiones en un solo plan. Coordinamos tu viaje por la Patagonia Argentina.",
     images: [ogImage],
   },
 };
@@ -98,11 +104,16 @@ export default function RootLayout({
     sameAs: [SITE.instagram],
     address: {
       "@type": "PostalAddress",
-      addressLocality: "San Carlos de Bariloche",
-      addressRegion: "Rio Negro",
+      addressLocality: "Buenos Aires",
+      addressRegion: "Ciudad Autónoma de Buenos Aires",
       addressCountry: "AR",
     },
   };
+
+  const signaturePrefetch = buildNextImageUrl(EXPERIENCE_IMAGE.src, {
+    width: IMAGE_PRELOAD_WIDTH.prefetchSection,
+    quality: IMAGE_QUALITY,
+  });
 
   return (
     <html
@@ -111,6 +122,8 @@ export default function RootLayout({
     >
       <head>
         <link rel="preload" href={SITE_INTRO_IMAGE} as="image" fetchPriority="high" />
+        <link rel="preload" href={HERO_POSTER} as="image" />
+        <link rel="prefetch" href={signaturePrefetch} as="image" />
         <style
           dangerouslySetInnerHTML={{
             __html: `#site-intro-placeholder{background-image:url("${SITE_INTRO_IMAGE}");background-size:cover;background-position:center;background-repeat:no-repeat}body.site-intro-pending #site-intro-placeholder{display:block}`,

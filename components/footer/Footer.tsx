@@ -27,12 +27,9 @@ export function Footer() {
           <div className="space-y-4">
             <p className="text-[0.92rem] font-semibold text-white">{SITE.name}</p>
             <p className="max-w-sm text-[0.92rem] leading-relaxed text-white/88">
-              Somos {SITE.name}: organizamos experiencias en Patagonia con
-              alojamiento, movilidad y actividades en un mismo plan.
+              {SITE.about}
             </p>
-            <p className="text-[0.9rem] text-white/78">
-              San Carlos de Bariloche, Río Negro, Argentina
-            </p>
+            <p className="text-[0.9rem] text-white/78">{SITE.location}</p>
           </div>
 
           <div className="space-y-2.5 text-[0.92rem] text-white/88">
@@ -69,8 +66,6 @@ export function Footer() {
             >
               Tienda de invierno
             </Link>
-            <p>Privacidad y términos</p>
-            <p>Información importante</p>
           </div>
         </Reveal>
 

@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 import { Reveal } from "@/components/motion/reveal";
-import { EXPERIENCE_IMAGE, IMAGE_QUALITY_MAX, SECTION_IDS } from "@/lib/constants";
+import { EXPERIENCE_IMAGE, IMAGE_QUALITY, IMAGE_SIZES, SECTION_IDS } from "@/lib/constants";
 import { cn, interactiveCardHover } from "@/lib/utils";
 
 export function Experience() {
@@ -23,9 +23,10 @@ export function Experience() {
             alt={EXPERIENCE_IMAGE.alt}
             width={EXPERIENCE_IMAGE.width}
             height={EXPERIENCE_IMAGE.height}
-            quality={IMAGE_QUALITY_MAX}
+            quality={IMAGE_QUALITY}
             className="size-full object-cover"
-            sizes="(min-width: 1024px) 50vw, 100vw"
+            sizes={IMAGE_SIZES.half}
+            loading="lazy"
           />
         </Reveal>
 

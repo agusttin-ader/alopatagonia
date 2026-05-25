@@ -3,10 +3,11 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
-import { GALLERY_IMAGES, IMAGE_QUALITY_MAX, SECTION_IDS } from "@/lib/constants";
+import { GALLERY_IMAGES, IMAGE_QUALITY_GALLERY, IMAGE_QUALITY_LIGHTBOX, IMAGE_SIZES, SECTION_IDS } from "@/lib/constants";
+import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
 
 type DestinationEditorialItem = {
@@ -23,7 +24,7 @@ const DESTINATION_EDITORIAL_ITEMS: DestinationEditorialItem[] = [
     name: "Bariloche",
     region: "San Carlos de Bariloche - Rio Negro",
     description:
-      "Bosques, lagos y rutas panoramicas para combinar alojamiento, paseos y montaña en una sola base.",
+      "Bosques, lagos y circuitos. Base ideal para combinar montaña y ruta en auto.",
     imageIndexes: [0, 1, 4, 8],
   },
   {
@@ -31,7 +32,7 @@ const DESTINATION_EDITORIAL_ITEMS: DestinationEditorialItem[] = [
     name: "Ushuaia",
     region: "Tierra del Fuego · Fin del mundo",
     description:
-      "Canales australes, montana y clima cambiante; ajustamos el itinerario para aprovechar cada ventana.",
+      "Canal Beagle, montaña y clima cambiante. Ajustamos el plan según la ventana del día.",
     imageIndexes: [3, 6, 7, 10],
   },
   {
@@ -39,7 +40,7 @@ const DESTINATION_EDITORIAL_ITEMS: DestinationEditorialItem[] = [
     name: "El Calafate",
     region: "Santa Cruz",
     description:
-      "Paisajes abiertos, hielo milenario y estancias para una experiencia intensa y bien planificada.",
+      "Glaciares que se escuchan antes de verse. Hielo, estepa y excursiones bien marcadas.",
     imageIndexes: [2, 5, 9, 10],
   },
   {
@@ -47,7 +48,7 @@ const DESTINATION_EDITORIAL_ITEMS: DestinationEditorialItem[] = [
     name: "San Martin",
     region: "San Martin de los Andes · Neuquen",
     description:
-      "Bosque andino, lago y montaña en un destino ideal para combinar relax, caminatas y ruta escenica.",
+      "Bosque andino y rutas junto al lago. Relax, caminatas y ruta escénica.",
     imageIndexes: [1, 2, 8, 9],
   },
   {
@@ -55,7 +56,7 @@ const DESTINATION_EDITORIAL_ITEMS: DestinationEditorialItem[] = [
     name: "Madryn",
     region: "Chubut · Costa patagonica",
     description:
-      "Fauna marina, playas extensas y excursiones icónicas para sumar naturaleza y mar a tu itinerario.",
+      "Mar patagónico y fauna en su hábitat. Ballenas, costa y excursiones de día.",
     imageIndexes: [0, 4, 5, 9],
   },
   {
@@ -63,7 +64,7 @@ const DESTINATION_EDITORIAL_ITEMS: DestinationEditorialItem[] = [
     name: "Villa La Angostura",
     region: "Neuquen",
     description:
-      "Lagos cristalinos, bosque andino y rutas escenicas para una experiencia tranquila y muy fotografiable.",
+      "Reserva, pueblo chico y lagos cristalinos. Ritmo tranquilo y muy fotografiable.",
     imageIndexes: [0, 1, 4, 6],
   },
   {
@@ -71,7 +72,7 @@ const DESTINATION_EDITORIAL_ITEMS: DestinationEditorialItem[] = [
     name: "El Bolson",
     region: "Rio Negro",
     description:
-      "Valle, cerros y aire de montaña para combinar naturaleza, senderos y pausas con ritmo relajado.",
+      "Montaña alternativa y feria artesanal. Valle, senderos y pausas con calma.",
     imageIndexes: [2, 5, 8, 9],
   },
   {
@@ -79,7 +80,7 @@ const DESTINATION_EDITORIAL_ITEMS: DestinationEditorialItem[] = [
     name: "Esquel",
     region: "Chubut",
     description:
-      "Cordillera y paisajes patagonicos autenticos para sumar recorridos de naturaleza y aventura suave.",
+      "Estepa, bosque y el Tren Patagónico. Cordillera y paisajes auténticos del sur.",
     imageIndexes: [3, 6, 7, 10],
   },
   {
@@ -87,7 +88,7 @@ const DESTINATION_EDITORIAL_ITEMS: DestinationEditorialItem[] = [
     name: "Mendoza",
     region: "Mendoza",
     description:
-      "Montaña, rutas y experiencias al aire libre para integrar una extension con gran atractivo visual.",
+      "Viñedos al pie de la cordillera. Buena extensión si querés sumar montaña y bodegas.",
     imageIndexes: [1, 3, 8, 10],
   },
 ];
@@ -97,28 +98,31 @@ const DESTINATION_NAME_MOTION = {
   idle: { scale: 1 },
 };
 
-const MOBILE_PANEL_EASE = [0.22, 0.03, 0.26, 1] as const;
-const MOBILE_PANEL_OPEN_MS = 880;
-const MOBILE_IMAGE_STAGGER_MS = 110;
-
 const MOBILE_DESTINATIONS_MQ = "(max-width: 1023px)";
+const MOBILE_PANEL_MS = 520;
 
 function DestinationName({
   name,
   isActive,
   className,
+  disableScale = false,
 }: {
   name: string;
   isActive: boolean;
   className?: string;
+  disableScale?: boolean;
 }) {
   const reduceMotion = useReducedMotion();
+
+  if (disableScale || reduceMotion) {
+    return <span className={cn("inline-block", className)}>{name}</span>;
+  }
 
   return (
     <motion.span
       className={cn("inline-block origin-left", className)}
       initial={false}
-      animate={reduceMotion ? undefined : isActive ? DESTINATION_NAME_MOTION.active : DESTINATION_NAME_MOTION.idle}
+      animate={isActive ? DESTINATION_NAME_MOTION.active : DESTINATION_NAME_MOTION.idle}
       transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
     >
       {name}
@@ -126,52 +130,139 @@ function DestinationName({
   );
 }
 
+function MobileDestinationPanel({
+  isActive,
+  itemId,
+  onExpandEnd,
+  children,
+}: {
+  isActive: boolean;
+  itemId: string;
+  onExpandEnd?: () => void;
+  children: ReactNode;
+}) {
+  const reduceMotion = useReducedMotion();
+  const [expanded, setExpanded] = useState(false);
+  const onExpandEndRef = useRef(onExpandEnd);
+  onExpandEndRef.current = onExpandEnd;
+
+  useEffect(() => {
+    if (!isActive) {
+      setExpanded(false);
+      return;
+    }
+
+    if (reduceMotion) {
+      setExpanded(true);
+      onExpandEndRef.current?.();
+      return;
+    }
+
+    setExpanded(false);
+    const frameId = window.requestAnimationFrame(() => {
+      setExpanded(true);
+    });
+    return () => window.cancelAnimationFrame(frameId);
+  }, [isActive, itemId, reduceMotion]);
+
+  if (!isActive) return null;
+
+  return (
+    <div
+      className={cn(
+        "grid transition-[grid-template-rows,opacity] ease-[cubic-bezier(0.22,0.03,0.26,1)] motion-reduce:transition-none",
+        expanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
+      )}
+      style={{ transitionDuration: reduceMotion ? "0ms" : `${MOBILE_PANEL_MS}ms` }}
+      onTransitionEnd={(event) => {
+        if (
+          event.propertyName === "grid-template-rows" &&
+          expanded &&
+          event.currentTarget === event.target
+        ) {
+          onExpandEndRef.current?.();
+        }
+      }}
+    >
+      <div className="min-h-0 overflow-hidden">
+        <div className="pt-4">{children}</div>
+      </div>
+    </div>
+  );
+}
+
 function DestinationGallery({
   destination,
   images,
   onImageClick,
-  relaxedMotion = false,
+  instant = false,
 }: {
   destination: DestinationEditorialItem;
   images: (typeof GALLERY_IMAGES)[number][];
   onImageClick: (index: number) => void;
-  relaxedMotion?: boolean;
+  instant?: boolean;
 }) {
   const reduceMotion = useReducedMotion();
-  const imageDuration = relaxedMotion ? 0.58 : 0.32;
-  const imageStagger = relaxedMotion ? MOBILE_IMAGE_STAGGER_MS / 1000 : 0.04;
+  const isCoarseMobile = useCoarseMobile();
+  const useStaticTiles = instant || isCoarseMobile || reduceMotion;
 
   return (
     <>
       <div className="grid grid-cols-2 gap-3">
-        {images.map((image, index) => (
-          <motion.button
-            type="button"
-            key={`${destination.id}-${image.src}`}
-            onClick={() => onImageClick(index)}
-            aria-label={`Expandir imagen de ${destination.name}`}
-            initial={
-              reduceMotion ? false : { opacity: 0, y: relaxedMotion ? 14 : 0, scale: 0.985 }
-            }
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{
-              duration: reduceMotion ? 0 : imageDuration,
-              delay: reduceMotion ? 0 : imageStagger * index,
-              ease: MOBILE_PANEL_EASE,
-            }}
-            className="relative aspect-[5/4] overflow-hidden rounded-2xl bg-muted shadow-[0_16px_30px_-20px_rgba(15,23,42,0.32)] transition-transform hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2 sm:aspect-[4/3]"
-          >
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              quality={IMAGE_QUALITY_MAX}
-              className="object-cover"
-              sizes="(min-width: 1280px) 28vw, (min-width: 1024px) 36vw, 100vw"
-              loading="lazy"
-            />
-          </motion.button>
-        ))}
+        {images.map((image, index) => {
+          const tileClassName =
+            "relative aspect-[5/4] overflow-hidden rounded-2xl bg-muted shadow-[0_16px_30px_-20px_rgba(15,23,42,0.32)] transition-transform hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2 sm:aspect-[4/3]";
+
+          if (useStaticTiles) {
+            return (
+              <button
+                type="button"
+                key={`${destination.id}-${image.src}`}
+                onClick={() => onImageClick(index)}
+                aria-label={`Expandir imagen de ${destination.name}`}
+                className={tileClassName}
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  quality={IMAGE_QUALITY_GALLERY}
+                  className="object-cover"
+                  sizes={IMAGE_SIZES.galleryTile}
+                  loading="eager"
+                  fetchPriority={index === 0 ? "high" : undefined}
+                />
+              </button>
+            );
+          }
+
+          return (
+            <motion.button
+              type="button"
+              key={`${destination.id}-${image.src}`}
+              onClick={() => onImageClick(index)}
+              aria-label={`Expandir imagen de ${destination.name}`}
+              initial={{ opacity: 0, scale: 0.985 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.32,
+                delay: 0.04 * index,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className={tileClassName}
+            >
+              <Image
+                src={image.src}
+                alt={image.alt}
+                fill
+                quality={IMAGE_QUALITY_GALLERY}
+                className="object-cover"
+                sizes={IMAGE_SIZES.galleryTile}
+                loading="eager"
+              />
+            </motion.button>
+          );
+        })}
       </div>
       <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:mt-5 sm:text-lg">
         {destination.description}
@@ -181,13 +272,11 @@ function DestinationGallery({
 }
 
 export function Destinations() {
-  const reduceMotion = useReducedMotion();
   const [activeDestinationId, setActiveDestinationId] = useState(
     DESTINATION_EDITORIAL_ITEMS[0].id,
   );
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const mobileItemRefs = useRef(new Map<string, HTMLLIElement>());
-  const skipNextMobileScroll = useRef(true);
 
   const activeDestination = useMemo(
     () =>
@@ -209,29 +298,22 @@ export function Destinations() {
     setLightboxIndex(null);
   }, [activeDestinationId]);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (!window.matchMedia(MOBILE_DESTINATIONS_MQ).matches) return;
-    if (skipNextMobileScroll.current) {
-      skipNextMobileScroll.current = false;
-      return;
-    }
+  const scrollActiveDestinationIntoView = useCallback(
+    (destinationId: string) => {
+      if (typeof window === "undefined") return;
+      if (!window.matchMedia(MOBILE_DESTINATIONS_MQ).matches) return;
 
-    const activeItem = mobileItemRefs.current.get(activeDestinationId);
-    if (!activeItem) return;
+      const activeItem = mobileItemRefs.current.get(destinationId);
+      if (!activeItem) return;
 
-    const scrollDelay = reduceMotion ? 0 : Math.round(MOBILE_PANEL_OPEN_MS * 0.42);
-
-    const timeoutId = window.setTimeout(() => {
       activeItem.scrollIntoView({
-        behavior: reduceMotion ? "auto" : "smooth",
+        behavior: "auto",
         block: "center",
         inline: "nearest",
       });
-    }, scrollDelay);
-
-    return () => window.clearTimeout(timeoutId);
-  }, [activeDestinationId, reduceMotion]);
+    },
+    [],
+  );
 
   useEffect(() => {
     if (lightboxIndex === null) return;
@@ -270,23 +352,20 @@ export function Destinations() {
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
         <Reveal className="max-w-3xl 2xl:max-w-4xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
-            Destinos
-          </p>
           <h2
             id="destinos-heading"
-            className="font-heading mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
+            className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
           >
-            Elegi el destino y mira su universo visual
+            Destinos
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground 2xl:text-xl">
-            Una seleccion editorial para que compares estilos de viaje y
-            decidamos juntos la mejor ruta para vos.
+            Elegí zona y mirá fotos reales de cada lugar. Después lo cerramos
+            juntos por WhatsApp.
           </p>
         </Reveal>
 
         <div className="mt-7 grid gap-6 lg:mt-12 lg:grid-cols-[minmax(260px,0.9fr)_1.1fr] lg:items-start 2xl:gap-12">
-          <Reveal className="lg:hidden">
+          <div className="lg:hidden">
             <ul className="flex flex-col gap-2.5">
               {DESTINATION_EDITORIAL_ITEMS.map((item) => {
                 const isActive = item.id === activeDestination.id;
@@ -301,7 +380,7 @@ export function Destinations() {
                       if (node) mobileItemRefs.current.set(item.id, node);
                       else mobileItemRefs.current.delete(item.id);
                     }}
-                    className={cn(isActive && "scroll-mt-4")}
+                    className={cn(isActive && "scroll-mt-[18vh]")}
                   >
                     <button
                       type="button"
@@ -309,7 +388,7 @@ export function Destinations() {
                       aria-pressed={isActive}
                       aria-expanded={isActive}
                       className={cn(
-                        "group w-full rounded-2xl border px-4 py-3 text-left transition",
+                        "group w-full rounded-2xl border px-4 py-3 text-left transition-colors",
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2",
                         isActive
                           ? "border-black/18 bg-black/[0.03]"
@@ -319,6 +398,7 @@ export function Destinations() {
                       <DestinationName
                         name={item.name}
                         isActive={isActive}
+                        disableScale
                         className={cn(
                           "font-heading block text-[clamp(1.5rem,8vw,2.2rem)] font-semibold uppercase leading-[0.9] tracking-[-0.02em]",
                           isActive ? "text-black" : "text-black/58",
@@ -326,7 +406,7 @@ export function Destinations() {
                       />
                       <span
                         className={cn(
-                          "mt-1.5 block text-[0.62rem] font-semibold uppercase tracking-[0.16em]",
+                          "mt-1.5 block text-[0.62rem] font-medium text-muted-foreground",
                           isActive ? "text-black/70" : "text-black/48",
                         )}
                       >
@@ -334,45 +414,23 @@ export function Destinations() {
                       </span>
                     </button>
 
-                    <AnimatePresence initial={false}>
-                      {isActive ? (
-                        <motion.div
-                          key={`${item.id}-panel`}
-                          initial={
-                            reduceMotion
-                              ? false
-                              : { opacity: 0, height: 0, y: -10 }
-                          }
-                          animate={{ opacity: 1, height: "auto", y: 0 }}
-                          exit={
-                            reduceMotion
-                              ? { opacity: 0, height: 0 }
-                              : { opacity: 0, height: 0, y: -6 }
-                          }
-                          transition={{
-                            duration: reduceMotion ? 0.01 : MOBILE_PANEL_OPEN_MS / 1000,
-                            ease: MOBILE_PANEL_EASE,
-                            opacity: { duration: reduceMotion ? 0.01 : 0.72 },
-                          }}
-                          className="overflow-hidden"
-                          style={{ transformOrigin: "top center" }}
-                        >
-                          <div className="pt-4">
-                            <DestinationGallery
-                              destination={item}
-                              images={itemImages}
-                              onImageClick={setLightboxIndex}
-                              relaxedMotion
-                            />
-                          </div>
-                        </motion.div>
-                      ) : null}
-                    </AnimatePresence>
+                    <MobileDestinationPanel
+                      isActive={isActive}
+                      itemId={item.id}
+                      onExpandEnd={() => scrollActiveDestinationIntoView(item.id)}
+                    >
+                      <DestinationGallery
+                        destination={item}
+                        images={itemImages}
+                        onImageClick={setLightboxIndex}
+                        instant
+                      />
+                    </MobileDestinationPanel>
                   </li>
                 );
               })}
             </ul>
-          </Reveal>
+          </div>
 
           <Reveal>
             <motion.ul layout className="hidden space-y-2 lg:block">
@@ -402,7 +460,7 @@ export function Destinations() {
                       />
                       <span
                         className={cn(
-                          "mt-1 block text-xs font-semibold uppercase tracking-[0.18em] transition-colors",
+                          "mt-1 block text-xs font-medium text-muted-foreground transition-colors",
                           isActive
                             ? "text-black/70"
                             : "text-black/35 group-hover:text-black/55",
@@ -508,9 +566,9 @@ export function Destinations() {
                 alt={activeLightboxImage.alt}
                 width={activeLightboxImage.width}
                 height={activeLightboxImage.height}
-                quality={IMAGE_QUALITY_MAX}
+                quality={IMAGE_QUALITY_LIGHTBOX}
                 className="max-h-[90vh] w-auto max-w-[92vw] rounded-2xl object-contain"
-                sizes="(min-width: 1280px) 1200px, 95vw"
+                sizes={IMAGE_SIZES.lightbox}
                 priority
               />
             </motion.div>

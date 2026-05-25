@@ -8,6 +8,9 @@ export const SITE = {
   instagramHandle: "alo_patagonia",
   email: "alopatagonia.arg@gmail.com",
   phoneDisplay: "+54 9 11 7095 4933",
+  location: "Patagonia, Argentina",
+  about:
+    "Coordinamos auto, alojamiento y excursiones en un mismo plan por la Patagonia Argentina.",
 } as const;
 
 export const HERO_COPY = {
@@ -18,7 +21,7 @@ export const HERO_COPY = {
 } as const;
 
 export const SITE_INTRO_COPY = {
-  eyebrow: "Viajes y experiencias en la Patagonia",
+  eyebrow: "Organizá tu viaje a Patagonia",
   tagline: HERO_COPY.subline,
 } as const;
 
@@ -77,14 +80,14 @@ export const WINTER_STORE_COPY = {
     "Abrigos y equipo pensados para el frío patagónico. Elegimos prendas para que viajes cómodo y seguro.",
   heroTitle: "Equipate para el frío patagónico",
   heroSubtitle:
-    "Una selección de invierno para combinar con tu viaje: menos improvisación, más calor y estilo en la montaña.",
+    "Abrigos y capas para el frío real del sur. Consultá talles por WhatsApp antes de salir.",
   ctaPrimary: "Ir a la tienda",
   ctaSecondaryHome: "Volver al inicio",
   ctaWhatsApp: "Consultar por WhatsApp",
   homeEyebrow: "Tienda de invierno",
-  homeHeading: "El frío no es excusa. Es parte del viaje.",
+  homeHeading: "En Ushuaia hace frío de verdad. Equipate antes de salir.",
   homeBody:
-    "Antes de salir, revisá abrigos y capas que marcan la diferencia entre disfrutar el paisaje y pasarla mal. Te llevamos a nuestra tienda en un clic.",
+    "Abrigos y capas para el viento sur. Entrá a la tienda, consultá talles por WhatsApp y sumalo a tu itinerario.",
   homeCta: "Ver tienda de invierno",
   bullets: [
     "Selección pensada para temperaturas reales del sur",
@@ -136,27 +139,27 @@ export type ServiceItem = {
 
 export const SERVICES: ServiceItem[] = [
   {
-    title: "Movete con libertad",
+    title: "Auto y rutas",
     description:
-      "Te resolvemos el auto ideal para tu plan, con entrega clara y recomendaciones de ruta para aprovechar cada día.",
+      "Elegimos el vehículo según tu plan y te indicamos tramos, tiempos y paradas que valen la pena.",
     icon: Car,
   },
   {
-    title: "Hospedaje a tu medida",
+    title: "Hoteles y cabañas",
     description:
-      "Seleccionamos alojamientos por zona, estilo y presupuesto para que descanses bien y estés donde te conviene.",
+      "Alojamientos por zona y presupuesto, cerca de lo que quieras hacer cada día.",
     icon: Hotel,
   },
   {
-    title: "Excursiones imperdibles",
+    title: "Trekking, glaciares, navegación",
     description:
-      "Armamos actividades que realmente valen la pena según temporada, clima y tipo de viaje que querés hacer.",
+      "Excursiones según temporada y clima — sin reservar cosas que no cierran con tu fechas.",
     icon: Mountain,
   },
   {
-    title: "Asesoramiento personalizado",
+    title: "Un solo WhatsApp",
     description:
-      "Tenés un solo contacto para ordenar fechas, traslados y reservas sin perder tiempo comparando por tu cuenta.",
+      "Fechas, traslados y reservas en un hilo. No tenés que perseguir proveedores por separado.",
     icon: Compass,
   },
 ];
@@ -179,6 +182,8 @@ type PlannerDestinationConfig = {
   label: string;
   mapCenter: [number, number];
   mapZoom: number;
+  previewHighlights: string;
+  previewHook: string;
 };
 
 export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
@@ -187,54 +192,72 @@ export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
     label: "Bariloche",
     mapCenter: [-41.1335, -71.3103],
     mapZoom: 12,
+    previewHighlights: "lagos, montaña y circuitos panorámicos",
+    previewHook: "Lagos, cipreses y ruta en auto sin apuro.",
   },
   {
     key: "ushuaia",
     label: "Ushuaia",
     mapCenter: [-54.8019, -68.303],
     mapZoom: 12.2,
+    previewHighlights: "fin del mundo, navegación y trekking",
+    previewHook: "Canal Beagle, montaña y el sur más sur.",
   },
   {
     key: "calafate",
     label: "El Calafate",
     mapCenter: [-50.3379, -72.2648],
     mapZoom: 12.2,
+    previewHighlights: "glaciares, trekking suave y fotografía",
+    previewHook: "Glaciares que se escuchan antes de verse.",
   },
   {
     key: "san-martin-andes",
     label: "San Martin de los Andes",
     mapCenter: [-40.1579, -71.3534],
     mapZoom: 12.2,
+    previewHighlights: "bosques, lagos y rutas escénicas",
+    previewHook: "Bosque andino y rutas junto al lago.",
   },
   {
     key: "villa-la-angostura",
     label: "Villa La Angostura",
     mapCenter: [-40.7617, -71.6463],
     mapZoom: 13,
+    previewHighlights: "naturaleza, relax y paisajes de postal",
+    previewHook: "Reserva, pueblo chico y paisajes de postal.",
   },
   {
     key: "puerto-madryn",
     label: "Puerto Madryn",
     mapCenter: [-42.7692, -65.0385],
     mapZoom: 12.4,
+    previewHighlights: "fauna marina y avistaje de ballenas",
+    previewHook: "Mar patagónico y fauna en su hábitat.",
   },
   {
     key: "el-bolson",
     label: "El Bolson",
     mapCenter: [-41.9664, -71.5336],
     mapZoom: 12.8,
+    previewHighlights: "artesanía, ferias y montaña alternativa",
+    previewHook: "Montaña alternativa y feria artesanal.",
   },
   {
     key: "esquel",
     label: "Esquel",
     mapCenter: [-42.9115, -71.3195],
     mapZoom: 12.8,
+    previewHighlights: "Tren Patagónico, bosques y estepa",
+    previewHook: "Estepa, bosque y el Tren Patagónico.",
   },
   {
     key: "mendoza",
     label: "Mendoza",
     mapCenter: [-32.8895, -68.8458],
     mapZoom: 12.2,
+    previewHighlights: "vinos, alta montaña y cordillera",
+    previewHook: "Viñedos al pie de la cordillera.",
   },
 ];
 
@@ -274,30 +297,38 @@ for (const destination of PLANNER_DESTINATIONS) {
 export const PLANNER_DESTINATION_LABELS = plannerDestinationLabels;
 export const PLANNER_DESTINATION_FOCUS = plannerDestinationFocus;
 
+const plannerDestinationHighlights = {} as Record<PlannerDestinationKey, string>;
+const plannerDestinationHooks = {} as Record<PlannerDestinationKey, string>;
+
+for (const destination of PLANNER_DESTINATIONS) {
+  plannerDestinationHighlights[destination.key] = destination.previewHighlights;
+  plannerDestinationHooks[destination.key] = destination.previewHook;
+}
+
+export const PLANNER_DESTINATION_HIGHLIGHTS = plannerDestinationHighlights;
+export const PLANNER_DESTINATION_HOOKS = plannerDestinationHooks;
+
 export const INSTAGRAM_STATS: InstagramStatItem[] = [
   {
     id: "posts",
-    label: "Contenido en el perfil",
+    label: "Publicaciones",
     target: 1408,
     variant: "integer",
-    description:
-      "Rutas, paisajes y tips prácticos para planificar con información clara.",
+    description: "Rutas, clima y tips de cada zona.",
   },
   {
     id: "followers",
-    label: "Comunidad",
+    label: "Seguidores",
     target: 12.7,
     variant: "k",
-    description:
-      "Personas que siguen el día a día del sur y cómo armamos cada experiencia.",
+    description: "Comunidad que sigue el sur.",
   },
   {
     id: "coverage",
-    label: "Cobertura en la Patagonia",
+    label: "Destinos",
     target: PLANNER_DESTINATIONS.length,
     variant: "integer",
-    description:
-      "Grandes regiones que coordinamos en un mismo viaje, con un solo interlocutor.",
+    description: "Regiones que coordinamos en un viaje.",
   },
 ];
 
@@ -310,27 +341,27 @@ export type Testimonial = {
 export const TESTIMONIALS: Testimonial[] = [
   {
     name: "Florencia y Tomás, Buenos Aires",
-    highlight: "Viaje de 8 días",
+    highlight: "8 días · Bariloche y Calafate",
     quote:
-      "Llegamos con todo cerrado en una sola propuesta. Auto, hotel y excursiones coordinadas perfecto.",
+      "Auto, hotel y Perito Moreno reservados en un solo mensaje. Llegamos y solo disfrutamos.",
   },
   {
     name: "Camila R., Córdoba",
-    highlight: "Escapada en pareja",
+    highlight: "4 días · Ushuaia",
     quote:
-      "Nos respondieron rapidísimo por WhatsApp y nos recomendaron planes que terminaron siendo lo mejor del viaje.",
+      "Nos respondieron el mismo día. Cambiaron una excursión por lluvia y nos salió mejor que el plan original.",
   },
   {
     name: "Familia Quiroga, Rosario",
-    highlight: "Viaje familiar",
+    highlight: "10 días · con chicos",
     quote:
-      "Con chicos necesitábamos practicidad. Nos armaron un itinerario cómodo, sin corridas y con alojamientos excelentes.",
+      "Itinerario sin corridas, hoteles cerca de todo y paradas pensadas para que los chicos descansen.",
   },
   {
     name: "Nicolás M., Mendoza",
-    highlight: "Primera vez en Patagonia",
+    highlight: "Primera vez en el sur",
     quote:
-      "Se sintió súper confiable desde el primer mensaje. En dos días ya teníamos todo resuelto para viajar tranquilos.",
+      "En dos días teníamos fechas, auto y alojamiento. Nos respondieron por WhatsApp durante todo el viaje.",
   },
 ];
 
@@ -341,8 +372,18 @@ export type GalleryImage = {
   height: number;
 };
 
-/** Calidad optimizada para `next/image`; debe existir en `images.qualities` del `next.config`. */
-export const IMAGE_QUALITY_MAX = 100 as const;
+/** Reexportado desde lib/image-config.ts (calidad + sizes centralizados). */
+export {
+  IMAGE_QUALITY,
+  IMAGE_QUALITY_GALLERY,
+  IMAGE_QUALITY_HERO,
+  IMAGE_QUALITY_INTRO,
+  IMAGE_QUALITY_LIGHTBOX,
+  IMAGE_QUALITY_MAX,
+  IMAGE_PRELOAD_WIDTH,
+  IMAGE_SIZES,
+  buildNextImageUrl,
+} from "@/lib/image-config";
 
 /**
  * Archivos en `public/images/` → URL `/images/nombre`.

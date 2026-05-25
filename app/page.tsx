@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { CTA } from "@/components/cta/CTA";
 import { InstagramStats } from "@/components/community/instagram-stats";
 import { Destinations } from "@/components/destinations/Destinations";
-import { Experience } from "@/components/experience/Experience";
 import { Footer } from "@/components/footer/Footer";
 import { Hero } from "@/components/hero/Hero";
 import { HowItWorks } from "@/components/how-it-works/HowItWorks";
@@ -16,9 +15,9 @@ import { WinterStoreSection } from "@/components/winter-store/WinterStoreSection
 import { FloatingWhatsAppButton } from "@/components/whatsapp/FloatingWhatsAppButton";
 
 export const metadata: Metadata = {
-  title: "Viajes y experiencias en la Patagonia",
+  title: "Organizá tu viaje a Patagonia",
   description:
-    "Organizamos tu viaje por Patagonia con alojamiento, movilidad y excursiones en un plan claro y personalizado.",
+    "Auto, alojamiento y excursiones en un solo plan. Coordinamos tu viaje por la Patagonia Argentina.",
   alternates: {
     canonical: "/",
   },
@@ -36,7 +35,6 @@ export default function Home() {
         <Services />
         <Destinations />
         <InstagramStats />
-        <Experience />
         <WinterStoreSection />
         <UrgencyTrust />
         <CTA />

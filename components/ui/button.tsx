@@ -19,7 +19,7 @@ const buttonVariants = cva(
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
         marketing:
-          "rounded-full bg-[linear-gradient(90deg,var(--color-primary)_0%,var(--color-footer-lake)_100%)] text-primary-foreground shadow-sm shadow-black/10 hover:brightness-[1.04]",
+          "rounded-full bg-primary text-primary-foreground shadow-sm hover:bg-primary/90",
       },
       size: {
         default:

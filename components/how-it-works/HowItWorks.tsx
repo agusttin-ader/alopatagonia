@@ -1,27 +1,26 @@
-import { ClipboardCheck, MessageCircle, Sparkles } from "lucide-react";
+import { ClipboardCheck, MessageCircle, Mountain } from "lucide-react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { SECTION_IDS } from "@/lib/constants";
-import { cn, interactiveCardHover } from "@/lib/utils";
 
 const STEPS = [
   {
     title: "Nos contás tu viaje",
     description:
-      "Nos escribís por WhatsApp con tus fechas, presupuesto y plan ideal.",
+      "Escribís por WhatsApp con fechas, presupuesto y qué te gustaría hacer.",
     icon: MessageCircle,
   },
   {
-    title: "Te armamos una propuesta personalizada",
+    title: "Te mandamos el plan",
     description:
-      "Combinamos auto, hospedaje y excursiones según tu forma de viajar.",
+      "Auto, hospedaje y excursiones según tu forma de viajar y la temporada.",
     icon: ClipboardCheck,
   },
   {
-    title: "Disfrutás Patagonia sin estrés",
+    title: "Viajás con todo ordenado",
     description:
-      "Viajás con todo ordenado y soporte rápido para resolver cualquier duda.",
-    icon: Sparkles,
+      "Llegás con reservas hechas y seguimos respondiendo si surge alguna duda.",
+    icon: Mountain,
   },
 ] as const;
 
@@ -34,14 +33,11 @@ export function HowItWorks() {
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
         <Reveal className="mx-auto max-w-2xl text-center 2xl:max-w-3xl">
-          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-brand-forest">
-            Como funciona
-          </p>
           <h2
             id="como-funciona-heading"
-            className="font-heading mt-4 text-3xl font-semibold tracking-tight text-foreground sm:text-[2.1rem] sm:leading-snug 2xl:text-5xl"
+            className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-[2.1rem] sm:leading-snug 2xl:text-5xl"
           >
-            Organizar tu viaje puede ser asi de simple
+            Tres pasos por WhatsApp
           </h2>
         </Reveal>
 
@@ -50,26 +46,14 @@ export function HowItWorks() {
             const Icon = step.icon;
             return (
               <li key={step.title} className="h-full min-h-0">
-                <Reveal
-                  delay={index * 0.09}
-                  className="block h-full min-h-0 w-full"
-                >
-                  <div
-                    className={cn(
-                      "group relative z-0 flex min-h-0 w-full flex-col rounded-2xl bg-card/50 px-6 pb-7 pt-7 sm:px-8 sm:pb-9 sm:pt-9 md:h-full",
-                      "shadow-sm ring-1 ring-brand-forest/10",
-                      interactiveCardHover,
-                    )}
-                  >
+                <Reveal delay={index * 0.09} className="block h-full min-h-0 w-full">
+                  <div className="relative z-0 flex min-h-0 w-full flex-col rounded-2xl bg-card/50 px-6 pb-7 pt-7 shadow-sm ring-1 ring-brand-forest/10 sm:px-8 sm:pb-9 sm:pt-9 md:h-full">
                     <div className="flex items-center justify-between gap-4">
-                      <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-forest">
-                        Paso {index + 1}
+                      <span className="font-heading text-sm font-semibold tabular-nums text-brand-forest/70">
+                        {index + 1}
                       </span>
                       <div
-                        className={cn(
-                          "flex size-10 shrink-0 items-center justify-center rounded-full",
-                          "bg-brand-forest/10 text-brand-forest",
-                        )}
+                        className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-forest/10 text-brand-forest"
                         aria-hidden
                       >
                         <Icon className="size-5" strokeWidth={1.9} />

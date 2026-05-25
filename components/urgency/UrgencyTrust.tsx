@@ -1,26 +1,25 @@
-import { Clock3, MessageCircleMore, TrendingUp } from "lucide-react";
+import { CalendarRange, CarFront, MessageCircleMore } from "lucide-react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { SECTION_IDS } from "@/lib/constants";
-import { cn, interactiveCardHover } from "@/lib/utils";
 
 const SIGNALS = [
   {
-    title: "Alta demanda en temporada",
+    title: "Enero a marzo se llena primero",
     description:
-      "Las mejores opciones de auto y hospedaje se ocupan rapido en fechas pico.",
-    icon: TrendingUp,
+      "Autos y cabañas en Bariloche y el sur suelen agotarse con semanas de anticipación.",
+    icon: CalendarRange,
   },
   {
-    title: "Reserva con anticipacion",
+    title: "Reservar antes abre más opciones",
     description:
-      "Cuanto antes definimos tu plan, mas alternativas y mejores combinaciones tenes.",
-    icon: Clock3,
+      "Con fechas definidas podemos combinar mejor alojamiento, traslados y excursiones.",
+    icon: CarFront,
   },
   {
-    title: "Respuesta rapida por WhatsApp",
+    title: "Respondemos por WhatsApp",
     description:
-      "Te respondemos agil para que avances sin esperar dias entre consulta y propuesta.",
+      "Consultas y cambios en el mismo hilo — sin formularios ni demoras de días.",
     icon: MessageCircleMore,
   },
 ] as const;
@@ -34,15 +33,16 @@ export function UrgencyTrust() {
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
         <Reveal className="max-w-2xl 2xl:max-w-3xl">
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-primary">
-            Confianza y urgencia
-          </p>
           <h2
             id="urgencia-heading"
-            className="font-heading mt-3 text-3xl font-medium tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
+            className="font-heading text-3xl font-medium tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
           >
-            Defini tu viaje antes de que se achiquen las opciones
+            Temporada alta en Patagonia
           </h2>
+          <p className="mt-4 text-lg text-muted-foreground 2xl:text-xl">
+            Datos útiles para elegir cuándo escribirnos y qué conviene reservar
+            antes.
+          </p>
         </Reveal>
 
         <ul className="mt-8 grid gap-6 md:grid-cols-3 2xl:gap-8">
@@ -52,12 +52,9 @@ export function UrgencyTrust() {
               <li key={signal.title}>
                 <Reveal
                   delay={index * 0.07}
-                  className={cn(
-                    "h-full rounded-2xl border border-border/80 bg-card px-4 py-7 shadow-sm",
-                    interactiveCardHover,
-                  )}
+                  className="h-full rounded-2xl border border-border/80 bg-card px-4 py-7 shadow-sm"
                 >
-                  <div className="flex size-11 items-center justify-center rounded-full bg-primary/10 text-primary">
+                  <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
                     <Icon className="size-5" strokeWidth={1.8} aria-hidden />
                   </div>
                   <h3 className="font-heading mt-5 text-xl font-medium text-foreground 2xl:text-2xl">

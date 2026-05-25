@@ -7,12 +7,13 @@ import Link from "next/link";
 import { Reveal } from "@/components/motion/reveal";
 import { buttonVariants } from "@/components/ui/button";
 import {
-  IMAGE_QUALITY_MAX,
+  IMAGE_QUALITY,
+  IMAGE_SIZES,
   SECTION_IDS,
   WINTER_STORE_COPY,
   WINTER_STORE_IMAGE,
 } from "@/lib/constants";
-import { cn, interactiveCardHover } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 export function WinterStoreSection() {
   return (
@@ -24,12 +25,9 @@ export function WinterStoreSection() {
       <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-2 lg:items-center lg:gap-14 2xl:max-w-[90rem]">
         <div className="order-2 lg:order-1">
           <Reveal>
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
-              {WINTER_STORE_COPY.homeEyebrow}
-            </p>
             <h2
               id="winter-shop-heading"
-              className="font-heading mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
+              className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
             >
               {WINTER_STORE_COPY.homeHeading}
             </h2>
@@ -40,7 +38,7 @@ export function WinterStoreSection() {
               href="/invierno"
               className={cn(
                 buttonVariants({ variant: "marketing", size: "lg" }),
-                "mt-8 inline-flex h-12 items-center gap-2 px-8 text-base font-semibold shadow-sm shadow-black/10 2xl:h-14 2xl:px-10 2xl:text-lg",
+                "mt-8 inline-flex h-12 items-center gap-2 px-8 text-base font-semibold 2xl:h-14 2xl:px-10 2xl:text-lg",
               )}
             >
               {WINTER_STORE_COPY.homeCta}
@@ -49,26 +47,20 @@ export function WinterStoreSection() {
           </Reveal>
         </div>
 
-        <Reveal
-          className={cn(
-            "order-1 lg:order-2",
-            "relative isolate overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/8",
-            interactiveCardHover,
-          )}
-        >
+        <Reveal className="relative isolate order-1 overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/8 lg:order-2">
           <Image
             src={WINTER_STORE_IMAGE.src}
             alt={WINTER_STORE_IMAGE.alt}
             width={WINTER_STORE_IMAGE.width}
             height={WINTER_STORE_IMAGE.height}
-            quality={IMAGE_QUALITY_MAX}
+            quality={IMAGE_QUALITY}
             className="aspect-[16/11] size-full object-cover"
-            sizes="(min-width: 1024px) 44vw, 100vw"
+            sizes={IMAGE_SIZES.winterSection}
+            loading="lazy"
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
           <p className="absolute bottom-6 left-6 right-6 text-sm font-medium leading-relaxed text-white/95 drop-shadow-sm sm:text-base">
-            Abrigos y capas para el viento sur. Entrá al puente con diseño Alo y
-            seguí a la tienda cuando estés listo.
+            Abrigos y capas para el viento sur.
           </p>
         </Reveal>
       </div>

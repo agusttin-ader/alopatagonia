@@ -9,7 +9,8 @@ import { buttonVariants } from "@/components/ui/button";
 import {
   getWhatsAppUrl,
   getWinterStoreUrl,
-  IMAGE_QUALITY_MAX,
+  IMAGE_QUALITY,
+  IMAGE_SIZES,
   WINTER_STORE_COPY,
   WINTER_STORE_IMAGE,
   WINTER_STORE_WHATSAPP_MESSAGE,
@@ -31,10 +32,10 @@ export function WinterStoreLanding() {
           alt={WINTER_STORE_IMAGE.alt}
           width={WINTER_STORE_IMAGE.width}
           height={WINTER_STORE_IMAGE.height}
-          quality={IMAGE_QUALITY_MAX}
+          quality={IMAGE_QUALITY}
           priority
           className="absolute inset-0 size-full object-cover"
-          sizes="100vw"
+          sizes={IMAGE_SIZES.viewport}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/58 to-black/34" aria-hidden />
         <div
@@ -43,8 +44,8 @@ export function WinterStoreLanding() {
         />
         <div className="relative z-10 mx-auto max-w-3xl 2xl:max-w-4xl">
           <Reveal>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/92 [text-shadow:0_1px_10px_rgba(0,0,0,0.45)]">
-              Alo Patagonia
+            <p className="text-sm font-medium text-white/92 [text-shadow:0_1px_10px_rgba(0,0,0,0.45)]">
+              Tienda de invierno
             </p>
             <h1
               id="winter-landing-heading"

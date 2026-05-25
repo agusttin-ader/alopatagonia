@@ -3,6 +3,7 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef, type ReactNode } from "react";
 
+import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
 
 type ScrollParallaxProps = {
@@ -18,6 +19,7 @@ export function ScrollParallax({
   strength = 36,
 }: ScrollParallaxProps) {
   const reduceMotion = useReducedMotion();
+  const isCoarseMobile = useCoarseMobile();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -25,12 +27,12 @@ export function ScrollParallax({
   });
   const y = useTransform(scrollYProgress, [0, 1], [strength * 0.35, -strength * 0.35]);
 
-  if (reduceMotion) {
+  if (reduceMotion || isCoarseMobile) {
     return <div className={className}>{children}</div>;
   }
 
   return (
-    <div ref={ref} className={cn("overflow-hidden", className)}>
+    <div ref={ref} className={cn("relative overflow-hidden", className)}>
       <motion.div style={{ y }}>{children}</motion.div>
     </div>
   );

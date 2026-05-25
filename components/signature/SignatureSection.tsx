@@ -7,21 +7,25 @@ import { Reveal } from "@/components/motion/reveal";
 import { ScrollParallax } from "@/components/motion/scroll-parallax";
 import { buttonVariants } from "@/components/ui/button";
 import {
-  IMAGE_QUALITY_MAX,
+  IMAGE_QUALITY,
+  IMAGE_SIZES,
   SECTION_IDS,
   EXPERIENCE_IMAGE,
 } from "@/lib/constants";
-import { cn, interactiveCardHover } from "@/lib/utils";
+import { useCoarseMobile } from "@/lib/use-coarse-mobile";
+import { cn } from "@/lib/utils";
 
-const EXPERIENCE_CHIPS = [
-  "Dia 1-3 Patagonia",
+const SIGNATURE_POINTS = [
   "Auto listo al llegar",
-  "Excursion segun clima",
+  "Hotel según tu ruta",
+  "Excursiones según clima",
   "WhatsApp activo todo el viaje",
 ] as const;
 
 export function SignatureSection() {
   const reduceMotion = useReducedMotion();
+  const isCoarseMobile = useCoarseMobile();
+  const animateProgress = !reduceMotion && !isCoarseMobile;
 
   return (
     <section
@@ -30,72 +34,58 @@ export function SignatureSection() {
       aria-labelledby="signature-heading"
     >
       <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.15fr_1fr] lg:items-center 2xl:max-w-[90rem] 2xl:gap-12">
-        <Reveal
-          className={cn(
-            "relative isolate overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/8",
-            interactiveCardHover,
-          )}
-        >
+        <Reveal className="relative isolate overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/8">
           <ScrollParallax strength={42} className="relative size-full">
             <Image
               src={EXPERIENCE_IMAGE.src}
               alt="Ruta de lago y montana en Patagonia"
               width={EXPERIENCE_IMAGE.width}
               height={EXPERIENCE_IMAGE.height}
-              quality={IMAGE_QUALITY_MAX}
+              quality={IMAGE_QUALITY}
               className="aspect-[16/11] size-full object-cover"
-              sizes="(min-width: 1024px) 52vw, 100vw"
+              sizes={IMAGE_SIZES.signature}
+              loading="lazy"
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
           </ScrollParallax>
           <motion.div
-            className="pointer-events-none absolute bottom-5 left-5 z-10 h-1 rounded-full bg-white/90"
-            initial={{ width: "20%" }}
-            whileInView={{ width: "62%" }}
+            className="pointer-events-none absolute bottom-5 left-5 z-10 h-1 w-[62%] origin-left rounded-full bg-white/90"
+            initial={{ scaleX: animateProgress ? 0.32 : 1 }}
+            whileInView={animateProgress ? { scaleX: 1 } : undefined}
             viewport={{ once: true }}
             transition={{
               type: "tween",
-              duration: reduceMotion ? 0 : 0.72,
+              duration: animateProgress ? 0.72 : 0,
               ease: [0.16, 1, 0.3, 1],
             }}
             aria-hidden
           />
           <div className="absolute bottom-8 left-5 right-5 text-white">
-            <p className="text-sm font-semibold tracking-wide text-white/90">
-              Patagonia a tu medida, en una sola conversacion
-            </p>
-            <p className="mt-2 max-w-md text-base leading-relaxed text-white/95">
-              No vendemos servicios sueltos. Diseniamos tu viaje completo de punta
-              a punta.
+            <p className="text-sm font-medium leading-relaxed text-white/95">
+              Patagonia Argentina · un equipo · tu viaje armado de punta a punta
             </p>
           </div>
         </Reveal>
 
         <div>
           <Reveal>
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
-              Esencia Alo Patagonia
-            </p>
             <h2
               id="signature-heading"
-              className="font-heading mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
+              className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
             >
-              No es solo destino. Es como lo vivis.
+              Un WhatsApp. Auto, alojamiento y salidas.
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground 2xl:text-xl">
-              Desde el primer WhatsApp, organizamos auto, alojamiento y
-              experiencias para que disfrutes con todo resuelto.
+              No vendemos servicios sueltos. Coordinamos fechas, traslados y
+              reservas para que viajes con todo resuelto.
             </p>
           </Reveal>
 
-          <Reveal delay={0.08} className="mt-6 flex flex-wrap gap-2.5">
-            {EXPERIENCE_CHIPS.map((chip) => (
-              <span
-                key={chip}
-                className="rounded-full border border-border/80 bg-card px-3.5 py-2 text-sm font-semibold text-foreground"
-              >
-                {chip}
-              </span>
+          <Reveal delay={0.08} className="mt-6 space-y-2.5 border-l border-primary/25 pl-4">
+            {SIGNATURE_POINTS.map((point) => (
+              <p key={point} className="text-[0.95rem] leading-relaxed text-foreground/88 2xl:text-base">
+                {point}
+              </p>
             ))}
           </Reveal>
 
@@ -104,10 +94,10 @@ export function SignatureSection() {
               href={`#${SECTION_IDS.planner}`}
               className={cn(
                 buttonVariants({ variant: "marketing", size: "lg" }),
-                "mt-7 inline-flex h-12 px-8 text-base font-semibold shadow-md 2xl:h-14 2xl:px-10 2xl:text-lg",
+                "mt-7 inline-flex h-12 px-8 text-base font-semibold 2xl:h-14 2xl:px-10 2xl:text-lg",
               )}
             >
-              Quiero mi propuesta por WhatsApp
+              Armar mi consulta
             </a>
           </Reveal>
         </div>

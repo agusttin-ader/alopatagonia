@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { CalendarDays, ChevronDown, ChevronLeft, ChevronRight, Mail } from "lucide-react";
+import { CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, Mail } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 
@@ -9,6 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 import {
   PLANNER_DESTINATION_LABELS,
+  PLANNER_DESTINATION_HOOKS,
   PLANNER_DESTINATION_OPTIONS,
   SECTION_IDS,
   SITE,
@@ -63,6 +64,222 @@ function formatDate(value: string) {
   return `${d}/${m}/${date.getFullYear()}`;
 }
 
+function isPastDay(date: Date) {
+  return toISODate(date) < toISODate(new Date());
+}
+
+function isBeforeMonth(year: number, month: number) {
+  const today = new Date();
+  return year < today.getFullYear() || (year === today.getFullYear() && month < today.getMonth());
+}
+
+function formatDateCompact(value: string) {
+  const date = fromISODate(value);
+  if (!date) return "";
+  const months = [
+    "ene",
+    "feb",
+    "mar",
+    "abr",
+    "may",
+    "jun",
+    "jul",
+    "ago",
+    "sep",
+    "oct",
+    "nov",
+    "dic",
+  ];
+  return `${date.getDate()} ${months[date.getMonth()]}`;
+}
+
+function getSeasonLabel(month: number) {
+  if (month === 11 || month <= 1) return "verano";
+  if (month <= 4) return "otoño";
+  if (month <= 7) return "invierno";
+  return "primavera";
+}
+
+function getTripNightCount(fromDate: string, toDate: string) {
+  const from = fromISODate(fromDate);
+  const to = fromISODate(toDate);
+  if (!from || !to || fromDate > toDate) return null;
+  const diffMs = to.getTime() - from.getTime();
+  return Math.max(0, Math.round(diffMs / (1000 * 60 * 60 * 24)));
+}
+
+type PlannerProgressStep = {
+  id: string;
+  label: string;
+  done: boolean;
+};
+
+function PlannerProgressBar({ steps }: { steps: PlannerProgressStep[] }) {
+  const completedSteps = steps.filter((step) => step.done).length;
+  const progress = (completedSteps / steps.length) * 100;
+
+  return (
+    <div
+      className="mb-4 space-y-2.5"
+      role="progressbar"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(progress)}
+      aria-label="Progreso del planificador"
+    >
+      <div className="h-1 overflow-hidden rounded-full bg-[#e8e0d2]">
+        <motion.div
+          className="h-full rounded-full bg-[linear-gradient(90deg,rgba(13,148,136,0.85),rgba(13,148,136,0.55))]"
+          initial={false}
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+        />
+      </div>
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs font-medium">
+        {steps.map((step, index) => (
+          <span key={step.id} className="inline-flex items-center gap-1.5">
+            {index > 0 ? (
+              <span className="text-muted-foreground/45" aria-hidden>
+                ·
+              </span>
+            ) : null}
+            <span
+              className={cn(
+                "inline-flex items-center gap-1 transition-colors",
+                step.done ? "text-primary" : "text-muted-foreground",
+              )}
+            >
+              <span
+                className={cn(
+                  "inline-flex size-4 items-center justify-center rounded-full border transition-colors",
+                  step.done
+                    ? "border-primary/30 bg-primary/12 text-primary"
+                    : "border-[#d9d2c5] bg-[#f5efe2] text-muted-foreground/70",
+                )}
+                aria-hidden
+              >
+                {step.done ? <Check className="size-2.5" strokeWidth={3} /> : null}
+              </span>
+              {step.label}
+              {step.done ? (
+                <span className="sr-only"> completado</span>
+              ) : (
+                <span className="sr-only"> pendiente</span>
+              )}
+            </span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function PlannerTripPreview({
+  destination,
+  fromDate,
+  toDate,
+  travelers,
+}: {
+  destination: PlannerDestinationValue;
+  fromDate: string;
+  toDate: string;
+  travelers: string;
+}) {
+  const destinationLabel = PLANNER_DESTINATION_LABELS[destination];
+  const hook = destination !== "none" ? PLANNER_DESTINATION_HOOKS[destination] : null;
+  const nights = getTripNightCount(fromDate, toDate);
+  const fromParsed = fromISODate(fromDate);
+  const season = fromParsed ? getSeasonLabel(fromParsed.getMonth()) : null;
+  const peopleCount = travelers.trim();
+  const hasDestination = destination !== "none";
+  const hasDates = Boolean(fromDate && toDate && nights !== null);
+  const hasAnyPreview = hasDestination || hasDates || peopleCount.length > 0;
+  const previewKey = `${destination}-${fromDate}-${toDate}-${travelers}`;
+
+  const metaLine = useMemo(() => {
+    const parts: string[] = [];
+
+    if (fromDate && toDate) {
+      parts.push(`${formatDateCompact(fromDate)} – ${formatDateCompact(toDate)}`);
+    }
+    if (peopleCount) {
+      parts.push(`${peopleCount} ${Number(peopleCount) === 1 ? "persona" : "personas"}`);
+    }
+    if (season) {
+      parts.push(season);
+    }
+
+    return parts.join(" · ");
+  }, [fromDate, peopleCount, season, toDate]);
+
+  const title = hasDestination ? destinationLabel : hasDates ? "Patagonia" : null;
+
+  return (
+    <div
+      className={cn(
+        "relative mb-4 overflow-hidden rounded-xl border border-[#d9d2c5]/70 bg-[#faf6ef]/55 px-3 py-2.5 sm:px-3.5 sm:py-3",
+        !hasAnyPreview && "border-dashed bg-transparent py-3",
+      )}
+      aria-live="polite"
+      aria-atomic="true"
+    >
+      <div
+        className="pointer-events-none absolute inset-y-2.5 left-0 w-px bg-primary/35"
+        aria-hidden
+      />
+
+      <AnimatePresence mode="wait">
+        {!hasAnyPreview ? (
+          <motion.p
+            key="empty"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            className="pl-2.5 text-[0.72rem] leading-relaxed text-muted-foreground/85 sm:text-xs"
+          >
+            Destino, fechas y grupo aparecen acá.
+          </motion.p>
+        ) : (
+          <motion.div
+            key={previewKey}
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-1 pl-2.5"
+          >
+            <div className="flex items-baseline gap-2.5">
+              {hasDates ? (
+                <span className="font-heading text-[1.35rem] font-medium tabular-nums leading-none tracking-tight text-brand-forest">
+                  {nights}
+                </span>
+              ) : null}
+              {title ? (
+                <p className="min-w-0 font-heading text-[0.98rem] font-semibold leading-tight text-brand-forest sm:text-base">
+                  {title}
+                </p>
+              ) : null}
+            </div>
+
+            {metaLine ? (
+              <p className="text-[0.68rem] leading-relaxed text-muted-foreground sm:text-[0.72rem]">
+                {metaLine}
+              </p>
+            ) : null}
+
+            {hook ? (
+              <p className="pt-0.5 font-heading text-[0.72rem] italic leading-snug text-foreground/62 sm:text-xs">
+                {hook}
+              </p>
+            ) : null}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 function DateField({
   label,
   value,
@@ -75,7 +292,13 @@ function DateField({
   const today = new Date();
   const selectedDate = fromISODate(value);
   const [open, setOpen] = useState(false);
-  const [viewDate, setViewDate] = useState(selectedDate ?? today);
+  const [viewDate, setViewDate] = useState(() => {
+    const initial = selectedDate ?? today;
+    if (isBeforeMonth(initial.getFullYear(), initial.getMonth())) {
+      return new Date(today.getFullYear(), today.getMonth(), 1);
+    }
+    return initial;
+  });
   const triggerId = useId();
   const panelId = useId();
   const fieldRef = useRef<HTMLDivElement>(null);
@@ -127,6 +350,15 @@ function DateField({
     };
   }, [open]);
 
+  useEffect(() => {
+    const parsed = fromISODate(value);
+    if (parsed && isPastDay(parsed)) {
+      onChange("");
+    }
+  }, [onChange, value]);
+
+  const viewingPastMonth = isBeforeMonth(viewDate.getFullYear(), viewDate.getMonth());
+
   return (
     <div ref={fieldRef} className="relative space-y-1.5">
       <span className="text-sm font-semibold text-foreground">{label}</span>
@@ -163,12 +395,13 @@ function DateField({
           <div className="mb-2 flex items-center justify-between">
             <button
               type="button"
+              disabled={viewingPastMonth}
               onClick={() =>
                 setViewDate(
                   new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1),
                 )
               }
-              className="inline-flex size-11 items-center justify-center rounded-lg text-foreground transition hover:bg-[#f2ede3]"
+              className="inline-flex size-11 items-center justify-center rounded-lg text-foreground transition hover:bg-[#f2ede3] disabled:cursor-not-allowed disabled:opacity-40"
               aria-label="Mes anterior"
             >
               <ChevronLeft className="size-4" />
@@ -200,22 +433,27 @@ function DateField({
             {calendarDays.map((day, idx) => {
               const iso = day ? toISODate(day) : "";
               const isSelected = day && iso === value;
+              const isDisabled = !day || isPastDay(day);
 
               return (
                 <button
                   key={`${iso}-${idx}`}
                   type="button"
-                  disabled={!day}
+                  disabled={isDisabled}
                   onClick={() => {
-                    if (!day) return;
+                    if (!day || isPastDay(day)) return;
                     onChange(iso);
                     setOpen(false);
                   }}
                   className={cn(
                     "h-11 rounded-lg text-xs font-medium transition",
-                    day
-                      ? "text-foreground hover:bg-[#f2ede3]"
-                      : "cursor-default opacity-0",
+                    !day && "cursor-default opacity-0",
+                    day &&
+                      !isPastDay(day) &&
+                      "text-foreground hover:bg-[#f2ede3]",
+                    day &&
+                      isPastDay(day) &&
+                      "cursor-not-allowed text-muted-foreground/45 hover:bg-transparent",
                     isSelected && "bg-primary text-primary-foreground hover:bg-primary",
                   )}
                 >
@@ -270,6 +508,27 @@ export function TripPlannerSection() {
   const honeypotTriggered = website.trim().length > 0;
   const canSubmit = plannerReady && !honeypotTriggered;
 
+  const progressSteps = useMemo<PlannerProgressStep[]>(
+    () => [
+      {
+        id: "destination",
+        label: "Destino",
+        done: destination !== "none",
+      },
+      {
+        id: "dates",
+        label: "Fechas",
+        done: Boolean(fromDate && toDate && !invalidDateRange),
+      },
+      {
+        id: "contact",
+        label: "Contacto",
+        done: name.trim().length > 1 && travelers.trim().length > 0,
+      },
+    ],
+    [destination, fromDate, invalidDateRange, name, toDate, travelers],
+  );
+
   const whatsappUrl = getWhatsAppUrl(message);
   const mailUrl = `mailto:${SITE.email}?subject=${encodeURIComponent("Consulta viaje Patagonia")}&body=${encodeURIComponent(message)}`;
 
@@ -319,23 +578,27 @@ export function TripPlannerSection() {
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
         <Reveal className="max-w-2xl 2xl:max-w-3xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-footer-lake">
-            Planificacion personalizada
-          </p>
           <h2
             id="planner-heading"
-            className="font-heading mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
+            className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
           >
             Planear mi viaje
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground 2xl:text-xl">
-            Completá estos datos y te enviamos una propuesta concreta para
-            organizar tu viaje por Patagonia.
+            Completá el formulario y te armamos el mensaje para consultar por
+            WhatsApp o mail.
           </p>
         </Reveal>
 
         <div className="mt-7 grid gap-6 lg:mt-10 lg:grid-cols-[1fr_1.05fr] 2xl:gap-8">
-          <Reveal className="rounded-[2rem] border border-[#ddd5c8]/80 bg-[linear-gradient(160deg,rgba(248,243,232,0.98),rgba(240,233,218,0.94))] p-5 shadow-[0_28px_52px_-36px_rgba(48,40,28,0.34)] sm:p-7 2xl:p-8">
+          <Reveal className="rounded-2xl border border-border/80 bg-card p-5 shadow-sm sm:p-7 2xl:p-8">
+            <PlannerProgressBar steps={progressSteps} />
+            <PlannerTripPreview
+              destination={destination}
+              fromDate={fromDate}
+              toDate={toDate}
+              travelers={travelers}
+            />
             <div
               className="mb-6 h-px w-28 bg-[linear-gradient(to_right,rgba(13,148,136,0.72),rgba(13,148,136,0.08))]"
               aria-hidden
@@ -392,11 +655,11 @@ export function TripPlannerSection() {
                         id={destinationPanelId}
                         role="listbox"
                         aria-labelledby={destinationButtonId}
-                        className="absolute left-0 top-[calc(100%+8px)] z-30 w-full rounded-2xl border border-[#d9d2c5]/90 bg-[linear-gradient(150deg,rgba(250,244,234,0.99),rgba(243,236,222,0.96))] p-2 shadow-[0_20px_36px_-28px_rgba(44,36,25,0.3)] ring-1 ring-[#faf6ef]/85 backdrop-blur-sm"
+                        className="absolute left-0 top-[calc(100%+8px)] z-30 w-full rounded-2xl border border-[#d9d2c5]/90 bg-[linear-gradient(150deg,rgba(250,244,234,0.99),rgba(243,236,222,0.96))] p-2 shadow-[0_20px_36px_-28px_rgba(44,36,25,0.3)] ring-1 ring-[#faf6ef]/85 sm:backdrop-blur-sm"
                         initial={{ opacity: 0, y: -8, scale: 0.985 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -6, scale: 0.99 }}
-                        transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
                       >
                         <div className="max-h-64 overflow-auto">
                           {PLANNER_DESTINATION_OPTIONS.map((option) => (
@@ -530,12 +793,9 @@ export function TripPlannerSection() {
           </Reveal>
 
           <Reveal className="hidden h-full flex-col overflow-hidden rounded-3xl border border-border/80 bg-secondary/30 p-4 sm:p-6 md:flex 2xl:p-7">
-            <div className="mb-4 flex items-center justify-between">
-              <p className="text-sm font-semibold uppercase tracking-[0.14em] text-footer-lake">
-                Mapa Patagonia Argentina
-              </p>
-              <p className="text-xs text-muted-foreground">
-                Foco: {PLANNER_DESTINATION_LABELS[destination]}
+            <div className="mb-4">
+              <p className="text-sm font-medium text-muted-foreground">
+                Mapa · {PLANNER_DESTINATION_LABELS[destination]}
               </p>
             </div>
 

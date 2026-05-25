@@ -16,7 +16,7 @@ const HOME_SECTION_IDS = {
 
 const HOME_LINKS = [
   { label: "Inicio", href: `#${HOME_SECTION_IDS.inicio}`, id: HOME_SECTION_IDS.inicio },
-  { label: "Sobre nosotros", href: `#${SECTION_IDS.signature}`, id: SECTION_IDS.signature },
+  { label: "Esencia Alo", href: `#${SECTION_IDS.signature}`, id: SECTION_IDS.signature },
   { label: "Testimonios", href: `#${SECTION_IDS.testimonials}`, id: SECTION_IDS.testimonials },
   { label: "Servicios", href: `#${SECTION_IDS.services}`, id: SECTION_IDS.services },
   { label: "Destinos", href: `#${SECTION_IDS.destinations}`, id: SECTION_IDS.destinations },
@@ -203,20 +203,13 @@ export function GlobalNav() {
       }
       transition={navVisibilityTransition}
     >
-      <motion.div
+      <div
         className={cn(
-          "relative border-b px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] md:hidden",
+          "relative border-b px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] transition-[padding,box-shadow,border-color,background-color] duration-300 ease-out md:hidden",
           scrolled
-            ? "border-border/80 bg-background shadow-[0_8px_20px_-18px_rgba(0,0,0,0.35)]"
+            ? "border-border/80 bg-background pb-[0.58rem] pt-[calc(env(safe-area-inset-top)+0.58rem)] shadow-[0_8px_20px_-18px_rgba(0,0,0,0.35)]"
             : "border-border/70 bg-background shadow-[0_6px_18px_-16px_rgba(0,0,0,0.28)]",
         )}
-        animate={{
-          paddingTop: scrolled
-            ? "calc(env(safe-area-inset-top) + 0.58rem)"
-            : "calc(env(safe-area-inset-top) + 0.75rem)",
-          paddingBottom: scrolled ? "0.58rem" : "0.75rem",
-        }}
-        transition={headerTransition}
       >
         <div className="mx-auto flex h-12 max-w-7xl items-center justify-between">
           <Link href="/" className="font-heading text-[1.22rem] font-semibold tracking-[0.02em] text-primary">
@@ -254,7 +247,7 @@ export function GlobalNav() {
             </span>
           </Button>
         </div>
-      </motion.div>
+      </div>
 
       <motion.div className="hidden md:block" transition={headerTransition}>
         <motion.div

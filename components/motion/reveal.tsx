@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion, type HTMLMotionProps } from "framer-motion";
 
+import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
 
 type RevealProps = HTMLMotionProps<"div"> & {
@@ -25,7 +26,12 @@ export function Reveal({
   ...props
 }: RevealProps) {
   const reduceMotion = useReducedMotion();
+  const isCoarseMobile = useCoarseMobile();
   const useStagger = staggerChildren;
+  const useLiteMotion = reduceMotion || isCoarseMobile;
+
+  const resolvedVariant = isCoarseMobile && !reduceMotion ? "fade" : variant;
+
   const variants = {
     fade: {
       hidden: { opacity: 0 },
@@ -40,19 +46,23 @@ export function Reveal({
       visible: { opacity: 1, y: 0, scale: 1 },
     },
   } as const;
-  const selectedVariant = variants[variant];
+  const selectedVariant = variants[resolvedVariant];
 
   return (
     <motion.div
-      initial={useStagger ? (reduceMotion ? undefined : "hidden") : reduceMotion ? "visible" : "hidden"}
+      initial={useStagger ? (useLiteMotion ? undefined : "hidden") : useLiteMotion ? "visible" : "hidden"}
       whileInView="visible"
-      viewport={{ once, margin, amount }}
+      viewport={{
+        once,
+        margin: isCoarseMobile ? "0px" : margin,
+        amount: isCoarseMobile ? 0.2 : amount,
+      }}
       variants={
         useStagger
           ? {
               hidden: {},
               visible: {
-                transition: reduceMotion
+                transition: useLiteMotion
                   ? { staggerChildren: 0 }
                   : { staggerChildren: 0.07, delayChildren: delay },
               },
@@ -65,12 +75,12 @@ export function Reveal({
           }
         : {})}
       transition={
-        reduceMotion
+        useLiteMotion
           ? { duration: 0 }
           : {
               type: "tween",
-              duration: 0.54,
-              delay,
+              duration: isCoarseMobile ? 0.28 : 0.54,
+              delay: isCoarseMobile ? 0 : delay,
               ease: [0.16, 1, 0.3, 1],
             }
       }

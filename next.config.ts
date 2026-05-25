@@ -49,8 +49,10 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
-    qualities: [75, 80, 85, 100],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    qualities: [75, 85, 88, 90, 92, 95, 100],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
+    imageSizes: [384, 640, 750, 828, 1080, 1200],
+    minimumCacheTTL: 60 * 60 * 24 * 30,
   },
   experimental: {
     optimizePackageImports: ["lucide-react", "framer-motion"],

@@ -10,19 +10,23 @@ import {
   HERO_VIDEO_MOBILE,
   HERO_VIDEO_MOBILE_LITE,
   HERO_VIDEO_PLAYBACK_RATE,
-  IMAGE_QUALITY_MAX,
+  IMAGE_QUALITY_HERO,
+  IMAGE_SIZES,
 } from "@/lib/constants";
+import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 
 export function HeroBackground() {
   const reduceMotion = useReducedMotion();
-  const { scrollY } = useScroll();
-  const parallaxY = useTransform(scrollY, [0, 640], [0, 40]);
-  const parallaxScale = useTransform(scrollY, [0, 640], [1, 1.04]);
+  const isCoarseMobile = useCoarseMobile();
   const [videoReady, setVideoReady] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
   const [allowParallax, setAllowParallax] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const shouldAnimateBackground = !reduceMotion && allowParallax;
+  const shouldParallax = !reduceMotion && !isCoarseMobile && allowParallax;
+
+  const { scrollY } = useScroll();
+  const parallaxY = useTransform(scrollY, [0, 640], [0, 40]);
+  const parallaxScale = useTransform(scrollY, [0, 640], [1, 1.04]);
 
   const markReady = useCallback(() => {
     setVideoReady(true);
@@ -32,17 +36,7 @@ export function HeroBackground() {
     el.playbackRate = HERO_VIDEO_PLAYBACK_RATE;
   }, []);
 
-  useEffect(() => {
-    const v = videoRef.current;
-    if (v && v.readyState >= 3) markReady();
-  }, [markReady]);
-
-  useEffect(() => {
-    const v = videoRef.current;
-    if (v) applyPlaybackRate(v);
-  }, [applyPlaybackRate]);
-
-  useEffect(() => {
+  const startPlayback = useCallback(() => {
     const v = videoRef.current;
     if (!v) return;
 
@@ -54,7 +48,7 @@ export function HeroBackground() {
   }, []);
 
   useEffect(() => {
-    if (reduceMotion) return;
+    if (reduceMotion || isCoarseMobile) return;
 
     const mediaQuery = window.matchMedia("(min-width: 768px)");
     const syncParallaxPreference = () => {
@@ -67,25 +61,26 @@ export function HeroBackground() {
     return () => {
       mediaQuery.removeEventListener("change", syncParallaxPreference);
     };
-  }, [reduceMotion]);
+  }, [reduceMotion, isCoarseMobile]);
 
-  const parallaxStyle = shouldAnimateBackground
-    ? { y: parallaxY, scale: parallaxScale }
-    : undefined;
+  useEffect(() => {
+    startPlayback();
+  }, [startPlayback, shouldParallax, isCoarseMobile, videoFailed]);
 
   if (videoFailed) {
     return (
-      <motion.div className="absolute inset-0 z-0" style={parallaxStyle}>
+      <div className="absolute inset-0 z-0">
         <Image
           src={HERO_IMAGE.src}
           alt={HERO_IMAGE.alt}
           fill
           priority
-          quality={IMAGE_QUALITY_MAX}
-          sizes="100vw"
+          quality={IMAGE_QUALITY_HERO}
+          sizes={IMAGE_SIZES.viewport}
+          fetchPriority="high"
           className="object-cover"
         />
-      </motion.div>
+      </div>
     );
   }
 
@@ -93,7 +88,7 @@ export function HeroBackground() {
     <motion.video
       ref={videoRef}
       className={`absolute inset-0 z-0 size-full object-cover transition-opacity duration-700 ease-out ${videoReady ? "opacity-100" : "opacity-85"}`}
-      style={parallaxStyle}
+      style={shouldParallax ? { y: parallaxY, scale: parallaxScale } : undefined}
       autoPlay
       muted
       loop
