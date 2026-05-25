@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import {
   HERO_IMAGE,
@@ -66,6 +66,17 @@ export function HeroBackground() {
   useEffect(() => {
     startPlayback();
   }, [startPlayback, shouldParallax, isCoarseMobile, videoFailed]);
+
+  /** Durante la intro el shell usa visibility:hidden: muchos navegadores no ejecutan play() hasta el reveal */
+  /** SiteIntro es hermano que corre su layout antes del hero → el event puede dispararse sin listeners; usar flag + mismo tick */
+  useLayoutEffect(() => {
+    const onReveal = () => startPlayback();
+    window.addEventListener("alo-site-intro-reveal", onReveal);
+    if (window.__aloIntroReveal) {
+      queueMicrotask(onReveal);
+    }
+    return () => window.removeEventListener("alo-site-intro-reveal", onReveal);
+  }, [startPlayback]);
 
   if (videoFailed) {
     return (
