@@ -39,11 +39,11 @@ const item = {
 };
 
 const mobileItem = {
-  hidden: { opacity: 0, y: 10 },
+  hidden: { opacity: 0, y: 8 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { type: "tween" as const, duration: 0.32, ease: easeLux },
+    transition: { type: "tween" as const, duration: 0.44, ease: easeLux },
   },
 };
 
@@ -65,7 +65,10 @@ export function HeroClient() {
       return;
     }
 
-    const onReveal = () => setHeroRevealed(true);
+    const onReveal = () => {
+      window.scrollTo(0, 0);
+      setHeroRevealed(true);
+    };
     window.addEventListener("alo-site-intro-reveal", onReveal);
 
     const fallbackId = window.setTimeout(
@@ -78,6 +81,11 @@ export function HeroClient() {
       window.clearTimeout(fallbackId);
     };
   }, [reduceMotion]);
+
+  useEffect(() => {
+    if (!heroRevealed || typeof window === "undefined") return;
+    window.scrollTo(0, 0);
+  }, [heroRevealed]);
 
   const showHero = reduceMotion || heroRevealed;
   const heroContainer = isCoarseMobile ? mobileContainer : container;

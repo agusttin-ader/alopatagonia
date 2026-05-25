@@ -24,11 +24,14 @@ export const SITE_INTRO_FALLBACK_BG = "#0a0f0d";
 export const SITE_INTRO_OVERLAY_CSS =
   "linear-gradient(to bottom, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.62) 45%, rgba(0,0,0,0.8) 100%)";
 
-/** Set false for production: show intro once per browser session */
+/** En true: cada carga ejecuta intro. En false (recomendado prod): una vez por sesión. */
 export const SITE_INTRO_ALWAYS_SHOW = true;
 
-/** Quita intro si no aplica; si aplica, asegura pending (keep in sync with SITE_INTRO_ALWAYS_SHOW) */
-export const SITE_INTRO_BOOT_SCRIPT = `(function(){try{var r=window.matchMedia("(prefers-reduced-motion: reduce)").matches;var a=${SITE_INTRO_ALWAYS_SHOW};var s=sessionStorage.getItem("${SITE_INTRO_STORAGE_KEY}")==="1";if(r||(!a&&s)){document.body.classList.remove("site-intro-pending");return;}document.body.classList.add("site-intro-pending");var i=new Image();i.fetchPriority="high";i.src="${SITE_INTRO_IMAGE}";i.onload=function(){var p=new Image();p.src="${HERO_POSTER}";};}catch(e){document.body.classList.remove("site-intro-pending");}})();`;
+/**
+ * Scroll al inicio y bloque de restauración agresiva del navegador (evita quedar
+ * medio scroll tras refresh / BFCache).
+ */
+export const SITE_INTRO_BOOT_SCRIPT = `(function(){try{if("scrollRestoration" in window.history)window.history.scrollRestoration="manual";var home=location.pathname==="/"||location.pathname==="";if(home&&location.hash){history.replaceState(null,"",location.pathname+location.search);}window.scrollTo(0,0);function sc(){scrollTo(0,0)}window.addEventListener("pageshow",function(e){if(e.persisted)sc()},false);window.addEventListener("load",sc,true);var r=window.matchMedia("(prefers-reduced-motion: reduce)").matches;var a=${SITE_INTRO_ALWAYS_SHOW};var s=sessionStorage.getItem("${SITE_INTRO_STORAGE_KEY}")==="1";if(r||(!a&&s)){document.body.classList.remove("site-intro-pending");return;}document.body.classList.add("site-intro-pending");var i=new Image();i.fetchPriority="high";i.src="${SITE_INTRO_IMAGE}";i.onload=function(){var p=new Image();p.src="${HERO_POSTER}";};}catch(e){document.body.classList.remove("site-intro-pending");}})();`;
 
 /** A grande → palabra completa → capa sube */
 export const SITE_INTRO_TIMELINE_MS = {
