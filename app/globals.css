@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -211,14 +210,11 @@
     transform: translateY(-2px);
     box-shadow: 0 10px 24px -16px color-mix(in oklch, var(--foreground) 52%, transparent);
   }
-
-  .gallery-dense {
-    grid-auto-flow: row dense;
-  }
 }
 
-/* Site intro: una sola capa con foto (placeholder); sin flash negro/crema */
+/* Site intro: foto oscurecida + logo; la página queda oculta hasta el reveal */
 body.site-intro-pending {
+  background-color: #0a0f0d !important;
   background-image: none !important;
 }
 
@@ -227,36 +223,38 @@ body.site-intro-pending #site-app-shell {
 }
 
 #site-intro-placeholder {
-  position: fixed;
-  inset: 0;
   display: none;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  will-change: transform;
+  background-color: #0a0f0d;
 }
 
-#site-intro-placeholder::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.78) 0%,
-    rgba(0, 0, 0, 0.62) 45%,
-    rgba(0, 0, 0, 0.8) 100%
-  );
-  pointer-events: none;
+.site-intro-placeholder-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(4.2);
+  transform-origin: center center;
+}
+
+.site-intro-placeholder-brand img {
+  height: clamp(3.5rem, 13vw, 5.75rem);
+  width: auto;
+  filter: drop-shadow(0 8px 28px rgba(0, 0, 0, 0.55));
+}
+
+@media (max-width: 767px) {
+  .site-intro-placeholder-brand {
+    transform: scale(2.85);
+  }
 }
 
 body.site-intro-pending #site-intro-placeholder,
 body.site-intro-exiting #site-intro-placeholder {
-  display: block;
+  display: flex;
 }
 
 body.site-intro-exiting #site-intro-placeholder {
   transform: translateY(-100%);
-  transition: transform 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body.site-intro-placeholder-off #site-intro-placeholder {

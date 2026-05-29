@@ -104,7 +104,7 @@ export function HeroBackground() {
       muted
       loop
       playsInline
-      preload="auto"
+      preload="metadata"
       poster="/videos/hero-poster.jpg"
       aria-hidden
       onLoadedMetadata={(e) => applyPlaybackRate(e.currentTarget)}

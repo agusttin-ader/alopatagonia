@@ -121,7 +121,6 @@ export function InstagramStats() {
   const inView = useInView(sectionRef, { once: true, margin: "-10% 0px" });
   const posts = INSTAGRAM_STATS.find((item) => item.id === "posts");
   const destinations = INSTAGRAM_STATS.find((item) => item.id === "coverage");
-  const avatarImage = GALLERY_IMAGES[COLLAGE_IMAGE_INDEXES[0]];
 
   return (
     <section
@@ -135,16 +134,18 @@ export function InstagramStats() {
           <div className="grid lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-stretch">
             <div className="flex flex-col justify-center px-6 py-8 sm:px-10 sm:py-10 lg:px-14 lg:py-12 2xl:px-20 2xl:py-14">
                 <div className="flex items-center gap-4">
-                  <div className="rounded-full bg-[linear-gradient(45deg,#f58529,#dd2a7b,#515bd4)] p-[2.5px]">
-                    <div className="relative size-14 overflow-hidden rounded-full ring-2 ring-[#1a2f26] sm:size-16">
-                      <Image
-                        src={avatarImage.src}
-                        alt=""
-                        fill
-                        sizes="64px"
-                        quality={IMAGE_QUALITY_GALLERY}
-                        className="object-cover"
-                      />
+                  <div className="shrink-0 rounded-full bg-[linear-gradient(45deg,#f58529,#dd2a7b,#515bd4)] p-[2.5px]">
+                    <div className="relative size-16 overflow-hidden rounded-full bg-white ring-2 ring-[#1a2f26] sm:size-[4.5rem]">
+                      <div className="flex size-full items-center justify-center p-2 sm:p-2.5">
+                        <Image
+                          src={SITE.logoOnLight}
+                          alt={SITE.name}
+                          width={591}
+                          height={586}
+                          sizes="64px"
+                          className="h-full w-full object-contain"
+                        />
+                      </div>
                     </div>
                   </div>
                   <div>

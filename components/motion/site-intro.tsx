@@ -11,8 +11,10 @@ import {
   setSiteIntroPlaceholderHidden,
   shouldPlaySiteIntro,
   SITE_INTRO_ALWAYS_SHOW,
+  SITE_INTRO_FALLBACK_BG,
   SITE_INTRO_HIDE_AFTER_MS,
   SITE_INTRO_IMAGE,
+  SITE_INTRO_LOGO,
   SITE_INTRO_OVERLAY_CSS,
   SITE_INTRO_STORAGE_KEY,
   SITE_INTRO_TIMELINE_MS,
@@ -23,10 +25,13 @@ import { cn } from "@/lib/utils";
 const easeFlow = [0.22, 0.03, 0.26, 1] as const;
 const easeWipe = [0.4, 0, 0.2, 1] as const;
 
-const WORD_SUFFIX = SITE.name.slice(1);
+const LOGO_WIDTH = 591;
+const LOGO_HEIGHT = 586;
 
 const WORDMARK_BASE =
-  "font-heading font-medium leading-[1.22] tracking-[-0.02em] text-white [text-shadow:0_4px_32px_rgba(0,0,0,0.8),0_2px_8px_rgba(0,0,0,0.55)]";
+  "font-heading font-medium leading-none tracking-[-0.02em] text-white [text-shadow:0_4px_32px_rgba(0,0,0,0.8),0_2px_8px_rgba(0,0,0,0.55)]";
+
+const LOGO_SIZE_CLASS = "h-12 w-auto sm:h-14 md:h-16";
 
 type IntroPhase = "letter" | "word" | "exit";
 
@@ -72,7 +77,6 @@ export function SiteIntro() {
     }
 
     scrollToHeroTop();
-
     setSiteIntroPending(true);
     setIntroExiting(false);
     setIsVisible(true);
@@ -110,7 +114,7 @@ export function SiteIntro() {
 
   const isLetter = phase === "letter";
   const isWord = phase === "word";
-  const letterScale = isCoarseMobile ? 2.4 : 4.1;
+  const logoScale = isCoarseMobile ? 2.55 : 3.45;
   const wordRevealUsesClip = !isCoarseMobile;
 
   if (!isVisible) return null;
@@ -118,7 +122,8 @@ export function SiteIntro() {
   return (
     <motion.div
       id="site-intro-overlay"
-      className="pointer-events-none fixed inset-0 z-[2200] overflow-hidden bg-[#0a0f0d]"
+      className="pointer-events-none fixed inset-0 z-[2200] overflow-hidden"
+      style={{ backgroundColor: SITE_INTRO_FALLBACK_BG }}
       initial={{ y: 0 }}
       animate={phase === "exit" ? { y: "-100%" } : { y: 0 }}
       transition={{
@@ -141,43 +146,59 @@ export function SiteIntro() {
       <div
         className="absolute inset-0"
         style={{ background: SITE_INTRO_OVERLAY_CSS }}
+        aria-hidden
       />
 
-      <div className="absolute inset-0 z-[1] flex items-center justify-center px-6 py-10 sm:px-10">
+      <div className="absolute inset-0 z-[2] flex items-center justify-center px-6 py-10 sm:px-10">
         <div
           className={cn(
-            "relative z-10 inline-grid max-w-[min(100%,52rem)] items-center overflow-visible py-[0.14em]",
-            isCoarseMobile
-              ? "transition-none"
-              : "transition-[grid-template-columns] duration-[880ms] ease-[cubic-bezier(0.22,0.03,0.26,1)]",
+            "inline-grid max-w-[min(100%,56rem)] items-center overflow-visible",
+            !isCoarseMobile &&
+              "transition-[grid-template-columns] duration-[920ms] ease-[cubic-bezier(0.22,0.03,0.26,1)]",
           )}
           style={{
             gridTemplateColumns: isWord ? "auto 1fr" : "auto 0fr",
           }}
         >
-          <motion.span
-            className={`inline-block origin-center justify-self-center ${WORDMARK_BASE} text-[clamp(3rem,11vw,6.5rem)]`}
-            initial={reduceMotion ? false : { opacity: 0, scale: isCoarseMobile ? 2.2 : 3.4 }}
+          <motion.div
+            className="origin-center justify-self-center"
+            initial={reduceMotion ? false : { opacity: 0, scale: isCoarseMobile ? 2.15 : 3.15 }}
             animate={{
               opacity: 1,
-              scale: isLetter ? letterScale : 1,
+              scale: isLetter ? logoScale : 1,
             }}
             transition={{
-              opacity: { duration: isCoarseMobile ? 0.45 : 0.65, ease: easeFlow },
+              opacity: { duration: isCoarseMobile ? 0.5 : 0.65, ease: easeFlow },
               scale: {
-                duration: isWord ? (isCoarseMobile ? 0.55 : 0.95) : isCoarseMobile ? 0.5 : 0.8,
+                duration: isWord ? (isCoarseMobile ? 0.82 : 0.96) : isCoarseMobile ? 0.72 : 0.82,
                 ease: easeFlow,
               },
             }}
           >
-            {SITE.name.charAt(0)}
-          </motion.span>
+            <Image
+              src={SITE_INTRO_LOGO}
+              alt={SITE.name}
+              width={LOGO_WIDTH}
+              height={LOGO_HEIGHT}
+              priority
+              quality={IMAGE_QUALITY_INTRO}
+              className={cn(
+                LOGO_SIZE_CLASS,
+                "drop-shadow-[0_8px_28px_rgba(0,0,0,0.55)]",
+              )}
+            />
+          </motion.div>
+
           <motion.span
-            className={`min-w-0 overflow-visible whitespace-nowrap ${WORDMARK_BASE} text-[clamp(3rem,11vw,6.5rem)]`}
+            className={cn(
+              "min-w-0 overflow-hidden whitespace-nowrap pl-2 sm:pl-3",
+              WORDMARK_BASE,
+              "text-[clamp(1.75rem,7.5vw,4.5rem)] sm:text-[clamp(2rem,5.2vw,5rem)]",
+            )}
             initial={false}
             animate={{
               opacity: isWord ? 1 : 0,
-              x: isWord ? 0 : wordRevealUsesClip ? 14 : 8,
+              x: isWord ? 0 : wordRevealUsesClip ? 20 : 12,
               clipPath: wordRevealUsesClip
                 ? isWord
                   ? "inset(-12% 0% -12% 0%)"
@@ -185,16 +206,16 @@ export function SiteIntro() {
                 : undefined,
             }}
             transition={{
-              opacity: { duration: isCoarseMobile ? 0.45 : 0.75, ease: easeFlow },
+              opacity: { duration: isCoarseMobile ? 0.55 : 0.72, ease: easeFlow },
               clipPath: wordRevealUsesClip
-                ? { duration: 0.88, ease: easeFlow }
+                ? { duration: 0.92, ease: easeFlow }
                 : { duration: 0 },
-              x: { duration: isCoarseMobile ? 0.45 : 0.82, ease: easeFlow },
+              x: { duration: isCoarseMobile ? 0.55 : 0.88, ease: easeFlow },
             }}
             style={{ pointerEvents: isWord ? "auto" : "none" }}
             aria-hidden={!isWord}
           >
-            {WORD_SUFFIX}
+            {SITE.name}
           </motion.span>
         </div>
       </div>

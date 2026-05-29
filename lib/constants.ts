@@ -3,6 +3,8 @@ import { Car, Compass, Hotel, Mountain } from "lucide-react";
 
 export const SITE = {
   name: "Alo Patagonia",
+  logo: "/images/logo/logo-alo.png",
+  logoOnLight: "/images/logo/logo-alo-black.png",
   instagram: "https://www.instagram.com/alo_patagonia",
   /** Sin @; para textos y enlaces al perfil. */
   instagramHandle: "alo_patagonia",
@@ -18,11 +20,6 @@ export const HERO_COPY = {
   headlineMobile: "Patagonia sin complicaciones",
   subline: "Auto + alojamiento + excursiones. Todo en un solo lugar.",
   sublineMobile: "Auto, alojamiento y excursiones. Un solo equipo.",
-} as const;
-
-export const SITE_INTRO_COPY = {
-  eyebrow: "Organizá tu viaje a Patagonia",
-  tagline: HERO_COPY.subline,
 } as const;
 
 export const SECTION_IDS = {
@@ -182,7 +179,6 @@ type PlannerDestinationConfig = {
   label: string;
   mapCenter: [number, number];
   mapZoom: number;
-  previewHighlights: string;
   previewHook: string;
 };
 
@@ -192,7 +188,6 @@ export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
     label: "Bariloche",
     mapCenter: [-41.1335, -71.3103],
     mapZoom: 12,
-    previewHighlights: "lagos, montaña y circuitos panorámicos",
     previewHook: "Lagos, cipreses y ruta en auto sin apuro.",
   },
   {
@@ -200,7 +195,6 @@ export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
     label: "Ushuaia",
     mapCenter: [-54.8019, -68.303],
     mapZoom: 12.2,
-    previewHighlights: "fin del mundo, navegación y trekking",
     previewHook: "Canal Beagle, montaña y el sur más sur.",
   },
   {
@@ -208,7 +202,6 @@ export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
     label: "El Calafate",
     mapCenter: [-50.3379, -72.2648],
     mapZoom: 12.2,
-    previewHighlights: "glaciares, trekking suave y fotografía",
     previewHook: "Glaciares que se escuchan antes de verse.",
   },
   {
@@ -216,7 +209,6 @@ export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
     label: "San Martin de los Andes",
     mapCenter: [-40.1579, -71.3534],
     mapZoom: 12.2,
-    previewHighlights: "bosques, lagos y rutas escénicas",
     previewHook: "Bosque andino y rutas junto al lago.",
   },
   {
@@ -224,7 +216,6 @@ export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
     label: "Villa La Angostura",
     mapCenter: [-40.7617, -71.6463],
     mapZoom: 13,
-    previewHighlights: "naturaleza, relax y paisajes de postal",
     previewHook: "Reserva, pueblo chico y paisajes de postal.",
   },
   {
@@ -232,7 +223,6 @@ export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
     label: "Puerto Madryn",
     mapCenter: [-42.7692, -65.0385],
     mapZoom: 12.4,
-    previewHighlights: "fauna marina y avistaje de ballenas",
     previewHook: "Mar patagónico y fauna en su hábitat.",
   },
   {
@@ -240,7 +230,6 @@ export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
     label: "El Bolson",
     mapCenter: [-41.9664, -71.5336],
     mapZoom: 12.8,
-    previewHighlights: "artesanía, ferias y montaña alternativa",
     previewHook: "Montaña alternativa y feria artesanal.",
   },
   {
@@ -248,7 +237,6 @@ export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
     label: "Esquel",
     mapCenter: [-42.9115, -71.3195],
     mapZoom: 12.8,
-    previewHighlights: "Tren Patagónico, bosques y estepa",
     previewHook: "Estepa, bosque y el Tren Patagónico.",
   },
   {
@@ -256,7 +244,6 @@ export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
     label: "Mendoza",
     mapCenter: [-32.8895, -68.8458],
     mapZoom: 12.2,
-    previewHighlights: "vinos, alta montaña y cordillera",
     previewHook: "Viñedos al pie de la cordillera.",
   },
 ];
@@ -297,15 +284,12 @@ for (const destination of PLANNER_DESTINATIONS) {
 export const PLANNER_DESTINATION_LABELS = plannerDestinationLabels;
 export const PLANNER_DESTINATION_FOCUS = plannerDestinationFocus;
 
-const plannerDestinationHighlights = {} as Record<PlannerDestinationKey, string>;
 const plannerDestinationHooks = {} as Record<PlannerDestinationKey, string>;
 
 for (const destination of PLANNER_DESTINATIONS) {
-  plannerDestinationHighlights[destination.key] = destination.previewHighlights;
   plannerDestinationHooks[destination.key] = destination.previewHook;
 }
 
-export const PLANNER_DESTINATION_HIGHLIGHTS = plannerDestinationHighlights;
 export const PLANNER_DESTINATION_HOOKS = plannerDestinationHooks;
 
 export const INSTAGRAM_STATS: InstagramStatItem[] = [

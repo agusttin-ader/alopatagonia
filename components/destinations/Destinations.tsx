@@ -229,7 +229,7 @@ function DestinationGallery({
                   quality={IMAGE_QUALITY_GALLERY}
                   className="object-cover"
                   sizes={IMAGE_SIZES.galleryTile}
-                  loading="eager"
+                  loading={index === 0 ? "eager" : "lazy"}
                   fetchPriority={index === 0 ? "high" : undefined}
                 />
               </button>
@@ -258,7 +258,7 @@ function DestinationGallery({
                 quality={IMAGE_QUALITY_GALLERY}
                 className="object-cover"
                 sizes={IMAGE_SIZES.galleryTile}
-                loading="eager"
+                loading={index === 0 ? "eager" : "lazy"}
               />
             </motion.button>
           );

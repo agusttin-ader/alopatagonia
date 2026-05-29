@@ -18,6 +18,10 @@ export const IMAGE_SIZES = {
   winterSection: "(min-width: 1024px) 44vw, 100vw",
   galleryTile:
     "(max-width: 767px) 46vw, (min-width: 1280px) 28vw, (min-width: 1024px) 36vw, 46vw",
+  catalogHubCard:
+    "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
+  catalogCard:
+    "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw",
   lightbox: "(min-width: 1280px) 1200px, 92vw",
 } as const;
 

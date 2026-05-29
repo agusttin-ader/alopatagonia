@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 
+import { SiteLogo } from "@/components/brand/SiteLogo";
 import { Button } from "@/components/ui/button";
 import { SECTION_IDS, SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -17,11 +18,11 @@ const HOME_SECTION_IDS = {
 const HOME_LINKS = [
   { label: "Inicio", href: `#${HOME_SECTION_IDS.inicio}`, id: HOME_SECTION_IDS.inicio },
   { label: "Esencia Alo", href: `#${SECTION_IDS.signature}`, id: SECTION_IDS.signature },
-  { label: "Testimonios", href: `#${SECTION_IDS.testimonials}`, id: SECTION_IDS.testimonials },
-  { label: "Servicios", href: `#${SECTION_IDS.services}`, id: SECTION_IDS.services },
   { label: "Destinos", href: `#${SECTION_IDS.destinations}`, id: SECTION_IDS.destinations },
   { label: "Tu viaje", href: `#${SECTION_IDS.planner}`, id: SECTION_IDS.planner },
-  { label: "Invierno", href: `#${SECTION_IDS.winterShop}`, id: SECTION_IDS.winterShop },
+  { label: "Testimonios", href: `#${SECTION_IDS.testimonials}`, id: SECTION_IDS.testimonials },
+  { label: "Cómo funciona", href: `#${SECTION_IDS.howItWorks}`, id: SECTION_IDS.howItWorks },
+  { label: "Invierno", href: `/invierno`, id: SECTION_IDS.winterShop },
 ] as const;
 
 const MOTION_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -205,15 +206,18 @@ export function GlobalNav() {
     >
       <div
         className={cn(
-          "relative border-b px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] transition-[padding,box-shadow,border-color,background-color] duration-300 ease-out md:hidden",
-          scrolled
-            ? "border-border/80 bg-background pb-[0.58rem] pt-[calc(env(safe-area-inset-top)+0.58rem)] shadow-[0_8px_20px_-18px_rgba(0,0,0,0.35)]"
-            : "border-border/70 bg-background shadow-[0_6px_18px_-16px_rgba(0,0,0,0.28)]",
+          "relative border-b border-border/75 bg-background px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] transition-[padding,box-shadow,border-color] duration-300 ease-out md:hidden",
+          scrolled &&
+            "border-border/80 pb-[0.58rem] pt-[calc(env(safe-area-inset-top)+0.58rem)] shadow-[0_8px_20px_-18px_rgba(0,0,0,0.35)]",
         )}
       >
-        <div className="mx-auto flex h-12 max-w-7xl items-center justify-between">
-          <Link href="/" className="font-heading text-[1.22rem] font-semibold tracking-[0.02em] text-primary">
-            {SITE.name}
+        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between">
+          <Link
+            href="/"
+            className="inline-flex shrink-0 items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2"
+            aria-label={SITE.name}
+          >
+            <SiteLogo linked={false} priority />
           </Link>
           <Button
             ref={menuButtonRef}
@@ -252,14 +256,17 @@ export function GlobalNav() {
       <motion.div className="hidden md:block" transition={headerTransition}>
         <motion.div
           className={cn(
-            "relative flex items-center justify-between border-b px-4 sm:px-8 lg:px-14 2xl:px-20",
-            scrolled
-              ? "h-17 border-border/80 bg-background shadow-[0_10px_24px_-22px_rgba(0,0,0,0.5)]"
-              : "h-18 border-border/75 bg-background",
+            "relative flex h-20 items-center justify-between border-b border-border/75 bg-background px-4 transition-[height,box-shadow,border-color] duration-300 ease-out sm:px-8 lg:px-14 2xl:px-20",
+            scrolled &&
+              "h-18 border-border/80 shadow-[0_10px_24px_-22px_rgba(0,0,0,0.5)]",
           )}
         >
-          <Link href="/" className="font-heading text-[1.08rem] font-semibold tracking-[0.02em] text-primary">
-            {SITE.name}
+          <Link
+            href="/"
+            className="inline-flex shrink-0 items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2"
+            aria-label={SITE.name}
+          >
+            <SiteLogo linked={false} priority />
           </Link>
 
           <div className="hidden items-center gap-1.5 md:flex">
@@ -269,9 +276,7 @@ export function GlobalNav() {
                   key={link.id}
                   href={link.href}
                   onClick={(event) => onNavLinkClick(event, link.href, link.id)}
-                  className={cn(
-                    "motion-link-underline motion-cta relative inline-flex min-h-11 cursor-pointer select-none items-center justify-center rounded-md px-3.5 py-2 text-[0.98rem] font-medium text-foreground/72 hover:text-footer-lake focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake/45 focus-visible:ring-offset-0",
-                  )}
+                  className="motion-link-underline motion-cta relative inline-flex min-h-11 cursor-pointer select-none items-center justify-center rounded-md px-3.5 py-2 text-[0.98rem] font-medium text-foreground/72 hover:text-footer-lake focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake/45 focus-visible:ring-offset-0"
                 >
                   {link.label}
                 </Link>
@@ -311,9 +316,10 @@ export function GlobalNav() {
                   <Link
                     href="/"
                     onClick={() => setMobileOpen(false)}
-                    className="font-heading text-[1.48rem] font-semibold tracking-[0.015em] text-foreground"
+                    className="inline-flex shrink-0 items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2"
+                    aria-label={SITE.name}
                   >
-                    {SITE.name}
+                    <SiteLogo linked={false} className="h-14" />
                   </Link>
                   <Button
                     type="button"

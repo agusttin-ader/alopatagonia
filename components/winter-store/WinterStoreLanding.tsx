@@ -4,6 +4,7 @@ import { Check, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { SiteLogo } from "@/components/brand/SiteLogo";
 import { Reveal } from "@/components/motion/reveal";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -43,6 +44,9 @@ export function WinterStoreLanding() {
           aria-hidden
         />
         <div className="relative z-10 mx-auto max-w-3xl 2xl:max-w-4xl">
+          <Reveal className="mb-6 flex justify-center">
+            <SiteLogo variant="onDark" className="h-11 sm:h-12" />
+          </Reveal>
           <Reveal>
             <p className="text-sm font-medium text-white/92 [text-shadow:0_1px_10px_rgba(0,0,0,0.45)]">
               Tienda de invierno

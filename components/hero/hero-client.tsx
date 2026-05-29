@@ -1,14 +1,13 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
 import { HERO_COPY, SECTION_IDS, SITE } from "@/lib/constants";
 import {
   shouldPlaySiteIntro,
-  SITE_INTRO_HIDE_AFTER_MS,
+  SITE_INTRO_REVEAL_FALLBACK_MS,
 } from "@/lib/site-intro-config";
 import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
@@ -73,7 +72,7 @@ export function HeroClient() {
 
     const fallbackId = window.setTimeout(
       () => setHeroRevealed(true),
-      SITE_INTRO_HIDE_AFTER_MS + 80,
+      SITE_INTRO_REVEAL_FALLBACK_MS,
     );
 
     return () => {
@@ -139,35 +138,6 @@ export function HeroClient() {
           </motion.a>
         </motion.div>
       </motion.div>
-
-      <motion.a
-        href={`#${SECTION_IDS.testimonials}`}
-        className="motion-cta absolute bottom-[max(2.4rem,calc(env(safe-area-inset-bottom)+1.8rem))] left-1/2 hidden min-h-11 -translate-x-1/2 flex-col items-center justify-center gap-1 text-white/90 hover:text-white min-[430px]:flex sm:bottom-[max(4rem,calc(env(safe-area-inset-bottom)+3rem))] lg:bottom-[max(4.8rem,calc(env(safe-area-inset-bottom)+3.4rem))]"
-        aria-label="Ir a testimonios"
-        initial={false}
-        animate={showHero ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-        transition={{
-          delay: reduceMotion ? 0 : 0.38,
-          duration: reduceMotion ? 0 : 0.72,
-          ease: easeLux,
-        }}
-      >
-        <span className="text-xs font-medium text-white/85">Testimonios</span>
-        <motion.span
-          animate={reduceMotion ? false : { y: [0, 5, 0] }}
-          transition={
-            reduceMotion
-              ? { duration: 0 }
-              : {
-                  duration: 2.75,
-                  repeat: Infinity,
-                  ease: [0.45, 0, 0.55, 1],
-                }
-          }
-        >
-          <ChevronDown className="size-6" aria-hidden />
-        </motion.span>
-      </motion.a>
     </div>
   );
 }

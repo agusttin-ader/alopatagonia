@@ -2,10 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
 
+import { HomeIntroGate } from "@/components/motion/home-intro-gate";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { NoZoomLock } from "@/components/mobile/no-zoom-lock";
 import { ScrollProgress } from "@/components/motion/scroll-progress";
-import { SiteIntro } from "@/components/motion/site-intro";
 import { GlobalNav } from "@/components/navigation/GlobalNav";
 import { EXPERIENCE_IMAGE, SITE } from "@/lib/constants";
 import {
@@ -14,9 +14,10 @@ import {
   IMAGE_QUALITY,
 } from "@/lib/image-config";
 import {
-  HERO_POSTER,
   SITE_INTRO_BOOT_SCRIPT,
-  SITE_INTRO_IMAGE,
+  SITE_INTRO_IMAGE_PRELOAD,
+  SITE_INTRO_LOGO,
+  SITE_INTRO_OVERLAY_CSS,
 } from "@/lib/site-intro-config";
 import "./globals.css";
 
@@ -27,7 +28,7 @@ const ogImage = "/videos/hero-poster.jpg";
 const inter = Inter({
   variable: "--font-sans-modern",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   adjustFontFallback: true,
 });
@@ -35,7 +36,7 @@ const inter = Inter({
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-display-modern",
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+  weight: ["500", "600", "700"],
   display: "swap",
   adjustFontFallback: true,
 });
@@ -121,17 +122,11 @@ export default function RootLayout({
       className={`${inter.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
       <head>
-        <link rel="preload" href={SITE_INTRO_IMAGE} as="image" fetchPriority="high" />
-        <link rel="preload" href={HERO_POSTER} as="image" />
+        <link rel="preload" href={SITE_INTRO_IMAGE_PRELOAD} as="image" fetchPriority="high" />
+        <link rel="preload" href={SITE_INTRO_LOGO} as="image" />
         <link rel="prefetch" href={signaturePrefetch} as="image" />
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `#site-intro-placeholder{background-image:url("${SITE_INTRO_IMAGE}");background-size:cover;background-position:center;background-repeat:no-repeat}body.site-intro-pending #site-intro-placeholder{display:block}`,
-          }}
-        />
-        <Script
+        <script
           id="alo-site-intro-boot"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: SITE_INTRO_BOOT_SCRIPT }}
         />
       </head>
@@ -139,9 +134,25 @@ export default function RootLayout({
         <div
           id="site-intro-placeholder"
           suppressHydrationWarning
-          className="pointer-events-none fixed inset-0 z-[2199]"
+          className="pointer-events-none fixed inset-0 z-[2199] flex items-center justify-center"
+          style={{
+            backgroundColor: "#0a0f0d",
+            backgroundImage: `url(${SITE_INTRO_IMAGE_PRELOAD})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
           aria-hidden
-        />
+        >
+          <div
+            className="absolute inset-0"
+            style={{ background: SITE_INTRO_OVERLAY_CSS }}
+            aria-hidden
+          />
+          <div className="site-intro-placeholder-brand relative z-[1]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={SITE_INTRO_LOGO} alt="" decoding="sync" fetchPriority="high" />
+          </div>
+        </div>
         <Script
           id="alo-organization-jsonld"
           type="application/ld+json"
@@ -151,7 +162,7 @@ export default function RootLayout({
         <MotionProvider>
           <NoZoomLock />
           <ScrollProgress />
-          <SiteIntro />
+          <HomeIntroGate />
           <div id="site-app-shell" className="flex min-h-dvh flex-1 flex-col">
             <GlobalNav />
             {children}
