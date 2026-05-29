@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "catalog:manifest": "node scripts/generate-destination-manifest.mjs",
+    "prebuild": "npm run catalog:manifest",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

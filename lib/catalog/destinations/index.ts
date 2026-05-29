@@ -1,5 +1,5 @@
+import { getDestinationImagePaths } from "@/lib/catalog/destination-images";
 import { buildBarilocheCatalog, buildFlatCatalog } from "@/lib/catalog/placeholders";
-import { listDestinationWebImages } from "@/lib/catalog/server/image-paths";
 import type { DestinationCatalog } from "@/lib/catalog/types";
 
 const flatConfigs = [
@@ -48,7 +48,7 @@ const ALL_DESTINATIONS: DestinationCatalog[] = [
       name: config.name,
       region: config.region,
       intro: config.intro,
-      imagePaths: listDestinationWebImages(config.folder),
+      imagePaths: getDestinationImagePaths(config.folder),
     }),
   ),
 ];

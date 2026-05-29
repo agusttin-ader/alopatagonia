@@ -47,6 +47,12 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  /** Evita que las fotos de destinos entren al bundle serverless (límite 300 MB en Vercel). */
+  outputFileTracingExcludes: {
+    "/destinos/[slug]": ["./public/images/destinations/**"],
+    "/destinos": ["./public/images/destinations/**"],
+    "/": ["./public/images/destinations/**"],
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     qualities: [75, 85, 88, 90, 92, 95, 100],

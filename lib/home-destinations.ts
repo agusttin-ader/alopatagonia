@@ -1,5 +1,5 @@
 import { BARILOCHE_EDITORIAL_IMAGES } from "@/lib/catalog/bariloche-curated";
-import { listDestinationWebImages } from "@/lib/catalog/server/image-paths";
+import { getDestinationImagePaths } from "@/lib/catalog/destination-images";
 import type { HomeDestinationEditorial } from "@/lib/home-destinations-types";
 
 export type { HomeDestinationEditorial } from "@/lib/home-destinations-types";
@@ -70,7 +70,7 @@ function buildGalleryImages(
 ): { src: string; alt: string }[] {
   const paths = curated?.length
     ? [...curated]
-    : listDestinationWebImages(folder);
+    : getDestinationImagePaths(folder);
   const barilocheAlts = [
     "Departamento en Bariloche",
     "Cabaña en Bariloche",

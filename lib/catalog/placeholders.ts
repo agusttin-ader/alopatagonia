@@ -8,7 +8,7 @@ import {
   BARILOCHE_CURATED,
   BARILOCHE_HERO_IMAGE,
 } from "@/lib/catalog/bariloche-curated";
-import { listDestinationWebImages } from "@/lib/catalog/server/image-paths";
+import { getDestinationImagePaths } from "@/lib/catalog/destination-images";
 
 export const CATALOG_LIMITS = {
   itemsPerAccommodationType: 1,
@@ -126,7 +126,7 @@ export function buildFlatCatalog(config: {
 
 export function buildBarilocheCatalog(): DestinationCatalog {
   const { cabana, departamento, hotel3, hotel4 } = BARILOCHE_CURATED;
-  const all = listDestinationWebImages("bariloche");
+  const all = getDestinationImagePaths("bariloche");
   const excursionPool = all.filter(
     (src) =>
       !src.includes("bari1") &&
