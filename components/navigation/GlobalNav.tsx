@@ -212,13 +212,7 @@ export function GlobalNav() {
         )}
       >
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between">
-          <Link
-            href="/"
-            className="inline-flex shrink-0 items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2"
-            aria-label={SITE.name}
-          >
-            <SiteLogo linked={false} priority />
-          </Link>
+          <SiteLogo linked priority showWordmark className="h-11 sm:h-12" />
           <Button
             ref={menuButtonRef}
             aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
@@ -261,13 +255,7 @@ export function GlobalNav() {
               "h-18 border-border/80 shadow-[0_10px_24px_-22px_rgba(0,0,0,0.5)]",
           )}
         >
-          <Link
-            href="/"
-            className="inline-flex shrink-0 items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2"
-            aria-label={SITE.name}
-          >
-            <SiteLogo linked={false} priority />
-          </Link>
+          <SiteLogo linked priority showWordmark />
 
           <div className="hidden items-center gap-1.5 md:flex">
             {links.map((link) => {
@@ -319,7 +307,7 @@ export function GlobalNav() {
                     className="inline-flex shrink-0 items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2"
                     aria-label={SITE.name}
                   >
-                    <SiteLogo linked={false} className="h-14" />
+                    <SiteLogo linked={false} showWordmark className="h-12" />
                   </Link>
                   <Button
                     type="button"

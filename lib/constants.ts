@@ -1,19 +1,5 @@
-import type { LucideIcon } from "lucide-react";
-import { Car, Compass, Hotel, Mountain } from "lucide-react";
-
-export const SITE = {
-  name: "Alo Patagonia",
-  logo: "/images/logo/logo-alo.png",
-  logoOnLight: "/images/logo/logo-alo-black.png",
-  instagram: "https://www.instagram.com/alo_patagonia",
-  /** Sin @; para textos y enlaces al perfil. */
-  instagramHandle: "alo_patagonia",
-  email: "alopatagonia.arg@gmail.com",
-  phoneDisplay: "+54 9 11 7095 4933",
-  location: "Patagonia, Argentina",
-  about:
-    "Coordinamos auto, alojamiento y excursiones en un mismo plan por la Patagonia Argentina.",
-} as const;
+export { SITE } from "@/lib/site";
+import { SITE } from "@/lib/site";
 
 export const HERO_COPY = {
   headline: "Organizá tu viaje a Patagonia sin complicaciones",
@@ -127,39 +113,6 @@ export function getWhatsAppUrl(message = DEFAULT_WHATSAPP_MESSAGE): string {
   const text = encodeURIComponent(message);
   return `https://wa.me/${safeDigits}?text=${text}`;
 }
-
-export type ServiceItem = {
-  title: string;
-  description: string;
-  icon: LucideIcon;
-};
-
-export const SERVICES: ServiceItem[] = [
-  {
-    title: "Auto y rutas",
-    description:
-      "Elegimos el vehículo según tu plan y te indicamos tramos, tiempos y paradas que valen la pena.",
-    icon: Car,
-  },
-  {
-    title: "Hoteles y cabañas",
-    description:
-      "Alojamientos por zona y presupuesto, cerca de lo que quieras hacer cada día.",
-    icon: Hotel,
-  },
-  {
-    title: "Trekking, glaciares, navegación",
-    description:
-      "Excursiones según temporada y clima — sin reservar cosas que no cierran con tu fechas.",
-    icon: Mountain,
-  },
-  {
-    title: "Un solo WhatsApp",
-    description:
-      "Fechas, traslados y reservas en un hilo. No tenés que perseguir proveedores por separado.",
-    icon: Compass,
-  },
-];
 
 export type PlannerDestinationKey =
   | "bariloche"

@@ -12,7 +12,7 @@ import { getDestinationImagePaths } from "@/lib/catalog/destination-images";
 
 export const CATALOG_LIMITS = {
   itemsPerAccommodationType: 1,
-  imagesPerCatalogItem: 3,
+  imagesPerCatalogItem: 6,
   maxExcursions: 1,
 } as const;
 
@@ -34,10 +34,30 @@ function toCatalogImage(src: string, alt: string): CatalogImage {
   return { src, alt };
 }
 
-function chunk<T>(items: T[], size: number): T[][] {
-  const out: T[][] = [];
-  for (let i = 0; i < items.length; i += size) out.push(items.slice(i, i + size));
-  return out;
+function defaultHighlights(type: AccommodationType, destinationName: string): string[] {
+  const base = destinationName;
+  if (type === "departamento") {
+    return [
+      `Ubicación céntrica o residencial en ${base}`,
+      "Ideal para parejas o familias chicas",
+      "Cocina equipada y espacio para descansar",
+      "Coordinamos fechas y check-in por WhatsApp",
+    ];
+  }
+  if (type === "cabana") {
+    return [
+      `Entorno natural cerca de ${base}`,
+      "Más privacidad y espacio que un hotel",
+      "Buena opción para varios días de estadía",
+      "Consultá capacidad y servicios incluidos",
+    ];
+  }
+  return [
+    `Opción económica en ${base}`,
+    "Ambiente social y ubicación práctica",
+    "Recomendado para viajeros individuales o grupos chicos",
+    "Disponibilidad según temporada",
+  ];
 }
 
 function buildAccommodationItems(
@@ -47,34 +67,41 @@ function buildAccommodationItems(
   destinationName: string,
 ): CatalogItem[] {
   const label = LABELS[type];
-  return chunk(paths, CATALOG_LIMITS.imagesPerCatalogItem)
-    .slice(0, CATALOG_LIMITS.itemsPerAccommodationType)
-    .map((group, index) => {
-      const name = `${label} ${index + 1}`;
-      return {
-        id: `${slugPrefix}-${type}-${index + 1}`,
-        name,
-        type,
-        description: `Opción de alojamiento en ${destinationName}. Consultá disponibilidad por WhatsApp.`,
-        images: group.map((src, i) =>
-          toCatalogImage(src, `${name} — foto ${i + 1}`),
-        ),
-      };
-    });
+  const group = paths.slice(0, CATALOG_LIMITS.imagesPerCatalogItem);
+  if (group.length === 0) return [];
+
+  const name = `${label} 1`;
+  return [
+    {
+      id: `${slugPrefix}-${type}-1`,
+      name,
+      type,
+      description: `Opción de alojamiento en ${destinationName}. Mirá las fotos y consultá disponibilidad.`,
+      highlights: defaultHighlights(type, destinationName),
+      images: group.map((src, i) => toCatalogImage(src, `${name} — foto ${i + 1}`)),
+    },
+  ];
 }
 
 function buildExcursions(slug: string, paths: string[], destinationName: string): CatalogItem[] {
-  return chunk(paths, CATALOG_LIMITS.imagesPerCatalogItem)
-    .slice(0, CATALOG_LIMITS.maxExcursions)
-    .map((group, index) => {
-      const name = `Excursión ${index + 1}`;
-      return {
-        id: `${slug}-excursion-${index + 1}`,
-        name,
-        description: `Excursión en ${destinationName}. Coordinamos según temporada.`,
-        images: group.map((src, i) => toCatalogImage(src, `${name} — foto ${i + 1}`)),
-      };
-    });
+  const group = paths.slice(0, CATALOG_LIMITS.imagesPerCatalogItem);
+  if (group.length === 0) return [];
+
+  const name = "Excursión 1";
+  return [
+    {
+      id: `${slug}-excursion-1`,
+      name,
+      description: `Excursión en ${destinationName}. Duración y salidas según temporada.`,
+      highlights: [
+        `Salidas desde ${destinationName}`,
+        "Grupos reducidos o salida privada según opción",
+        "Incluye coordinación y recomendaciones locales",
+        "Reservá con anticipación en temporada alta",
+      ],
+      images: group.map((src, i) => toCatalogImage(src, `${name} — foto ${i + 1}`)),
+    },
+  ];
 }
 
 export function buildStandardAccommodations(

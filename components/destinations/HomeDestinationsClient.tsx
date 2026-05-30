@@ -189,16 +189,18 @@ function DestinationPreview({
           );
         })}
       </div>
-      <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:mt-5 sm:text-lg">
-        {destination.description}
-      </p>
-      <Link
-        href={`/destinos/${destination.slug}`}
-        className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
-      >
-        Ver catálogo
-        <ArrowUpRight className="size-4" />
-      </Link>
+      <div className="pe-[max(5rem,calc(4.5rem+env(safe-area-inset-right)))] sm:pe-24">
+        <p className="mt-4 line-clamp-1 text-base text-muted-foreground sm:mt-5 sm:text-lg">
+          {destination.description}
+        </p>
+        <Link
+          href={`/destinos/${destination.slug}`}
+          className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
+        >
+          Ver catálogo
+          <ArrowUpRight className="size-4" />
+        </Link>
+      </div>
     </>
   );
 }

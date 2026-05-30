@@ -8,6 +8,8 @@ export type CatalogItem = {
   description?: string;
   type?: AccommodationType;
   images: CatalogImage[];
+  /** Detalles cortos bajo la galería (capacidad, ubicación, etc.). */
+  highlights?: string[];
 };
 
 export type CarRentalPartner = {

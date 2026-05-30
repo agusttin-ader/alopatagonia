@@ -1,11 +1,8 @@
-"use client";
-
 import { Share2 } from "lucide-react";
 import Link from "next/link";
 
 import { SiteLogo } from "@/components/brand/SiteLogo";
-import { Reveal } from "@/components/motion/reveal";
-import { SITE } from "@/lib/constants";
+import { SITE } from "@/lib/site";
 
 export function Footer() {
   return (
@@ -24,9 +21,9 @@ export function Footer() {
         </svg>
       </div>
       <div className="bg-[var(--footer-lake)] px-4 pb-9 pt-8 sm:px-8 lg:px-14 2xl:px-20">
-        <Reveal variant="up" className="mx-auto grid max-w-7xl gap-8 text-[var(--footer-lake-foreground)] md:grid-cols-3 2xl:max-w-[90rem]">
+        <div className="mx-auto grid max-w-7xl gap-8 text-[var(--footer-lake-foreground)] md:grid-cols-3 2xl:max-w-[90rem]">
           <div className="space-y-4">
-            <SiteLogo variant="onDark" className="h-11 sm:h-12" />
+            <SiteLogo variant="onDark" showWordmark className="h-11 sm:h-12" />
             <p className="max-w-sm text-[0.92rem] leading-relaxed text-white/88">
               {SITE.about}
             </p>
@@ -68,11 +65,11 @@ export function Footer() {
               Tienda de invierno
             </Link>
           </div>
-        </Reveal>
+        </div>
 
-        <Reveal variant="fade" delay={0.08} className="mx-auto mt-7 max-w-7xl border-t border-white/14 pt-4 text-[0.72rem] text-white/62 2xl:max-w-[90rem]">
+        <div className="mx-auto mt-7 max-w-7xl border-t border-white/14 pt-4 text-[0.72rem] text-white/62 2xl:max-w-[90rem]">
           © {new Date().getFullYear()} {SITE.name}. Todos los derechos reservados.
-        </Reveal>
+        </div>
       </div>
     </footer>
   );

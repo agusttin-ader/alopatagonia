@@ -108,11 +108,3 @@ export const HOME_DESTINATION_EDITORIAL: HomeDestinationEditorial[] = DESTINATIO
     ),
   }),
 );
-
-/** @deprecated Usar HOME_DESTINATION_EDITORIAL */
-export const HOME_DESTINATION_CARDS = HOME_DESTINATION_EDITORIAL.map((item) => ({
-  slug: item.slug,
-  name: item.name,
-  region: item.region,
-  image: item.galleryImages[0]?.src ?? "",
-}));

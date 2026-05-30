@@ -5,14 +5,9 @@ import Script from "next/script";
 import { HomeIntroGate } from "@/components/motion/home-intro-gate";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { NoZoomLock } from "@/components/mobile/no-zoom-lock";
-import { ScrollProgress } from "@/components/motion/scroll-progress";
+import { ScrollProgressGate } from "@/components/motion/scroll-progress-gate";
 import { GlobalNav } from "@/components/navigation/GlobalNav";
-import { EXPERIENCE_IMAGE, SITE } from "@/lib/constants";
-import {
-  buildNextImageUrl,
-  IMAGE_PRELOAD_WIDTH,
-  IMAGE_QUALITY,
-} from "@/lib/image-config";
+import { SITE } from "@/lib/site";
 import {
   SITE_INTRO_BOOT_SCRIPT,
   SITE_INTRO_IMAGE_PRELOAD,
@@ -111,11 +106,6 @@ export default function RootLayout({
     },
   };
 
-  const signaturePrefetch = buildNextImageUrl(EXPERIENCE_IMAGE.src, {
-    width: IMAGE_PRELOAD_WIDTH.prefetchSection,
-    quality: IMAGE_QUALITY,
-  });
-
   return (
     <html
       lang="es"
@@ -124,7 +114,6 @@ export default function RootLayout({
       <head>
         <link rel="preload" href={SITE_INTRO_IMAGE_PRELOAD} as="image" fetchPriority="high" />
         <link rel="preload" href={SITE_INTRO_LOGO} as="image" />
-        <link rel="prefetch" href={signaturePrefetch} as="image" />
         <script
           id="alo-site-intro-boot"
           dangerouslySetInnerHTML={{ __html: SITE_INTRO_BOOT_SCRIPT }}
@@ -161,7 +150,7 @@ export default function RootLayout({
         />
         <MotionProvider>
           <NoZoomLock />
-          <ScrollProgress />
+          <ScrollProgressGate />
           <HomeIntroGate />
           <div id="site-app-shell" className="flex min-h-dvh flex-1 flex-col">
             <GlobalNav />

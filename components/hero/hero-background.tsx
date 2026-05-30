@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useReducedMotion } from "framer-motion";
 
 import {
   HERO_IMAGE,
@@ -20,13 +20,7 @@ export function HeroBackground() {
   const isCoarseMobile = useCoarseMobile();
   const [videoReady, setVideoReady] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
-  const [allowParallax, setAllowParallax] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const shouldParallax = !reduceMotion && !isCoarseMobile && allowParallax;
-
-  const { scrollY } = useScroll();
-  const parallaxY = useTransform(scrollY, [0, 640], [0, 40]);
-  const parallaxScale = useTransform(scrollY, [0, 640], [1, 1.04]);
 
   const markReady = useCallback(() => {
     setVideoReady(true);
@@ -48,27 +42,9 @@ export function HeroBackground() {
   }, []);
 
   useEffect(() => {
-    if (reduceMotion || isCoarseMobile) return;
-
-    const mediaQuery = window.matchMedia("(min-width: 768px)");
-    const syncParallaxPreference = () => {
-      setAllowParallax(mediaQuery.matches);
-    };
-
-    syncParallaxPreference();
-    mediaQuery.addEventListener("change", syncParallaxPreference);
-
-    return () => {
-      mediaQuery.removeEventListener("change", syncParallaxPreference);
-    };
-  }, [reduceMotion, isCoarseMobile]);
-
-  useEffect(() => {
     startPlayback();
-  }, [startPlayback, shouldParallax, isCoarseMobile, videoFailed]);
+  }, [startPlayback, isCoarseMobile, videoFailed]);
 
-  /** Durante la intro el shell usa visibility:hidden: muchos navegadores no ejecutan play() hasta el reveal */
-  /** SiteIntro es hermano que corre su layout antes del hero → el event puede dispararse sin listeners; usar flag + mismo tick */
   useLayoutEffect(() => {
     const onReveal = () => startPlayback();
     window.addEventListener("alo-site-intro-reveal", onReveal);
@@ -78,7 +54,7 @@ export function HeroBackground() {
     return () => window.removeEventListener("alo-site-intro-reveal", onReveal);
   }, [startPlayback]);
 
-  if (videoFailed) {
+  if (reduceMotion || videoFailed) {
     return (
       <div className="absolute inset-0 z-0">
         <Image
@@ -96,10 +72,9 @@ export function HeroBackground() {
   }
 
   return (
-    <motion.video
+    <video
       ref={videoRef}
       className={`absolute inset-0 z-0 size-full object-cover transition-opacity duration-700 ease-out ${videoReady ? "opacity-100" : "opacity-85"}`}
-      style={shouldParallax ? { y: parallaxY, scale: parallaxScale } : undefined}
       autoPlay
       muted
       loop
@@ -116,6 +91,6 @@ export function HeroBackground() {
       <source src={HERO_VIDEO_MOBILE_LITE.src} type="video/mp4" media="(max-width: 390px)" />
       <source src={HERO_VIDEO_MOBILE.src} type="video/mp4" media="(max-width: 900px)" />
       <source src={HERO_VIDEO.src} type="video/mp4" />
-    </motion.video>
+    </video>
   );
 }

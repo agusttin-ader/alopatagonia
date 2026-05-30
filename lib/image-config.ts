@@ -22,6 +22,9 @@ export const IMAGE_SIZES = {
     "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
   catalogCard:
     "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw",
+  catalogItemGallery:
+    "(max-width: 1024px) 100vw, (min-width: 1024px) 70vw, 900px",
+  catalogItemThumb: "(max-width: 1024px) 30vw, 200px",
   lightbox: "(min-width: 1280px) 1200px, 92vw",
 } as const;
 

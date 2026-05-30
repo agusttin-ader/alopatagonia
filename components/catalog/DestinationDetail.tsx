@@ -1,60 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { CatalogItemShowcase } from "@/components/catalog/CatalogItemShowcase";
 import { buttonVariants } from "@/components/ui/button";
 import {
   buildCarRentalWhatsAppMessage,
-  buildCatalogWhatsAppMessage,
 } from "@/lib/catalog/placeholders";
 import type { CatalogItem, DestinationCatalog } from "@/lib/catalog/types";
 import { getWhatsAppUrl } from "@/lib/constants";
 import { IMAGE_QUALITY_GALLERY, IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
-function CatalogCard({
-  item,
-  destinationName,
-  badge,
-}: {
-  item: CatalogItem;
-  destinationName: string;
-  badge: string;
-}) {
-  const cover = item.images[0];
-  if (!cover) return null;
-
-  return (
-    <article className="overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm">
-      <div className="relative aspect-[4/3]">
-        <Image
-          src={cover.src}
-          alt={cover.alt}
-          fill
-          loading="lazy"
-          quality={IMAGE_QUALITY_GALLERY}
-          className="object-cover"
-          sizes={IMAGE_SIZES.catalogCard}
-        />
-        <span className="absolute left-3 top-3 rounded-full bg-black/60 px-2.5 py-1 text-xs font-medium text-white">
-          {badge}
-        </span>
-      </div>
-      <div className="space-y-3 p-4">
-        <h3 className="font-heading text-lg font-medium">{item.name}</h3>
-        {item.description ? (
-          <p className="text-sm leading-relaxed text-muted-foreground">{item.description}</p>
-        ) : null}
-        <a
-          href={getWhatsAppUrl(buildCatalogWhatsAppMessage(item.name, destinationName))}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={cn(buttonVariants({ variant: "marketing", size: "default" }), "w-full")}
-        >
-          Consultar
-        </a>
-      </div>
-    </article>
-  );
+function accommodationBadge(item: CatalogItem) {
+  if (item.type === "cabana") return "Cabaña";
+  if (item.type === "departamento") return "Departamento";
+  return "Hostel";
 }
 
 export function DestinationDetail({ destination }: { destination: DestinationCatalog }) {
@@ -103,19 +63,13 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
           >
             Alojamientos
           </h2>
-          <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-8 flex flex-col gap-10">
             {destination.accommodations.map((item) => (
-              <CatalogCard
+              <CatalogItemShowcase
                 key={item.id}
                 item={item}
                 destinationName={destination.name}
-                badge={
-                  item.type === "cabana"
-                    ? "Cabaña"
-                    : item.type === "departamento"
-                      ? "Departamento"
-                      : "Hostel"
-                }
+                badge={accommodationBadge(item)}
               />
             ))}
           </div>
@@ -128,9 +82,9 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
           >
             Excursiones
           </h2>
-          <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-8 flex flex-col gap-10">
             {destination.excursions.map((item) => (
-              <CatalogCard
+              <CatalogItemShowcase
                 key={item.id}
                 item={item}
                 destinationName={destination.name}
