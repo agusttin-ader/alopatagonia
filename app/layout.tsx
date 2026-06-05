@@ -1,12 +1,15 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
-import Script from "next/script";
-
 import { HomeIntroGate } from "@/components/motion/home-intro-gate";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { NoZoomLock } from "@/components/mobile/no-zoom-lock";
 import { ScrollProgressGate } from "@/components/motion/scroll-progress-gate";
 import { GlobalNav } from "@/components/navigation/GlobalNav";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
+import { JsonLdScript } from "@/components/seo/JsonLdScript";
+import { buildSiteGraphJsonLd } from "@/lib/json-ld";
+import { getGoogleSiteVerification } from "@/lib/seo";
+import { getSiteUrl } from "@/lib/site-url";
 import { SITE } from "@/lib/site";
 import {
   SITE_INTRO_BOOT_SCRIPT,
@@ -16,9 +19,9 @@ import {
 } from "@/lib/site-intro-config";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://alopatagonia.com";
+const siteUrl = getSiteUrl();
 const metadataBase = new URL(siteUrl);
-const ogImage = "/videos/hero-poster.jpg";
+const googleSiteVerification = getGoogleSiteVerification();
 
 const inter = Inter({
   variable: "--font-sans-modern",
@@ -48,8 +51,8 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase,
   title: {
-    default: "Alo Patagonia | Organizá tu viaje a Patagonia",
-    template: "%s | Alo Patagonia",
+    default: "Alo Patagonia | Organizá tu viaje",
+    template: "Alo Patagonia | %s",
   },
   description:
     "Auto, alojamiento y excursiones en un solo plan. Coordinamos tu viaje por la Patagonia Argentina.",
@@ -65,24 +68,47 @@ export const metadata: Metadata = {
     locale: "es_AR",
     url: "/",
     siteName: SITE.name,
-    title: "Alo Patagonia | Organizá tu viaje a Patagonia",
+    title: "Alo Patagonia | Organizá tu viaje",
     description:
       "Auto, alojamiento y excursiones en un solo plan. Coordinamos tu viaje por la Patagonia Argentina.",
     images: [
       {
-        url: ogImage,
-        width: 1200,
-        height: 630,
-        alt: "Paisajes de Patagonia — Alo Patagonia",
+        url: SITE.ogImage,
+        width: SITE.ogImageWidth,
+        height: SITE.ogImageHeight,
+        alt: SITE.ogImageAlt,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alo Patagonia | Organizá tu viaje a Patagonia",
+    site: `@${SITE.instagramHandle}`,
+    creator: `@${SITE.instagramHandle}`,
+    title: "Alo Patagonia | Organizá tu viaje",
     description:
       "Auto, alojamiento y excursiones en un solo plan. Coordinamos tu viaje por la Patagonia Argentina.",
-    images: [ogImage],
+    images: [SITE.ogImage],
+  },
+  ...(googleSiteVerification
+    ? { verification: { google: googleSiteVerification } }
+    : {}),
+  icons: {
+    icon: [
+      {
+        url: "/icon-light",
+        type: "image/png",
+        sizes: "96x96",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/icon-dark",
+        type: "image/png",
+        sizes: "96x96",
+        media: "(prefers-color-scheme: dark)",
+      },
+      { url: "/icon-dark", type: "image/png", sizes: "96x96" },
+    ],
+    apple: [{ url: "/apple-icon", type: "image/png", sizes: "180x180" }],
   },
 };
 
@@ -91,20 +117,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const organizationJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "TravelAgency",
-    name: SITE.name,
-    url: metadataBase.toString(),
-    email: SITE.email,
-    sameAs: [SITE.instagram],
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Buenos Aires",
-      addressRegion: "Ciudad Autónoma de Buenos Aires",
-      addressCountry: "AR",
-    },
-  };
+  const siteGraphJsonLd = buildSiteGraphJsonLd(siteUrl);
 
   return (
     <html
@@ -142,12 +155,8 @@ export default function RootLayout({
             <img src={SITE_INTRO_LOGO} alt="" decoding="sync" fetchPriority="high" />
           </div>
         </div>
-        <Script
-          id="alo-organization-jsonld"
-          type="application/ld+json"
-          strategy="lazyOnload"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
+        <JsonLdScript id="alo-site-graph-jsonld" data={siteGraphJsonLd} />
+        <GoogleAnalytics />
         <MotionProvider>
           <NoZoomLock />
           <ScrollProgressGate />

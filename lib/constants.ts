@@ -15,6 +15,7 @@ export const SECTION_IDS = {
   testimonials: "testimonios",
   howItWorks: "como-funciona",
   services: "beneficios",
+  catalogHub: "explorar-catalogo",
   destinations: "destinos",
   experience: "experiencia",
   winterShop: "tienda-invierno",

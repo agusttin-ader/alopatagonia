@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -7,19 +6,29 @@ import { FloatingWhatsAppButton } from "@/components/whatsapp/FloatingWhatsAppBu
 import { getAllDestinations } from "@/lib/catalog/destinations";
 import { getDestinationCounts } from "@/lib/catalog/utils";
 import { IMAGE_QUALITY_GALLERY, IMAGE_SIZES } from "@/lib/image-config";
+import { JsonLdScript } from "@/components/seo/JsonLdScript";
+import { buildBreadcrumbJsonLd } from "@/lib/json-ld";
+import { buildPageMetadata } from "@/lib/seo";
+import { getSiteUrl } from "@/lib/site-url";
 
-export const metadata: Metadata = {
-  title: "Destinos | Alojamientos, excursiones y auto",
+export const metadata = buildPageMetadata({
+  title: "Destinos en la Patagonia",
   description:
-    "Catálogo por destino: alojamientos, excursiones y alquiler de auto en la Patagonia.",
-  alternates: { canonical: "/destinos" },
-};
+    "Bariloche, El Chaltén, San Martín de los Andes, Puerto Madryn y más. Alojamientos, excursiones y auto por destino.",
+  path: "/destinos",
+});
+
+const breadcrumbJsonLd = buildBreadcrumbJsonLd(getSiteUrl(), [
+  { name: "Inicio", path: "/" },
+  { name: "Destinos", path: "/destinos" },
+]);
 
 export default function DestinosPage() {
   const destinations = getAllDestinations();
 
   return (
     <>
+      <JsonLdScript id="alo-destinos-breadcrumb-jsonld" data={breadcrumbJsonLd} />
       <main className="min-w-0 flex-1 bg-background px-4 pb-12 pt-28 sm:px-8 sm:pt-32 lg:px-14 2xl:px-20">
         <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
           <nav className="text-sm text-muted-foreground">

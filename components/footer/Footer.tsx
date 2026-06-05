@@ -56,8 +56,14 @@ export function Footer() {
 
           <div className="space-y-2.5 text-[0.92rem] text-white/88">
             <p className="text-[0.74rem] font-semibold uppercase tracking-[0.12em] text-white">
-              Legales
+              Explorar
             </p>
+            <Link
+              href="/destinos"
+              className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            >
+              Destinos
+            </Link>
             <Link
               href="/invierno"
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"

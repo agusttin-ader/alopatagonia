@@ -18,6 +18,7 @@ const HOME_SECTION_IDS = {
 const HOME_LINKS = [
   { label: "Inicio", href: `#${HOME_SECTION_IDS.inicio}`, id: HOME_SECTION_IDS.inicio },
   { label: "Esencia Alo", href: `#${SECTION_IDS.signature}`, id: SECTION_IDS.signature },
+  { label: "Catálogo", href: `#${SECTION_IDS.catalogHub}`, id: SECTION_IDS.catalogHub },
   { label: "Destinos", href: `#${SECTION_IDS.destinations}`, id: SECTION_IDS.destinations },
   { label: "Tu viaje", href: `#${SECTION_IDS.planner}`, id: SECTION_IDS.planner },
   { label: "Testimonios", href: `#${SECTION_IDS.testimonials}`, id: SECTION_IDS.testimonials },
@@ -134,6 +135,7 @@ export function GlobalNav() {
     if (isHome) return HOME_LINKS;
     return [
       { label: "Inicio", href: "/", id: "home" },
+      { label: "Destinos", href: "/destinos", id: "destinos" },
       { label: "Tienda Invierno", href: "/invierno", id: "invierno" },
       { label: "Tu viaje", href: `/#${SECTION_IDS.planner}`, id: "planner" },
     ];

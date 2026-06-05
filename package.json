@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "catalog:manifest": "node scripts/generate-destination-manifest.mjs",
-    "prebuild": "npm run catalog:manifest",
+    "favicon:logos": "node scripts/generate-favicon-logos.mjs",
+    "prebuild": "npm run catalog:manifest && npm run favicon:logos",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -31,6 +32,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "shadcn": "^4.7.0",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
