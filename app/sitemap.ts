@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+import { getAllCatalogItemParams } from "@/lib/catalog/catalog-items";
 import { getDestinationSlugs } from "@/lib/catalog/destinations";
 import { CATALOG_HUB_PILLARS } from "@/lib/catalog-hub/config";
 import { getSiteUrl } from "@/lib/site-url";
@@ -26,6 +27,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  const catalogItemUrls = getAllCatalogItemParams().map(({ slug, itemSlug }) => ({
+    url: `${siteUrl}/destinos/${slug}/${itemSlug}`,
+    lastModified: SITE_LAST_MODIFIED,
+    changeFrequency: "weekly" as const,
+    priority: 0.65,
+  }));
+
   return [
     {
       url: `${siteUrl}/`,
@@ -35,6 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...catalogHubUrls,
     ...destinationUrls,
+    ...catalogItemUrls,
     {
       url: `${siteUrl}/invierno`,
       lastModified: SITE_LAST_MODIFIED,

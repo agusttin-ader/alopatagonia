@@ -68,7 +68,7 @@ export function Footer() {
               href="/invierno"
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
-              Tienda de invierno
+              Indumentaria
             </Link>
           </div>
         </div>

@@ -1,5 +1,9 @@
 import { getDestinationImagePaths } from "@/lib/catalog/destination-images";
-import { buildBarilocheCatalog, buildFlatCatalog } from "@/lib/catalog/placeholders";
+import {
+  buildBarilocheCatalog,
+  buildFlatCatalog,
+  buildStructuredCatalog,
+} from "@/lib/catalog/placeholders";
 import type { DestinationCatalog } from "@/lib/catalog/types";
 
 const flatConfigs = [
@@ -40,10 +44,43 @@ const flatConfigs = [
   },
 ] as const;
 
+const structuredConfigs = [
+  {
+    slug: "el-calafate",
+    name: "El Calafate",
+    region: "Santa Cruz · Glaciar Perito Moreno",
+    intro: "Glaciares, lagos turquesa y base para el sur austral.",
+    folder: "calafate",
+  },
+  {
+    slug: "traful",
+    name: "Traful / Villa Traful",
+    region: "Neuquén · Lago Traful",
+    intro: "Bosque nativo, aguas claras y ritmo de pueblo.",
+    folder: "traful",
+  },
+  {
+    slug: "ushuaia",
+    name: "Ushuaia",
+    region: "Tierra del Fuego · Fin del mundo",
+    intro: "Canal Beagle, montaña y naturaleza austral.",
+    folder: "ushuaia",
+  },
+] as const;
+
 const ALL_DESTINATIONS: DestinationCatalog[] = [
   buildBarilocheCatalog(),
   ...flatConfigs.map((config) =>
     buildFlatCatalog({
+      slug: config.slug,
+      name: config.name,
+      region: config.region,
+      intro: config.intro,
+      imagePaths: getDestinationImagePaths(config.folder),
+    }),
+  ),
+  ...structuredConfigs.map((config) =>
+    buildStructuredCatalog({
       slug: config.slug,
       name: config.name,
       region: config.region,

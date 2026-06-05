@@ -1,5 +1,4 @@
 export { SITE } from "@/lib/site";
-import { SITE } from "@/lib/site";
 
 export const HERO_COPY = {
   headline: "Organizá tu viaje a Patagonia sin complicaciones",
@@ -14,21 +13,18 @@ export const SECTION_IDS = {
   signature: "esencia-alo",
   testimonials: "testimonios",
   howItWorks: "como-funciona",
-  services: "beneficios",
   catalogHub: "explorar-catalogo",
   destinations: "destinos",
-  experience: "experiencia",
   winterShop: "tienda-invierno",
-  urgency: "urgencia",
   cta: "contacto",
 } as const;
 
 /** URL fallback de tienda; priorizar `NEXT_PUBLIC_WINTER_STORE_URL` en producción. */
-const DEFAULT_WINTER_STORE_URL = "https://www.laguaridainstrumentos.com";
+const DEFAULT_WINTER_STORE_URL = "https://www.boulder.com.ar/";
 const DEFAULT_WHATSAPP_E164 = "5491170954933";
 const ALLOWED_WINTER_STORE_HOSTS = new Set([
-  "www.laguaridainstrumentos.com",
-  "laguaridainstrumentos.com",
+  "www.boulder.com.ar",
+  "boulder.com.ar",
 ]);
 const ALLOWED_WHATSAPP_HOSTS = new Set(["wa.me", "api.whatsapp.com"]);
 
@@ -55,28 +51,24 @@ export function getWinterStoreUrl(): string {
   return fromEnv || DEFAULT_WINTER_STORE_URL;
 }
 
-export const WINTER_STORE_WHATSAPP_MESSAGE =
-  "Hola! Quiero consultar por la tienda de invierno / equipamiento para mi viaje.";
-
 export const WINTER_STORE_COPY = {
-  metaTitle: "Alo Patagonia | Equipamiento de invierno",
   metaDescription:
-    "Abrigos y equipo pensados para el frío patagónico. Elegimos prendas para que viajes cómodo y seguro.",
+    "Indumentaria Boulder para el frío patagónico. 3, 6 y 9 cuotas sin interés, 15% off por transferencia y envíos gratis desde $130.000.",
   heroTitle: "Equipate para el frío patagónico",
   heroSubtitle:
-    "Abrigos y capas para el frío real del sur. Consultá talles por WhatsApp antes de salir.",
-  ctaPrimary: "Ir a la tienda",
+    "Camperas, buzos y pantalones outdoor Boulder. 3, 6 y 9 cuotas sin interés, 15% off por transferencia y envíos gratis desde $130.000.",
+  ctaPrimary: "Ir a Boulder",
   ctaSecondaryHome: "Volver al inicio",
-  ctaWhatsApp: "Consultar por WhatsApp",
-  homeEyebrow: "Tienda de invierno",
+  homeEyebrow: "Indumentaria",
   homeHeading: "En Ushuaia hace frío de verdad. Equipate antes de salir.",
   homeBody:
-    "Abrigos y capas para el viento sur. Entrá a la tienda, consultá talles por WhatsApp y sumalo a tu itinerario.",
-  homeCta: "Ver tienda de invierno",
+    "Indumentaria outdoor Boulder para el viento sur. Entrá a la tienda y sumalo a tu itinerario.",
+  homeCta: "Ver indumentaria",
+  homeHighlight: "3, 6 y 9 cuotas sin interés · 15% off por transferencia · envíos gratis desde $130.000",
   bullets: [
-    "Selección pensada para temperaturas reales del sur",
-    "Consultas rápidas por WhatsApp si dudás con talles o envíos",
-    "Complementa tu itinerario Alo con equipo confiable",
+    "3, 6 y 9 cuotas sin interés, sin monto mínimo",
+    "15% off pagando por transferencia en toda la web",
+    "Envíos gratis a partir de $130.000 · a todo el país",
   ],
 } as const;
 
@@ -317,7 +309,6 @@ export {
   IMAGE_QUALITY_HERO,
   IMAGE_QUALITY_INTRO,
   IMAGE_QUALITY_LIGHTBOX,
-  IMAGE_QUALITY_MAX,
   IMAGE_PRELOAD_WIDTH,
   IMAGE_SIZES,
   buildNextImageUrl,
@@ -361,13 +352,55 @@ export const EXPERIENCE_IMAGE: GalleryImage = {
   height: 2880,
 };
 
-/** Imagen nevada para la tienda de invierno (reusa archivo de galería). */
-export const WINTER_STORE_IMAGE: GalleryImage = {
-  src: img("IMG_1657.jpeg"),
-  alt: "Nieve y cumbres patagónicas",
-  width: 3840,
-  height: 2560,
-};
+/** Carrusel home: fem → promo 2 → masc → promo 1. */
+export const BOULDER_HOME_CAROUSEL_IMAGES = [
+  {
+    src: "/images/boulder-indumentaria/promocion-boulder-fem.png",
+    alt: "Indumentaria Boulder para mujer — camperas y abrigos outdoor",
+    width: 930,
+    height: 465,
+  },
+  {
+    src: "/images/boulder-indumentaria/promocion-boulder-2.jpg",
+    alt: "Boulder — 3, 6 y 9 cuotas sin interés",
+    width: 1280,
+    height: 640,
+  },
+  {
+    src: "/images/boulder-indumentaria/promocion-boulder-masc.png",
+    alt: "Indumentaria Boulder para hombre — camperas y abrigos outdoor",
+    width: 930,
+    height: 465,
+  },
+  {
+    src: "/images/boulder-indumentaria/promocion-boulder-1.png",
+    alt: "Boulder — 15% off por transferencia y envíos gratis",
+    width: 1774,
+    height: 887,
+  },
+] as const satisfies readonly GalleryImage[];
+
+/** Hero `/invierno` — solo promos gráficas (sin fotos de producto). */
+export const BOULDER_INVIERNO_HERO_IMAGES = [
+  {
+    src: "/images/boulder-indumentaria/promocion-boulder-2.jpg",
+    alt: "Boulder — 3, 6 y 9 cuotas sin interés",
+    width: 1280,
+    height: 640,
+  },
+  {
+    src: "/images/boulder-indumentaria/promocion-boulder-1.png",
+    alt: "Boulder — 15% off por transferencia y envíos gratis",
+    width: 1774,
+    height: 887,
+  },
+] as const satisfies readonly GalleryImage[];
+
+/** Promos Boulder — mismo set que el carrusel del home. */
+export const BOULDER_INDUMENTARIA_IMAGES = BOULDER_HOME_CAROUSEL_IMAGES;
+
+/** Primera promo Boulder — OG / fallback estático. */
+export const WINTER_STORE_IMAGE: GalleryImage = BOULDER_INDUMENTARIA_IMAGES[0];
 
 export const GALLERY_IMAGES: GalleryImage[] = [
   {

@@ -1,88 +1,67 @@
-import { MapPin } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 
-import { CatalogItemGallery } from "@/components/catalog/CatalogItemGallery";
-import { buttonVariants } from "@/components/ui/button";
-import { buildCatalogWhatsAppMessage } from "@/lib/catalog/placeholders";
+import { getCatalogItemPath } from "@/lib/catalog/catalog-items";
 import type { CatalogItem } from "@/lib/catalog/types";
-import { getWhatsAppUrl } from "@/lib/constants";
+import { IMAGE_QUALITY_GALLERY, IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
 type CatalogItemShowcaseProps = {
   item: CatalogItem;
-  destinationName: string;
+  destinationSlug: string;
   badge: string;
 };
 
 export function CatalogItemShowcase({
   item,
-  destinationName,
+  destinationSlug,
   badge,
 }: CatalogItemShowcaseProps) {
   if (item.images.length === 0) return null;
 
-  const whatsAppHref = getWhatsAppUrl(
-    buildCatalogWhatsAppMessage(item.name, destinationName),
-  );
+  const detailHref = getCatalogItemPath(destinationSlug, item.itemSlug);
+  const cover = item.images[0]!;
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm sm:rounded-3xl">
-      <div className="bg-neutral-950 p-2 sm:p-3">
-        <CatalogItemGallery images={item.images} />
-      </div>
-
-      <div className="space-y-5 p-5 sm:p-6 lg:p-8">
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
-            <span className="inline-flex rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
-              {badge}
-            </span>
-            <h3 className="font-heading mt-3 text-2xl font-medium tracking-tight sm:text-3xl">
-              {item.name}
-            </h3>
-            <p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
-              <MapPin className="size-3.5 shrink-0" aria-hidden />
-              {destinationName}
-            </p>
+    <article>
+      <Link href={detailHref} className="group block focus-visible:outline-none">
+        <div className="overflow-hidden rounded-2xl lg:rounded-3xl">
+          <div className="relative aspect-[4/5] bg-muted/40 sm:aspect-[5/6]">
+            <Image
+              src={cover.src}
+              alt={cover.alt}
+              fill
+              quality={IMAGE_QUALITY_GALLERY}
+              className="object-cover transition duration-500 group-hover:scale-[1.03]"
+              sizes={IMAGE_SIZES.catalogCard}
+            />
           </div>
         </div>
 
-        {item.description ? (
-          <p className="max-w-3xl text-base leading-relaxed text-muted-foreground">
-            {item.description}
-          </p>
-        ) : null}
-
-        {item.highlights && item.highlights.length > 0 ? (
-          <ul className="grid gap-2 sm:grid-cols-2">
-            {item.highlights.map((line) => (
-              <li
-                key={line}
-                className="flex gap-2 text-sm leading-relaxed text-foreground/90"
-              >
-                <span className="mt-2 size-1.5 shrink-0 rounded-full bg-primary" aria-hidden />
-                {line}
-              </li>
-            ))}
-          </ul>
-        ) : null}
-
-        <div className="flex flex-col gap-3 border-t border-border/70 pt-5 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-muted-foreground">
-            Coordinamos disponibilidad y precio según tus fechas.
-          </p>
-          <a
-            href={whatsAppHref}
-            target="_blank"
-            rel="noopener noreferrer"
+        <div className="mt-4 flex items-start justify-between gap-4 border-b border-border/60 pb-4 transition group-hover:border-border">
+          <div className="min-w-0">
+            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+              {badge}
+            </p>
+            <h3 className="font-heading mt-2 text-xl font-medium tracking-tight text-foreground transition group-hover:text-primary/90 sm:text-2xl">
+              {item.name}
+            </h3>
+            <p className="mt-1.5 text-sm text-muted-foreground">
+              {item.images.length} {item.images.length === 1 ? "foto" : "fotos"}
+            </p>
+          </div>
+          <span
             className={cn(
-              buttonVariants({ variant: "marketing", size: "lg" }),
-              "w-full shrink-0 sm:w-auto sm:min-w-[200px]",
+              "mt-1 inline-flex size-10 shrink-0 items-center justify-center rounded-full border border-border/80",
+              "text-foreground/70 transition group-hover:border-foreground/25 group-hover:bg-foreground/5 group-hover:text-foreground",
             )}
+            aria-hidden
           >
-            Consultar
-          </a>
+            <ArrowUpRight className="size-4" />
+          </span>
         </div>
-      </div>
+      </Link>
     </article>
   );
 }

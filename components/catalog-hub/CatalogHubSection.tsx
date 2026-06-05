@@ -28,7 +28,7 @@ export function CatalogHubSection() {
           </p>
         </div>
 
-        <ul className="mt-10 grid list-none gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        <ul className="mt-10 grid list-none gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:items-start lg:gap-8">
           {CATALOG_HUB_PILLARS.map((pillar, index) => (
             <li key={pillar.slug} className="min-h-0">
               <CatalogHubPillarCard pillar={pillar} priority={index === 0} />

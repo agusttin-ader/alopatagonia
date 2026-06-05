@@ -1,11 +1,10 @@
+import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { CatalogItemShowcase } from "@/components/catalog/CatalogItemShowcase";
 import { buttonVariants } from "@/components/ui/button";
-import {
-  buildCarRentalWhatsAppMessage,
-} from "@/lib/catalog/placeholders";
+import { buildCarRentalWhatsAppMessage } from "@/lib/catalog/placeholders";
 import type { CatalogItem, DestinationCatalog } from "@/lib/catalog/types";
 import { getWhatsAppUrl } from "@/lib/constants";
 import { IMAGE_QUALITY_GALLERY, IMAGE_SIZES } from "@/lib/image-config";
@@ -14,7 +13,32 @@ import { cn } from "@/lib/utils";
 function accommodationBadge(item: CatalogItem) {
   if (item.type === "cabana") return "Cabaña";
   if (item.type === "departamento") return "Departamento";
-  return "Hostel";
+  return "Hotel";
+}
+
+type CatalogSectionProps = {
+  id: string;
+  title: string;
+  description: string;
+  children: ReactNode;
+};
+
+function CatalogSection({ id, title, description, children }: CatalogSectionProps) {
+  return (
+    <section aria-labelledby={id}>
+      <div className="flex flex-col gap-3 border-b border-border/70 pb-5 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 id={id} className="font-heading text-2xl font-medium tracking-tight sm:text-3xl">
+            {title}
+          </h2>
+          <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+            {description}
+          </p>
+        </div>
+      </div>
+      <div className="mt-8">{children}</div>
+    </section>
+  );
 }
 
 export function DestinationDetail({ destination }: { destination: DestinationCatalog }) {
@@ -55,72 +79,70 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
         </div>
       </section>
 
-      <div className="mx-auto max-w-7xl space-y-14 px-4 py-12 sm:px-8 lg:px-14 2xl:max-w-[90rem] 2xl:py-14">
-        <section aria-labelledby="alojamientos-heading">
-          <h2
-            id="alojamientos-heading"
-            className="font-heading text-2xl font-medium tracking-tight sm:text-3xl"
-          >
-            Alojamientos
-          </h2>
-          <div className="mt-8 flex flex-col gap-10">
+      <div className="mx-auto max-w-7xl space-y-16 px-4 py-12 sm:px-8 lg:space-y-20 lg:px-14 2xl:max-w-[90rem] 2xl:py-16">
+        <CatalogSection
+          id="alojamientos-heading"
+          title="Alojamientos"
+          description="Elegí una opción para ver la galería completa y consultar disponibilidad."
+        >
+          <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-12">
             {destination.accommodations.map((item) => (
               <CatalogItemShowcase
                 key={item.id}
                 item={item}
-                destinationName={destination.name}
+                destinationSlug={destination.slug}
                 badge={accommodationBadge(item)}
               />
             ))}
           </div>
-        </section>
+        </CatalogSection>
 
-        <section aria-labelledby="excursiones-heading">
-          <h2
-            id="excursiones-heading"
-            className="font-heading text-2xl font-medium tracking-tight sm:text-3xl"
-          >
-            Excursiones
-          </h2>
-          <div className="mt-8 flex flex-col gap-10">
+        <CatalogSection
+          id="excursiones-heading"
+          title="Excursiones"
+          description="Salidas y experiencias en la zona. Mirá fotos y fechas según temporada."
+        >
+          <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-12">
             {destination.excursions.map((item) => (
               <CatalogItemShowcase
                 key={item.id}
                 item={item}
-                destinationName={destination.name}
+                destinationSlug={destination.slug}
                 badge="Excursión"
               />
             ))}
           </div>
-        </section>
+        </CatalogSection>
 
         <section
           aria-labelledby="auto-heading"
-          className="rounded-2xl border border-border/80 bg-muted/30 p-6 sm:p-8"
+          className="border-t border-border/70 pt-12 lg:pt-14"
         >
-          <h2
-            id="auto-heading"
-            className="font-heading text-2xl font-medium tracking-tight sm:text-3xl"
-          >
-            Alquiler de auto
-          </h2>
-          <p className="mt-3 max-w-2xl text-muted-foreground">
-            {destination.carRental.description}
-          </p>
-          <p className="mt-2 text-sm font-medium">
-            Operador:{" "}
-            <span className="font-normal text-muted-foreground">
-              {destination.carRental.operatorName}
-            </span>
-          </p>
-          <a
-            href={carWhatsApp}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(buttonVariants({ variant: "marketing", size: "lg" }), "mt-6 inline-flex")}
-          >
-            Consultar auto
-          </a>
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-2xl">
+              <h2
+                id="auto-heading"
+                className="font-heading text-2xl font-medium tracking-tight sm:text-3xl"
+              >
+                Alquiler de auto
+              </h2>
+              <p className="mt-3 text-muted-foreground">{destination.carRental.description}</p>
+              <p className="mt-2 text-sm font-medium">
+                Operador:{" "}
+                <span className="font-normal text-muted-foreground">
+                  {destination.carRental.operatorName}
+                </span>
+              </p>
+            </div>
+            <a
+              href={carWhatsApp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ variant: "marketing", size: "lg" }), "shrink-0")}
+            >
+              Consultar auto
+            </a>
+          </div>
         </section>
       </div>
     </>

@@ -17,7 +17,6 @@ export const SITE_INTRO_IMAGE_PRELOAD = buildNextImageUrl(SITE_INTRO_IMAGE, {
   quality: IMAGE_QUALITY_INTRO,
 });
 
-export const HERO_POSTER = "/videos/hero-poster.jpg";
 export const SITE_INTRO_FALLBACK_BG = "#0a0f0d";
 
 export const SITE_INTRO_OVERLAY_CSS =

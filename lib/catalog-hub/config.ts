@@ -15,7 +15,7 @@ export const CATALOG_HUB_PILLARS: CatalogHubPillar[] = [
     slug: "destinos",
     title: "Destinos",
     eyebrow: "Por zona",
-    description: "Bariloche, El Chaltén, Madryn y más. Elegí la base de tu viaje.",
+    description: "Bariloche, El Calafate, Ushuaia, Madryn y más. Elegí la base de tu viaje.",
     href: "/destinos",
     image: "/images/destinations/bariloche/Bariloche Hoteles/bari3.jpg",
     imageAlt: "Vista de Bariloche — Patagonia",

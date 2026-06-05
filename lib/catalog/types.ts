@@ -2,8 +2,12 @@ export type AccommodationType = "cabana" | "departamento" | "hostel";
 
 export type CatalogImage = { src: string; alt: string };
 
+export type CatalogItemKind = "accommodation" | "excursion";
+
 export type CatalogItem = {
   id: string;
+  /** Segmento de URL dentro de `/destinos/[slug]/`. */
+  itemSlug: string;
   name: string;
   description?: string;
   type?: AccommodationType;

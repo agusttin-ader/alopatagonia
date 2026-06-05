@@ -142,7 +142,7 @@ function DestinationPreview({
             return (
               <button
                 type="button"
-                key={`${destination.slug}-${image.src}`}
+                key={`${destination.slug}-${index}`}
                 onClick={() => onImageClick(index)}
                 aria-label={`Ampliar foto de ${destination.name}`}
                 className={tileClassName}
@@ -164,7 +164,7 @@ function DestinationPreview({
           return (
             <motion.button
               type="button"
-              key={`${destination.slug}-${image.src}`}
+              key={`${destination.slug}-${index}`}
               onClick={() => onImageClick(index)}
               aria-label={`Ampliar foto de ${destination.name}`}
               initial={{ opacity: 0, scale: 0.985 }}
@@ -491,7 +491,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
             </button>
 
             <motion.div
-              key={activeLightboxImage.src}
+              key={`${activeDestination.slug}-${lightboxIndex}`}
               className="relative z-[1] h-[min(90vh,820px)] w-[min(92vw,1100px)]"
               initial={{ opacity: 0, scale: 0.985, y: 8 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}

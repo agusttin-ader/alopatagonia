@@ -60,6 +60,33 @@ const DESTINATION_META = [
       "Mar patagónico y fauna en su hábitat. Ballenas, costa y excursiones de día.",
     fallback: "/images/destinations/madryn/IMG-20260525-WA0122.jpg",
   },
+  {
+    slug: "el-calafate",
+    folder: "calafate",
+    name: "El Calafate",
+    region: "Santa Cruz · Glaciar Perito Moreno",
+    description:
+      "Glaciares, lagos turquesa y base para recorrer el sur austral en auto.",
+    fallback: "/images/IMG_1506.jpeg",
+  },
+  {
+    slug: "traful",
+    folder: "traful",
+    name: "Traful / Villa Traful",
+    region: "Neuquén · Lago Traful",
+    description:
+      "Bosque nativo y aguas claras. Ideal para desconectar con ritmo de pueblo.",
+    fallback: "/images/IMG_1506.jpeg",
+  },
+  {
+    slug: "ushuaia",
+    folder: "ushuaia",
+    name: "Ushuaia",
+    region: "Tierra del Fuego · Fin del mundo",
+    description:
+      "Canal Beagle, montaña y naturaleza austral. Coordinamos alojamiento y salidas.",
+    fallback: "/images/IMG_1506.jpeg",
+  },
 ] as const;
 
 function buildGalleryImages(

@@ -1,59 +1,53 @@
 "use client";
 
 import { Check, ExternalLink } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 
 import { SiteLogo } from "@/components/brand/SiteLogo";
+import { BoulderHeroBackdrop } from "@/components/winter-store/BoulderHeroBackdrop";
+import { BoulderLogo } from "@/components/winter-store/BoulderLogo";
 import { Reveal } from "@/components/motion/reveal";
 import { buttonVariants } from "@/components/ui/button";
+import type { GalleryImage } from "@/lib/constants";
 import {
-  getWhatsAppUrl,
   getWinterStoreUrl,
-  IMAGE_QUALITY,
   IMAGE_SIZES,
   WINTER_STORE_COPY,
-  WINTER_STORE_IMAGE,
-  WINTER_STORE_WHATSAPP_MESSAGE,
 } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-export function WinterStoreLanding() {
+type WinterStoreLandingProps = {
+  heroImage: GalleryImage;
+};
+
+export function WinterStoreLanding({ heroImage }: WinterStoreLandingProps) {
   const storeUrl = getWinterStoreUrl();
-  const whatsappUrl = getWhatsAppUrl(WINTER_STORE_WHATSAPP_MESSAGE);
 
   return (
     <>
       <section
-        className="relative flex min-h-[78dvh] w-full flex-col justify-end overflow-hidden px-6 pb-16 pt-28 text-center shadow-xl ring-1 ring-black/10 sm:min-h-[80dvh] sm:px-10 sm:pb-20 sm:pt-32 2xl:px-20"
+        className="relative flex min-h-[78dvh] w-full flex-col items-center justify-center overflow-hidden px-6 py-28 text-center shadow-xl ring-1 ring-black/10 sm:min-h-[80dvh] sm:px-10 sm:py-32 2xl:px-20"
         aria-labelledby="winter-landing-heading"
       >
-        <Image
-          src={WINTER_STORE_IMAGE.src}
-          alt={WINTER_STORE_IMAGE.alt}
-          width={WINTER_STORE_IMAGE.width}
-          height={WINTER_STORE_IMAGE.height}
-          quality={IMAGE_QUALITY}
+        <BoulderHeroBackdrop
+          image={heroImage}
           priority
-          className="absolute inset-0 size-full object-cover"
           sizes={IMAGE_SIZES.viewport}
+          className="absolute inset-0"
+          shade={0.52}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/58 to-black/34" aria-hidden />
-        <div
-          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(0,0,0,0.22),rgba(0,0,0,0.52))]"
-          aria-hidden
-        />
-        <div className="relative z-10 mx-auto max-w-3xl 2xl:max-w-4xl">
-          <Reveal className="mb-6 flex justify-center">
-            <SiteLogo variant="onDark" className="h-11 sm:h-12" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" aria-hidden />
+        <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center 2xl:max-w-4xl">
+          <Reveal className="mb-6">
+            <div className="flex items-center justify-center gap-5 sm:gap-6">
+              <SiteLogo variant="onDark" priority className="h-[4.75rem] w-auto sm:h-[4.75rem]" />
+              <BoulderLogo priority className="h-12 w-auto" />
+            </div>
           </Reveal>
           <Reveal>
-            <p className="text-sm font-medium text-white/92 [text-shadow:0_1px_10px_rgba(0,0,0,0.45)]">
-              Tienda de invierno
-            </p>
             <h1
               id="winter-landing-heading"
-              className="font-heading mt-4 text-3xl font-medium tracking-tight text-white [text-shadow:0_3px_18px_rgba(0,0,0,0.5)] sm:text-4xl 2xl:text-5xl"
+              className="font-heading text-3xl font-medium tracking-tight text-white [text-shadow:0_3px_18px_rgba(0,0,0,0.5)] sm:text-4xl 2xl:text-5xl"
             >
               {WINTER_STORE_COPY.heroTitle}
             </h1>
@@ -62,14 +56,14 @@ export function WinterStoreLanding() {
             </p>
           </Reveal>
 
-          <Reveal delay={0.08} className="mt-10">
-            <ul className="mx-auto flex max-w-xl flex-col gap-3 text-left text-base text-white sm:mx-auto sm:max-w-lg">
+          <Reveal delay={0.08} className="mt-10 w-full">
+            <ul className="mx-auto flex flex-col items-center gap-3 text-base text-white">
               {WINTER_STORE_COPY.bullets.map((line) => (
-                <li key={line} className="flex gap-3">
+                <li key={line} className="inline-flex max-w-md items-start gap-3 sm:max-w-lg">
                   <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-white/20 ring-1 ring-white/35">
                     <Check className="size-3.5 text-white" aria-hidden />
                   </span>
-                  <span className="leading-relaxed [text-shadow:0_1px_10px_rgba(0,0,0,0.5)]">{line}</span>
+                  <span className="text-left leading-relaxed [text-shadow:0_1px_10px_rgba(0,0,0,0.5)]">{line}</span>
                 </li>
               ))}
             </ul>
@@ -97,17 +91,6 @@ export function WinterStoreLanding() {
             >
               {WINTER_STORE_COPY.ctaSecondaryHome}
             </Link>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                buttonVariants({ variant: "ghost", size: "lg" }),
-                "inline-flex h-12 w-full items-center justify-center rounded-full border border-white/30 bg-black/12 px-8 text-base font-semibold text-white hover:bg-white/16 hover:text-white sm:w-auto 2xl:h-14 2xl:px-10 2xl:text-lg",
-              )}
-            >
-              {WINTER_STORE_COPY.ctaWhatsApp}
-            </a>
           </Reveal>
         </div>
       </section>

@@ -8,9 +8,6 @@ export const IMAGE_QUALITY_HERO = 90 as const;
 export const IMAGE_QUALITY_LIGHTBOX = 92 as const;
 export const IMAGE_QUALITY_INTRO = 88 as const;
 
-/** @deprecated Usar IMAGE_QUALITY */
-export const IMAGE_QUALITY_MAX = IMAGE_QUALITY;
-
 export const IMAGE_SIZES = {
   viewport: "100vw",
   half: "(min-width: 1024px) 50vw, 100vw",
@@ -29,9 +26,7 @@ export const IMAGE_SIZES = {
 } as const;
 
 export const IMAGE_PRELOAD_WIDTH = {
-  introMobile: 828,
   introDesktop: 1280,
-  prefetchSection: 828,
 } as const;
 
 /** URL del optimizador de Next para fondos CSS / preload (misma calidad que `<Image />`). */

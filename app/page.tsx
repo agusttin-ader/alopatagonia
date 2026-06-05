@@ -8,6 +8,7 @@ import { Hero } from "@/components/hero/Hero";
 import { HowItWorks } from "@/components/how-it-works/HowItWorks";
 import { SignatureSection } from "@/components/signature/SignatureSection";
 import { Testimonials } from "@/components/testimonials/Testimonials";
+import { WinterStorePromoSection } from "@/components/winter-store/WinterStorePromoSection";
 import { FloatingWhatsAppButton } from "@/components/whatsapp/FloatingWhatsAppButton";
 import { buildPageMetadata } from "@/lib/seo";
 
@@ -37,6 +38,7 @@ export default function Home() {
         <SignatureSection />
         <CatalogHubSection />
         <HomeDestinations />
+        <WinterStorePromoSection />
         <TripPlannerSection />
         <Testimonials />
         <InstagramStats />

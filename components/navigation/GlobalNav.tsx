@@ -17,13 +17,9 @@ const HOME_SECTION_IDS = {
 
 const HOME_LINKS = [
   { label: "Inicio", href: `#${HOME_SECTION_IDS.inicio}`, id: HOME_SECTION_IDS.inicio },
-  { label: "Esencia Alo", href: `#${SECTION_IDS.signature}`, id: SECTION_IDS.signature },
-  { label: "Catálogo", href: `#${SECTION_IDS.catalogHub}`, id: SECTION_IDS.catalogHub },
-  { label: "Destinos", href: `#${SECTION_IDS.destinations}`, id: SECTION_IDS.destinations },
-  { label: "Tu viaje", href: `#${SECTION_IDS.planner}`, id: SECTION_IDS.planner },
-  { label: "Testimonios", href: `#${SECTION_IDS.testimonials}`, id: SECTION_IDS.testimonials },
-  { label: "Cómo funciona", href: `#${SECTION_IDS.howItWorks}`, id: SECTION_IDS.howItWorks },
-  { label: "Invierno", href: `/invierno`, id: SECTION_IDS.winterShop },
+  { label: "Destinos", href: "/destinos", id: "destinos" },
+  { label: "Planear mi viaje", href: `#${SECTION_IDS.planner}`, id: SECTION_IDS.planner },
+  { label: "Indumentaria", href: "/invierno", id: "invierno" },
 ] as const;
 
 const MOTION_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -136,8 +132,8 @@ export function GlobalNav() {
     return [
       { label: "Inicio", href: "/", id: "home" },
       { label: "Destinos", href: "/destinos", id: "destinos" },
-      { label: "Tienda Invierno", href: "/invierno", id: "invierno" },
-      { label: "Tu viaje", href: `/#${SECTION_IDS.planner}`, id: "planner" },
+      { label: "Planear mi viaje", href: `/#${SECTION_IDS.planner}`, id: "planner" },
+      { label: "Indumentaria", href: "/invierno", id: "invierno" },
     ];
   }, [isHome]);
 
@@ -259,7 +255,7 @@ export function GlobalNav() {
         >
           <SiteLogo linked priority showWordmark />
 
-          <div className="hidden items-center gap-1.5 md:flex">
+          <div className="hidden items-center gap-2 md:flex">
             {links.map((link) => {
               return (
                 <Link
