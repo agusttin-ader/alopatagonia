@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { HomeIntroGate } from "@/components/motion/home-intro-gate";
@@ -162,6 +163,7 @@ export default function RootLayout({
         </div>
         <JsonLdScript id="alo-site-graph-jsonld" data={siteGraphJsonLd} />
         <GoogleAnalytics />
+        <Analytics />
         <MotionProvider>
           <NoZoomLock />
           <ScrollProgressGate />

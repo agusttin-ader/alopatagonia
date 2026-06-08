@@ -10,6 +10,8 @@ const connectSrc = [
   "https://*.googletagmanager.com",
   "https://*.tile.openstreetmap.org",
   "https://tile.openstreetmap.org",
+  "https://vitals.vercel-insights.com",
+  "https://*.vercel-insights.com",
   ...(isDev ? ["ws://localhost:*", "ws://127.0.0.1:*"] : []),
 ].join(" ");
 
@@ -43,7 +45,7 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://va.vercel-scripts.com",
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob: https:",
       "font-src 'self' data: https:",
