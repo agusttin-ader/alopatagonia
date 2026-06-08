@@ -17,6 +17,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { SECTION_IDS } from "@/lib/constants";
 import { IMAGE_QUALITY_GALLERY, IMAGE_QUALITY_LIGHTBOX, IMAGE_SIZES } from "@/lib/image-config";
 import type { HomeDestinationEditorial } from "@/lib/home-destinations-types";
+import { HOME_DESTINATION_GALLERY_MOBILE_COUNT } from "@/lib/home-destinations";
 import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
 
@@ -120,8 +121,10 @@ function DestinationPreview({
     <>
       <div className="grid grid-cols-2 gap-3">
         {destination.galleryImages.map((image, index) => {
-          const tileClassName =
-            "relative aspect-[5/4] overflow-hidden rounded-2xl bg-muted shadow-[0_16px_30px_-20px_rgba(15,23,42,0.32)] transition-transform hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2 sm:aspect-[4/3]";
+          const tileClassName = cn(
+            "relative aspect-[5/4] overflow-hidden rounded-2xl bg-muted shadow-[0_16px_30px_-20px_rgba(15,23,42,0.32)] transition-transform hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2 sm:aspect-[4/3]",
+            index >= HOME_DESTINATION_GALLERY_MOBILE_COUNT && "hidden lg:block",
+          );
 
           if (useStaticTiles) {
             return (

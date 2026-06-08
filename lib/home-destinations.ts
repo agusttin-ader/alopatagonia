@@ -90,7 +90,8 @@ const DESTINATION_META = [
 ] as const;
 
 /** Fotos en la sección Destinos del home. Más adelante: carpeta `naturaleza` por destino. */
-const HOME_DESTINATION_GALLERY_COUNT = 2;
+export const HOME_DESTINATION_GALLERY_DESKTOP_COUNT = 4;
+export const HOME_DESTINATION_GALLERY_MOBILE_COUNT = 2;
 
 function buildGalleryImages(
   folder: string,
@@ -101,9 +102,14 @@ function buildGalleryImages(
   const paths = curated?.length
     ? [...curated]
     : getDestinationImagePaths(folder);
-  const barilocheAlts = ["Departamento en Bariloche", "Cabaña en Bariloche"];
+  const barilocheAlts = [
+    "Departamento en Bariloche",
+    "Cabaña en Bariloche",
+    "Hotel en Bariloche",
+    "Hotel en Bariloche",
+  ];
   const picked = (
-    paths.length > 0 ? paths.slice(0, HOME_DESTINATION_GALLERY_COUNT) : [fallback]
+    paths.length > 0 ? paths.slice(0, HOME_DESTINATION_GALLERY_DESKTOP_COUNT) : [fallback]
   ).map((src, index) => ({
     src,
     alt:
@@ -112,7 +118,7 @@ function buildGalleryImages(
         : `${name} — foto ${index + 1}`,
   }));
 
-  while (picked.length < HOME_DESTINATION_GALLERY_COUNT) {
+  while (picked.length < HOME_DESTINATION_GALLERY_DESKTOP_COUNT) {
     const src = picked[picked.length - 1]?.src ?? fallback;
     picked.push({ src, alt: `${name} — foto ${picked.length + 1}` });
   }

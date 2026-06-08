@@ -12,14 +12,26 @@ import {
   HERO_VIDEO_PLAYBACK_RATE,
   IMAGE_SIZES,
 } from "@/lib/constants";
-import { useCoarseMobile } from "@/lib/use-coarse-mobile";
+import { cn } from "@/lib/utils";
+
+function pickHeroVideoSrc(): string {
+  if (typeof window === "undefined") return HERO_VIDEO.src;
+  const width = window.innerWidth;
+  if (width <= 390) return HERO_VIDEO_MOBILE_LITE.src;
+  if (width <= 900) return HERO_VIDEO_MOBILE.src;
+  return HERO_VIDEO.src;
+}
 
 export function HeroBackground() {
   const reduceMotion = useReducedMotion();
-  const isCoarseMobile = useCoarseMobile();
+  const [videoSrc, setVideoSrc] = useState(HERO_VIDEO.src);
   const [videoReady, setVideoReady] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useLayoutEffect(() => {
+    setVideoSrc(pickHeroVideoSrc());
+  }, []);
 
   const markReady = useCallback(() => {
     setVideoReady(true);
@@ -30,19 +42,20 @@ export function HeroBackground() {
   }, []);
 
   const startPlayback = useCallback(() => {
-    const v = videoRef.current;
-    if (!v) return;
+    const video = videoRef.current;
+    if (!video) return;
 
-    v.muted = true;
-    const maybePlay = v.play();
+    video.muted = true;
+    applyPlaybackRate(video);
+    const maybePlay = video.play();
     if (maybePlay?.catch) {
       maybePlay.catch(() => {});
     }
-  }, []);
+  }, [applyPlaybackRate]);
 
   useEffect(() => {
     startPlayback();
-  }, [startPlayback, isCoarseMobile, videoFailed]);
+  }, [startPlayback, videoSrc, videoFailed]);
 
   useLayoutEffect(() => {
     const onReveal = () => startPlayback();
@@ -71,25 +84,35 @@ export function HeroBackground() {
   }
 
   return (
-    <video
-      ref={videoRef}
-      className={`absolute inset-0 z-0 size-full object-cover transition-opacity duration-700 ease-out ${videoReady ? "opacity-100" : "opacity-85"}`}
-      autoPlay
-      muted
-      loop
-      playsInline
-      preload="metadata"
-      poster="/videos/hero-poster.jpg"
+    <div
+      className="absolute inset-0 z-0 bg-cover bg-center"
+      style={{ backgroundImage: "url(/videos/hero-poster.jpg)" }}
       aria-hidden
-      onLoadedMetadata={(e) => applyPlaybackRate(e.currentTarget)}
-      onCanPlay={markReady}
-      onLoadedData={markReady}
-      onPlaying={markReady}
-      onError={() => setVideoFailed(true)}
     >
-      <source src={HERO_VIDEO_MOBILE_LITE.src} type="video/mp4" media="(max-width: 390px)" />
-      <source src={HERO_VIDEO_MOBILE.src} type="video/mp4" media="(max-width: 900px)" />
-      <source src={HERO_VIDEO.src} type="video/mp4" />
-    </video>
+      <video
+        key={videoSrc}
+        ref={videoRef}
+        className={cn(
+          "size-full object-cover transition-opacity duration-700 ease-out",
+          videoReady ? "opacity-100" : "opacity-0",
+        )}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        poster="/videos/hero-poster.jpg"
+        onLoadedMetadata={(event) => applyPlaybackRate(event.currentTarget)}
+        onCanPlay={() => {
+          markReady();
+          startPlayback();
+        }}
+        onLoadedData={markReady}
+        onPlaying={markReady}
+        onError={() => setVideoFailed(true)}
+      >
+        <source src={videoSrc} type="video/mp4" />
+      </video>
+    </div>
   );
 }
