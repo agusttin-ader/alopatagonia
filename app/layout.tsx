@@ -96,25 +96,24 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: SITE.faviconOnLight,
+        url: SITE.faviconLight96,
         type: "image/png",
         sizes: "96x96",
         media: "(prefers-color-scheme: light)",
       },
       {
-        url: SITE.faviconOnDark,
+        url: SITE.faviconDark96,
         type: "image/png",
         sizes: "96x96",
         media: "(prefers-color-scheme: dark)",
       },
       {
-        url: SITE.faviconOnLight,
+        url: SITE.faviconDark96,
         type: "image/png",
-        sizes: "48x48",
-        media: "(prefers-color-scheme: light)",
+        sizes: "96x96",
       },
     ],
-    shortcut: SITE.faviconOnLight,
+    shortcut: SITE.faviconDark96,
     apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
   },
 };
@@ -140,18 +139,19 @@ export default function RootLayout({
         <link rel="preload" href={SITE_INTRO_LOGO} as="image" />
         <link
           rel="icon"
-          href={SITE.faviconOnDark}
-          type="image/png"
-          sizes="96x96"
-          media="(prefers-color-scheme: dark)"
-        />
-        <link
-          rel="icon"
-          href={SITE.faviconOnLight}
+          href={SITE.faviconLight96}
           type="image/png"
           sizes="96x96"
           media="(prefers-color-scheme: light)"
         />
+        <link
+          rel="icon"
+          href={SITE.faviconDark96}
+          type="image/png"
+          sizes="96x96"
+          media="(prefers-color-scheme: dark)"
+        />
+        <link rel="icon" href={SITE.faviconDark96} type="image/png" sizes="96x96" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
       </head>
       <body suppressHydrationWarning className="flex min-h-dvh flex-col">

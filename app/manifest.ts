@@ -14,7 +14,7 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "es-AR",
     icons: [
       {
-        src: SITE.faviconOnDark,
+        src: SITE.faviconDark96,
         sizes: "96x96",
         type: "image/png",
       },

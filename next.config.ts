@@ -104,7 +104,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/favicon.ico",
-        destination: "/favicon.png",
+        destination: "/favicon-dark.png",
       },
     ];
   },

@@ -6,6 +6,9 @@ export const SITE = {
   /** Variantes con fondo transparente para favicon. */
   faviconOnDark: "/images/logo/logo-alo-favicon-dark.png",
   faviconOnLight: "/images/logo/logo-alo-favicon-light.png",
+  /** Cuadrados optimizados para pestañas (generados en prebuild). */
+  faviconDark96: "/favicon-dark-96.png",
+  faviconLight96: "/favicon-96.png",
   /** Imagen social por defecto (logo sobre fondo de marca). */
   ogImage: "/opengraph-image",
   ogImageWidth: 1200,

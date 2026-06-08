@@ -74,11 +74,13 @@ await makeTransparent(
 // Versión oscura para pestañas claras: invertir el logo blanco transparente.
 await sharp(darkFavicon).negate({ alpha: false }).png().toFile(lightFavicon);
 
-// Favicon estático para Google, pestañas y crawlers (rutas dinámicas /icon-* no siempre se indexan).
+// Favicon estático para Google, pestañas y crawlers.
 await writeSquareIcon(lightFavicon, join(PUBLIC_DIR, "favicon.png"), 48);
 await writeSquareIcon(lightFavicon, join(PUBLIC_DIR, "favicon-96.png"), 96);
+await writeSquareIcon(darkFavicon, join(PUBLIC_DIR, "favicon-dark.png"), 48);
+await writeSquareIcon(darkFavicon, join(PUBLIC_DIR, "favicon-dark-96.png"), 96);
 await writeSquareIcon(lightFavicon, join(PUBLIC_DIR, "apple-touch-icon.png"), 180, 0.82);
-await writeSquareIcon(lightFavicon, join(APP_DIR, "icon.png"), 96);
-await writeSquareIcon(darkFavicon, join(APP_DIR, "icon-dark.png"), 96);
+// Default de Next (sin media): blanco para pestañas oscuras de Chrome aunque el SO esté en light.
+await writeSquareIcon(darkFavicon, join(APP_DIR, "icon.png"), 96);
 
 console.log("Wrote favicon logo variants in public/images/logo/ and public/favicon*.png");
