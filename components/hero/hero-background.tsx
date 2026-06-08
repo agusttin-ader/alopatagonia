@@ -1,7 +1,7 @@
 "use client";
 
 import { AppImage } from "@/components/media/AppImage";
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 
 import {
@@ -12,6 +12,10 @@ import {
   HERO_VIDEO_PLAYBACK_RATE,
   IMAGE_SIZES,
 } from "@/lib/constants";
+import {
+  shouldPlaySiteIntro,
+  SITE_INTRO_REVEAL_FALLBACK_MS,
+} from "@/lib/site-intro-config";
 import { cn } from "@/lib/utils";
 
 function pickHeroVideoSrc(): string {
@@ -22,49 +26,69 @@ function pickHeroVideoSrc(): string {
   return HERO_VIDEO.src;
 }
 
+function canStartHeroVideo(): boolean {
+  if (typeof window === "undefined") return false;
+  return Boolean(window.__aloIntroReveal) || !shouldPlaySiteIntro();
+}
+
 export function HeroBackground() {
   const reduceMotion = useReducedMotion();
-  const [videoSrc, setVideoSrc] = useState<string>(HERO_VIDEO.src);
+  const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [videoReady, setVideoReady] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  useLayoutEffect(() => {
-    setVideoSrc(pickHeroVideoSrc());
-  }, []);
+  /** El shell está oculto durante la intro — el autoplay falla si montamos antes. */
+  useEffect(() => {
+    if (reduceMotion) return;
 
-  const markReady = useCallback(() => {
-    setVideoReady(true);
-  }, []);
+    const activate = () => {
+      setVideoSrc((current) => current ?? pickHeroVideoSrc());
+    };
 
-  const applyPlaybackRate = useCallback((el: HTMLVideoElement) => {
-    el.playbackRate = HERO_VIDEO_PLAYBACK_RATE;
-  }, []);
+    if (canStartHeroVideo()) {
+      activate();
+      return;
+    }
 
-  const startPlayback = useCallback(() => {
+    window.addEventListener("alo-site-intro-reveal", activate, { once: true });
+    const fallbackId = window.setTimeout(activate, SITE_INTRO_REVEAL_FALLBACK_MS);
+
+    return () => {
+      window.removeEventListener("alo-site-intro-reveal", activate);
+      window.clearTimeout(fallbackId);
+    };
+  }, [reduceMotion]);
+
+  const startPlayback = useCallback(async () => {
     const video = videoRef.current;
     if (!video) return;
 
     video.muted = true;
-    applyPlaybackRate(video);
-    const maybePlay = video.play();
-    if (maybePlay?.catch) {
-      maybePlay.catch(() => {});
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.playbackRate = HERO_VIDEO_PLAYBACK_RATE;
+
+    try {
+      await video.play();
+      setVideoReady(true);
+    } catch {
+      window.setTimeout(() => {
+        void video.play().then(() => setVideoReady(true)).catch(() => {});
+      }, 120);
     }
-  }, [applyPlaybackRate]);
+  }, []);
 
   useEffect(() => {
-    startPlayback();
-  }, [startPlayback, videoSrc, videoFailed]);
+    if (!videoSrc || videoFailed) return;
+    void startPlayback();
+  }, [videoSrc, videoFailed, startPlayback]);
 
-  useLayoutEffect(() => {
-    const onReveal = () => startPlayback();
-    window.addEventListener("alo-site-intro-reveal", onReveal);
-    if (window.__aloIntroReveal) {
-      queueMicrotask(onReveal);
-    }
-    return () => window.removeEventListener("alo-site-intro-reveal", onReveal);
-  }, [startPlayback]);
+  useEffect(() => {
+    if (!videoSrc || videoReady) return;
+    const fallbackId = window.setTimeout(() => setVideoReady(true), 2800);
+    return () => window.clearTimeout(fallbackId);
+  }, [videoSrc, videoReady]);
 
   if (reduceMotion || videoFailed) {
     return (
@@ -89,30 +113,26 @@ export function HeroBackground() {
       style={{ backgroundImage: "url(/videos/hero-poster.jpg)" }}
       aria-hidden
     >
-      <video
-        key={videoSrc}
-        ref={videoRef}
-        className={cn(
-          "size-full object-cover transition-opacity duration-700 ease-out",
-          videoReady ? "opacity-100" : "opacity-0",
-        )}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        poster="/videos/hero-poster.jpg"
-        onLoadedMetadata={(event) => applyPlaybackRate(event.currentTarget)}
-        onCanPlay={() => {
-          markReady();
-          startPlayback();
-        }}
-        onLoadedData={markReady}
-        onPlaying={markReady}
-        onError={() => setVideoFailed(true)}
-      >
-        <source src={videoSrc} type="video/mp4" />
-      </video>
+      {videoSrc ? (
+        <video
+          ref={videoRef}
+          src={videoSrc}
+          className={cn(
+            "size-full object-cover transition-opacity duration-700 ease-out",
+            videoReady ? "opacity-100" : "opacity-0",
+          )}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster="/videos/hero-poster.jpg"
+          onLoadedData={() => void startPlayback()}
+          onCanPlay={() => void startPlayback()}
+          onPlaying={() => setVideoReady(true)}
+          onError={() => setVideoFailed(true)}
+        />
+      ) : null}
     </div>
   );
 }
