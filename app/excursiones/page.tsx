@@ -5,15 +5,16 @@ import { getAllExcursions } from "@/lib/catalog/catalog-items";
 import { FloatingWhatsAppButton } from "@/components/whatsapp/FloatingWhatsAppButton";
 import { getCatalogHubPillar } from "@/lib/catalog-hub/config";
 import { buildPageMetadata } from "@/lib/seo";
+import { SITE_SEO } from "@/lib/seo-destinations";
 
 const pillar = getCatalogHubPillar("excursiones");
 
 export const metadata = buildPageMetadata({
-  title: "Excursiones en la Patagonia",
-  description:
-    pillar?.description ??
-    "Trekking, navegación, fauna y más en la Patagonia.",
+  title: SITE_SEO.excursiones.title,
+  description: SITE_SEO.excursiones.description,
   path: "/excursiones",
+  keywords: [...SITE_SEO.excursiones.keywords],
+  titleOrder: "keyword-first",
   index: pillar?.status === "live",
 });
 

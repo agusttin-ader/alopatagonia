@@ -11,7 +11,7 @@ import {
 } from "@/lib/catalog/catalog-items";
 import type { ExcursionCategory } from "@/lib/catalog/types";
 
-const ACCOMMODATION_MOBILE_VARIANT = "overlay" as const;
+const ACCOMMODATION_MOBILE_VARIANT = "frame" as const;
 
 type CatalogBrowseMode = "accommodation" | "excursion";
 

@@ -39,6 +39,7 @@ export function SiteLogo({
       height={LOGO_HEIGHT}
       priority={priority}
       withBlur={false}
+      loadingPulse={false}
       sizes={IMAGE_SIZES.logo}
       className={cn("h-12 w-auto sm:h-14", className)}
     />

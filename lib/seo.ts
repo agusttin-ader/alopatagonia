@@ -15,13 +15,17 @@ export function formatSiteTitle(pageTitle: string): string {
 }
 
 type PageSeoOptions = {
-  /** Parte descriptiva; se antepone «Alo Patagonia |» automáticamente. */
+  /** Parte descriptiva del título. */
   title: string;
   description: string;
   path: string;
   ogImage?: string;
   ogImageAlt?: string;
   index?: boolean;
+  /** Palabras clave para meta keywords y contexto editorial. */
+  keywords?: string[];
+  /** keyword-first → «Bariloche… | Alo Patagonia»; brand-first → «Alo Patagonia | …» */
+  titleOrder?: "brand-first" | "keyword-first";
 };
 
 export function buildPageMetadata({
@@ -31,16 +35,31 @@ export function buildPageMetadata({
   ogImage = DEFAULT_OG_IMAGE,
   ogImageAlt = SITE.ogImageAlt,
   index = true,
+  keywords,
+  titleOrder = "brand-first",
 }: PageSeoOptions): Metadata {
-  const fullTitle = formatSiteTitle(title);
+  const fullTitle =
+    titleOrder === "keyword-first"
+      ? title.includes(SITE.name)
+        ? title
+        : `${title} | ${SITE.name}`
+      : formatSiteTitle(title);
 
   return {
     title: { absolute: fullTitle },
     description,
+    ...(keywords?.length ? { keywords } : {}),
     alternates: { canonical: path },
     robots: {
       index,
       follow: true,
+      googleBot: {
+        index,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
     },
     openGraph: {
       type: "website",

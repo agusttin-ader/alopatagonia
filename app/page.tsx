@@ -7,17 +7,14 @@ import { Footer } from "@/components/footer/Footer";
 import { HomeGallerySection } from "@/components/gallery/HomeGallerySection";
 import { Hero } from "@/components/hero/Hero";
 import { HowItWorks } from "@/components/how-it-works/HowItWorks";
+import { PlannerLegacyHashRedirect } from "@/components/planner/PlannerLegacyHashRedirect";
+import { TripPlannerTeaser } from "@/components/planner/TripPlannerTeaser";
 import { SignatureSection } from "@/components/signature/SignatureSection";
 import { Testimonials } from "@/components/testimonials/Testimonials";
 import { WinterStorePromoSection } from "@/components/winter-store/WinterStorePromoSection";
 import { FloatingWhatsAppButton } from "@/components/whatsapp/FloatingWhatsAppButton";
 import { buildPageMetadata } from "@/lib/seo";
-
-const TripPlannerSection = dynamic(
-  () =>
-    import("@/components/planner/TripPlannerSection").then((mod) => mod.TripPlannerSection),
-  { loading: () => <div className="min-h-[480px]" aria-hidden /> },
-);
+import { SITE_SEO } from "@/lib/seo-destinations";
 
 const InstagramStats = dynamic(
   () => import("@/components/community/instagram-stats").then((mod) => mod.InstagramStats),
@@ -25,15 +22,17 @@ const InstagramStats = dynamic(
 );
 
 export const metadata = buildPageMetadata({
-  title: "Organizá tu viaje",
-  description:
-    "Auto, alojamiento y excursiones en un solo plan. Coordinamos tu viaje por la Patagonia Argentina.",
+  title: SITE_SEO.home.title,
+  description: SITE_SEO.home.description,
   path: "/",
+  keywords: [...SITE_SEO.home.keywords],
+  titleOrder: "keyword-first",
 });
 
 export default function Home() {
   return (
     <>
+      <PlannerLegacyHashRedirect />
       <Hero />
       <main className="min-w-0 flex-1 pb-20 sm:pb-0">
         <SignatureSection />
@@ -41,7 +40,7 @@ export default function Home() {
         <CatalogHubSection />
         <HomeDestinations />
         <WinterStorePromoSection />
-        <TripPlannerSection />
+        <TripPlannerTeaser />
         <Testimonials />
         <InstagramStats />
         <HowItWorks />

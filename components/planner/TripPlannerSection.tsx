@@ -11,6 +11,7 @@ import {
   PLANNER_DESTINATION_LABELS,
   PLANNER_DESTINATION_HOOKS,
   PLANNER_DESTINATION_OPTIONS,
+  resolvePlannerDestinationKey,
   SECTION_IDS,
   SITE,
   getWhatsAppUrl,
@@ -468,7 +469,7 @@ function DateField({
   );
 }
 
-export function TripPlannerSection() {
+export function TripPlannerSection({ showHeading = true }: { showHeading?: boolean }) {
   const [name, setName] = useState("");
   const [destination, setDestination] = useState<PlannerDestinationValue>("none");
   const [travelers, setTravelers] = useState("");
@@ -482,26 +483,28 @@ export function TripPlannerSection() {
   const destinationContainerRef = useRef<HTMLDivElement>(null);
   const destinationButtonRef = useRef<HTMLButtonElement>(null);
 
+  const resolvedDestination = resolvePlannerDestinationKey(destination);
+
   const message = useMemo(() => {
     const personName = name.trim().slice(0, MAX_NAME_LENGTH) || "sin nombre";
-    const destinationText = PLANNER_DESTINATION_LABELS[destination];
+    const destinationText = PLANNER_DESTINATION_LABELS[resolvedDestination];
     const people = travelers.trim().slice(0, MAX_TRAVELERS_LENGTH) || "sin definir";
     const from = formatDate(fromDate);
     const to = formatDate(toDate);
 
     return `Hola, vengo desde la web de Alo Patagonia. Mi nombre es ${personName}, viajo a ${destinationText}, somos ${people} personas, desde ${from} hasta ${to}. ¿Planeamos mi viaje?`;
-  }, [name, destination, travelers, fromDate, toDate]);
+  }, [name, resolvedDestination, travelers, fromDate, toDate]);
 
   const completionCount = useMemo(() => {
     const checks = [
       name.trim().length > 1,
-      destination !== "none",
+      resolvedDestination !== "none",
       travelers.trim().length > 0,
       Boolean(fromDate),
       Boolean(toDate),
     ];
     return checks.filter(Boolean).length;
-  }, [name, destination, travelers, fromDate, toDate]);
+  }, [name, resolvedDestination, travelers, fromDate, toDate]);
 
   const invalidDateRange = Boolean(fromDate && toDate && fromDate > toDate);
   const plannerReady = completionCount >= 4 && !invalidDateRange;
@@ -513,7 +516,7 @@ export function TripPlannerSection() {
       {
         id: "destination",
         label: "Destino",
-        done: destination !== "none",
+        done: resolvedDestination !== "none",
       },
       {
         id: "dates",
@@ -526,11 +529,19 @@ export function TripPlannerSection() {
         done: name.trim().length > 1 && travelers.trim().length > 0,
       },
     ],
-    [destination, fromDate, invalidDateRange, name, toDate, travelers],
+    [resolvedDestination, fromDate, invalidDateRange, name, toDate, travelers],
   );
 
   const whatsappUrl = getWhatsAppUrl(message);
   const mailUrl = `mailto:${SITE.email}?subject=${encodeURIComponent("Consulta viaje Patagonia")}&body=${encodeURIComponent(message)}`;
+
+  useEffect(() => {
+    if (destination === "none") return;
+    const normalized = resolvePlannerDestinationKey(destination);
+    if (normalized !== destination) {
+      setDestination(normalized);
+    }
+  }, [destination]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -572,29 +583,34 @@ export function TripPlannerSection() {
 
   return (
     <section
-      id={SECTION_IDS.planner}
-      className="scroll-mt-24 bg-background px-4 py-12 sm:px-8 sm:py-20 lg:px-14 2xl:px-20"
-      aria-labelledby="planner-heading"
+      id={showHeading ? SECTION_IDS.planner : undefined}
+      className={cn(
+        "scroll-mt-24 bg-background px-4 py-12 sm:px-8 sm:py-20 lg:px-14 2xl:px-20",
+        !showHeading && "pt-8 sm:pt-10",
+      )}
+      aria-labelledby={showHeading ? "planner-heading" : undefined}
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
-        <Reveal className="max-w-2xl 2xl:max-w-3xl">
-          <h2
-            id="planner-heading"
-            className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
-          >
-            Planear mi viaje
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground 2xl:text-xl">
-            Completá el formulario y te armamos el mensaje para consultar por
-            WhatsApp o mail.
-          </p>
-        </Reveal>
+        {showHeading ? (
+          <Reveal className="max-w-2xl 2xl:max-w-3xl">
+            <h2
+              id="planner-heading"
+              className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
+            >
+              Planear mi viaje
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-muted-foreground 2xl:text-xl">
+              Completá el formulario y te armamos el mensaje para consultar por
+              WhatsApp o mail.
+            </p>
+          </Reveal>
+        ) : null}
 
-        <div className="mt-7 grid gap-6 lg:mt-10 lg:grid-cols-[1fr_1.05fr] 2xl:gap-8">
+        <div className={cn("grid gap-6 lg:grid-cols-[1fr_1.05fr] 2xl:gap-8", showHeading ? "mt-7 lg:mt-10" : "mt-0")}>
           <Reveal className="rounded-2xl border border-border/80 bg-card p-5 shadow-sm sm:p-7 2xl:p-8">
             <PlannerProgressBar steps={progressSteps} />
             <PlannerTripPreview
-              destination={destination}
+              destination={resolvedDestination}
               fromDate={fromDate}
               toDate={toDate}
               travelers={travelers}
@@ -795,12 +811,12 @@ export function TripPlannerSection() {
           <Reveal className="hidden h-full flex-col overflow-hidden rounded-3xl border border-border/80 bg-secondary/30 p-4 sm:p-6 md:flex 2xl:p-7">
             <div className="mb-4">
               <p className="text-sm font-medium text-muted-foreground">
-                Mapa · {PLANNER_DESTINATION_LABELS[destination]}
+                Mapa · {PLANNER_DESTINATION_LABELS[resolvedDestination]}
               </p>
             </div>
 
             <div className="relative min-h-[360px] flex-1 overflow-hidden rounded-2xl border border-border/60 bg-background sm:min-h-[420px] 2xl:min-h-[500px]">
-              {showDesktopMap ? <PlannerMap destination={destination} /> : null}
+              {showDesktopMap ? <PlannerMap destination={resolvedDestination} /> : null}
             </div>
           </Reveal>
         </div>

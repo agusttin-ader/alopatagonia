@@ -2,6 +2,8 @@ import { Share2 } from "lucide-react";
 import Link from "next/link";
 
 import { SiteLogo } from "@/components/brand/SiteLogo";
+import { PLANNER_PATH } from "@/lib/constants";
+import { SEO_POPULAR_DESTINATIONS } from "@/lib/seo-destinations";
 import { SITE } from "@/lib/site";
 
 export function Footer() {
@@ -21,7 +23,7 @@ export function Footer() {
         </svg>
       </div>
       <div className="bg-[var(--footer-lake)] px-4 pb-9 pt-8 sm:px-8 lg:px-14 2xl:px-20">
-        <div className="mx-auto grid max-w-7xl gap-8 text-[var(--footer-lake-foreground)] md:grid-cols-3 2xl:max-w-[90rem]">
+        <div className="mx-auto grid max-w-7xl gap-8 text-[var(--footer-lake-foreground)] md:grid-cols-2 lg:grid-cols-4 2xl:max-w-[90rem]">
           <div className="space-y-4">
             <SiteLogo variant="onDark" showWordmark className="h-11 sm:h-12" />
             <p className="max-w-sm text-[0.92rem] leading-relaxed text-white/88">
@@ -77,11 +79,32 @@ export function Footer() {
               Excursiones
             </Link>
             <Link
+              href={PLANNER_PATH}
+              className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            >
+              Planear mi viaje
+            </Link>
+            <Link
               href="/invierno"
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
               Indumentaria
             </Link>
+          </div>
+
+          <div className="space-y-2.5 text-[0.92rem] text-white/88">
+            <p className="text-[0.74rem] font-semibold uppercase tracking-[0.12em] text-white">
+              Destinos populares
+            </p>
+            {SEO_POPULAR_DESTINATIONS.map((destination) => (
+              <Link
+                key={destination.slug}
+                href={`/destinos/${destination.slug}`}
+                className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+              >
+                {destination.label}
+              </Link>
+            ))}
           </div>
         </div>
 

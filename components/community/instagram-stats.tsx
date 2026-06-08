@@ -52,6 +52,7 @@ function FeedAvatar() {
             height={586}
             sizes={IMAGE_SIZES.avatar}
             withBlur={false}
+            loadingPulse={false}
             className="size-full object-contain"
             aria-hidden
           />
@@ -303,6 +304,7 @@ export function InstagramStats() {
                           height={586}
                           sizes={IMAGE_SIZES.avatar}
                           withBlur={false}
+            loadingPulse={false}
                           className="h-full w-full object-contain"
                         />
                       </div>

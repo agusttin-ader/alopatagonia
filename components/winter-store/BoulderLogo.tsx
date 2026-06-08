@@ -27,6 +27,7 @@ export function BoulderLogo({ className, priority, linked = true }: BoulderLogoP
       height={BOULDER_LOGO.height}
       priority={priority}
       withBlur={false}
+      loadingPulse={false}
       sizes={IMAGE_SIZES.logo}
       className={cn("h-10 w-auto sm:h-11", className)}
     />

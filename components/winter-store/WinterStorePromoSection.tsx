@@ -57,7 +57,7 @@ export function WinterStorePromoSection() {
             <BoulderIndumentariaShowcase
               images={BOULDER_HOME_CAROUSEL_IMAGES}
               sizes={IMAGE_SIZES.winterSection}
-              shade={0.5}
+              shade={0.58}
               logoLinked={false}
             />
           </div>

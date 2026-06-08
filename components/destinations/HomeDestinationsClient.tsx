@@ -18,6 +18,7 @@ import { SECTION_IDS } from "@/lib/constants";
 import { IMAGE_QUALITY_GALLERY, IMAGE_QUALITY_LIGHTBOX, IMAGE_SIZES } from "@/lib/image-config";
 import type { HomeDestinationEditorial } from "@/lib/home-destinations-types";
 import { HOME_DESTINATION_GALLERY_MOBILE_COUNT } from "@/lib/home-destinations";
+import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
 
@@ -266,18 +267,30 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
   return (
     <section
       id={SECTION_IDS.destinations}
-      className="scroll-mt-24 bg-background px-4 py-12 sm:px-8 sm:py-20 lg:px-14 2xl:px-20"
+      className={cn(
+        "scroll-mt-24 bg-background px-4 py-12 sm:px-8 sm:py-20 lg:px-14 2xl:px-20",
+        MOBILE_MAGAZINE_G_ENABLED &&
+          "max-md:bg-footer-lake max-md:px-4 max-md:py-14 max-md:text-footer-lake-foreground",
+      )}
       aria-labelledby="destinos-heading"
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
         <Reveal className="max-w-3xl 2xl:max-w-4xl">
           <h2
             id="destinos-heading"
-            className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
+            className={cn(
+              "font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl",
+              MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground",
+            )}
           >
             Destinos
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground 2xl:text-xl">
+          <p
+            className={cn(
+              "mt-4 text-lg leading-relaxed text-muted-foreground 2xl:text-xl",
+              MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground/78",
+            )}
+          >
             Elegí zona y mirá fotos reales de cada lugar. Después entrá al catálogo o
             consultanos por WhatsApp.
           </p>
@@ -305,6 +318,11 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
                         isActive
                           ? "border-black/18 bg-black/[0.03]"
                           : "border-border/65 bg-card/70",
+                        MOBILE_MAGAZINE_G_ENABLED &&
+                          "max-md:border-transparent max-md:bg-card max-md:shadow-[0_18px_40px_-28px_rgba(0,0,0,0.55)] max-md:ring-1 max-md:ring-black/6",
+                        MOBILE_MAGAZINE_G_ENABLED &&
+                          isActive &&
+                          "max-md:ring-primary/35",
                       )}
                     >
                       <DestinationName
@@ -406,7 +424,11 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
         <Reveal delay={0.1} className="mt-10 text-center lg:mt-12">
           <Link
             href="/destinos"
-            className="text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
+            className={cn(
+              "text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2",
+              MOBILE_MAGAZINE_G_ENABLED &&
+                "max-md:text-footer-lake-foreground max-md:focus-visible:ring-white/45 max-md:focus-visible:ring-offset-footer-lake",
+            )}
           >
             Ver todos los destinos
           </Link>

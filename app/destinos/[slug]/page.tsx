@@ -9,8 +9,9 @@ import {
   getDestinationBySlug,
   getDestinationSlugs,
 } from "@/lib/catalog/destinations";
-import { buildBreadcrumbJsonLd, buildTouristDestinationJsonLd } from "@/lib/json-ld";
+import { buildDestinationPageGraphJsonLd } from "@/lib/json-ld";
 import { buildPageMetadata, formatSiteTitle } from "@/lib/seo";
+import { getDestinationSeo } from "@/lib/seo-destinations";
 import { getSiteUrl } from "@/lib/site-url";
 import { SITE } from "@/lib/site";
 
@@ -30,12 +31,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const seo = getDestinationSeo(slug);
+
   return buildPageMetadata({
-    title: `${destination.name} — alojamiento y excursiones`,
-    description: destination.intro,
+    title: seo?.seoTitle ?? `${destination.name} — alojamiento y excursiones`,
+    description: seo?.seoDescription ?? destination.intro,
     path: `/destinos/${slug}`,
     ogImage: destination.heroImage,
-    ogImageAlt: `${destination.name} — ${SITE.name}`,
+    ogImageAlt: `Viajes a ${destination.name} — ${SITE.name}`,
+    keywords: seo?.keywords,
+    titleOrder: "keyword-first",
   });
 }
 
@@ -44,18 +49,15 @@ export default async function DestinationPage({ params }: PageProps) {
   const destination = getDestinationBySlug(slug);
   if (!destination) notFound();
 
-  const siteUrl = getSiteUrl();
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd(siteUrl, [
-    { name: "Inicio", path: "/" },
-    { name: "Destinos", path: "/destinos" },
-    { name: destination.name, path: `/destinos/${slug}` },
-  ]);
-  const destinationJsonLd = buildTouristDestinationJsonLd(siteUrl, destination);
+  const seo = getDestinationSeo(slug);
+  const destinationJsonLd = buildDestinationPageGraphJsonLd(getSiteUrl(), destination, {
+    seoDescription: seo?.seoDescription,
+    faq: seo?.faq,
+  });
 
   return (
     <>
-      <JsonLdScript id="alo-destination-breadcrumb-jsonld" data={breadcrumbJsonLd} />
-      <JsonLdScript id="alo-destination-jsonld" data={destinationJsonLd} />
+      <JsonLdScript id="alo-destination-graph-jsonld" data={destinationJsonLd} />
       <main className="min-w-0 flex-1">
         <DestinationDetail destination={destination} />
       </main>

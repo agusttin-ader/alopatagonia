@@ -8,7 +8,8 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { SiteLogo } from "@/components/brand/SiteLogo";
 import { Button } from "@/components/ui/button";
-import { SECTION_IDS, SITE } from "@/lib/constants";
+import { SECTION_IDS, SITE, PLANNER_PATH } from "@/lib/constants";
+import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { cn } from "@/lib/utils";
 
 const HOME_SECTION_IDS = {
@@ -20,7 +21,7 @@ const HOME_LINKS = [
   { label: "Destinos", href: "/destinos", id: "destinos" },
   { label: "Alojamientos", href: "/alojamientos", id: "alojamientos" },
   { label: "Excursiones", href: "/excursiones", id: "excursiones" },
-  { label: "Planear mi viaje", href: `#${SECTION_IDS.planner}`, id: SECTION_IDS.planner },
+  { label: "Planear mi viaje", href: PLANNER_PATH, id: SECTION_IDS.planner },
   { label: "Indumentaria", href: "/invierno", id: "invierno" },
 ] as const;
 
@@ -99,9 +100,7 @@ export function GlobalNav() {
 
       setScrolled(currentScrollY > 16);
 
-      if (!isDesktop) {
-        setNavHidden(false);
-      } else if (mobileOpen) {
+      if (mobileOpen) {
         setNavHidden(false);
       } else if (currentScrollY <= 24) {
         setNavHidden(false);
@@ -127,7 +126,7 @@ export function GlobalNav() {
       window.removeEventListener("scroll", onScroll);
       if (rafId) window.cancelAnimationFrame(rafId);
     };
-  }, [isDesktop, mobileOpen]);
+  }, [mobileOpen]);
 
   const links = useMemo(() => {
     if (isHome) return HOME_LINKS;
@@ -136,7 +135,7 @@ export function GlobalNav() {
       { label: "Destinos", href: "/destinos", id: "destinos" },
       { label: "Alojamientos", href: "/alojamientos", id: "alojamientos" },
       { label: "Excursiones", href: "/excursiones", id: "excursiones" },
-      { label: "Planear mi viaje", href: `/#${SECTION_IDS.planner}`, id: "planner" },
+      { label: "Planear mi viaje", href: PLANNER_PATH, id: "planner" },
       { label: "Indumentaria", href: "/invierno", id: "invierno" },
     ];
   }, [isHome]);
@@ -195,6 +194,9 @@ export function GlobalNav() {
     };
   }, [isHome]);
 
+  const mobileHeroHeader =
+    MOBILE_MAGAZINE_G_ENABLED && isHome && !scrolled && !mobileOpen;
+
   return (
     <motion.nav
       className="fixed inset-x-0 top-0 z-[1200]"
@@ -208,13 +210,37 @@ export function GlobalNav() {
     >
       <div
         className={cn(
-          "relative border-b border-border/75 bg-background px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] transition-[padding,box-shadow,border-color] duration-300 ease-out md:hidden",
-          scrolled &&
-            "border-border/80 pb-[0.58rem] pt-[calc(env(safe-area-inset-top)+0.58rem)] shadow-[0_8px_20px_-18px_rgba(0,0,0,0.35)]",
+          "relative transition-[padding,box-shadow,border-color,background-color] duration-300 ease-out md:hidden",
+          MOBILE_MAGAZINE_G_ENABLED
+            ? cn(
+                "px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)]",
+                mobileHeroHeader
+                  ? "border-b border-transparent bg-transparent shadow-none"
+                  : cn(
+                      "border-b border-border/75 bg-background",
+                      scrolled &&
+                        "pb-[0.58rem] pt-[calc(env(safe-area-inset-top)+0.58rem)] shadow-[0_8px_20px_-18px_rgba(0,0,0,0.35)]",
+                    ),
+              )
+            : cn(
+                "border-b border-border/75 bg-background px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)]",
+                scrolled &&
+                  "border-border/80 pb-[0.58rem] pt-[calc(env(safe-area-inset-top)+0.58rem)] shadow-[0_8px_20px_-18px_rgba(0,0,0,0.35)]",
+              ),
         )}
       >
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between">
-          <SiteLogo linked priority showWordmark className="h-11 sm:h-12" />
+          <SiteLogo
+            linked
+            priority
+            showWordmark
+            variant={
+              MOBILE_MAGAZINE_G_ENABLED && mobileHeroHeader && !mobileOpen
+                ? "onDark"
+                : "onLight"
+            }
+            className="h-11 sm:h-12"
+          />
           <Button
             ref={menuButtonRef}
             aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
@@ -222,7 +248,13 @@ export function GlobalNav() {
             aria-expanded={mobileOpen}
             size="icon"
             variant="ghost"
-            className="min-h-12 min-w-12"
+            className={cn(
+              "min-h-12 min-w-12",
+              MOBILE_MAGAZINE_G_ENABLED &&
+                mobileHeroHeader &&
+                !mobileOpen &&
+                "text-white hover:bg-white/12 hover:text-white",
+            )}
             onClick={() => {
               setNavHidden(false);
               setMobileOpen((prev) => !prev);
@@ -230,17 +262,35 @@ export function GlobalNav() {
           >
             <span className="relative block size-6">
               <motion.span
-                className="absolute left-0 top-1/2 h-0.5 w-6 origin-center rounded-full bg-foreground"
+                className={cn(
+                  "absolute left-0 top-1/2 h-0.5 w-6 origin-center rounded-full bg-foreground",
+                  MOBILE_MAGAZINE_G_ENABLED &&
+                    mobileHeroHeader &&
+                    !mobileOpen &&
+                    "bg-white",
+                )}
                 animate={mobileOpen ? { rotate: 45, y: 0 } : { rotate: 0, y: -7 }}
                 transition={iconLineTransition}
               />
               <motion.span
-                className="absolute left-0 top-1/2 h-0.5 w-6 origin-center rounded-full bg-foreground"
+                className={cn(
+                  "absolute left-0 top-1/2 h-0.5 w-6 origin-center rounded-full bg-foreground",
+                  MOBILE_MAGAZINE_G_ENABLED &&
+                    mobileHeroHeader &&
+                    !mobileOpen &&
+                    "bg-white",
+                )}
                 animate={mobileOpen ? { opacity: 0, x: 4 } : { opacity: 1, x: 0 }}
                 transition={iconLineTransition}
               />
               <motion.span
-                className="absolute left-0 top-1/2 h-0.5 w-6 origin-center rounded-full bg-foreground"
+                className={cn(
+                  "absolute left-0 top-1/2 h-0.5 w-6 origin-center rounded-full bg-foreground",
+                  MOBILE_MAGAZINE_G_ENABLED &&
+                    mobileHeroHeader &&
+                    !mobileOpen &&
+                    "bg-white",
+                )}
                 animate={mobileOpen ? { rotate: -45, y: 0 } : { rotate: 0, y: 7 }}
                 transition={iconLineTransition}
               />

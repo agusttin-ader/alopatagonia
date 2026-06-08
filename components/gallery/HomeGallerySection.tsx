@@ -9,6 +9,7 @@ import { ImageLightbox } from "@/components/media/ImageLightbox";
 import { Reveal } from "@/components/motion/reveal";
 import { HOME_GALLERY_IMAGES, SECTION_IDS } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
+import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { cn } from "@/lib/utils";
 
 const DESKTOP_DISPLAY_COUNT = 7;
@@ -223,7 +224,7 @@ function GallerySkeleton({ mobile = false }: { mobile?: boolean }) {
   return (
     <div className={cn(mobile ? MOBILE_GRID_SHELL : GRID_SHELL)} aria-hidden>
       {(mobile ? MOBILE_SLOTS : GALLERY_SLOTS).map((slot, index) => (
-        <div key={index} className={cn("animate-pulse bg-muted/80", slot.layout)} />
+        <div key={index} className={cn("app-image-pulse", slot.layout)} />
       ))}
     </div>
   );
@@ -233,10 +234,12 @@ function GalleryNavButton({
   direction,
   disabled,
   onClick,
+  className,
 }: {
   direction: "prev" | "next";
   disabled?: boolean;
   onClick: () => void;
+  className?: string;
 }) {
   const Icon = direction === "prev" ? ChevronLeft : ChevronRight;
   const label =
@@ -248,7 +251,7 @@ function GalleryNavButton({
       onClick={onClick}
       disabled={disabled}
       aria-label={label}
-      className={NAV_BUTTON_CLASS}
+      className={cn(NAV_BUTTON_CLASS, className)}
     >
       <Icon className="size-4 min-[400px]:size-[1.125rem] sm:size-5" aria-hidden />
     </button>
@@ -322,7 +325,10 @@ export function HomeGallerySection() {
   return (
     <section
       id={SECTION_IDS.gallery}
-      className="scroll-mt-24 bg-background py-10 sm:py-12 lg:py-16"
+      className={cn(
+        "scroll-mt-24 bg-background py-10 sm:py-12 lg:py-16",
+        MOBILE_MAGAZINE_G_ENABLED && "max-md:py-12",
+      )}
       aria-labelledby="home-gallery-heading"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-8 lg:px-14 2xl:max-w-[90rem] 2xl:px-20">
@@ -349,7 +355,14 @@ export function HomeGallerySection() {
       >
         <div className="mx-auto w-full">
           <div className="sm:hidden">
-            <div className={cn("relative isolate", MOBILE_GRID_HEIGHT)} aria-live="polite">
+            <div
+              className={cn(
+                "relative isolate",
+                MOBILE_GRID_HEIGHT,
+                MOBILE_MAGAZINE_G_ENABLED && "max-md:overflow-hidden max-md:rounded-[1.5rem]",
+              )}
+              aria-live="polite"
+            >
               {!isReady ? (
                 <GallerySkeleton mobile />
               ) : (
@@ -384,7 +397,17 @@ export function HomeGallerySection() {
               )}
             </div>
 
-            {canNavigate ? (
+            {canNavigate && MOBILE_MAGAZINE_G_ENABLED ? (
+              <div className="mt-3 flex items-center justify-center gap-3">
+                <GalleryNavButton direction="prev" onClick={goPrev} disabled={!canGoPrev} />
+                <span className="min-w-[3.25rem] text-center text-xs font-semibold tabular-nums text-muted-foreground">
+                  {setIndex + 1} / {selectionSets.length}
+                </span>
+                <GalleryNavButton direction="next" onClick={goNext} />
+              </div>
+            ) : null}
+
+            {canNavigate && !MOBILE_MAGAZINE_G_ENABLED ? (
               <div className="mt-3 flex items-center justify-center gap-3">
                 <GalleryNavButton direction="prev" onClick={goPrev} disabled={!canGoPrev} />
                 <GalleryNavButton direction="next" onClick={goNext} />

@@ -25,6 +25,19 @@ export const SITE_INTRO_OVERLAY_CSS =
 /** En true: cada carga ejecuta intro. En false: una vez por sesión al ingresar. */
 export const SITE_INTRO_ALWAYS_SHOW = false;
 
+function preloadIntroImage() {
+  if (typeof document === "undefined") return;
+  if (document.querySelector('link[data-alo-intro-preload]')) return;
+
+  const link = document.createElement("link");
+  link.rel = "preload";
+  link.as = "image";
+  link.href = SITE_INTRO_IMAGE_PRELOAD;
+  link.setAttribute("data-alo-intro-preload", "");
+  link.fetchPriority = "high";
+  document.head.appendChild(link);
+}
+
 /**
  * Boot de intro: scroll al inicio y clase `site-intro-pending` en <html>.
  * Se ejecuta desde instrumentation-client.ts (antes de hidratar React).
@@ -66,6 +79,7 @@ export function runSiteIntroBoot(): void {
     }
 
     root.classList.add("site-intro-pending");
+    preloadIntroImage();
   } catch {
     document.documentElement.classList.remove("site-intro-pending");
   }

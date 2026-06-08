@@ -7,7 +7,6 @@ import { useLayoutEffect, useState } from "react";
 import { SITE } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import {
-  initSiteIntroVisibility,
   setSiteIntroExiting,
   setSiteIntroPending,
   setSiteIntroPlaceholderHidden,
@@ -53,10 +52,20 @@ function setIntroExiting(exiting: boolean) {
 
 export function SiteIntro() {
   const reduceMotion = useReducedMotion();
-  const [isVisible, setIsVisible] = useState(() => initSiteIntroVisibility());
+  const [isVisible, setIsVisible] = useState(false);
   const [phase, setPhase] = useState<IntroPhase>("letter");
 
   useLayoutEffect(() => {
+    const home = window.location.pathname === "/" || window.location.pathname === "";
+
+    if (!home) {
+      setSiteIntroPending(false);
+      setIntroExiting(false);
+      setSiteIntroPlaceholderHidden(true);
+      setIsVisible(false);
+      return;
+    }
+
     if (reduceMotion) {
       setSiteIntroPending(false);
       setIntroExiting(false);
@@ -138,6 +147,7 @@ export function SiteIntro() {
         qualityPreset="intro"
         sizes={IMAGE_SIZES.viewport}
         className="object-cover"
+        loadingPulse={false}
         onLoadingComplete={() => setSiteIntroPlaceholderHidden(true)}
       />
       <div
@@ -171,6 +181,7 @@ export function SiteIntro() {
               height={LOGO_HEIGHT}
               priority
               withBlur={false}
+              loadingPulse={false}
               sizes={IMAGE_SIZES.logo}
               qualityPreset="intro"
               className={cn(LOGO_SIZE_CLASS, "drop-shadow-[0_8px_28px_rgba(0,0,0,0.55)]")}
@@ -226,6 +237,7 @@ export function SiteIntro() {
               height={LOGO_HEIGHT}
               priority
               withBlur={false}
+              loadingPulse={false}
               sizes={IMAGE_SIZES.logo}
               qualityPreset="intro"
               className={cn(

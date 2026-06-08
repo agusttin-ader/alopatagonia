@@ -80,11 +80,11 @@ export function CatalogItemShowcase({
                 className="object-cover"
                 sizes={IMAGE_SIZES.catalogCard}
               />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/55 to-transparent" />
-              <div className="absolute left-3 top-3 rounded-full bg-black/48 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white ring-1 ring-white/25">
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-28 bg-gradient-to-t from-black/55 to-transparent" />
+              <div className="absolute left-3 top-3 z-[2] rounded-full bg-black/48 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white ring-1 ring-white/25">
                 {badge}
               </div>
-              <div className="absolute bottom-3 left-3 right-3">
+              <div className="absolute bottom-3 left-3 right-3 z-[2]">
                 <h3 className="font-heading line-clamp-2 text-xl font-medium leading-tight tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
                   {item.name}
                 </h3>
@@ -116,6 +116,11 @@ export function CatalogItemShowcase({
                 <h3 className="font-heading mt-1.5 text-xl font-medium leading-snug tracking-tight text-foreground">
                   {item.name}
                 </h3>
+                {item.description ? (
+                  <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                    {item.description}
+                  </p>
+                ) : null}
                 {destinationLabel ? (
                   <p className="mt-1 line-clamp-1 text-sm text-muted-foreground">{destinationLabel}</p>
                 ) : null}
@@ -248,6 +253,11 @@ export function CatalogItemShowcase({
                 <h3 className="font-heading mt-1.5 text-xl font-medium leading-snug tracking-tight text-foreground">
                   {item.name}
                 </h3>
+                {item.description ? (
+                  <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                    {item.description}
+                  </p>
+                ) : null}
                 {destinationLabel ? (
                   <p className="mt-1 line-clamp-1 text-sm text-muted-foreground">{destinationLabel}</p>
                 ) : null}
@@ -281,10 +291,10 @@ export function CatalogItemShowcase({
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-black/5" />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-              <div className="absolute left-3 top-3 rounded-full bg-black/48 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white ring-1 ring-white/25">
+              <div className="absolute left-3 top-3 z-[2] rounded-full bg-black/48 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white ring-1 ring-white/25">
                 {badge}
               </div>
-              <div className="absolute inset-x-3 bottom-3 flex items-end justify-between gap-3">
+              <div className="absolute inset-x-3 bottom-3 z-[2] flex items-end justify-between gap-3">
                 <div className="min-w-0">
                   <h3 className="font-heading line-clamp-2 text-lg font-medium leading-tight tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
                     {item.name}
@@ -421,6 +431,11 @@ export function CatalogItemShowcase({
             <h3 className="font-heading mt-2 text-xl font-medium tracking-tight text-foreground transition group-hover:text-primary/90 sm:text-2xl">
               {item.name}
             </h3>
+            {item.description ? (
+              <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                {item.description}
+              </p>
+            ) : null}
             {destinationLabel ? (
               <p className="mt-1 text-sm text-muted-foreground">{destinationLabel}</p>
             ) : null}

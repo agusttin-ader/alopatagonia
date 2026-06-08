@@ -4,7 +4,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
-import { HERO_COPY, SECTION_IDS, SITE } from "@/lib/constants";
+import { HERO_COPY, PLANNER_PATH, SITE } from "@/lib/constants";
+import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import {
   isSiteIntroPending,
   shouldPlaySiteIntro,
@@ -92,7 +93,7 @@ export function HeroClient() {
   const heroItem = isCoarseMobile ? mobileItem : item;
 
   return (
-    <div className="relative z-10 flex min-h-[100dvh] flex-col justify-end px-4 pb-[max(7rem,calc(env(safe-area-inset-bottom)+6rem))] pt-24 sm:px-8 sm:pb-[max(8rem,calc(env(safe-area-inset-bottom)+6.2rem))] lg:px-14 lg:pb-[max(8.8rem,calc(env(safe-area-inset-bottom)+6.8rem))] 2xl:px-20">
+    <div className="relative z-10 flex min-h-[100dvh] flex-col justify-end px-4 pb-[max(7rem,calc(env(safe-area-inset-bottom)+6rem))] pt-24 max-md:min-h-[88dvh] max-md:pb-[5.25rem] sm:px-8 sm:pb-[max(8rem,calc(env(safe-area-inset-bottom)+6.2rem))] lg:px-14 lg:pb-[max(8.8rem,calc(env(safe-area-inset-bottom)+6.8rem))] 2xl:px-20">
       <motion.div
         className="max-w-3xl 2xl:max-w-4xl [text-shadow:0_1px_4px_rgba(0,0,0,0.22)]"
         variants={heroContainer}
@@ -119,12 +120,18 @@ export function HeroClient() {
           <span className="sm:hidden">{HERO_COPY.sublineMobile}</span>
           <span className="hidden sm:inline">{HERO_COPY.subline}</span>
         </motion.p>
-        <motion.div variants={heroItem} className="mt-7 flex sm:mt-10">
+        <motion.div
+          variants={heroItem}
+          className={cn("mt-7 flex sm:mt-10", MOBILE_MAGAZINE_G_ENABLED && "max-md:mt-6")}
+        >
           <motion.a
-            href={`#${SECTION_IDS.planner}`}
+            href={PLANNER_PATH}
             className={cn(
               buttonVariants({ variant: "marketing", size: "lg" }),
-              "motion-cta h-12 w-full px-8 text-base font-semibold sm:w-auto 2xl:h-14 2xl:px-10 2xl:text-lg",
+              "motion-cta h-12 px-8 text-base font-semibold sm:w-auto 2xl:h-14 2xl:px-10 2xl:text-lg",
+              MOBILE_MAGAZINE_G_ENABLED
+                ? "max-md:h-11 max-md:w-auto max-md:max-w-[15.5rem] max-md:px-6 max-md:text-sm"
+                : "w-full",
             )}
             whileHover={reduceMotion ? undefined : { y: -1.5, scale: 1.015 }}
             whileTap={reduceMotion ? undefined : { y: 0, scale: 0.99 }}

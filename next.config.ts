@@ -1,5 +1,18 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV === "development";
+
+const connectSrc = [
+  "'self'",
+  "https://www.google-analytics.com",
+  "https://*.google-analytics.com",
+  "https://analytics.google.com",
+  "https://*.googletagmanager.com",
+  "https://*.tile.openstreetmap.org",
+  "https://tile.openstreetmap.org",
+  ...(isDev ? ["ws://localhost:*", "ws://127.0.0.1:*"] : []),
+].join(" ");
+
 const securityHeaders = [
   {
     key: "X-DNS-Prefetch-Control",
@@ -30,11 +43,11 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com",
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob: https:",
       "font-src 'self' data: https:",
-      "connect-src 'self' https://*.tile.openstreetmap.org https://tile.openstreetmap.org",
+      `connect-src ${connectSrc}`,
       "media-src 'self' blob: data:",
       "object-src 'none'",
       "base-uri 'self'",

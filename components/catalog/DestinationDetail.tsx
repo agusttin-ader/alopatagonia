@@ -3,11 +3,13 @@ import { AppImage } from "@/components/media/AppImage";
 import Link from "next/link";
 
 import { CatalogItemShowcase } from "@/components/catalog/CatalogItemShowcase";
+import { FaqSection } from "@/components/seo/FaqSection";
 import { buttonVariants } from "@/components/ui/button";
 import { buildCarRentalWhatsAppMessage } from "@/lib/catalog/placeholders";
 import type { CatalogItem, DestinationCatalog } from "@/lib/catalog/types";
-import { getWhatsAppUrl } from "@/lib/constants";
+import { PLANNER_PATH, getWhatsAppUrl } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
+import { getDestinationSeo } from "@/lib/seo-destinations";
 import { cn } from "@/lib/utils";
 
 function accommodationBadge(item: CatalogItem) {
@@ -43,13 +45,14 @@ function CatalogSection({ id, title, description, children }: CatalogSectionProp
 
 export function DestinationDetail({ destination }: { destination: DestinationCatalog }) {
   const carWhatsApp = getWhatsAppUrl(buildCarRentalWhatsAppMessage(destination.name));
+  const seo = getDestinationSeo(destination.slug);
 
   return (
     <>
       <section className="relative min-h-[40vh] overflow-hidden px-4 pb-10 pt-28 sm:px-8 sm:pt-32 lg:px-14 2xl:px-20">
         <AppImage
           src={destination.heroImage}
-          alt={destination.name}
+          alt={`Viajes a ${destination.name} — Patagonia Argentina`}
           fill
           priority
           qualityPreset="gallery"
@@ -80,6 +83,29 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
       </section>
 
       <div className="mx-auto max-w-7xl space-y-16 px-4 py-12 sm:px-8 lg:space-y-20 lg:px-14 2xl:max-w-[90rem] 2xl:py-16">
+        {seo ? (
+          <section aria-labelledby="destination-seo-heading" className="max-w-3xl">
+            <h2
+              id="destination-seo-heading"
+              className="font-heading text-2xl font-medium tracking-tight sm:text-3xl"
+            >
+              Viajes a {destination.name}
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+              {seo.seoIntro}
+            </p>
+            <Link
+              href={PLANNER_PATH}
+              className={cn(
+                buttonVariants({ variant: "outline", size: "lg" }),
+                "mt-6 inline-flex",
+              )}
+            >
+              Planear viaje a {destination.name}
+            </Link>
+          </section>
+        ) : null}
+
         <CatalogSection
           id="alojamientos-heading"
           title="Alojamientos"
@@ -92,7 +118,7 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
                 item={item}
                 destinationSlug={destination.slug}
                 badge={accommodationBadge(item)}
-                mobileCardVariant="overlay"
+                mobileCardVariant="frame"
               />
             ))}
           </div>
@@ -145,6 +171,14 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
             </a>
           </div>
         </section>
+
+        {seo?.faq.length ? (
+          <FaqSection
+            items={seo.faq}
+            title={`Preguntas sobre viajar a ${destination.name}`}
+            className="border-t border-border/70 pt-12 lg:pt-14"
+          />
+        ) : null}
       </div>
     </>
   );

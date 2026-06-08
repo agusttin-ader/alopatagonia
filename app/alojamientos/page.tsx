@@ -5,15 +5,16 @@ import { getAllAccommodations } from "@/lib/catalog/catalog-items";
 import { FloatingWhatsAppButton } from "@/components/whatsapp/FloatingWhatsAppButton";
 import { getCatalogHubPillar } from "@/lib/catalog-hub/config";
 import { buildPageMetadata } from "@/lib/seo";
+import { SITE_SEO } from "@/lib/seo-destinations";
 
 const pillar = getCatalogHubPillar("alojamientos");
 
 export const metadata = buildPageMetadata({
-  title: "Alojamientos en la Patagonia",
-  description:
-    pillar?.description ??
-    "Cabañas, departamentos y hostels en la Patagonia. Opciones reales por destino.",
+  title: SITE_SEO.alojamientos.title,
+  description: SITE_SEO.alojamientos.description,
   path: "/alojamientos",
+  keywords: [...SITE_SEO.alojamientos.keywords],
+  titleOrder: "keyword-first",
   index: pillar?.status === "live",
 });
 

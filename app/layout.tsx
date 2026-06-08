@@ -13,7 +13,7 @@ import { getSiteUrl } from "@/lib/site-url";
 import { SITE } from "@/lib/site";
 import {
   SITE_INTRO_CRITICAL_CSS,
-  SITE_INTRO_IMAGE_PRELOAD,
+  SITE_INTRO_IMAGE,
   SITE_INTRO_LOGO,
   SITE_INTRO_OVERLAY_CSS,
 } from "@/lib/site-intro-config";
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     template: "Alo Patagonia | %s",
   },
   description:
-    "Auto, alojamiento y excursiones en un solo plan. Coordinamos tu viaje por la Patagonia Argentina.",
+    "Organizá tu viaje a la Patagonia: auto, alojamiento y excursiones en Bariloche, San Martín de los Andes, El Chaltén, Puerto Madryn, Ushuaia y más destinos patagónicos.",
   alternates: {
     canonical: "/",
   },
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     title: "Alo Patagonia | Organizá tu viaje",
     description:
-      "Auto, alojamiento y excursiones en un solo plan. Coordinamos tu viaje por la Patagonia Argentina.",
+      "Organizá tu viaje a la Patagonia: auto, alojamiento y excursiones en Bariloche, San Martín de los Andes, El Chaltén, Puerto Madryn, Ushuaia y más.",
     images: [
       {
         url: SITE.ogImage,
@@ -86,7 +86,7 @@ export const metadata: Metadata = {
     creator: `@${SITE.instagramHandle}`,
     title: "Alo Patagonia | Organizá tu viaje",
     description:
-      "Auto, alojamiento y excursiones en un solo plan. Coordinamos tu viaje por la Patagonia Argentina.",
+      "Organizá tu viaje a la Patagonia: auto, alojamiento y excursiones en Bariloche, San Martín de los Andes, El Chaltén, Puerto Madryn, Ushuaia y más.",
     images: [SITE.ogImage],
   },
   ...(googleSiteVerification
@@ -124,6 +124,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
+      suppressHydrationWarning
       className={`${inter.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
       <head>
@@ -131,7 +132,6 @@ export default function RootLayout({
           id="alo-site-intro-critical"
           dangerouslySetInnerHTML={{ __html: SITE_INTRO_CRITICAL_CSS }}
         />
-        <link rel="preload" href={SITE_INTRO_IMAGE_PRELOAD} as="image" fetchPriority="high" />
         <link rel="preload" href={SITE_INTRO_LOGO} as="image" />
         <link rel="icon" href="/favicon.png" type="image/png" sizes="48x48" />
         <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
@@ -144,7 +144,7 @@ export default function RootLayout({
           className="pointer-events-none fixed inset-0 z-[2199] flex items-center justify-center"
           style={{
             backgroundColor: "#1a2f26",
-            backgroundImage: `url(${SITE_INTRO_IMAGE_PRELOAD})`,
+            backgroundImage: `url(${SITE_INTRO_IMAGE})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}

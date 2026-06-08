@@ -27,6 +27,30 @@ export const SECTION_IDS = {
   cta: "contacto",
 } as const;
 
+import { BARILOCHE_HERO_IMAGE } from "@/lib/catalog/bariloche-curated";
+
+export const PLANNER_PATH = "/planear-mi-viaje" as const;
+
+export const PLANNER_BANNER = {
+  src: BARILOCHE_HERO_IMAGE,
+  alt: "Panorámica de lagos y montaña en Bariloche, Patagonia Argentina",
+} as const;
+
+export const PLANNER_PAGE_COPY = {
+  title: "Planear mi viaje",
+  description:
+    "Contanos destino, fechas y cantidad de personas. Te armamos el mensaje listo para WhatsApp o mail.",
+  intro:
+    "En pocos minutos tenés la consulta armada: elegís destino, fechas y datos de contacto. Nosotros te preparamos el mensaje para que solo tengas que enviarlo.",
+} as const;
+
+export const PLANNER_TEASER_COPY = {
+  title: "¿Listo para armar tu viaje?",
+  description:
+    "Completá destino, fechas y datos en nuestra herramienta. Te preparamos el mensaje para WhatsApp.",
+  cta: "Comenzar a planear",
+} as const;
+
 /** URL fallback de tienda; priorizar `NEXT_PUBLIC_WINTER_STORE_URL` en producción. */
 const DEFAULT_WINTER_STORE_URL = "https://www.boulder.com.ar/";
 const DEFAULT_WHATSAPP_E164 = "5491170954933";
@@ -117,14 +141,14 @@ export function getWhatsAppUrl(message = DEFAULT_WHATSAPP_MESSAGE): string {
 
 export type PlannerDestinationKey =
   | "bariloche"
-  | "ushuaia"
-  | "calafate"
-  | "san-martin-andes"
+  | "san-martin"
+  | "el-chalten"
+  | "esquel"
   | "villa-la-angostura"
   | "puerto-madryn"
-  | "el-bolson"
-  | "esquel"
-  | "mendoza";
+  | "el-calafate"
+  | "traful"
+  | "ushuaia";
 
 export type PlannerDestinationValue = PlannerDestinationKey | "none";
 
@@ -145,25 +169,25 @@ export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
     previewHook: "Lagos, cipreses y ruta en auto sin apuro.",
   },
   {
-    key: "ushuaia",
-    label: "Ushuaia",
-    mapCenter: [-54.8019, -68.303],
-    mapZoom: 12.2,
-    previewHook: "Canal Beagle, montaña y el sur más sur.",
-  },
-  {
-    key: "calafate",
-    label: "El Calafate",
-    mapCenter: [-50.3379, -72.2648],
-    mapZoom: 12.2,
-    previewHook: "Glaciares que se escuchan antes de verse.",
-  },
-  {
-    key: "san-martin-andes",
-    label: "San Martin de los Andes",
+    key: "san-martin",
+    label: "San Martín de los Andes",
     mapCenter: [-40.1579, -71.3534],
     mapZoom: 12.2,
     previewHook: "Bosque andino y rutas junto al lago.",
+  },
+  {
+    key: "el-chalten",
+    label: "El Chaltén",
+    mapCenter: [-49.3317, -72.8866],
+    mapZoom: 12.4,
+    previewHook: "Trekking al pie del Fitz Roy y senderos de montaña.",
+  },
+  {
+    key: "esquel",
+    label: "Esquel / Trevelin",
+    mapCenter: [-42.9115, -71.3195],
+    mapZoom: 12.8,
+    previewHook: "Estepa, bosque y el Tren Patagónico.",
   },
   {
     key: "villa-la-angostura",
@@ -180,25 +204,25 @@ export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
     previewHook: "Mar patagónico y fauna en su hábitat.",
   },
   {
-    key: "el-bolson",
-    label: "El Bolson",
-    mapCenter: [-41.9664, -71.5336],
-    mapZoom: 12.8,
-    previewHook: "Montaña alternativa y feria artesanal.",
-  },
-  {
-    key: "esquel",
-    label: "Esquel",
-    mapCenter: [-42.9115, -71.3195],
-    mapZoom: 12.8,
-    previewHook: "Estepa, bosque y el Tren Patagónico.",
-  },
-  {
-    key: "mendoza",
-    label: "Mendoza",
-    mapCenter: [-32.8895, -68.8458],
+    key: "el-calafate",
+    label: "El Calafate",
+    mapCenter: [-50.3379, -72.2648],
     mapZoom: 12.2,
-    previewHook: "Viñedos al pie de la cordillera.",
+    previewHook: "Glaciares que se escuchan antes de verse.",
+  },
+  {
+    key: "traful",
+    label: "Traful / Villa Traful",
+    mapCenter: [-40.6583, -71.4597],
+    mapZoom: 12.6,
+    previewHook: "Lago Traful, bosque sumergido y rutas escénicas.",
+  },
+  {
+    key: "ushuaia",
+    label: "Ushuaia",
+    mapCenter: [-54.8019, -68.303],
+    mapZoom: 12.2,
+    previewHook: "Canal Beagle, montaña y el sur más sur.",
   },
 ];
 
@@ -245,6 +269,28 @@ for (const destination of PLANNER_DESTINATIONS) {
 }
 
 export const PLANNER_DESTINATION_HOOKS = plannerDestinationHooks;
+
+/** Claves legacy del planner (antes del sync con `/destinos`). */
+export const LEGACY_PLANNER_DESTINATION_ALIASES = {
+  calafate: "el-calafate",
+  "san-martin-andes": "san-martin",
+} as const satisfies Partial<Record<string, PlannerDestinationKey>>;
+
+export function resolvePlannerDestinationKey(value: string): PlannerDestinationValue {
+  if (value === "none") return "none";
+  const aliased =
+    LEGACY_PLANNER_DESTINATION_ALIASES[
+      value as keyof typeof LEGACY_PLANNER_DESTINATION_ALIASES
+    ] ?? value;
+  return aliased in PLANNER_DESTINATION_FOCUS
+    ? (aliased as PlannerDestinationKey)
+    : "none";
+}
+
+export function getPlannerDestinationFocus(destination: PlannerDestinationValue) {
+  const key = resolvePlannerDestinationKey(destination);
+  return key === "none" ? PLANNER_DEFAULT_FOCUS : PLANNER_DESTINATION_FOCUS[key];
+}
 
 export const INSTAGRAM_STATS: InstagramStatItem[] = [
   {

@@ -41,21 +41,27 @@ export function BoulderIndumentariaShowcase({
         fadeSeconds={fadeSeconds}
       />
       <div
-        className="absolute inset-0 bg-black"
+        className="absolute inset-0 z-[1] bg-black"
         style={{ opacity: shade }}
         aria-hidden
       />
       {showLogo ? (
-        <div className="absolute inset-0 z-10 flex items-center justify-center">
-          <BoulderLogo
-            priority={priority}
-            linked={logoLinked}
-            className={cn(
-              "h-7 w-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)] sm:h-8",
-              logoClassName,
-            )}
+        <>
+          <div
+            className="pointer-events-none absolute inset-0 z-[2] bg-[radial-gradient(ellipse_85%_60%_at_50%_50%,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.42)_48%,transparent_74%)]"
+            aria-hidden
           />
-        </div>
+          <div className="absolute inset-0 z-10 flex items-center justify-center">
+            <BoulderLogo
+              priority={priority}
+              linked={logoLinked}
+              className={cn(
+                "h-7 w-auto drop-shadow-[0_2px_16px_rgba(0,0,0,0.55)] sm:h-8",
+                logoClassName,
+              )}
+            />
+          </div>
+        </>
       ) : null}
     </div>
   );

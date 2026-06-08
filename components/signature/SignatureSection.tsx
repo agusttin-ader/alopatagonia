@@ -3,15 +3,19 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { AppImage } from "@/components/media/AppImage";
 
+import Link from "next/link";
+
 import { Reveal } from "@/components/motion/reveal";
 import { ScrollParallax } from "@/components/motion/scroll-parallax";
 import { buttonVariants } from "@/components/ui/button";
 import {
   IMAGE_QUALITY,
   IMAGE_SIZES,
+  PLANNER_PATH,
   SECTION_IDS,
   EXPERIENCE_IMAGE,
 } from "@/lib/constants";
+import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
 
@@ -30,23 +34,32 @@ export function SignatureSection() {
   return (
     <section
       id={SECTION_IDS.signature}
-      className="scroll-mt-24 bg-background px-4 py-12 sm:px-8 lg:px-14 2xl:px-20"
+      className={cn(
+        "scroll-mt-24 bg-background px-4 py-12 sm:px-8 lg:px-14 2xl:px-20",
+        MOBILE_MAGAZINE_G_ENABLED && "max-md:pt-12 max-md:pb-14",
+      )}
       aria-labelledby="signature-heading"
     >
-      <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.15fr_1fr] lg:items-center 2xl:max-w-[90rem] 2xl:gap-12">
-        <Reveal className="relative isolate overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/8">
-          <ScrollParallax strength={42} className="relative size-full">
-            <AppImage
-              src={EXPERIENCE_IMAGE.src}
-              alt="Ruta de lago y montana en Patagonia"
-              width={EXPERIENCE_IMAGE.width}
-              height={EXPERIENCE_IMAGE.height}
-              quality={IMAGE_QUALITY}
-              className="aspect-[16/11] size-full object-cover"
-              sizes={IMAGE_SIZES.signature}
-              loading="lazy"
-            />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+      <div className="mx-auto grid max-w-7xl gap-6 max-md:grid-cols-1 lg:grid-cols-[1.15fr_1fr] lg:items-center 2xl:max-w-[90rem] 2xl:gap-12">
+        <Reveal
+          className={cn(
+            "relative isolate overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/8",
+            MOBILE_MAGAZINE_G_ENABLED && "max-md:order-2 max-md:mt-3 max-md:rounded-[1.75rem]",
+          )}
+        >
+          <ScrollParallax strength={42} className="relative w-full">
+            <div className="relative aspect-[16/11] w-full">
+              <AppImage
+                src={EXPERIENCE_IMAGE.src}
+                alt="Ruta de lago y montana en Patagonia"
+                fill
+                quality={IMAGE_QUALITY}
+                className="object-cover"
+                sizes={IMAGE_SIZES.signature}
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+            </div>
           </ScrollParallax>
           <motion.div
             className="pointer-events-none absolute bottom-5 left-5 z-10 h-1 w-[62%] origin-left rounded-full bg-white/90"
@@ -67,7 +80,7 @@ export function SignatureSection() {
           </div>
         </Reveal>
 
-        <div>
+        <div className={cn(MOBILE_MAGAZINE_G_ENABLED && "max-md:order-1")}>
           <Reveal>
             <h2
               id="signature-heading"
@@ -90,15 +103,17 @@ export function SignatureSection() {
           </Reveal>
 
           <Reveal delay={0.12}>
-            <a
-              href={`#${SECTION_IDS.planner}`}
+            <Link
+              href={PLANNER_PATH}
               className={cn(
                 buttonVariants({ variant: "marketing", size: "lg" }),
                 "mt-7 inline-flex h-12 w-full px-8 text-base font-semibold sm:w-auto 2xl:h-14 2xl:px-10 2xl:text-lg",
+                MOBILE_MAGAZINE_G_ENABLED &&
+                  "max-md:h-11 max-md:w-auto max-md:max-w-[15.5rem] max-md:px-6 max-md:text-sm",
               )}
             >
               Armar mi consulta
-            </a>
+            </Link>
           </Reveal>
         </div>
       </div>

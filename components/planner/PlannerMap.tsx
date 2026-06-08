@@ -6,8 +6,8 @@ import L from "leaflet";
 import { useEffect, useMemo, useRef } from "react";
 
 import {
-  PLANNER_DEFAULT_FOCUS,
-  PLANNER_DESTINATION_FOCUS,
+  getPlannerDestinationFocus,
+  resolvePlannerDestinationKey,
   type PlannerDestinationValue,
 } from "@/lib/constants";
 
@@ -34,10 +34,8 @@ export function PlannerMap({ destination }: { destination: PlannerDestinationVal
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    const focus =
-      destination === "none"
-        ? PLANNER_DEFAULT_FOCUS
-        : PLANNER_DESTINATION_FOCUS[destination];
+    const resolvedDestination = resolvePlannerDestinationKey(destination);
+    const focus = getPlannerDestinationFocus(destination);
 
     if (!mapRef.current && mapNodeRef.current) {
       const map = L.map(mapNodeRef.current, {
@@ -67,7 +65,7 @@ export function PlannerMap({ destination }: { destination: PlannerDestinationVal
       });
     }
 
-    if (destination === "none") {
+    if (resolvedDestination === "none") {
       markerRef.current?.remove();
       markerRef.current = null;
       return;

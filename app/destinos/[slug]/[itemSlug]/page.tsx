@@ -10,8 +10,9 @@ import {
   getCatalogItemBadge,
   getCatalogItemEntry,
 } from "@/lib/catalog/catalog-items";
-import { buildBreadcrumbJsonLd } from "@/lib/json-ld";
+import { buildCatalogItemGraphJsonLd } from "@/lib/json-ld";
 import { buildPageMetadata, formatSiteTitle } from "@/lib/seo";
+import { getDestinationSeoKeywords } from "@/lib/seo-destinations";
 import { getSiteUrl } from "@/lib/site-url";
 import { SITE } from "@/lib/site";
 
@@ -34,13 +35,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { destination, item } = entry;
   const badge = getCatalogItemBadge(entry);
   const heroImage = item.images[0]?.src ?? destination.heroImage;
+  const kindLabel = entry.kind === "accommodation" ? "alojamiento" : "excursión";
 
   return buildPageMetadata({
-    title: `${item.name} — ${destination.name}`,
-    description: item.description ?? `${badge} en ${destination.name}. Consultá disponibilidad.`,
+    title: `${item.name} en ${destination.name} — ${kindLabel}`,
+    description:
+      item.description ??
+      `${badge} en ${destination.name}, Patagonia Argentina. Consultá fotos, detalles y disponibilidad por WhatsApp.`,
     path: `/destinos/${slug}/${itemSlug}`,
     ogImage: heroImage,
-    ogImageAlt: `${item.name} — ${SITE.name}`,
+    ogImageAlt: `${item.name} en ${destination.name} — ${SITE.name}`,
+    keywords: [
+      item.name.toLowerCase(),
+      `${kindLabel} ${destination.name.toLowerCase()}`,
+      ...getDestinationSeoKeywords(slug),
+    ],
+    titleOrder: "keyword-first",
   });
 }
 
@@ -49,18 +59,11 @@ export default async function CatalogItemPage({ params }: PageProps) {
   const entry = getCatalogItemEntry(slug, itemSlug);
   if (!entry) notFound();
 
-  const siteUrl = getSiteUrl();
-  const { destination, item } = entry;
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd(siteUrl, [
-    { name: "Inicio", path: "/" },
-    { name: "Destinos", path: "/destinos" },
-    { name: destination.name, path: `/destinos/${slug}` },
-    { name: item.name, path: `/destinos/${slug}/${itemSlug}` },
-  ]);
+  const catalogItemJsonLd = buildCatalogItemGraphJsonLd(getSiteUrl(), entry);
 
   return (
     <>
-      <JsonLdScript id="alo-catalog-item-breadcrumb-jsonld" data={breadcrumbJsonLd} />
+      <JsonLdScript id="alo-catalog-item-graph-jsonld" data={catalogItemJsonLd} />
       <main className="min-w-0 flex-1">
         <CatalogItemDetail entry={entry} />
       </main>
