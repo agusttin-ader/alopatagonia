@@ -45,13 +45,17 @@ const securityHeaders = [
   },
 ];
 
+/** Assets estáticos en public/ — no deben empaquetarse en cada función serverless (límite 300 MB Vercel). */
+const OUTPUT_TRACE_PUBLIC_EXCLUDES = [
+  "./public/images/destinations/**",
+  "./public/images/**",
+  "./public/videos/**",
+] as const;
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
-  /** Evita que las fotos de destinos entren al bundle serverless (límite 300 MB en Vercel). */
   outputFileTracingExcludes: {
-    "/destinos/[slug]": ["./public/images/destinations/**"],
-    "/destinos": ["./public/images/destinations/**"],
-    "/": ["./public/images/destinations/**"],
+    "/*": [...OUTPUT_TRACE_PUBLIC_EXCLUDES],
   },
   images: {
     formats: ["image/avif", "image/webp"],
