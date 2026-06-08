@@ -13,12 +13,12 @@ export const SITE = {
   ogImage: "/opengraph-image",
   ogImageWidth: 1200,
   ogImageHeight: 630,
-  ogImageAlt: "Alo Patagonia — viajes por la Patagonia Argentina",
+  ogImageAlt: "Alo Patagonia — agencia de viajes en la Patagonia argentina",
   instagram: "https://www.instagram.com/alo_patagonia",
   instagramHandle: "alo_patagonia",
   email: "alopatagonia.arg@gmail.com",
   phoneDisplay: "+54 9 11 7095 4933",
   location: "Patagonia, Argentina",
   about:
-    "Coordinamos auto, alojamiento y excursiones en un mismo plan por la Patagonia Argentina.",
+    "Te ayudamos con auto, alojamiento y excursiones en la Patagonia — todo desde un solo WhatsApp.",
 } as const;

@@ -6,7 +6,7 @@ import { formatSiteTitle } from "@/lib/seo";
 
 export const metadata = {
   title: { absolute: formatSiteTitle("Página no encontrada") },
-  description: "La página que buscás no existe. Volvé al inicio o explorá destinos en la Patagonia.",
+  description: "Esta página no está. Volvé al inicio o mirá los destinos.",
   robots: {
     index: false,
     follow: true,

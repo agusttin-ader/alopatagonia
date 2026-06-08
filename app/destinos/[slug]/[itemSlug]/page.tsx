@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: `${item.name} en ${destination.name} — ${kindLabel}`,
     description:
       item.description ??
-      `${badge} en ${destination.name}, Patagonia Argentina. Consultá fotos, detalles y disponibilidad por WhatsApp.`,
+      `${badge} en ${destination.name}. Fotos y consulta por WhatsApp.`,
     path: `/destinos/${slug}/${itemSlug}`,
     ogImage: heroImage,
     ogImageAlt: `${item.name} en ${destination.name} — ${SITE.name}`,

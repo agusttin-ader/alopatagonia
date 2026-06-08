@@ -28,7 +28,7 @@ import { cn } from "@/lib/utils";
 
 const FEED_POST = {
   caption:
-    "Patagonia en imágenes reales — rutas, lagos y atardeceres de los viajes que armamos.",
+    "Rutas, clima y atardeceres de la Patagonia — lo que subimos cada semana.",
   likes: 1240,
 } as const;
 
@@ -329,8 +329,8 @@ export function InstagramStats() {
                   Patagonia en tu feed
                 </h2>
                 <p className="mt-4 max-w-md text-base leading-relaxed text-white/78 sm:text-lg">
-                  Rutas, clima y fotos reales de los destinos que armamos. Seguí el
-                  perfil y escribinos cuando quieras planear el viaje.
+                  Subimos rutas, clima y fotos de Bariloche, Calafate, Ushuaia y más. Cuando
+                  quieras viajar, escribinos.
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-2.5">

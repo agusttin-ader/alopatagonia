@@ -9,6 +9,13 @@ import { ImageLightbox } from "@/components/media/ImageLightbox";
 import { Reveal } from "@/components/motion/reveal";
 import { HOME_GALLERY_IMAGES, SECTION_IDS } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
+import {
+  GALLERY_MAX_FLEX,
+  GALLERY_NAV_BUTTON_SIZE,
+  HOME_GALLERY_GAP,
+  HOME_GALLERY_GRID_HEIGHT,
+  siteShell,
+} from "@/lib/layout-shell";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { cn } from "@/lib/utils";
 
@@ -45,22 +52,10 @@ const MOBILE_GRID_HEIGHT = ["aspect-square w-full"] as const;
 /** Layout de la grilla (sin alto — el contenedor reserva el espacio). */
 const GRID_FRAME = [
   "grid w-full min-h-0 grid-cols-4 grid-rows-12",
-  "gap-0.5 min-[400px]:gap-1 sm:gap-1 md:gap-1.5 lg:gap-1.5 xl:gap-2",
-  "min-[1920px]:gap-2.5 min-[2560px]:gap-3 min-[3840px]:gap-3.5",
+  HOME_GALLERY_GAP,
 ] as const;
 
-const GRID_HEIGHT = [
-  "h-[min(66vh,480px)]",
-  "min-[400px]:h-[min(68vh,540px)]",
-  "sm:h-[min(72vh,620px)]",
-  "md:h-[min(76vh,700px)]",
-  "lg:h-[min(80vh,780px)]",
-  "xl:h-[min(84vh,860px)]",
-  "2xl:h-[min(86vh,920px)]",
-  "min-[1920px]:h-[min(88vh,1000px)]",
-  "min-[2560px]:h-[min(90vh,1140px)]",
-  "min-[3840px]:h-[min(88vh,1280px)]",
-] as const;
+const GRID_HEIGHT = [HOME_GALLERY_GRID_HEIGHT] as const;
 
 const GRID_SHELL = [...GRID_FRAME, ...GRID_HEIGHT] as const;
 
@@ -73,16 +68,11 @@ const GRID_FADE = {
   ease: FADE_EASE,
 } as const;
 
-const GALLERY_WIDTH = [
-  "min-w-0 w-full max-w-[90rem]",
-  "min-[1920px]:max-w-[105rem]",
-  "min-[2560px]:max-w-[125rem]",
-  "min-[3840px]:max-w-[155rem]",
-] as const;
+const GALLERY_WIDTH = [GALLERY_MAX_FLEX] as const;
 
 const NAV_BUTTON_CLASS = cn(
   "inline-flex shrink-0 items-center justify-center rounded-full border border-border/80 bg-card text-foreground shadow-sm",
-  "size-8 min-[400px]:size-9 sm:size-10 md:size-11",
+  GALLERY_NAV_BUTTON_SIZE,
   "transition hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
   "disabled:pointer-events-none disabled:opacity-35",
 );
@@ -304,7 +294,7 @@ export function HomeGallerySection() {
       )}
       aria-labelledby="home-gallery-heading"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-8 lg:px-14 2xl:max-w-[90rem] 2xl:px-20">
+      <div className={siteShell()}>
         <Reveal className="max-w-xl lg:max-w-2xl">
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
             Galería
@@ -313,11 +303,10 @@ export function HomeGallerySection() {
             id="home-gallery-heading"
             className="font-heading mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-[2.6rem]"
           >
-            Patagonia en imágenes reales
+            Fotos de viajes que hicimos
           </h2>
           <p className="mt-4 max-w-lg text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Una selección distinta en cada visita — rutas, lagos y momentos de viajes
-            que armamos.
+            Cada vez ves otra mezcla: rutas, lagos y momentos de viajeros que pasaron por acá.
           </p>
         </Reveal>
       </div>

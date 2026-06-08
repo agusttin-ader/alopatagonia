@@ -8,10 +8,12 @@ import {
 } from "@/lib/home-images";
 
 export const HERO_COPY = {
-  headline: "Organizá tu viaje a la Patagonia sin complicaciones",
-  headlineMobile: "La Patagonia sin complicaciones",
-  subline: "Auto + alojamiento + excursiones. Todo en un solo lugar.",
-  sublineMobile: "Auto, alojamiento y excursiones. Un solo equipo.",
+  headline: "Organizá con nosotros tu viaje a Patagonia sin complicaciones",
+  headlineMobile: "Tu viaje a Patagonia, sin complicaciones",
+  subline:
+    "Alojamientos + transfers + alquiler de autos y excursiones… todo en un solo lugar.",
+  sublineMobile:
+    "Alojamientos, transfers, autos y excursiones en un solo lugar.",
 } as const;
 
 export const SECTION_IDS = {
@@ -39,16 +41,16 @@ export const PLANNER_BANNER = {
 export const PLANNER_PAGE_COPY = {
   title: "Planear mi viaje",
   description:
-    "Contanos destino, fechas y cantidad de personas. Te armamos el mensaje listo para WhatsApp o mail.",
+    "Decinos a dónde querés ir, cuándo y cuántos son. Te dejamos el texto para WhatsApp o mail.",
   intro:
-    "En pocos minutos tenés la consulta armada: elegís destino, fechas y datos de contacto. Nosotros te preparamos el mensaje para que solo tengas que enviarlo.",
+    "En dos minutos completás destino, fechas y datos. Nosotros te escribimos el mensaje; vos solo lo enviás.",
 } as const;
 
 export const PLANNER_TEASER_COPY = {
-  title: "¿Listo para armar tu viaje?",
+  title: "¿Tenés fechas? Empecemos.",
   description:
-    "Completá destino, fechas y datos en nuestra herramienta. Te preparamos el mensaje para WhatsApp.",
-  cta: "Comenzar a planear",
+    "Elegí destino, fechas y cuántos son. Te dejamos el mensaje listo para mandar por WhatsApp.",
+  cta: "Armar mi consulta",
 } as const;
 
 /** URL fallback de tienda; priorizar `NEXT_PUBLIC_WINTER_STORE_URL` en producción. */
@@ -92,11 +94,13 @@ export const WINTER_STORE_COPY = {
   ctaPrimary: "Ir a Boulder",
   ctaSecondaryHome: "Volver al inicio",
   homeEyebrow: "Indumentaria",
-  homeHeading: "En Ushuaia hace frío de verdad. Equipate antes de salir.",
-  homeBody:
-    "Indumentaria outdoor Boulder para el viento sur. Entrá a la tienda y sumalo a tu itinerario.",
+  homeHeading:
+    "Porque el viaje comienza con la planificación, equipate fuerte para la montaña!!",
+  homeBodyParagraphs: [
+    "Todo lo que necesitás para tu próxima aventura… está acá.",
+    "Viajá cómodo y preparado para afrontar el clima patagónico. Conocé la calidad de la indumentaria Boulder y completá tu experiencia… entrá a la tienda online y aprovechá nuestro beneficio para llevarte todo!!",
+  ],
   homeCta: "Ver indumentaria",
-  homeHighlight: "3, 6 y 9 cuotas sin interés · 15% off por transferencia · envíos gratis desde $130.000",
   bullets: [
     "3, 6 y 9 cuotas sin interés, sin monto mínimo",
     "15% off pagando por transferencia en toda la web",
@@ -115,7 +119,7 @@ export type InstagramStatItem = {
 };
 
 const DEFAULT_WHATSAPP_MESSAGE =
-  "Hola! Quiero planear mi viaje a Patagonia. ¿Me ayudan?";
+  "Hola! Quiero ir a la Patagonia. ¿Me ayudan con auto, alojamiento y excursiones?";
 
 export const WHATSAPP_MESSAGES = {
   primary: DEFAULT_WHATSAPP_MESSAGE,
@@ -194,14 +198,14 @@ export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
     label: "Villa La Angostura",
     mapCenter: [-40.7617, -71.6463],
     mapZoom: 13,
-    previewHook: "Reserva, pueblo chico y paisajes de postal.",
+    previewHook: "Reserva, pueblo chico y lagos para ir sin apuro.",
   },
   {
     key: "puerto-madryn",
     label: "Puerto Madryn",
     mapCenter: [-42.7692, -65.0385],
     mapZoom: 12.4,
-    previewHook: "Mar patagónico y fauna en su hábitat.",
+    previewHook: "Ballenas, pingüinos y costa atlántica.",
   },
   {
     key: "el-calafate",
@@ -215,7 +219,7 @@ export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
     label: "Traful / Villa Traful",
     mapCenter: [-40.6583, -71.4597],
     mapZoom: 12.6,
-    previewHook: "Lago Traful, bosque sumergido y rutas escénicas.",
+    previewHook: "Lago Traful, el bosque sumergido y la ruta de los Siete Lagos.",
   },
   {
     key: "ushuaia",
@@ -312,7 +316,7 @@ export const INSTAGRAM_STATS: InstagramStatItem[] = [
     label: "Destinos",
     target: PLANNER_DESTINATIONS.length,
     variant: "integer",
-    description: "Regiones que coordinamos en un viaje.",
+    description: "Zonas donde trabajamos.",
   },
 ];
 
@@ -327,7 +331,7 @@ export const TESTIMONIALS: Testimonial[] = [
     name: "Florencia y Tomás, Buenos Aires",
     highlight: "8 días · Bariloche y Calafate",
     quote:
-      "Auto, hotel y Perito Moreno reservados en un solo mensaje. Llegamos y solo disfrutamos.",
+      "En un chat nos quedó el auto, el hotel y el Perito Moreno. Llegamos y no tuvimos que correr.",
   },
   {
     name: "Camila R., Córdoba",
@@ -339,7 +343,7 @@ export const TESTIMONIALS: Testimonial[] = [
     name: "Familia Quiroga, Rosario",
     highlight: "10 días · con chicos",
     quote:
-      "Itinerario sin corridas, hoteles cerca de todo y paradas pensadas para que los chicos descansen.",
+      "Sin días corridos, hoteles bien ubicados y paradas para que los chicos no se fundan.",
   },
   {
     name: "Nicolás M., Mendoza",
@@ -360,6 +364,7 @@ export type GalleryImage = {
 export {
   IMAGE_BLUR_PLACEHOLDER,
   IMAGE_QUALITY,
+  IMAGE_QUALITY_CARD,
   IMAGE_QUALITY_GALLERY,
   IMAGE_QUALITY_HERO,
   IMAGE_QUALITY_INTRO,

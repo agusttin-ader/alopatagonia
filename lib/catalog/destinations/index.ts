@@ -1,4 +1,5 @@
 import { getDestinationImagePaths } from "@/lib/catalog/destination-images";
+import { sortByDestinationSlugOrder } from "@/lib/catalog/destination-order";
 import { LA_ANGOSTURA_HERO_IMAGE } from "@/lib/catalog/la-angostura-curated";
 import { SAN_MARTIN_HERO_IMAGE } from "@/lib/catalog/san-martin-curated";
 import {
@@ -21,7 +22,7 @@ const flatConfigs = [
     slug: "el-chalten",
     name: "El Chaltén",
     region: "Santa Cruz · Capital del trekking",
-    intro: "Capital nacional del trekking, al pie del Fitz Roy y senderos de alta montaña.",
+    intro: "Al pie del Fitz Roy. Senderos para todos los niveles.",
     folder: "chalten",
   },
   {
@@ -35,7 +36,7 @@ const flatConfigs = [
     slug: "villa-la-angostura",
     name: "Villa La Angostura",
     region: "Neuquén · Reserva Nacional",
-    intro: "Aldea cordillerana en el Parque Nacional Nahuel Huapi, portal al Bosque de Arrayanes.",
+    intro: "Pueblo chico en el Nahuel Huapi, a pasos del Bosque de Arrayanes.",
     folder: "la-angostura",
     heroImage: LA_ANGOSTURA_HERO_IMAGE,
   },
@@ -53,7 +54,7 @@ const structuredConfigs = [
     slug: "el-calafate",
     name: "El Calafate",
     region: "Santa Cruz · Glaciar Perito Moreno",
-    intro: "Puerta al Glaciar Perito Moreno y navegaciones por el Lago Argentino.",
+    intro: "Desde acá salís al Perito Moreno y a las navegaciones del Lago Argentino.",
     folder: "calafate",
   },
   {
@@ -67,12 +68,12 @@ const structuredConfigs = [
     slug: "ushuaia",
     name: "Ushuaia",
     region: "Tierra del Fuego · Fin del mundo",
-    intro: "Canal Beagle, Parque Nacional Tierra del Fuego y la ciudad más austral del mundo.",
+    intro: "Canal Beagle, Parque Nacional y la ciudad más al sur.",
     folder: "ushuaia",
   },
 ] as const;
 
-const ALL_DESTINATIONS: DestinationCatalog[] = [
+const ALL_DESTINATIONS: DestinationCatalog[] = sortByDestinationSlugOrder([
   buildBarilocheCatalog(),
   ...flatConfigs.map((config) =>
     buildFlatCatalog({
@@ -93,7 +94,7 @@ const ALL_DESTINATIONS: DestinationCatalog[] = [
       imagePaths: getDestinationImagePaths(config.folder),
     }),
   ),
-];
+]);
 
 export function getAllDestinations(): DestinationCatalog[] {
   return ALL_DESTINATIONS;

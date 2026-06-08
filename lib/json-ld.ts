@@ -147,7 +147,6 @@ export function buildTouristDestinationJsonLd(
       name: destination.region,
     },
     ...(geo ? { geo } : {}),
-    touristType: "Viajeros por la Patagonia Argentina",
   };
 }
 

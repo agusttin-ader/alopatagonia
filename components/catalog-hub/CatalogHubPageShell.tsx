@@ -3,18 +3,19 @@ import type { ReactNode } from "react";
 
 import { CATALOG_HUB_PILLARS } from "@/lib/catalog-hub/config";
 import type { CatalogHubPillar } from "@/lib/catalog-hub/config";
+import { PAGE_TITLE, SHELL_PAGE_PT, siteShell } from "@/lib/layout-shell";
 import { SECTION_IDS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 type CatalogHubPageShellProps = {
   pillar: CatalogHubPillar;
-  children?: ReactNode;
+  children: ReactNode;
 };
 
 export function CatalogHubPageShell({ pillar, children }: CatalogHubPageShellProps) {
   return (
-    <main className="min-w-0 flex-1 bg-background px-4 pb-14 pt-28 sm:px-8 sm:pt-32 lg:px-14 2xl:px-20">
-      <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
+    <main className={cn("min-w-0 flex-1 bg-background pb-14", SHELL_PAGE_PT)}>
+      <div className={siteShell()}>
         <nav className="text-sm text-muted-foreground">
           <Link href="/" className="hover:text-foreground">
             Inicio
@@ -30,16 +31,14 @@ export function CatalogHubPageShell({ pillar, children }: CatalogHubPageShellPro
         <p className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-primary/85">
           {pillar.eyebrow}
         </p>
-        <h1 className="font-heading mt-2 text-3xl font-medium tracking-tight sm:text-4xl">
+        <h1 className={cn("font-heading mt-2", PAGE_TITLE)}>
           {pillar.title}
         </h1>
         <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
           {pillar.description}
         </p>
 
-        {children ?? (
-          <ComingSoonPanel pillar={pillar} />
-        )}
+        {children}
 
         <aside className="mt-12 border-t border-border/70 pt-8">
           <p className="text-sm font-medium text-foreground">También podés explorar</p>
@@ -61,32 +60,5 @@ export function CatalogHubPageShell({ pillar, children }: CatalogHubPageShellPro
         </aside>
       </div>
     </main>
-  );
-}
-
-function ComingSoonPanel({ pillar }: { pillar: CatalogHubPillar }) {
-  return (
-    <div className="mt-10 rounded-3xl border border-dashed border-border/80 bg-muted/25 p-8 sm:p-10">
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-        Esqueleto · {pillar.status === "live" ? "En curso" : "Próximamente"}
-      </p>
-      <p className="mt-3 max-w-xl text-base leading-relaxed text-muted-foreground">
-        Estamos armando el listado de {pillar.title.toLowerCase()} con fotos reales y filtros
-        por destino. Por ahora podés ver las opciones dentro de cada zona en{" "}
-        <Link href="/destinos" className="font-medium text-primary underline-offset-4 hover:underline">
-          Destinos
-        </Link>
-        .
-      </p>
-      <div className="mt-8 grid gap-3 sm:grid-cols-3">
-        {["Placeholder 1", "Placeholder 2", "Placeholder 3"].map((label) => (
-          <div
-            key={label}
-            className="aspect-[4/3] rounded-2xl bg-muted/80 ring-1 ring-border/60"
-            aria-hidden
-          />
-        ))}
-      </div>
-    </div>
   );
 }

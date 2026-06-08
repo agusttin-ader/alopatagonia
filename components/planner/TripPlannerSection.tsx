@@ -492,7 +492,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
     const from = formatDate(fromDate);
     const to = formatDate(toDate);
 
-    return `Hola, vengo desde la web de Alo Patagonia. Mi nombre es ${personName}, viajo a ${destinationText}, somos ${people} personas, desde ${from} hasta ${to}. ¿Planeamos mi viaje?`;
+    return `Hola! Soy ${personName}, quiero ir a ${destinationText} con ${people} personas del ${from} al ${to}. ¿Me ayudan a armarlo?`;
   }, [name, resolvedDestination, travelers, fromDate, toDate]);
 
   const completionCount = useMemo(() => {
@@ -600,8 +600,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
               Planear mi viaje
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground 2xl:text-xl">
-              Completá el formulario y te armamos el mensaje para consultar por
-              WhatsApp o mail.
+              Completá el formulario y te dejamos el mensaje para WhatsApp o mail.
             </p>
           </Reveal>
         ) : null}
@@ -741,7 +740,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
 
               <div className="pt-2">
                 <p className="text-xs text-muted-foreground">
-                  Armamos el mensaje automaticamente para que consultes en un clic.
+                  El mensaje se completa solo con lo que cargás.
                 </p>
                 {invalidDateRange ? (
                   <p className="mt-2 text-xs font-semibold text-destructive">

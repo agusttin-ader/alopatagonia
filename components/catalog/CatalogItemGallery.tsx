@@ -2,6 +2,11 @@ import { AppImage } from "@/components/media/AppImage";
 
 import type { CatalogImage } from "@/lib/catalog/types";
 import { IMAGE_QUALITY_GALLERY, IMAGE_SIZES } from "@/lib/image-config";
+import {
+  CATALOG_GALLERY_GAP,
+  CATALOG_GALLERY_GRID_HEIGHT,
+  CATALOG_GALLERY_SINGLE_HEIGHT,
+} from "@/lib/layout-shell";
 import { cn } from "@/lib/utils";
 
 type CellPlacement = {
@@ -95,10 +100,9 @@ export function CatalogItemGallery({
     >
       <div
         className={cn(
-          "grid grid-cols-12 grid-rows-6 gap-1.5 md:gap-2.5 lg:gap-3",
-          isSingle
-            ? "min-h-0"
-            : "h-[clamp(420px,52vh,560px)] md:h-[clamp(480px,58vh,680px)] lg:h-[clamp(520px,62vh,760px)] xl:h-[clamp(560px,65vh,820px)]",
+          "grid grid-cols-12 grid-rows-6",
+          CATALOG_GALLERY_GAP,
+          isSingle ? "min-h-0" : CATALOG_GALLERY_GRID_HEIGHT,
           className,
         )}
       >
@@ -106,8 +110,7 @@ export function CatalogItemGallery({
           const sharedClassName = cn(
             "relative min-h-0 overflow-hidden bg-muted/40",
             cell.className,
-            isSingle &&
-              "col-span-12 row-span-6 aspect-[4/3] md:aspect-auto md:h-[clamp(420px,55vh,680px)] lg:h-[clamp(480px,58vh,760px)]",
+            isSingle && CATALOG_GALLERY_SINGLE_HEIGHT,
             isInteractive &&
               "cursor-zoom-in transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 group",
           );

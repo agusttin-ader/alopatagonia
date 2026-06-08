@@ -7,9 +7,11 @@ import { FloatingWhatsAppButton } from "@/components/whatsapp/FloatingWhatsAppBu
 import { JsonLdScript } from "@/components/seo/JsonLdScript";
 import { getAllDestinations } from "@/lib/catalog/destinations";
 import { buildDestinosHubGraphJsonLd } from "@/lib/json-ld";
+import { PAGE_TITLE, SHELL_PAGE_PT, siteShell } from "@/lib/layout-shell";
 import { buildPageMetadata } from "@/lib/seo";
 import { SITE_FAQ, SITE_SEO } from "@/lib/seo-destinations";
 import { getSiteUrl } from "@/lib/site-url";
+import { cn } from "@/lib/utils";
 
 export const metadata = buildPageMetadata({
   title: SITE_SEO.destinos.title,
@@ -26,8 +28,8 @@ export default function DestinosPage() {
   return (
     <>
       <JsonLdScript id="alo-destinos-graph-jsonld" data={destinosGraphJsonLd} />
-      <main className="min-w-0 flex-1 bg-background px-4 pb-14 pt-28 sm:px-8 sm:pt-32 lg:px-14 2xl:px-20">
-        <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
+      <main className={cn("min-w-0 flex-1 bg-background pb-14", SHELL_PAGE_PT)}>
+        <div className={siteShell()}>
           <nav className="text-sm text-muted-foreground">
             <Link href="/" className="hover:text-foreground">
               Inicio
@@ -36,7 +38,7 @@ export default function DestinosPage() {
             <span className="text-foreground">Destinos</span>
           </nav>
 
-          <h1 className="font-heading mt-4 text-3xl font-medium tracking-tight sm:text-4xl">
+          <h1 className={cn("font-heading mt-4", PAGE_TITLE)}>
             Destinos en la Patagonia Argentina
           </h1>
           <p className="mt-4 max-w-3xl text-lg leading-relaxed text-muted-foreground">

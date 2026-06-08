@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import type { CatalogHubPillar } from "@/lib/catalog-hub/config";
 import { IMAGE_QUALITY_GALLERY, IMAGE_SIZES } from "@/lib/image-config";
-import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { cn } from "@/lib/utils";
 
 type CatalogHubPillarCardProps = {
@@ -46,44 +45,7 @@ function CtaLabel({ isLive }: { isLive: boolean }) {
   );
 }
 
-/** Mobile clásico (<sm): overlay sobre imagen. */
-function HubPillarMobileOverlayCard({ pillar, priority }: CatalogHubPillarCardProps) {
-  const isLive = pillar.status === "live";
-
-  return (
-    <Link
-      href={pillar.href}
-      className={cn(
-        "group block overflow-hidden rounded-2xl bg-card shadow-[0_16px_40px_-28px_rgba(16,24,40,0.38)] ring-1 ring-border/70",
-        "transition active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2",
-      )}
-    >
-      <div className="relative aspect-[3/4] bg-muted/40">
-        <AppImage
-          src={pillar.image}
-          alt={pillar.imageAlt}
-          fill
-          priority={priority}
-          quality={IMAGE_QUALITY_GALLERY}
-          sizes={IMAGE_SIZES.catalogHubCard}
-          className="object-cover"
-        />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-28 bg-gradient-to-t from-black/55 to-transparent" />
-        <div className="absolute left-3 top-3 z-[3] rounded-full bg-black/48 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white ring-1 ring-white/25">
-          {isLive ? pillar.eyebrow : "Próximamente"}
-        </div>
-        <div className="absolute bottom-3 left-3 right-3 z-[3]">
-          <h3 className="font-heading line-clamp-2 text-xl font-medium leading-tight tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]">
-            {pillar.title}
-          </h3>
-          <p className="mt-1 line-clamp-2 text-xs text-white/88">{pillar.description}</p>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-/** Mobile Magazine G: marco + cabecera + póster con CTA pill. */
+/** Mobile: marco + cabecera + póster con CTA pill. */
 function HubPillarMagazineMobileCard({ pillar, priority }: CatalogHubPillarCardProps) {
   const isLive = pillar.status === "live";
 
@@ -193,19 +155,12 @@ function HubPillarDesktopPosterCard({ pillar, priority }: CatalogHubPillarCardPr
 }
 
 export function CatalogHubPillarCard({ pillar, priority = false }: CatalogHubPillarCardProps) {
-  const desktopBreakpoint = MOBILE_MAGAZINE_G_ENABLED ? "md:block" : "sm:block";
-  const mobileBreakpoint = MOBILE_MAGAZINE_G_ENABLED ? "md:hidden" : "sm:hidden";
-
   return (
     <>
-      <div className={mobileBreakpoint}>
-        {MOBILE_MAGAZINE_G_ENABLED ? (
-          <HubPillarMagazineMobileCard pillar={pillar} priority={priority} />
-        ) : (
-          <HubPillarMobileOverlayCard pillar={pillar} priority={priority} />
-        )}
+      <div className="md:hidden">
+        <HubPillarMagazineMobileCard pillar={pillar} priority={priority} />
       </div>
-      <div className={cn("hidden h-full", desktopBreakpoint)}>
+      <div className="hidden h-full md:block">
         <HubPillarDesktopPosterCard pillar={pillar} priority={priority} />
       </div>
     </>

@@ -1,5 +1,6 @@
 import { BARILOCHE_EDITORIAL_IMAGES } from "@/lib/catalog/bariloche-curated";
 import { getDestinationImagePaths } from "@/lib/catalog/destination-images";
+import { sortByDestinationSlugOrder } from "@/lib/catalog/destination-order";
 import type { HomeDestinationEditorial } from "@/lib/home-destinations-types";
 
 export type { HomeDestinationEditorial } from "@/lib/home-destinations-types";
@@ -11,7 +12,7 @@ const DESTINATION_META = [
     name: "Bariloche",
     region: "San Carlos de Bariloche · Río Negro",
     description:
-      "Bosques, lagos y circuitos. Base ideal para combinar montaña y ruta en auto.",
+      "Bosque, lagos y rutas en auto. La clásica para arrancar en el sur.",
     fallback: BARILOCHE_EDITORIAL_IMAGES[0],
     curatedGallery: BARILOCHE_EDITORIAL_IMAGES,
   },
@@ -25,13 +26,22 @@ const DESTINATION_META = [
     fallback: "/images/destinations/san-martin/alojamientos/Screenshot_20251106_191521_Instagram.jpg",
   },
   {
-    slug: "el-chalten",
-    folder: "chalten",
-    name: "El Chaltén",
-    region: "Santa Cruz · Capital del trekking",
+    slug: "traful",
+    folder: "traful",
+    name: "Traful / Villa Traful",
+    region: "Neuquén · Lago Traful",
     description:
-      "Montaña, senderos y glaciares. Ajustamos el plan según la ventana del día.",
-    fallback: "/images/destinations/chalten/alojamientos/IMG-20260525-WA0136.jpg",
+      "Bosque y lago Traful. Pueblo chico, poco tránsito.",
+    fallback: "/images/IMG_1506.jpeg",
+  },
+  {
+    slug: "villa-la-angostura",
+    folder: "la-angostura",
+    name: "Villa La Angostura",
+    region: "Neuquén · Reserva Nacional",
+    description:
+      "Pueblo chico, reserva y lagos. Para ir sin apuro.",
+    fallback: "/images/destinations/la-angostura/alojamientos/IMG_20240117_155008_248.jpg",
   },
   {
     slug: "esquel",
@@ -43,21 +53,12 @@ const DESTINATION_META = [
     fallback: "/images/destinations/esquel-trevelin /alojamientos/IMG_20231023_203417_099.jpg",
   },
   {
-    slug: "villa-la-angostura",
-    folder: "la-angostura",
-    name: "Villa La Angostura",
-    region: "Neuquén · Reserva Nacional",
-    description:
-      "Reserva, pueblo chico y lagos cristalinos. Ritmo tranquilo y muy fotografiable.",
-    fallback: "/images/destinations/la-angostura/alojamientos/IMG_20240117_155008_248.jpg",
-  },
-  {
     slug: "puerto-madryn",
     folder: "madryn",
     name: "Puerto Madryn",
     region: "Chubut · Costa patagónica",
     description:
-      "Mar patagónico y fauna en su hábitat. Ballenas, costa y excursiones de día.",
+      "Costa patagónica: ballenas, pingüinos y salidas de un día.",
     fallback: "/images/destinations/madryn/alojamientos/IMG-20260525-WA0122.jpg",
   },
   {
@@ -70,13 +71,13 @@ const DESTINATION_META = [
     fallback: "/images/IMG_1506.jpeg",
   },
   {
-    slug: "traful",
-    folder: "traful",
-    name: "Traful / Villa Traful",
-    region: "Neuquén · Lago Traful",
+    slug: "el-chalten",
+    folder: "chalten",
+    name: "El Chaltén",
+    region: "Santa Cruz · Capital del trekking",
     description:
-      "Bosque nativo y aguas claras. Ideal para desconectar con ritmo de pueblo.",
-    fallback: "/images/IMG_1506.jpeg",
+      "Montaña y senderos. Si el clima cambia, cambiamos el plan.",
+    fallback: "/images/destinations/chalten/alojamientos/IMG-20260525-WA0136.jpg",
   },
   {
     slug: "ushuaia",
@@ -84,7 +85,7 @@ const DESTINATION_META = [
     name: "Ushuaia",
     region: "Tierra del Fuego · Fin del mundo",
     description:
-      "Canal Beagle, montaña y naturaleza austral. Coordinamos alojamiento y salidas.",
+      "Canal Beagle, montaña y frío de verdad. Te ayudamos con hotel y excursiones.",
     fallback: "/images/IMG_1506.jpeg",
   },
 ] as const;
@@ -127,8 +128,8 @@ function buildGalleryImages(
 }
 
 /** Destinos con catálogo en `/destinos/[slug]` — datos para la sección editorial en home. */
-export const HOME_DESTINATION_EDITORIAL: HomeDestinationEditorial[] = DESTINATION_META.map(
-  (meta) => ({
+export const HOME_DESTINATION_EDITORIAL: HomeDestinationEditorial[] = sortByDestinationSlugOrder(
+  DESTINATION_META.map((meta) => ({
     slug: meta.slug,
     name: meta.name,
     region: meta.region,
@@ -139,5 +140,5 @@ export const HOME_DESTINATION_EDITORIAL: HomeDestinationEditorial[] = DESTINATIO
       meta.fallback,
       "curatedGallery" in meta ? meta.curatedGallery : undefined,
     ),
-  }),
+  })),
 );

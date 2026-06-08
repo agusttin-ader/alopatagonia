@@ -26,11 +26,11 @@ export function CatalogHubSection() {
             id="catalog-hub-heading"
             className="font-heading mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-[2.6rem]"
           >
-            Explorá por categoría
+            Explorá por categorías
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
-            Destinos, alojamientos y excursiones en rutas separadas. Entrá, mirá fotos y
-            consultanos lo que te interese.
+            Navegá entre destinos, alojamientos y excursiones… mirá las fotos y consultá sobre
+            las opciones que más te interesen.
           </p>
         </div>
 

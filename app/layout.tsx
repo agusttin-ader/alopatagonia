@@ -52,11 +52,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase,
   title: {
-    default: "Alo Patagonia | Organizá tu viaje",
+    default: "Alo Patagonia | Viajes por la Patagonia",
     template: "Alo Patagonia | %s",
   },
   description:
-    "Organizá tu viaje a la Patagonia: auto, alojamiento y excursiones en Bariloche, San Martín de los Andes, El Chaltén, Puerto Madryn, Ushuaia y más destinos patagónicos.",
+    "Viajes a la Patagonia con auto, alojamiento y excursiones. Bariloche, Calafate, Ushuaia, Madryn y más. Escribinos por WhatsApp.",
   alternates: {
     canonical: "/",
   },
@@ -69,9 +69,9 @@ export const metadata: Metadata = {
     locale: "es_AR",
     url: "/",
     siteName: SITE.name,
-    title: "Alo Patagonia | Organizá tu viaje",
+    title: "Alo Patagonia | Viajes por la Patagonia",
     description:
-      "Organizá tu viaje a la Patagonia: auto, alojamiento y excursiones en Bariloche, San Martín de los Andes, El Chaltén, Puerto Madryn, Ushuaia y más.",
+      "Viajes a la Patagonia con auto, alojamiento y excursiones. Bariloche, Calafate, Ushuaia, Madryn y más. Escribinos por WhatsApp.",
     images: [
       {
         url: SITE.ogImage,
@@ -85,9 +85,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: `@${SITE.instagramHandle}`,
     creator: `@${SITE.instagramHandle}`,
-    title: "Alo Patagonia | Organizá tu viaje",
+    title: "Alo Patagonia | Viajes por la Patagonia",
     description:
-      "Organizá tu viaje a la Patagonia: auto, alojamiento y excursiones en Bariloche, San Martín de los Andes, El Chaltén, Puerto Madryn, Ushuaia y más.",
+      "Viajes a la Patagonia con auto, alojamiento y excursiones. Bariloche, Calafate, Ushuaia, Madryn y más. Escribinos por WhatsApp.",
     images: [SITE.ogImage],
   },
   ...(googleSiteVerification

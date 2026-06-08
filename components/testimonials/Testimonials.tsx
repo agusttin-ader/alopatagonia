@@ -17,8 +17,7 @@ export function Testimonials() {
             Quienes ya viajaron con nosotros
           </h2>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground 2xl:max-w-2xl 2xl:text-lg">
-            Llegaron desde Instagram y cerraron auto, hotel y excursiones por
-            WhatsApp.
+            Nos escribieron por Instagram y cerraron todo por WhatsApp.
           </p>
         </Reveal>
 

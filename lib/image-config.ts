@@ -4,6 +4,8 @@
  */
 export const IMAGE_QUALITY_GALLERY = 82 as const;
 export const IMAGE_QUALITY = 85 as const;
+/** Portadas de cards (catálogo) — un poco más alta para evitar banding en retina + hover zoom. */
+export const IMAGE_QUALITY_CARD = 88 as const;
 export const IMAGE_QUALITY_HERO = 88 as const;
 export const IMAGE_QUALITY_LIGHTBOX = 88 as const;
 export const IMAGE_QUALITY_INTRO = 85 as const;
@@ -26,11 +28,13 @@ export const IMAGE_SIZES = {
   catalogHubCard:
     "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
   catalogCard:
-    "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw",
+    "(max-width: 640px) 94vw, (max-width: 1024px) 52vw, (max-width: 1280px) 36vw, 560px",
   catalogItemGallery:
-    "(max-width: 1024px) 100vw, (min-width: 1024px) 70vw, 900px",
-  catalogItemThumb: "(max-width: 1024px) 30vw, 200px",
-  lightbox: "(min-width: 2560px) 1400px, (min-width: 1280px) 1200px, 92vw",
+    "(max-width: 1024px) 100vw, (min-width: 3840px) 1200px, (min-width: 2560px) 1000px, (min-width: 1920px) 900px, (min-width: 1024px) 70vw, 900px",
+  catalogItemThumb:
+    "(max-width: 1024px) 30vw, (min-width: 3840px) 480px, (min-width: 2560px) 400px, 200px",
+  lightbox:
+    "(min-width: 3840px) 1680px, (min-width: 2560px) 1480px, (min-width: 1920px) 1280px, (min-width: 1280px) 1200px, 92vw",
   logo: "160px",
   avatar: "36px",
 } as const;

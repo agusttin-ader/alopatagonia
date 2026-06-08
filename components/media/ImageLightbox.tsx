@@ -6,6 +6,10 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 import { IMAGE_SIZES } from "@/lib/image-config";
+import {
+  LIGHTBOX_CONTROL_SIZE,
+  LIGHTBOX_FRAME,
+} from "@/lib/layout-shell";
 import { cn } from "@/lib/utils";
 
 export type LightboxImage = {
@@ -97,7 +101,7 @@ export function ImageLightbox({
     <AnimatePresence>
       {activeImage && activeIndex !== null ? (
         <motion.div
-          className="fixed inset-0 z-[1450] flex items-center justify-center bg-black/88 p-3"
+          className="fixed inset-0 z-[1450] flex items-center justify-center bg-black/88 p-3 min-[1920px]:p-5 min-[2560px]:p-6"
           role="dialog"
           aria-modal="true"
           aria-label={ariaLabel}
@@ -116,10 +120,13 @@ export function ImageLightbox({
           <button
             type="button"
             onClick={onClose}
-            className="absolute right-[max(0.75rem,env(safe-area-inset-right))] top-[max(0.75rem,env(safe-area-inset-top))] z-[2] inline-flex size-11 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            className={cn(
+              "absolute right-[max(0.75rem,env(safe-area-inset-right))] top-[max(0.75rem,env(safe-area-inset-top))] z-[2] inline-flex items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black",
+              LIGHTBOX_CONTROL_SIZE,
+            )}
             aria-label="Cerrar"
           >
-            <X className="size-5" />
+            <X className="size-5 min-[1920px]:size-6" />
           </button>
 
           {hasMultiple ? (
@@ -131,8 +138,8 @@ export function ImageLightbox({
                   goPrev();
                 }}
                 className={cn(
-                  "absolute left-[max(0.45rem,env(safe-area-inset-left))] top-1/2 z-[2] hidden -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black md:inline-flex md:size-11",
-                  "size-11 sm:left-4",
+                  "absolute left-[max(0.45rem,env(safe-area-inset-left))] top-1/2 z-[2] hidden -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black md:inline-flex sm:left-4",
+                  LIGHTBOX_CONTROL_SIZE,
                 )}
                 aria-label="Imagen anterior"
               >
@@ -145,8 +152,8 @@ export function ImageLightbox({
                   goNext();
                 }}
                 className={cn(
-                  "absolute right-[max(0.45rem,env(safe-area-inset-right))] top-1/2 z-[2] hidden -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black md:inline-flex md:size-11",
-                  "size-11 sm:right-4",
+                  "absolute right-[max(0.45rem,env(safe-area-inset-right))] top-1/2 z-[2] hidden -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black md:inline-flex sm:right-4",
+                  LIGHTBOX_CONTROL_SIZE,
                 )}
                 aria-label="Imagen siguiente"
               >
@@ -155,7 +162,7 @@ export function ImageLightbox({
             </>
           ) : null}
 
-          <div className="relative z-[1] flex h-[min(90vh,820px)] w-[min(92vw,1100px)] flex-col items-center">
+          <div className={cn("relative z-[1] flex flex-col items-center", LIGHTBOX_FRAME)}>
             <AnimatePresence initial={false} custom={direction} mode="popLayout">
               <motion.div
                 key={`${activeIndex}-${activeImage.src}`}

@@ -7,6 +7,15 @@ import type { CatalogItemEntry } from "@/lib/catalog/catalog-items";
 import { getCatalogItemBadge } from "@/lib/catalog/catalog-items";
 import { buildCatalogWhatsAppMessage } from "@/lib/catalog/placeholders";
 import { getWhatsAppUrl } from "@/lib/constants";
+import {
+  DETAIL_SIDEBAR_GRID,
+  DETAIL_STICKY_TOP,
+  DETAIL_TITLE,
+  GALLERY_BAND_PX,
+  GALLERY_MAX,
+  SHELL_PAGE_PT,
+  siteShell,
+} from "@/lib/layout-shell";
 import { cn } from "@/lib/utils";
 
 type CatalogItemDetailProps = {
@@ -25,18 +34,18 @@ export function CatalogItemDetail({ entry }: CatalogItemDetailProps) {
   const sectionLabel = entry.kind === "excursion" ? "excursiones" : "alojamientos";
 
   return (
-    <div className="pb-16 pt-28 sm:pt-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-8 lg:px-14 2xl:max-w-[90rem] 2xl:px-20">
-        <nav className="mb-4 text-sm text-muted-foreground md:mb-5">
+    <div className={cn("pb-16 min-[1920px]:pb-20 min-[2560px]:pb-24", SHELL_PAGE_PT)}>
+      <div className={siteShell()}>
+        <nav className="mb-4 text-sm text-muted-foreground md:mb-5 min-[1920px]:text-[0.9375rem]">
           <Link href="/destinos" className="inline-flex items-center gap-1.5 hover:text-foreground">
-            <ArrowLeft className="size-3.5" aria-hidden />
+            <ArrowLeft className="size-3.5 min-[1920px]:size-4" aria-hidden />
             {destination.name}
           </Link>
         </nav>
       </div>
 
-      <div className="px-3 sm:px-6 md:px-8 lg:px-12 xl:px-14">
-        <div className="mx-auto w-full max-w-[1560px]">
+      <div className={GALLERY_BAND_PX}>
+        <div className={GALLERY_MAX}>
           <CatalogDetailGallery
             images={item.images}
             lightboxLabel={`Vista ampliada — ${item.name}`}
@@ -45,34 +54,36 @@ export function CatalogItemDetail({ entry }: CatalogItemDetailProps) {
         </div>
       </div>
 
-      <div className="mx-auto mt-12 max-w-7xl px-4 sm:mt-14 sm:px-8 lg:mt-16 lg:px-14 2xl:max-w-[90rem] 2xl:px-20">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start lg:gap-14 xl:grid-cols-[minmax(0,1fr)_360px]">
-          <div className="min-w-0 space-y-5">
+      <div
+        className={cn(
+          siteShell("mt-12 sm:mt-14 lg:mt-16 min-[1920px]:mt-20 min-[2560px]:mt-24"),
+        )}
+      >
+        <div className={cn("grid gap-10 lg:items-start lg:gap-14", DETAIL_SIDEBAR_GRID)}>
+          <div className="min-w-0 space-y-5 min-[1920px]:space-y-6">
             <div>
-              <span className="inline-flex rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary">
+              <span className="inline-flex rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary min-[1920px]:px-3 min-[1920px]:py-1.5 min-[1920px]:text-[0.8125rem]">
                 {badge}
               </span>
-              <h1 className="font-heading mt-4 text-3xl font-medium tracking-tight sm:text-4xl lg:text-[2.6rem] lg:leading-tight">
-                {item.name}
-              </h1>
-              <p className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground sm:text-base">
-                <MapPin className="size-4 shrink-0" aria-hidden />
+              <h1 className={cn("font-heading mt-4", DETAIL_TITLE)}>{item.name}</h1>
+              <p className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground sm:text-base min-[1920px]:text-lg">
+                <MapPin className="size-4 shrink-0 min-[1920px]:size-[1.125rem]" aria-hidden />
                 {destination.name} · {destination.region}
               </p>
             </div>
 
             {item.description ? (
-              <p className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg min-[1920px]:max-w-3xl min-[1920px]:text-xl min-[2560px]:max-w-4xl">
                 {item.description}
               </p>
             ) : null}
 
             {item.highlights && item.highlights.length > 0 ? (
-              <ul className="grid gap-2.5 border-t border-border/60 pt-6 sm:grid-cols-2">
+              <ul className="grid gap-2.5 border-t border-border/60 pt-6 sm:grid-cols-2 min-[1920px]:gap-3 min-[1920px]:pt-8">
                 {item.highlights.map((line) => (
                   <li
                     key={line}
-                    className="flex gap-2.5 text-sm leading-relaxed text-foreground/80"
+                    className="flex gap-2.5 text-sm leading-relaxed text-foreground/80 min-[1920px]:text-base"
                   >
                     <span
                       className="mt-2 size-1.5 shrink-0 rounded-full bg-primary/70"
@@ -85,13 +96,13 @@ export function CatalogItemDetail({ entry }: CatalogItemDetailProps) {
             ) : null}
           </div>
 
-          <aside className="lg:sticky lg:top-28">
-            <div className="rounded-2xl border border-border/80 bg-card p-6 shadow-sm sm:p-7">
-              <p className="font-heading text-lg font-medium tracking-tight">
-                Consultá disponibilidad
+          <aside className={cn("lg:sticky", DETAIL_STICKY_TOP)}>
+            <div className="rounded-2xl border border-border/80 bg-card p-6 shadow-sm sm:p-7 min-[1920px]:rounded-3xl min-[1920px]:p-8 min-[2560px]:p-9">
+              <p className="font-heading text-lg font-medium tracking-tight min-[1920px]:text-xl">
+                Preguntanos si hay lugar
               </p>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                Te respondemos por WhatsApp con fechas, capacidad y opciones según tu viaje.
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground min-[1920px]:text-base">
+                Por WhatsApp te decimos fechas, capacidad y qué hay disponible.
               </p>
               <a
                 href={whatsAppHref}
@@ -99,12 +110,12 @@ export function CatalogItemDetail({ entry }: CatalogItemDetailProps) {
                 rel="noopener noreferrer"
                 className={cn(
                   buttonVariants({ variant: "marketing", size: "lg" }),
-                  "mt-5 w-full",
+                  "mt-5 w-full min-[1920px]:mt-6 min-[1920px]:h-12 min-[1920px]:text-base",
                 )}
               >
                 Consultar
               </a>
-              <div className="mt-6 space-y-2 border-t border-border/70 pt-5 text-sm">
+              <div className="mt-6 space-y-2 border-t border-border/70 pt-5 text-sm min-[1920px]:mt-8 min-[1920px]:text-base">
                 <Link href={backHref} className="block text-muted-foreground hover:text-foreground">
                   ← Volver a {sectionLabel} en {destination.name}
                 </Link>

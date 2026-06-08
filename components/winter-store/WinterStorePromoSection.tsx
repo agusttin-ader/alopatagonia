@@ -30,12 +30,12 @@ export function WinterStorePromoSection() {
           >
             {WINTER_STORE_COPY.homeHeading}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-white/88 sm:text-lg 2xl:text-xl">
-            {WINTER_STORE_COPY.homeBody}
-          </p>
-          <p className="mt-6 flex gap-2.5 text-sm leading-relaxed text-white/90 sm:text-base">
-            <span className="mt-2 size-1.5 shrink-0 rounded-full bg-white" aria-hidden />
-            {WINTER_STORE_COPY.homeHighlight}
+          <p className="mt-4 space-y-4 text-base leading-relaxed text-white/88 sm:text-lg 2xl:text-xl">
+            {WINTER_STORE_COPY.homeBodyParagraphs.map((paragraph) => (
+              <span key={paragraph} className="block">
+                {paragraph}
+              </span>
+            ))}
           </p>
           <Link
             href="/invierno"
@@ -57,7 +57,6 @@ export function WinterStorePromoSection() {
             <BoulderIndumentariaShowcase
               images={BOULDER_HOME_CAROUSEL_IMAGES}
               sizes={IMAGE_SIZES.winterSection}
-              shade={0.58}
               logoLinked={false}
             />
           </div>

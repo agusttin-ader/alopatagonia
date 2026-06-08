@@ -5,10 +5,8 @@ import type {
   DestinationCatalog,
   ExcursionCategory,
 } from "@/lib/catalog/types";
-import {
-  BARILOCHE_CURATED,
-  BARILOCHE_HERO_IMAGE,
-} from "@/lib/catalog/bariloche-curated";
+import { buildDestinationAccommodationItems } from "@/lib/catalog/accommodation-items";
+import { BARILOCHE_HERO_IMAGE } from "@/lib/catalog/bariloche-curated";
 import { getDestinationImagePaths } from "@/lib/catalog/destination-images";
 import {
   CATALOG_ACCOMMODATION_FOLDERS,
@@ -51,17 +49,17 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
     {
       name: "Circuito Chico + Punto Panorámico",
       category: "aventura",
-      description: "Recorrido escénico por lagos, bosque andino y miradores clásicos de Bariloche.",
+      description: "Medio día por lagos y miradores del Circuito Chico.",
       highlights: [
         "Paradas en miradores y puntos fotográficos",
-        "Ideal para primer día en destino",
+        "Buena para el primer día",
         "Salida de medio día con guía local",
       ],
     },
     {
       name: "Navegación Isla Victoria y Arrayanes",
       category: "navegacion",
-      description: "Navegación por el Nahuel Huapi con visita a bosques únicos y senderos suaves.",
+      description: "Navegación al Nahuel Huapi: Isla Victoria o Arrayanes, según temporada.",
       highlights: [
         "Embarque según clima y temporada",
         "Tiempo libre para recorrer senderos",
@@ -75,7 +73,7 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
       highlights: [
         "Nivel medio/alto según ritmo",
         "Sugerimos calzado técnico y abrigo",
-        "Coordinamos salida privada o grupal",
+        "Salida privada o grupal, según temporada",
       ],
     },
   ],
@@ -86,7 +84,7 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
       description: "Excursión escénica entre lagos patagónicos y bosques nativos.",
       highlights: [
         "Paradas panorámicas durante todo el día",
-        "Ideal para combinar con Villa La Angostura",
+        "Se combina bien con Villa La Angostura",
         "Salida flexible según clima",
       ],
     },
@@ -96,7 +94,7 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
       description: "Paseo lacustre con vistas de montaña y costa boscosa.",
       highlights: [
         "Recorrido apto para todas las edades",
-        "Incluye coordinación de horarios",
+        "Te pasamos horarios de embarque",
         "Recomendable en días de calma",
       ],
     },
@@ -107,7 +105,7 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
       highlights: [
         "Trekking de media jornada",
         "Posibilidad de guía local",
-        "Opción ideal para viajeros activos",
+        "Para quienes van con buen ritmo de caminata",
       ],
     },
   ],
@@ -127,7 +125,7 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
       category: "fauna",
       description: "Recorrido corto para observar aves y panorámicas del valle.",
       highlights: [
-        "Excursión ideal para media tarde",
+        "Buena para la tarde",
         "Apta para combinar con otros paseos",
         "Vistas abiertas de cerros y río",
       ],
@@ -147,7 +145,7 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
     {
       name: "Parque Nacional Los Alerces",
       category: "fauna",
-      description: "Jornada entre lagos y bosque antiguo, ideal para contacto pleno con la naturaleza.",
+      description: "Día en Los Alerces: lagos y bosque de alerces milenarios.",
       highlights: [
         "Recorrido por áreas protegidas",
         "Interpretación de flora y fauna local",
@@ -170,7 +168,7 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
       description: "Circuito por Trevelin y alrededores con foco en paisaje y cultura local.",
       highlights: [
         "Visita a zonas rurales y miradores",
-        "Ideal para combinar con gastronomía local",
+        "Sumá una parada gastronómica en el camino",
         "Opción de día completo",
       ],
     },
@@ -199,7 +197,7 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
     {
       name: "Cerro Bayo Panorámico",
       category: "aventura",
-      description: "Ascenso escénico con vistas abiertas al cordón de lagos.",
+      description: "Subida al Cerro Bayo con vistas al cordón de lagos.",
       highlights: [
         "Opciones de ascenso según temporada",
         "Miradores de altura",
@@ -223,9 +221,9 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
       category: "navegacion",
       description: "Salida en embarcación para observar fauna marina en su hábitat natural.",
       highlights: [
-        "Experiencia sujeta a temporada",
+        "Solo en temporada de ballenas",
         "Navegación corta con guía",
-        "Ideal para amantes de la naturaleza",
+        "Si te gusta el mar y la fauna",
       ],
     },
     {
@@ -247,7 +245,7 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
       highlights: [
         "Tiempo libre para recorrer pasarelas",
         "Salidas regulares durante todo el año",
-        "Experiencia ideal para primer viaje al destino",
+        "La clásica si es tu primera vez en Calafate",
       ],
     },
     {
@@ -266,7 +264,7 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
       description: "Caminata suave entre bosque y miradores con vista al Fitz Roy a la distancia.",
       highlights: [
         "Opción activa de medio día",
-        "Ideal para quienes buscan caminar sin gran exigencia",
+        "Para caminar sin mucha exigencia",
         "Se adapta según clima",
       ],
     },
@@ -279,7 +277,7 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
       highlights: [
         "Recorridos aptos para media jornada",
         "Bosque nativo y aguas cristalinas",
-        "Ideal para fotografía de paisaje",
+        "Buena para sacar fotos de la costa",
       ],
     },
     {
@@ -289,7 +287,7 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
       highlights: [
         "Salida sujeta a condiciones de lago",
         "Guías locales durante el recorrido",
-        "Experiencia tranquila y panorámica",
+        "Salida tranquila, buena para ir con chicos",
       ],
     },
     {
@@ -297,7 +295,7 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
       category: "aventura",
       description: "Circuito por ruta panorámica con formaciones naturales y miradores.",
       highlights: [
-        "Ideal para combinar con traslado en auto",
+        "Se hace bien en auto con paradas cortas",
         "Paradas cortas en puntos destacados",
         "Recomendado en cualquier época del año",
       ],
@@ -321,7 +319,7 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
       highlights: [
         "Salida clásica en Ushuaia",
         "Vistas del canal y montañas nevadas",
-        "Ideal para todas las edades",
+        "Para ir con chicos o abuelos",
       ],
     },
     {
@@ -357,10 +355,10 @@ function defaultHighlights(type: AccommodationType, destinationName: string): st
   const base = destinationName;
   if (type === "departamento") {
     return [
-      `Ubicación céntrica o residencial en ${base}`,
-      "Ideal para parejas o familias chicas",
+      `Ubicación céntrica o tranquila en ${base}`,
+      "Para dos o una familia chica",
       "Cocina equipada y espacio para descansar",
-      "Coordinamos fechas y check-in por WhatsApp",
+      "Fechas y check-in los vemos por WhatsApp",
     ];
   }
   if (type === "cabana") {
@@ -368,13 +366,12 @@ function defaultHighlights(type: AccommodationType, destinationName: string): st
       `Entorno natural cerca de ${base}`,
       "Más privacidad y espacio que un hotel",
       "Buena opción para varios días de estadía",
-      "Consultá capacidad y servicios incluidos",
+      "Preguntanos capacidad y qué incluye",
     ];
   }
   return [
-    `Opción cómoda en ${base}`,
+    `Hotel en ${base}, cerca de las salidas del día`,
     "Servicios de hotel según categoría",
-    "Buena base para salidas diarias",
     "Disponibilidad según temporada",
   ];
 }
@@ -401,7 +398,7 @@ function buildAccommodationItems(
       itemSlug: ACCOMMODATION_ITEM_SLUGS[type],
       name,
       type,
-      description: `Alojamiento tipo ${label.toLowerCase()} en ${destinationName}, pensado para usar como base de viaje.`,
+      description: `Alojamiento tipo ${label.toLowerCase()} en ${destinationName} para quedarte varios días y salir a recorrer.`,
       highlights: defaultHighlights(type, destinationName),
       images: group.map((src, i) => toCatalogImage(src, `${name} — foto ${i + 1}`)),
     },
@@ -428,11 +425,11 @@ function buildExcursions(
       category: content?.category,
       description:
         content?.description ??
-        `Excursión en ${destinationName}. Duración y salidas coordinadas según temporada.`,
+        `Excursión en ${destinationName}. Fechas y salidas según temporada.`,
       highlights: content?.highlights ?? [
         `Salidas desde ${destinationName}`,
         "Grupos reducidos o salida privada según opción",
-        "Incluye coordinación y recomendaciones locales",
+        "Te decimos horarios y qué llevar",
         "Reservá con anticipación en temporada alta",
       ],
       images: group.map((src, i) => toCatalogImage(src, `${name} — foto ${i + 1}`)),
@@ -518,6 +515,18 @@ export function buildStandardAccommodations(
   ];
 }
 
+function buildDestinationAccommodations(
+  slug: string,
+  name: string,
+  imagePaths: string[],
+): CatalogItem[] {
+  const fromFolders = buildDestinationAccommodationItems(slug, name);
+  if (fromFolders.length > 0) return fromFolders;
+
+  const accommodationPools = splitAccommodationPools(imagePaths);
+  return buildStandardAccommodations(slug, name, accommodationPools);
+}
+
 export function buildFlatCatalog(config: {
   slug: string;
   name: string;
@@ -527,7 +536,6 @@ export function buildFlatCatalog(config: {
   heroImage?: string;
 }): DestinationCatalog {
   const hero = pickCatalogHeroImage(config.imagePaths, config.heroImage);
-  const accommodationPools = splitAccommodationPools(config.imagePaths);
 
   return {
     slug: config.slug,
@@ -535,7 +543,11 @@ export function buildFlatCatalog(config: {
     region: config.region,
     intro: config.intro,
     heroImage: hero,
-    accommodations: buildStandardAccommodations(config.slug, config.name, accommodationPools),
+    accommodations: buildDestinationAccommodations(
+      config.slug,
+      config.name,
+      config.imagePaths,
+    ),
     excursions: buildExcursions(
       config.slug,
       buildExcursionImageGroups(config.imagePaths),
@@ -543,7 +555,7 @@ export function buildFlatCatalog(config: {
     ),
     carRental: {
       operatorName: "Operador local",
-      description: `Alquiler de auto en ${config.name} con operador local.`,
+      description: `Alquiler de auto en ${config.name}. Te pasamos el contacto que usamos.`,
       images: [toCatalogImage(hero, `Auto en ${config.name}`)],
     },
     published: true,
@@ -575,7 +587,7 @@ export function buildStructuredCatalog(config: {
     ),
     carRental: {
       operatorName: "Operador local",
-      description: `Alquiler de auto en ${config.name} con operador local.`,
+      description: `Alquiler de auto en ${config.name}. Te pasamos el contacto que usamos.`,
       images: [toCatalogImage(hero, `Auto en ${config.name}`)],
     },
     published: true,
@@ -583,19 +595,8 @@ export function buildStructuredCatalog(config: {
 }
 
 export function buildBarilocheCatalog(): DestinationCatalog {
-  const { cabana, departamento, hotel3, hotel4 } = BARILOCHE_CURATED;
   const all = getDestinationImagePaths("bariloche");
   const per = CATALOG_LIMITS.imagesPerCatalogItem;
-
-  const cabanaPaths = all.filter((src) =>
-    pathMatchesAnyFolder(src, ["Bariloche cabañas", "cabanas"]),
-  );
-  const deptoPaths = all.filter((src) =>
-    pathMatchesAnyFolder(src, ["Bariloche dptos", "dptos"]),
-  );
-  const hotelPaths = all.filter((src) =>
-    pathMatchesAnyFolder(src, ["Bariloche Hoteles", "hoteles"]),
-  );
   const excursionPool = pathsInAnyFolder(all, CATALOG_EXCURSION_FOLDERS);
 
   return {
@@ -603,13 +604,9 @@ export function buildBarilocheCatalog(): DestinationCatalog {
     name: "Bariloche",
     region: "San Carlos de Bariloche · Río Negro",
     intro:
-      "A orillas del Nahuel Huapi: capital nacional del turismo aventura y puerta a los lagos andinos.",
+      "A orillas del Nahuel Huapi: lagos, bosque y la ruta clásica de Bariloche.",
     heroImage: BARILOCHE_HERO_IMAGE,
-    accommodations: buildStandardAccommodations("bariloche", "Bariloche", {
-      cabana: cabanaPaths.length > 0 ? cabanaPaths.slice(0, per) : [cabana],
-      departamento: deptoPaths.length > 0 ? deptoPaths.slice(0, per) : [departamento],
-      hostel: hotelPaths.length > 0 ? hotelPaths.slice(0, per) : [hotel3, hotel4],
-    }),
+    accommodations: buildDestinationAccommodations("bariloche", "Bariloche", all),
     excursions: buildExcursions(
       "bariloche",
       [

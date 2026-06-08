@@ -291,8 +291,16 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
               MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground/78",
             )}
           >
-            Elegí zona y mirá fotos reales de cada lugar. Después entrá al catálogo o
-            consultanos por WhatsApp.
+            Elegí la ciudad que más te guste, descubrí fotos reales y encontrá todas las
+            diferentes opciones para tu próximo viaje.
+          </p>
+          <p
+            className={cn(
+              "mt-3 text-lg leading-relaxed text-muted-foreground 2xl:text-xl",
+              MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground/78",
+            )}
+          >
+            Si tenés alguna duda… consultanos por WhatsApp.
           </p>
         </Reveal>
 

@@ -21,7 +21,7 @@ export const DESTINATION_ZONES: DestinationZone[] = [
     title: "Corredor de los Lagos",
     description:
       "Lagos glaciares, bosque andino y la Ruta de los Siete Lagos entre Bariloche, Villa La Angostura, San Martín de los Andes y Villa Traful.",
-    destinationSlugs: ["bariloche", "villa-la-angostura", "san-martin", "traful"],
+    destinationSlugs: ["bariloche", "san-martin", "traful", "villa-la-angostura"],
   },
   {
     id: "santa-cruz",

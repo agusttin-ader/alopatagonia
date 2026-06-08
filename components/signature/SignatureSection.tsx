@@ -20,10 +20,11 @@ import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
 
 const SIGNATURE_POINTS = [
-  "Auto listo al llegar",
-  "Hotel según tu ruta",
-  "Excursiones según clima",
-  "WhatsApp activo todo el viaje",
+  "Auto o transfer esperándote en el aeropuerto.",
+  "Hotel según tu ruta y presupuesto",
+  "Excursiones organizadas según el clima.",
+  "WhatsApp activo para acompañarte durante todo tu viaje.",
+  "Itinerario sin cargo para que aproveches tu tiempo a full.",
 ] as const;
 
 export function SignatureSection() {
@@ -75,7 +76,7 @@ export function SignatureSection() {
           />
           <div className="absolute bottom-8 left-5 right-5 text-white">
             <p className="text-sm font-medium leading-relaxed text-white/95">
-              Patagonia Argentina · un equipo · tu viaje armado de punta a punta
+              Patagonia Argentina — un solo contacto para todo el viaje
             </p>
           </div>
         </Reveal>
@@ -86,12 +87,8 @@ export function SignatureSection() {
               id="signature-heading"
               className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
             >
-              Un WhatsApp. Auto, alojamiento y salidas.
+              Coordinamos reservas, traslados y actividades para que viajes con todo resuelto.
             </h2>
-            <p className="mt-4 text-lg leading-relaxed text-muted-foreground 2xl:text-xl">
-              No vendemos servicios sueltos. Coordinamos fechas, traslados y
-              reservas para que viajes con todo resuelto.
-            </p>
           </Reveal>
 
           <Reveal delay={0.08} className="mt-6 space-y-2.5 border-l border-primary/25 pl-4">

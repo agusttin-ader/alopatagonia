@@ -3,23 +3,15 @@ import {
   getDestinationBySlug,
 } from "@/lib/catalog/destinations";
 import type {
-  AccommodationType,
   CatalogItem,
   CatalogItemKind,
   DestinationCatalog,
-  ExcursionCategory,
 } from "@/lib/catalog/types";
 
 export type CatalogItemEntry = {
   destination: DestinationCatalog;
   item: CatalogItem;
   kind: CatalogItemKind;
-};
-
-export type CatalogEntryFilters = {
-  destinationSlug?: string;
-  accommodationType?: AccommodationType;
-  excursionCategory?: ExcursionCategory;
 };
 
 export function getCatalogItemEntry(
@@ -70,35 +62,6 @@ export function getAllExcursions(): CatalogItemEntry[] {
       kind: "excursion" as const,
     })),
   );
-}
-
-export function filterCatalogEntries(
-  entries: CatalogItemEntry[],
-  filters: CatalogEntryFilters,
-): CatalogItemEntry[] {
-  return entries.filter((entry) => {
-    if (filters.destinationSlug && entry.destination.slug !== filters.destinationSlug) {
-      return false;
-    }
-
-    if (filters.accommodationType && entry.kind === "accommodation") {
-      return entry.item.type === filters.accommodationType;
-    }
-
-    if (filters.accommodationType && entry.kind !== "accommodation") {
-      return false;
-    }
-
-    if (filters.excursionCategory && entry.kind === "excursion") {
-      return entry.item.category === filters.excursionCategory;
-    }
-
-    if (filters.excursionCategory && entry.kind !== "excursion") {
-      return false;
-    }
-
-    return true;
-  });
 }
 
 export function groupEntriesByDestination(

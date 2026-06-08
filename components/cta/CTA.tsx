@@ -38,7 +38,7 @@ export function CTA() {
               MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground/82",
             )}
           >
-            Contanos fechas y destino por WhatsApp. Te respondemos con un plan claro.
+            Mandanos fechas y destino por WhatsApp. Te contestamos con opciones concretas.
           </p>
           {MOBILE_MAGAZINE_G_ENABLED ? (
             <MagazinePillCta

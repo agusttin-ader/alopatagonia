@@ -16,7 +16,7 @@ export const SITE_SEO = {
   home: {
     title: "Viajes Patagonia Argentina — Bariloche, Ushuaia y El Calafate",
     description:
-      "Organizá tu viaje a la Patagonia: auto, alojamiento y excursiones en Bariloche, San Martín de los Andes, El Chaltén, Puerto Madryn, Ushuaia y más. Consultá por WhatsApp.",
+      "Viajes a la Patagonia con auto, hotel y excursiones. Bariloche, Calafate, Ushuaia, Madryn y más. Escribinos por WhatsApp.",
     keywords: [
       "viajes patagonia",
       "patagonia argentina",
@@ -31,9 +31,9 @@ export const SITE_SEO = {
   destinos: {
     title: "Destinos en la Patagonia Argentina",
     description:
-      "Bariloche, San Martín de los Andes, El Chaltén, Villa La Angostura, Puerto Madryn, El Calafate, Esquel, Traful y Ushuaia. Alojamientos, excursiones y auto por destino.",
+      "Nueve destinos en la Patagonia argentina: alojamiento, excursiones y auto en cada uno.",
     intro:
-      "Elegí la base de tu viaje en la Patagonia argentina. En cada destino encontrás alojamientos, excursiones y opciones de alquiler de auto coordinadas por un mismo equipo.",
+      "Elegí por dónde empezar. En cada destino tenemos alojamientos, excursiones y auto — todo lo vemos desde acá.",
     keywords: [
       "destinos patagonia",
       "turismo patagonia argentina",
@@ -48,7 +48,7 @@ export const SITE_SEO = {
   alojamientos: {
     title: "Alojamientos en la Patagonia — hoteles, cabañas y departamentos",
     description:
-      "Hoteles, cabañas y departamentos en Bariloche, El Chaltén, San Martín de los Andes, Puerto Madryn, Ushuaia y más destinos patagónicos. Consultá disponibilidad por WhatsApp.",
+      "Cabañas, deptos y hoteles en Bariloche, Chaltén, Madryn, Ushuaia y más. Preguntanos qué hay libre.",
     keywords: [
       "alojamiento patagonia",
       "hoteles bariloche",
@@ -60,7 +60,7 @@ export const SITE_SEO = {
   excursiones: {
     title: "Excursiones en la Patagonia — trekking, navegación y fauna",
     description:
-      "Excursiones en Bariloche, El Calafate, Puerto Madryn, Ushuaia y toda la Patagonia: trekking, navegación, glaciares, ballenas y más. Reservá por WhatsApp.",
+      "Trekking, navegación, glaciares y fauna en la Patagonia. Reservá por WhatsApp.",
     keywords: [
       "excursiones patagonia",
       "excursiones bariloche",
@@ -72,7 +72,7 @@ export const SITE_SEO = {
   planner: {
     title: "Planear viaje Patagonia — consulta por WhatsApp",
     description:
-      "Armá tu consulta de viaje a la Patagonia: destino, fechas y cantidad de personas. Te preparamos el mensaje para WhatsApp con alojamiento, auto y excursiones.",
+      "Completá destino y fechas. Te dejamos el mensaje listo para WhatsApp con alojamiento, auto y excursiones.",
     keywords: [
       "planear viaje patagonia",
       "itinerario patagonia",
@@ -86,7 +86,7 @@ export const SITE_FAQ: SeoFaqItem[] = [
   {
     question: "¿Cómo organizo un viaje completo por la Patagonia?",
     answer:
-      "Escribinos por WhatsApp con destino, fechas y cantidad de personas. Coordinamos auto de alquiler, alojamiento y excursiones en un solo plan según tu ruta y temporada.",
+      "Escribinos por WhatsApp con destino, fechas y cuántos son. Te armamos auto, alojamiento y excursiones en un mismo itinerario.",
   },
   {
     question: "¿Qué destinos patagónicos cubren?",
@@ -96,7 +96,7 @@ export const SITE_FAQ: SeoFaqItem[] = [
   {
     question: "¿Puedo reservar solo alojamiento o solo excursiones?",
     answer:
-      "Sí. Podés consultar por alojamiento, excursiones o alquiler de auto por separado, aunque recomendamos armar el viaje completo para optimizar traslados y fechas.",
+      "Sí. Podés consultar por alojamiento, excursiones o alquiler de auto por separado, aunque te conviene armar todo junto para no perder tiempo en traslados.",
   },
 ];
 
@@ -104,9 +104,12 @@ export const SITE_FAQ: SeoFaqItem[] = [
 export const SEO_POPULAR_DESTINATIONS = [
   { slug: "bariloche", label: "Bariloche" },
   { slug: "san-martin", label: "San Martín de los Andes" },
-  { slug: "el-chalten", label: "El Chaltén" },
-  { slug: "el-calafate", label: "El Calafate" },
+  { slug: "traful", label: "Villa Traful" },
+  { slug: "villa-la-angostura", label: "Villa La Angostura" },
+  { slug: "esquel", label: "Esquel / Trevelin" },
   { slug: "puerto-madryn", label: "Puerto Madryn" },
+  { slug: "el-calafate", label: "El Calafate" },
+  { slug: "el-chalten", label: "El Chaltén" },
   { slug: "ushuaia", label: "Ushuaia" },
 ] as const;
 
@@ -114,9 +117,9 @@ const DESTINATION_SEO: Record<string, DestinationSeoConfig> = {
   bariloche: {
     seoTitle: "Viajes a Bariloche — alojamiento, excursiones y auto",
     seoDescription:
-      "Organizá tu viaje a Bariloche: hoteles, cabañas, Circuito Chico, Cerro Catedral y alquiler de auto. Coordinamos alojamiento y excursiones por WhatsApp.",
+      "Bariloche: hotel, cabañas, Circuito Chico y auto. Escribinos por WhatsApp.",
     seoIntro:
-      "Bariloche es la puerta clásica a la Patagonia andina: lagos, bosques y montaña en el Parque Nacional Nahuel Huapi. Te ayudamos a elegir alojamiento, armar excursiones y coordinar el auto para recorrer la región sin complicaciones.",
+      "Bariloche es el clásico del sur: lagos, bosque y montaña en el Nahuel Huapi. Te ayudamos con hotel, excursiones y el auto para recorrer la zona.",
     keywords: [
       "bariloche",
       "viajes bariloche",
@@ -135,16 +138,16 @@ const DESTINATION_SEO: Record<string, DestinationSeoConfig> = {
       {
         question: "¿Qué incluye un viaje organizado a Bariloche?",
         answer:
-          "Coordinamos alojamiento, alquiler de auto y excursiones según temporada. Todo se arma por WhatsApp con fechas claras y opciones reales del catálogo.",
+          "Hotel, auto y excursiones según la temporada. Todo lo charlamos por WhatsApp con fechas claras.",
       },
     ],
   },
   "san-martin": {
     seoTitle: "Viajes a San Martín de los Andes — alojamiento y excursiones",
     seoDescription:
-      "Viajá a San Martín de los Andes: hoteles, cabañas, Ruta de los 7 Lagos y excursiones en el Parque Nacional Lanín. Organizamos tu viaje por WhatsApp.",
+      "San Martín de los Andes: hoteles, cabañas, Ruta de los 7 Lagos y excursiones. Escribinos por WhatsApp.",
     seoIntro:
-      "San Martín de los Andes combina bosque nativo, el Lago Lácar y acceso al Parque Nacional Lanín. Es ideal para quienes buscan un destino patagónico más tranquilo, con buenas bases para trekking y la clásica ruta de los Siete Lagos.",
+      "Más tranquilo que Bariloche: bosque, Lácar y la ruta de los Siete Lagos. Buena base para trekking y para ir sin apuro.",
     keywords: [
       "san martin de los andes",
       "viajes san martin de los andes",
@@ -163,9 +166,9 @@ const DESTINATION_SEO: Record<string, DestinationSeoConfig> = {
   "el-chalten": {
     seoTitle: "Viajes a El Chaltén — trekking, alojamiento y excursiones",
     seoDescription:
-      "Organizá tu viaje a El Chaltén, capital del trekking: alojamiento, Laguna de los Tres, Fitz Roy y excursiones de montaña. Consultá por WhatsApp.",
+      "El Chaltén: alojamiento, Laguna de los Tres, Fitz Roy y senderos. Escribinos por WhatsApp.",
     seoIntro:
-      "El Chaltén es el destino patagónico por excelencia para trekking y montaña, al pie del Fitz Roy. Te ayudamos con alojamiento base, excursiones guiadas y logística para aprovechar los senderos según clima y temporada.",
+      "El Chaltén es trekking puro, al pie del Fitz Roy. Te ayudamos con el hotel y las salidas según el clima.",
     keywords: [
       "el chalten",
       "viajes el chalten",
@@ -178,16 +181,16 @@ const DESTINATION_SEO: Record<string, DestinationSeoConfig> = {
       {
         question: "¿Cuándo es la mejor época para ir a El Chaltén?",
         answer:
-          "La temporada alta va de octubre a abril, con más servicios abiertos. En invierno hay menos opciones, pero el paisaje es espectacular para viajeros experimentados.",
+          "La temporada alta va de octubre a abril, con más servicios abiertos. En invierno hay menos opciones, pero el paisaje vale la pena si ya conocés trekking en frío.",
       },
     ],
   },
   esquel: {
     seoTitle: "Viajes a Esquel y Trevelin — Patagonia andina",
     seoDescription:
-      "Viajá a Esquel y Trevelin: alojamiento, Parque Nacional Los Alerces, La Hoya y excursiones en la Patagonia chubutense. Coordinamos tu plan por WhatsApp.",
+      "Esquel y Trevelin: alojamiento, Los Alerces, La Hoya y excursiones. Escribinos por WhatsApp.",
     seoIntro:
-      "Esquel y Trevelin ofrecen estepa, bosque de alerces y paisaje cordillerano en el sur de Chubut. Es una base excelente para combinar naturaleza, esquí en temporada y rutas escénicas hacia el resto de la Patagonia.",
+      "Esquel y Trevelin: alerces, La Hoya en invierno y el Tren La Trochita. Estepa y cordillera en el sur de Chubut.",
     keywords: [
       "esquel",
       "trevelin",
@@ -207,9 +210,9 @@ const DESTINATION_SEO: Record<string, DestinationSeoConfig> = {
   "villa-la-angostura": {
     seoTitle: "Viajes a Villa La Angostura — alojamiento y excursiones",
     seoDescription:
-      "Organizá tu viaje a Villa La Angostura: hoteles, cabañas, Bosque de Arrayanes y excursiones en el Nahuel Huapi. Consultá disponibilidad por WhatsApp.",
+      "Villa La Angostura: hoteles, cabañas, Bosque de Arrayanes y excursiones. Escribinos por WhatsApp.",
     seoIntro:
-      "Villa La Angostura es una aldea de montaña dentro del Parque Nacional Nahuel Huapi, famosa por el Bosque de Arrayanes y su entorno lacustre. Funciona muy bien como base exclusiva o en combinación con Bariloche y San Martín.",
+      "Pueblo chico en el Nahuel Huapi, a pasos del Bosque de Arrayanes. Funciona solo o en combo con Bariloche y San Martín.",
     keywords: [
       "villa la angostura",
       "viajes villa la angostura",
@@ -228,9 +231,9 @@ const DESTINATION_SEO: Record<string, DestinationSeoConfig> = {
   "puerto-madryn": {
     seoTitle: "Viajes a Puerto Madryn — ballenas, fauna y excursiones",
     seoDescription:
-      "Viajá a Puerto Madryn y Península Valdés: alojamiento, avistaje de ballenas, pingüinos y excursiones en la costa patagónica. Organizamos tu viaje por WhatsApp.",
+      "Puerto Madryn y Península Valdés: alojamiento, ballenas, pingüinos y excursiones. Escribinos por WhatsApp.",
     seoIntro:
-      "Puerto Madryn es la base ideal para la fauna marina patagónica: ballenas, pingüinos y Península Valdés. Coordinamos alojamiento, excursiones estacionales y traslados para que no pierdas las ventanas de avistaje.",
+      "Desde Madryn salís a ver ballenas y pingüinos. Te avisamos qué fechas convienen y armamos hotel + excursiones.",
     keywords: [
       "puerto madryn",
       "viajes puerto madryn",
@@ -243,16 +246,16 @@ const DESTINATION_SEO: Record<string, DestinationSeoConfig> = {
       {
         question: "¿Cuándo se ven ballenas en Puerto Madryn?",
         answer:
-          "La temporada de ballenas franca austral suele concentrarse entre junio y diciembre, con picos variables. Consultanos fechas y armamos alojamiento más excursiones acordes.",
+          "La temporada de ballenas franca austral suele concentrarse entre junio y diciembre, con picos variables. Escribinos fechas y armamos alojamiento más excursiones acordes.",
       },
     ],
   },
   "el-calafate": {
     seoTitle: "Viajes a El Calafate — glaciares, alojamiento y excursiones",
     seoDescription:
-      "Organizá tu viaje a El Calafate: Perito Moreno, navegación por glaciares, hoteles y alquiler de auto. Coordinamos tu estadía en la Patagonia austral.",
+      "El Calafate: Perito Moreno, navegación por glaciares, hoteles y auto. Escribinos por WhatsApp.",
     seoIntro:
-      "El Calafate es la puerta al Glaciar Perito Moreno y al Lago Argentino. Te ayudamos con alojamiento, navegaciones, excursiones a glaciares y conexión con El Chaltén si querés sumar trekking al mismo viaje.",
+      "Desde Calafate salís al Perito Moreno y al Lago Argentino. Te ayudamos con hotel, navegaciones y la conexión con El Chaltén si querés sumar trekking.",
     keywords: [
       "el calafate",
       "viajes el calafate",
@@ -272,9 +275,9 @@ const DESTINATION_SEO: Record<string, DestinationSeoConfig> = {
   traful: {
     seoTitle: "Viajes a Villa Traful — lagos y bosque en la Patagonia",
     seoDescription:
-      "Descubrí Traful y Villa Traful: alojamiento, lago Traful, bosque sumergido y rutas escénicas. Organizamos tu viaje por la Patagonia neuquina.",
+      "Traful y Villa Traful: alojamiento, lago Traful y bosque sumergido. Escribinos por WhatsApp.",
     seoIntro:
-      "Traful y Villa Traful son un desvío espectacular del Camino de los Siete Lagos: aguas turquesas, bosque y tranquilidad. Ideal para quienes quieren sumar naturaleza exclusiva a un circuito por Bariloche o San Martín.",
+      "Un desvío del Camino de los Siete Lagos: agua turquesa, bosque y poco turismo. Sumalo a Bariloche o San Martín.",
     keywords: [
       "villa traful",
       "traful",
@@ -287,16 +290,16 @@ const DESTINATION_SEO: Record<string, DestinationSeoConfig> = {
       {
         question: "¿Cómo llegar a Villa Traful?",
         answer:
-          "Se accede por rutas escénicas desde San Martín de los Andes o Bariloche. Te ayudamos a integrarlo en tu itinerario con alojamiento y excursiones.",
+          "Se accede por rutas desde San Martín de los Andes o Bariloche. Te ayudamos a integrarlo en tu itinerario con alojamiento y excursiones.",
       },
     ],
   },
   ushuaia: {
     seoTitle: "Viajes a Ushuaia — fin del mundo, alojamiento y excursiones",
     seoDescription:
-      "Organizá tu viaje a Ushuaia: hoteles, Canal Beagle, Parque Nacional Tierra del Fuego y excursiones en el fin del mundo. Consultá por WhatsApp.",
+      "Ushuaia: hoteles, Canal Beagle, Tierra del Fuego y excursiones. Escribinos por WhatsApp.",
     seoIntro:
-      "Ushuaia es la ciudad más austral del mundo y una base única para navegar el Canal Beagle, recorrer Tierra del Fuego y vivir la Patagonia extrema. Coordinamos alojamiento, excursiones y logística de viaje.",
+      "Ushuaia es el sur en serio: Beagle, Tierra del Fuego y frío. Te ayudamos con hotel y excursiones.",
     keywords: [
       "ushuaia",
       "viajes ushuaia",

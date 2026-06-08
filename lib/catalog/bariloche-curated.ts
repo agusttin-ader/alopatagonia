@@ -1,17 +1,23 @@
-/**
- * Imágenes curadas de Bariloche (dentro de alojamientos/).
- * - bari1 → departamentos
- * - bari2 → cabañas
- * - bari3, bari4 → hoteles (hostel en catálogo)
- */
+import { getDestinationAccommodationCoverImages } from "@/lib/catalog/accommodation-items";
+
 const BARILOCHE_ROOT = "/images/destinations/bariloche";
 const BARILOCHE_ALOJAMIENTOS = `${BARILOCHE_ROOT}/alojamientos`;
 
+const covers = getDestinationAccommodationCoverImages("bariloche");
+
 export const BARILOCHE_CURATED = {
-  departamento: `${BARILOCHE_ALOJAMIENTOS}/Bariloche dptos/bari1.jpg`,
-  cabana: `${BARILOCHE_ALOJAMIENTOS}/Bariloche cabañas/bari2.jpg`,
-  hotel3: `${BARILOCHE_ALOJAMIENTOS}/Bariloche Hoteles/bari3.jpg`,
-  hotel4: `${BARILOCHE_ALOJAMIENTOS}/Bariloche Hoteles/bari4.jpg`,
+  departamento:
+    covers.departamento ??
+    `${BARILOCHE_ALOJAMIENTOS}/Bariloche dptos/Dpto 1/IMG-20260205-WA0029.jpg`,
+  cabana:
+    covers.cabana ??
+    `${BARILOCHE_ALOJAMIENTOS}/Bariloche cabañas/Casa calma/IMG-20260205-WA0029.jpg`,
+  hotel3:
+    covers.hotel ??
+    `${BARILOCHE_ALOJAMIENTOS}/Bariloche Hoteles/Hotel 1⭐️/Screenshot_20240402_092933_Chrome.jpg`,
+  hotel4:
+    covers.hotel ??
+    `${BARILOCHE_ALOJAMIENTOS}/Bariloche Hoteles/Hotel 4 ⭐️/Screenshot_20250528_221412_Chrome.jpg`,
 } as const;
 
 /** Orden editorial en home: depto, cabaña, hotel, hotel */
