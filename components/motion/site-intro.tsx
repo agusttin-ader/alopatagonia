@@ -21,7 +21,6 @@ import {
   SITE_INTRO_STORAGE_KEY,
   SITE_INTRO_TIMELINE_MS,
 } from "@/lib/site-intro-config";
-import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
 
 const easeFlow = [0.22, 0.03, 0.26, 1] as const;
@@ -54,7 +53,6 @@ function setIntroExiting(exiting: boolean) {
 
 export function SiteIntro() {
   const reduceMotion = useReducedMotion();
-  const isCoarseMobile = useCoarseMobile();
   const [isVisible, setIsVisible] = useState(() => initSiteIntroVisibility());
   const [phase, setPhase] = useState<IntroPhase>("letter");
 
@@ -115,8 +113,6 @@ export function SiteIntro() {
 
   const isLetter = phase === "letter";
   const isWord = phase === "word";
-  const logoScale = isCoarseMobile ? 2.55 : 3.45;
-  const wordRevealUsesClip = !isCoarseMobile;
 
   if (!isVisible) return null;
 
@@ -151,27 +147,74 @@ export function SiteIntro() {
       />
 
       <div className="absolute inset-0 z-[2] flex items-center justify-center px-6 py-10 sm:px-10">
+        {/* Mobile: logo arriba + wordmark abajo (evita recorte horizontal) */}
+        <div className="flex max-w-[min(100%,20rem)] flex-col items-center gap-4 text-center sm:hidden">
+          <motion.div
+            className="origin-center"
+            initial={reduceMotion ? false : { opacity: 0, scale: 2.15 }}
+            animate={{
+              opacity: 1,
+              scale: isLetter ? 2.55 : 1,
+            }}
+            transition={{
+              opacity: { duration: 0.5, ease: easeFlow },
+              scale: {
+                duration: isWord ? 0.82 : 0.72,
+                ease: easeFlow,
+              },
+            }}
+          >
+            <AppImage
+              src={SITE_INTRO_LOGO}
+              alt={SITE.name}
+              width={LOGO_WIDTH}
+              height={LOGO_HEIGHT}
+              priority
+              withBlur={false}
+              sizes={IMAGE_SIZES.logo}
+              qualityPreset="intro"
+              className={cn(LOGO_SIZE_CLASS, "drop-shadow-[0_8px_28px_rgba(0,0,0,0.55)]")}
+            />
+          </motion.div>
+
+          <motion.span
+            className={cn(
+              WORDMARK_BASE,
+              "max-w-[min(100%,18rem)] text-balance text-[clamp(1.65rem,8.5vw,2.35rem)] leading-[1.05]",
+            )}
+            initial={false}
+            animate={{
+              opacity: isWord ? 1 : 0,
+              y: isWord ? 0 : 10,
+            }}
+            transition={{
+              opacity: { duration: 0.55, ease: easeFlow },
+              y: { duration: 0.55, ease: easeFlow },
+            }}
+            aria-hidden={!isWord}
+          >
+            {SITE.name}
+          </motion.span>
+        </div>
+
+        {/* Desktop: logo + wordmark en fila */}
         <div
-          className={cn(
-            "inline-grid max-w-[min(100%,56rem)] items-center overflow-visible",
-            !isCoarseMobile &&
-              "transition-[grid-template-columns] duration-[920ms] ease-[cubic-bezier(0.22,0.03,0.26,1)]",
-          )}
+          className="hidden max-w-[min(100%,56rem)] items-center overflow-visible transition-[grid-template-columns] duration-[920ms] ease-[cubic-bezier(0.22,0.03,0.26,1)] sm:inline-grid"
           style={{
             gridTemplateColumns: isWord ? "auto 1fr" : "auto 0fr",
           }}
         >
           <motion.div
             className="origin-center justify-self-center"
-            initial={reduceMotion ? false : { opacity: 0, scale: isCoarseMobile ? 2.15 : 3.15 }}
+            initial={reduceMotion ? false : { opacity: 0, scale: 3.15 }}
             animate={{
               opacity: 1,
-              scale: isLetter ? logoScale : 1,
+              scale: isLetter ? 3.45 : 1,
             }}
             transition={{
-              opacity: { duration: isCoarseMobile ? 0.5 : 0.65, ease: easeFlow },
+              opacity: { duration: 0.65, ease: easeFlow },
               scale: {
-                duration: isWord ? (isCoarseMobile ? 0.82 : 0.96) : isCoarseMobile ? 0.72 : 0.82,
+                duration: isWord ? 0.96 : 0.82,
                 ease: easeFlow,
               },
             }}
@@ -194,26 +237,22 @@ export function SiteIntro() {
 
           <motion.span
             className={cn(
-              "min-w-0 overflow-hidden whitespace-nowrap pl-2 sm:pl-3",
+              "min-w-0 overflow-hidden whitespace-nowrap pl-3",
               WORDMARK_BASE,
-              "text-[clamp(1.75rem,7.5vw,4.5rem)] sm:text-[clamp(2rem,5.2vw,5rem)]",
+              "text-[clamp(2rem,5.2vw,5rem)]",
             )}
             initial={false}
             animate={{
               opacity: isWord ? 1 : 0,
-              x: isWord ? 0 : wordRevealUsesClip ? 20 : 12,
-              clipPath: wordRevealUsesClip
-                ? isWord
-                  ? "inset(-12% 0% -12% 0%)"
-                  : "inset(-12% 100% -12% 0%)"
-                : undefined,
+              x: isWord ? 0 : 20,
+              clipPath: isWord
+                ? "inset(-12% 0% -12% 0%)"
+                : "inset(-12% 100% -12% 0%)",
             }}
             transition={{
-              opacity: { duration: isCoarseMobile ? 0.55 : 0.72, ease: easeFlow },
-              clipPath: wordRevealUsesClip
-                ? { duration: 0.92, ease: easeFlow }
-                : { duration: 0 },
-              x: { duration: isCoarseMobile ? 0.55 : 0.88, ease: easeFlow },
+              opacity: { duration: 0.72, ease: easeFlow },
+              clipPath: { duration: 0.92, ease: easeFlow },
+              x: { duration: 0.88, ease: easeFlow },
             }}
             style={{ pointerEvents: isWord ? "auto" : "none" }}
             aria-hidden={!isWord}
