@@ -94,24 +94,27 @@ function FeedPostCarousel({
   return (
     <div className="group/post relative aspect-square w-full overflow-hidden bg-[#141414]">
       <div
-        className="flex h-full w-full transition-transform duration-500 ease-out motion-reduce:transition-none"
-        style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+        className="flex h-full transition-transform duration-500 ease-out motion-reduce:transition-none"
+        style={{
+          width: `${images.length * 100}%`,
+          transform: `translateX(-${(activeIndex * 100) / images.length}%)`,
+        }}
       >
         {images.map((image, index) => (
           <div
             key={image.src}
-            className="relative h-full w-full shrink-0 basis-full overflow-hidden"
+            className="relative h-full shrink-0 overflow-hidden"
+            style={{ width: `${100 / images.length}%` }}
           >
             <AppImage
               src={image.src}
               alt={image.alt}
-              width={1080}
-              height={1080}
+              fill
               sizes={FEED_IMAGE_SIZES}
               qualityPreset="lightbox"
               priority={priority && index === 0}
               loading={index <= 1 ? "eager" : "lazy"}
-              className="h-full w-full object-cover object-center"
+              className="object-cover object-center"
             />
           </div>
         ))}
@@ -295,16 +298,16 @@ export function InstagramStats() {
             <div className="flex flex-col justify-center px-6 py-8 sm:px-10 sm:py-10 lg:px-14 lg:py-12 2xl:px-20 2xl:py-14">
                 <div className="flex items-center gap-4">
                   <div className="shrink-0 rounded-full bg-[linear-gradient(45deg,#f58529,#dd2a7b,#515bd4)] p-[2.5px]">
-                    <div className="relative size-16 overflow-hidden rounded-full bg-white ring-2 ring-footer-lake sm:size-[4.5rem]">
-                      <div className="flex size-full items-center justify-center p-2 sm:p-2.5">
+                    <div className="relative size-16 overflow-hidden rounded-full bg-footer-lake ring-2 ring-footer-lake sm:size-[4.5rem]">
+                      <div className="flex size-full items-center justify-center p-2.5 sm:p-3">
                         <AppImage
-                          src={SITE.logoOnLight}
+                          src={SITE.faviconOnDark}
                           alt={SITE.name}
                           width={591}
                           height={586}
                           sizes={IMAGE_SIZES.avatar}
                           withBlur={false}
-            loadingPulse={false}
+                          loadingPulse={false}
                           className="h-full w-full object-contain"
                         />
                       </div>
@@ -330,14 +333,14 @@ export function InstagramStats() {
                   perfil y escribinos cuando quieras planear el viaje.
                 </p>
 
-                <div className="mt-6 flex flex-wrap gap-2.5 text-xs font-medium text-white/72">
+                <div className="mt-6 flex flex-wrap gap-2.5">
                   {posts ? (
-                    <span className="rounded-full bg-white/8 px-3 py-1 ring-1 ring-white/10">
+                    <span className="rounded-full bg-white/14 px-3 py-1.5 text-xs font-semibold text-white/92 ring-1 ring-white/22 backdrop-blur-sm">
                       {formatStatValue(posts, posts.target)} publicaciones
                     </span>
                   ) : null}
                   {destinations ? (
-                    <span className="rounded-full bg-white/8 px-3 py-1 ring-1 ring-white/10">
+                    <span className="rounded-full bg-white/14 px-3 py-1.5 text-xs font-semibold text-white/92 ring-1 ring-white/22 backdrop-blur-sm">
                       {destinations.target} destinos
                     </span>
                   ) : null}
