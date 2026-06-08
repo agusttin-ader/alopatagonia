@@ -134,7 +134,7 @@ export function AppImage({
       className={cn(
         className,
         usePulse &&
-          "transition-opacity duration-[680ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
+          "transition-opacity duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none",
         usePulse && (loaded ? "opacity-100" : "opacity-0"),
         usePulse && (fill ? "z-[1]" : "relative z-[1]"),
       )}

@@ -156,18 +156,11 @@
 @layer utilities {
   @keyframes app-image-heartbeat {
     0%,
-    46%,
     100% {
-      opacity: 0.34;
+      opacity: 0.4;
     }
-    10% {
+    50% {
       opacity: 0.62;
-    }
-    20% {
-      opacity: 0.38;
-    }
-    32% {
-      opacity: 0.72;
     }
   }
 
@@ -178,7 +171,7 @@
       color-mix(in oklch, var(--muted) 72%, var(--secondary)) 48%,
       var(--muted) 100%
     );
-    animation: app-image-heartbeat 1.85s var(--motion-ease-soft) infinite;
+    animation: app-image-heartbeat 3.4s ease-in-out infinite;
   }
 
   @media (prefers-reduced-motion: reduce) {
