@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useCallback, useEffect, useLayoutEffect, useMemo, useReducer, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useReducer, useState } from "react";
 
 import { AppImage } from "@/components/media/AppImage";
 import { ImageLightbox } from "@/components/media/ImageLightbox";
@@ -258,25 +258,10 @@ function GalleryNavButton({
   );
 }
 
-function useMobileGalleryLayout() {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useLayoutEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 639px)");
-    const update = () => setIsMobile(mediaQuery.matches);
-    update();
-    mediaQuery.addEventListener("change", update);
-    return () => mediaQuery.removeEventListener("change", update);
-  }, []);
-
-  return isMobile;
-}
-
 export function HomeGallerySection() {
   const images = HOME_GALLERY_IMAGES;
   const total = images.length;
   const reduceMotion = useReducedMotion();
-  const isMobileGallery = useMobileGalleryLayout();
   const [{ sets: selectionSets, index: setIndex }, dispatch] = useReducer(
     gallerySelectionReducer,
     { sets: [], index: 0 },
@@ -302,19 +287,7 @@ export function HomeGallerySection() {
   const visibleCount = Math.min(DISPLAY_COUNT, total);
   const pickedIndices = selectionSets[setIndex] ?? null;
 
-  const visibleImages = useMemo(() => {
-    if (!pickedIndices) return [];
-    return Array.from({ length: visibleCount }, (_, slot) => images[pickedIndices[slot]]).filter(
-      Boolean,
-    );
-  }, [images, pickedIndices, visibleCount]);
-
   const mobileSlotCount = Math.min(MOBILE_DISPLAY_COUNT, visibleCount);
-  const mobileLightboxImages = useMemo(
-    () => visibleImages.slice(0, mobileSlotCount),
-    [visibleImages, mobileSlotCount],
-  );
-  const lightboxImages = isMobileGallery ? mobileLightboxImages : visibleImages;
 
   if (total === 0) return null;
 
@@ -387,7 +360,7 @@ export function HomeGallerySection() {
                           className={slotConfig.layout}
                           hero={"hero" in slotConfig && slotConfig.hero}
                           priority={setIndex === 0 && slot === 0}
-                          onClick={() => setLightboxIndex(slot)}
+                          onClick={() => setLightboxIndex(pickedIndices[slot])}
                           slotLabel={`Ver foto ${slot + 1} ampliada`}
                         />
                       );
@@ -445,7 +418,7 @@ export function HomeGallerySection() {
                           className={slotConfig.layout}
                           hero={"hero" in slotConfig && slotConfig.hero}
                           priority={setIndex === 0 && slot === 0}
-                          onClick={() => setLightboxIndex(slot)}
+                          onClick={() => setLightboxIndex(pickedIndices[slot])}
                           slotLabel={`Ver foto ${slot + 1} ampliada`}
                         />
                       );
@@ -463,7 +436,7 @@ export function HomeGallerySection() {
       </Reveal>
 
       <ImageLightbox
-        images={lightboxImages}
+        images={images}
         activeIndex={lightboxIndex}
         onClose={() => setLightboxIndex(null)}
         onIndexChange={setLightboxIndex}

@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AppImage } from "@/components/media/AppImage";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
 import { IMAGE_SIZES } from "@/lib/image-config";
+import { cn } from "@/lib/utils";
 
 export type LightboxImage = {
   src: string;
@@ -20,6 +21,24 @@ type ImageLightboxProps = {
   ariaLabel?: string;
 };
 
+const SWIPE_OFFSET = 48;
+const SWIPE_VELOCITY = 420;
+
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "16%" : "-16%",
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction > 0 ? "-16%" : "16%",
+    opacity: 0,
+  }),
+};
+
 export function ImageLightbox({
   images,
   activeIndex,
@@ -27,8 +46,29 @@ export function ImageLightbox({
   onIndexChange,
   ariaLabel = "Vista ampliada de imagen",
 }: ImageLightboxProps) {
+  const reduceMotion = useReducedMotion();
+  const [direction, setDirection] = useState(0);
+
   const activeImage = activeIndex !== null ? images[activeIndex] : null;
   const hasMultiple = images.length > 1;
+
+  const goTo = useCallback(
+    (index: number, slideDirection: number) => {
+      setDirection(slideDirection);
+      onIndexChange(index);
+    },
+    [onIndexChange],
+  );
+
+  const goPrev = useCallback(() => {
+    if (activeIndex === null || !hasMultiple) return;
+    goTo(activeIndex === 0 ? images.length - 1 : activeIndex - 1, -1);
+  }, [activeIndex, goTo, hasMultiple, images.length]);
+
+  const goNext = useCallback(() => {
+    if (activeIndex === null || !hasMultiple) return;
+    goTo(activeIndex === images.length - 1 ? 0 : activeIndex + 1, 1);
+  }, [activeIndex, goTo, hasMultiple, images.length]);
 
   useEffect(() => {
     if (activeIndex === null) return;
@@ -40,9 +80,9 @@ export function ImageLightbox({
       if (event.key === "Escape") {
         onClose();
       } else if (event.key === "ArrowLeft" && hasMultiple) {
-        onIndexChange(activeIndex === 0 ? images.length - 1 : activeIndex - 1);
+        goPrev();
       } else if (event.key === "ArrowRight" && hasMultiple) {
-        onIndexChange(activeIndex === images.length - 1 ? 0 : activeIndex + 1);
+        goNext();
       }
     };
 
@@ -51,7 +91,7 @@ export function ImageLightbox({
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [activeIndex, hasMultiple, images.length, onClose, onIndexChange]);
+  }, [activeIndex, goNext, goPrev, hasMultiple, onClose]);
 
   return (
     <AnimatePresence>
@@ -88,9 +128,12 @@ export function ImageLightbox({
                 type="button"
                 onClick={(event) => {
                   event.stopPropagation();
-                  onIndexChange(activeIndex === 0 ? images.length - 1 : activeIndex - 1);
+                  goPrev();
                 }}
-                className="absolute left-[max(0.45rem,env(safe-area-inset-left))] top-1/2 z-[2] inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:left-4"
+                className={cn(
+                  "absolute left-[max(0.45rem,env(safe-area-inset-left))] top-1/2 z-[2] hidden -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black md:inline-flex md:size-11",
+                  "size-11 sm:left-4",
+                )}
                 aria-label="Imagen anterior"
               >
                 <ChevronLeft className="size-6" />
@@ -99,9 +142,12 @@ export function ImageLightbox({
                 type="button"
                 onClick={(event) => {
                   event.stopPropagation();
-                  onIndexChange(activeIndex === images.length - 1 ? 0 : activeIndex + 1);
+                  goNext();
                 }}
-                className="absolute right-[max(0.45rem,env(safe-area-inset-right))] top-1/2 z-[2] inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-4"
+                className={cn(
+                  "absolute right-[max(0.45rem,env(safe-area-inset-right))] top-1/2 z-[2] hidden -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black md:inline-flex md:size-11",
+                  "size-11 sm:right-4",
+                )}
                 aria-label="Imagen siguiente"
               >
                 <ChevronRight className="size-6" />
@@ -109,31 +155,50 @@ export function ImageLightbox({
             </>
           ) : null}
 
-          <motion.div
-            key={activeImage.src}
-            className="relative z-[1] flex h-[min(90vh,820px)] w-[min(92vw,1100px)] flex-col items-center"
-            initial={{ opacity: 0, scale: 0.985, y: 8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.985, y: 8 }}
-            transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="relative h-full w-full">
-              <AppImage
-                src={activeImage.src}
-                alt={activeImage.alt}
-                fill
-                qualityPreset="lightbox"
-                className="rounded-2xl object-contain"
-                sizes={IMAGE_SIZES.lightbox}
-                priority
-              />
-            </div>
+          <div className="relative z-[1] flex h-[min(90vh,820px)] w-[min(92vw,1100px)] flex-col items-center">
+            <AnimatePresence initial={false} custom={direction} mode="popLayout">
+              <motion.div
+                key={`${activeIndex}-${activeImage.src}`}
+                custom={direction}
+                variants={reduceMotion ? undefined : slideVariants}
+                initial={reduceMotion ? false : "enter"}
+                animate="center"
+                exit={reduceMotion ? undefined : "exit"}
+                transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
+                drag={hasMultiple && !reduceMotion ? "x" : false}
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.14}
+                onDragEnd={(_, info) => {
+                  if (!hasMultiple) return;
+                  if (info.offset.x <= -SWIPE_OFFSET || info.velocity.x <= -SWIPE_VELOCITY) {
+                    goNext();
+                  } else if (info.offset.x >= SWIPE_OFFSET || info.velocity.x >= SWIPE_VELOCITY) {
+                    goPrev();
+                  }
+                }}
+                className={cn(
+                  "relative h-full w-full touch-pan-y",
+                  hasMultiple && !reduceMotion && "cursor-grab active:cursor-grabbing",
+                )}
+              >
+                <AppImage
+                  src={activeImage.src}
+                  alt={activeImage.alt}
+                  fill
+                  qualityPreset="lightbox"
+                  className="rounded-2xl object-contain"
+                  sizes={IMAGE_SIZES.lightbox}
+                  priority
+                  draggable={false}
+                />
+              </motion.div>
+            </AnimatePresence>
             {hasMultiple ? (
               <p className="mt-3 text-sm tabular-nums text-white/75">
                 {activeIndex + 1} / {images.length}
               </p>
             ) : null}
-          </motion.div>
+          </div>
         </motion.div>
       ) : null}
     </AnimatePresence>
