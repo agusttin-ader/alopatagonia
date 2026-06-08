@@ -8,8 +8,8 @@ import {
 } from "@/lib/home-images";
 
 export const HERO_COPY = {
-  headline: "Organizá tu viaje a Patagonia sin complicaciones",
-  headlineMobile: "Patagonia sin complicaciones",
+  headline: "Organizá tu viaje a la Patagonia sin complicaciones",
+  headlineMobile: "La Patagonia sin complicaciones",
   subline: "Auto + alojamiento + excursiones. Todo en un solo lugar.",
   sublineMobile: "Auto, alojamiento y excursiones. Un solo equipo.",
 } as const;
