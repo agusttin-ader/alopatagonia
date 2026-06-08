@@ -95,22 +95,26 @@ export const metadata: Metadata = {
     : {}),
   icons: {
     icon: [
-      { url: "/favicon.png", type: "image/png", sizes: "48x48" },
-      { url: "/favicon-96.png", type: "image/png", sizes: "96x96" },
       {
-        url: "/images/logo/logo-alo-favicon-light.png",
+        url: SITE.faviconOnLight,
         type: "image/png",
         sizes: "96x96",
         media: "(prefers-color-scheme: light)",
       },
       {
-        url: "/images/logo/logo-alo-favicon-dark.png",
+        url: SITE.faviconOnDark,
         type: "image/png",
         sizes: "96x96",
         media: "(prefers-color-scheme: dark)",
       },
+      {
+        url: SITE.faviconOnLight,
+        type: "image/png",
+        sizes: "48x48",
+        media: "(prefers-color-scheme: light)",
+      },
     ],
-    shortcut: "/favicon.png",
+    shortcut: SITE.faviconOnLight,
     apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
   },
 };
@@ -134,8 +138,20 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: SITE_INTRO_CRITICAL_CSS }}
         />
         <link rel="preload" href={SITE_INTRO_LOGO} as="image" />
-        <link rel="icon" href="/favicon.png" type="image/png" sizes="48x48" />
-        <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
+        <link
+          rel="icon"
+          href={SITE.faviconOnDark}
+          type="image/png"
+          sizes="96x96"
+          media="(prefers-color-scheme: dark)"
+        />
+        <link
+          rel="icon"
+          href={SITE.faviconOnLight}
+          type="image/png"
+          sizes="96x96"
+          media="(prefers-color-scheme: light)"
+        />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
       </head>
       <body suppressHydrationWarning className="flex min-h-dvh flex-col">

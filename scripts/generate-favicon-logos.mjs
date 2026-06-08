@@ -79,5 +79,6 @@ await writeSquareIcon(lightFavicon, join(PUBLIC_DIR, "favicon.png"), 48);
 await writeSquareIcon(lightFavicon, join(PUBLIC_DIR, "favicon-96.png"), 96);
 await writeSquareIcon(lightFavicon, join(PUBLIC_DIR, "apple-touch-icon.png"), 180, 0.82);
 await writeSquareIcon(lightFavicon, join(APP_DIR, "icon.png"), 96);
+await writeSquareIcon(darkFavicon, join(APP_DIR, "icon-dark.png"), 96);
 
 console.log("Wrote favicon logo variants in public/images/logo/ and public/favicon*.png");

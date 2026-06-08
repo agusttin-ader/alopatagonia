@@ -14,13 +14,13 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: "es-AR",
     icons: [
       {
-        src: "/apple-touch-icon.png",
-        sizes: "180x180",
+        src: SITE.faviconOnDark,
+        sizes: "96x96",
         type: "image/png",
       },
       {
-        src: "/favicon-96.png",
-        sizes: "96x96",
+        src: "/apple-touch-icon.png",
+        sizes: "180x180",
         type: "image/png",
       },
       {
