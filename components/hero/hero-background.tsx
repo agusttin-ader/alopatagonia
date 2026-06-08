@@ -24,7 +24,7 @@ function pickHeroVideoSrc(): string {
 
 export function HeroBackground() {
   const reduceMotion = useReducedMotion();
-  const [videoSrc, setVideoSrc] = useState(HERO_VIDEO.src);
+  const [videoSrc, setVideoSrc] = useState<string>(HERO_VIDEO.src);
   const [videoReady, setVideoReady] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
