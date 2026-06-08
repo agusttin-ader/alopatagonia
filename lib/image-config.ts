@@ -8,9 +8,9 @@ export const IMAGE_QUALITY_HERO = 88 as const;
 export const IMAGE_QUALITY_LIGHTBOX = 88 as const;
 export const IMAGE_QUALITY_INTRO = 85 as const;
 
-/** Placeholder ~10×10 — peso mínimo, evita flash en carga. */
+/** Placeholder sólido (--muted) — evita bandas de color al escalar blur en mobile/Safari. */
 export const IMAGE_BLUR_PLACEHOLDER =
-  "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCwAA8A0AAA//Z";
+  "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCI+PHJlY3QgZmlsbD0iI2U4ZGVjZSIgd2lkdGg9IjEwIiBoZWlnaHQ9IjEwIi8+PC9zdmc+";
 
 export const IMAGE_SIZES = {
   viewport: "100vw",

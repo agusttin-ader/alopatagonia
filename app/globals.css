@@ -145,6 +145,9 @@
     font-weight: 650;
     letter-spacing: -0.012em;
   }
+  img[data-nimg="fill"] {
+    background-color: var(--muted);
+  }
 }
 
 @layer utilities {

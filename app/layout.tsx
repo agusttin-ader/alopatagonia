@@ -94,21 +94,23 @@ export const metadata: Metadata = {
     : {}),
   icons: {
     icon: [
+      { url: "/favicon.png", type: "image/png", sizes: "48x48" },
+      { url: "/favicon-96.png", type: "image/png", sizes: "96x96" },
       {
-        url: "/icon-light",
+        url: "/images/logo/logo-alo-favicon-light.png",
         type: "image/png",
         sizes: "96x96",
         media: "(prefers-color-scheme: light)",
       },
       {
-        url: "/icon-dark",
+        url: "/images/logo/logo-alo-favicon-dark.png",
         type: "image/png",
         sizes: "96x96",
         media: "(prefers-color-scheme: dark)",
       },
-      { url: "/icon-dark", type: "image/png", sizes: "96x96" },
     ],
-    apple: [{ url: "/apple-icon", type: "image/png", sizes: "180x180" }],
+    shortcut: "/favicon.png",
+    apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
   },
 };
 
@@ -131,6 +133,9 @@ export default function RootLayout({
         />
         <link rel="preload" href={SITE_INTRO_IMAGE_PRELOAD} as="image" fetchPriority="high" />
         <link rel="preload" href={SITE_INTRO_LOGO} as="image" />
+        <link rel="icon" href="/favicon.png" type="image/png" sizes="48x48" />
+        <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
       </head>
       <body suppressHydrationWarning className="flex min-h-dvh flex-col">
         <div

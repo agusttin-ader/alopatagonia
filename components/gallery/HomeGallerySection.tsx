@@ -188,6 +188,7 @@ function GalleryCell({
       alt={image.alt}
       fill
       qualityPreset="gallery"
+      withBlur={false}
       sizes={hero ? IMAGE_SIZES.homeGalleryHero : IMAGE_SIZES.homeGalleryTile}
       priority={priority}
       className="object-cover motion-safe:transition motion-safe:duration-500 group-hover:scale-[1.012]"
