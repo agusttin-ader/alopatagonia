@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { AppImage } from "@/components/media/AppImage";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 
@@ -10,7 +10,6 @@ import {
   HERO_VIDEO_MOBILE,
   HERO_VIDEO_MOBILE_LITE,
   HERO_VIDEO_PLAYBACK_RATE,
-  IMAGE_QUALITY_HERO,
   IMAGE_SIZES,
 } from "@/lib/constants";
 import { useCoarseMobile } from "@/lib/use-coarse-mobile";
@@ -57,12 +56,12 @@ export function HeroBackground() {
   if (reduceMotion || videoFailed) {
     return (
       <div className="absolute inset-0 z-0">
-        <Image
+        <AppImage
           src={HERO_IMAGE.src}
           alt={HERO_IMAGE.alt}
           fill
           priority
-          quality={IMAGE_QUALITY_HERO}
+          qualityPreset="hero"
           sizes={IMAGE_SIZES.viewport}
           fetchPriority="high"
           className="object-cover"

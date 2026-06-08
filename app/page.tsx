@@ -4,6 +4,7 @@ import { CTA } from "@/components/cta/CTA";
 import { CatalogHubSection } from "@/components/catalog-hub/CatalogHubSection";
 import { HomeDestinations } from "@/components/destinations/HomeDestinations";
 import { Footer } from "@/components/footer/Footer";
+import { HomeGallerySection } from "@/components/gallery/HomeGallerySection";
 import { Hero } from "@/components/hero/Hero";
 import { HowItWorks } from "@/components/how-it-works/HowItWorks";
 import { SignatureSection } from "@/components/signature/SignatureSection";
@@ -34,8 +35,9 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <main className="min-w-0 flex-1">
+      <main className="min-w-0 flex-1 pb-20 sm:pb-0">
         <SignatureSection />
+        <HomeGallerySection />
         <CatalogHubSection />
         <HomeDestinations />
         <WinterStorePromoSection />

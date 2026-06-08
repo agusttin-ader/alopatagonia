@@ -1,12 +1,14 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import Image from "next/image";
+import { AppImage } from "@/components/media/AppImage";
 import { useLayoutEffect, useState } from "react";
 
 import { SITE } from "@/lib/constants";
-import { IMAGE_QUALITY_INTRO, IMAGE_SIZES } from "@/lib/image-config";
+import { IMAGE_SIZES } from "@/lib/image-config";
 import {
+  initSiteIntroVisibility,
+  setSiteIntroExiting,
   setSiteIntroPending,
   setSiteIntroPlaceholderHidden,
   shouldPlaySiteIntro,
@@ -47,14 +49,13 @@ function markIntroReveal() {
 }
 
 function setIntroExiting(exiting: boolean) {
-  if (typeof document === "undefined") return;
-  document.body.classList.toggle("site-intro-exiting", exiting);
+  setSiteIntroExiting(exiting);
 }
 
 export function SiteIntro() {
   const reduceMotion = useReducedMotion();
   const isCoarseMobile = useCoarseMobile();
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(() => initSiteIntroVisibility());
   const [phase, setPhase] = useState<IntroPhase>("letter");
 
   useLayoutEffect(() => {
@@ -132,13 +133,13 @@ export function SiteIntro() {
       }}
       aria-hidden
     >
-      <Image
+      <AppImage
         src={SITE_INTRO_IMAGE}
         alt=""
         fill
         priority
         fetchPriority="high"
-        quality={IMAGE_QUALITY_INTRO}
+        qualityPreset="intro"
         sizes={IMAGE_SIZES.viewport}
         className="object-cover"
         onLoadingComplete={() => setSiteIntroPlaceholderHidden(true)}
@@ -175,13 +176,15 @@ export function SiteIntro() {
               },
             }}
           >
-            <Image
+            <AppImage
               src={SITE_INTRO_LOGO}
               alt={SITE.name}
               width={LOGO_WIDTH}
               height={LOGO_HEIGHT}
               priority
-              quality={IMAGE_QUALITY_INTRO}
+              withBlur={false}
+              sizes={IMAGE_SIZES.logo}
+              qualityPreset="intro"
               className={cn(
                 LOGO_SIZE_CLASS,
                 "drop-shadow-[0_8px_28px_rgba(0,0,0,0.55)]",

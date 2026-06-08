@@ -1,6 +1,7 @@
-import Image from "next/image";
+import { AppImage } from "@/components/media/AppImage";
 
 import { getWinterStoreUrl } from "@/lib/constants";
+import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
 const BOULDER_LOGO = {
@@ -19,12 +20,14 @@ type BoulderLogoProps = {
 
 export function BoulderLogo({ className, priority, linked = true }: BoulderLogoProps) {
   const image = (
-    <Image
+    <AppImage
       src={BOULDER_LOGO.src}
       alt={BOULDER_LOGO.alt}
       width={BOULDER_LOGO.width}
       height={BOULDER_LOGO.height}
       priority={priority}
+      withBlur={false}
+      sizes={IMAGE_SIZES.logo}
       className={cn("h-10 w-auto sm:h-11", className)}
     />
   );

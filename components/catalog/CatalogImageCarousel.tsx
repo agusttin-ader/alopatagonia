@@ -1,11 +1,11 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { AppImage } from "@/components/media/AppImage";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import type { CatalogImage } from "@/lib/catalog/types";
-import { IMAGE_QUALITY_GALLERY, IMAGE_SIZES } from "@/lib/image-config";
+import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
 type CatalogImageCarouselProps = {
@@ -80,12 +80,12 @@ export function CatalogImageCarousel({
             );
 
           const imageNode = (
-            <Image
+            <AppImage
               src={image.src}
               alt={image.alt}
               fill
               priority={index === 0}
-              quality={IMAGE_QUALITY_GALLERY}
+              qualityPreset="gallery"
               className="object-cover"
               sizes={IMAGE_SIZES.catalogItemGallery}
             />
@@ -133,12 +133,12 @@ export function CatalogImageCarousel({
             disabled={activeIndex === 0}
             aria-label="Foto anterior"
             className={cn(
-              "absolute left-2 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full",
+              "absolute left-2 top-1/2 z-10 flex size-11 -translate-y-1/2 items-center justify-center rounded-full",
               "border border-white/30 bg-black/45 text-white shadow-sm backdrop-blur-sm",
               "transition enabled:hover:bg-black/60 disabled:pointer-events-none disabled:opacity-35",
             )}
           >
-            <ChevronLeft className="size-5" aria-hidden />
+            <ChevronLeft className="size-5.5" aria-hidden />
           </button>
           <button
             type="button"
@@ -146,12 +146,12 @@ export function CatalogImageCarousel({
             disabled={activeIndex === images.length - 1}
             aria-label="Foto siguiente"
             className={cn(
-              "absolute right-2 top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full",
+              "absolute right-2 top-1/2 z-10 flex size-11 -translate-y-1/2 items-center justify-center rounded-full",
               "border border-white/30 bg-black/45 text-white shadow-sm backdrop-blur-sm",
               "transition enabled:hover:bg-black/60 disabled:pointer-events-none disabled:opacity-35",
             )}
           >
-            <ChevronRight className="size-5" aria-hidden />
+            <ChevronRight className="size-5.5" aria-hidden />
           </button>
 
           <div className="mt-3 flex items-center justify-center gap-2">
@@ -163,12 +163,19 @@ export function CatalogImageCarousel({
                 aria-current={index === activeIndex ? "true" : undefined}
                 onClick={() => scrollTo(index)}
                 className={cn(
-                  "h-1.5 rounded-full transition-all",
+                  "inline-flex min-h-11 min-w-11 items-center justify-center rounded-full transition",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2",
+                )}
+              >
+                <span
+                  className={cn(
+                    "h-1.5 rounded-full transition-all",
                   index === activeIndex
                     ? "w-6 bg-primary"
                     : "w-1.5 bg-muted-foreground/35 hover:bg-muted-foreground/55",
-                )}
-              />
+                  )}
+                />
+              </button>
             ))}
           </div>
           <p className="mt-1 text-center text-xs tabular-nums text-muted-foreground">

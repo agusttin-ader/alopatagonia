@@ -3,6 +3,7 @@ export type AccommodationType = "cabana" | "departamento" | "hostel";
 export type CatalogImage = { src: string; alt: string };
 
 export type CatalogItemKind = "accommodation" | "excursion";
+export type ExcursionCategory = "trekking" | "navegacion" | "fauna" | "aventura";
 
 export type CatalogItem = {
   id: string;
@@ -11,6 +12,7 @@ export type CatalogItem = {
   name: string;
   description?: string;
   type?: AccommodationType;
+  category?: ExcursionCategory;
   images: CatalogImage[];
   /** Detalles cortos bajo la galería (capacidad, ubicación, etc.). */
   highlights?: string[];

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import Image from "next/image";
+import { AppImage } from "@/components/media/AppImage";
 import Link from "next/link";
 
 import { CatalogItemShowcase } from "@/components/catalog/CatalogItemShowcase";
@@ -7,7 +7,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { buildCarRentalWhatsAppMessage } from "@/lib/catalog/placeholders";
 import type { CatalogItem, DestinationCatalog } from "@/lib/catalog/types";
 import { getWhatsAppUrl } from "@/lib/constants";
-import { IMAGE_QUALITY_GALLERY, IMAGE_SIZES } from "@/lib/image-config";
+import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
 function accommodationBadge(item: CatalogItem) {
@@ -25,7 +25,7 @@ type CatalogSectionProps = {
 
 function CatalogSection({ id, title, description, children }: CatalogSectionProps) {
   return (
-    <section aria-labelledby={id}>
+    <section aria-labelledby={id} className="scroll-mt-24 sm:scroll-mt-28">
       <div className="flex flex-col gap-3 border-b border-border/70 pb-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h2 id={id} className="font-heading text-2xl font-medium tracking-tight sm:text-3xl">
@@ -47,12 +47,12 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
   return (
     <>
       <section className="relative min-h-[40vh] overflow-hidden px-4 pb-10 pt-28 sm:px-8 sm:pt-32 lg:px-14 2xl:px-20">
-        <Image
+        <AppImage
           src={destination.heroImage}
           alt={destination.name}
           fill
           priority
-          quality={IMAGE_QUALITY_GALLERY}
+          qualityPreset="gallery"
           className="object-cover"
           sizes={IMAGE_SIZES.viewport}
         />
@@ -92,6 +92,7 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
                 item={item}
                 destinationSlug={destination.slug}
                 badge={accommodationBadge(item)}
+                mobileCardVariant="overlay"
               />
             ))}
           </div>

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { AppImage } from "@/components/media/AppImage";
 
 import type { GalleryImage } from "@/lib/constants";
 import { IMAGE_QUALITY } from "@/lib/image-config";
@@ -22,7 +22,7 @@ export function BoulderHeroBackdrop({
 }: BoulderHeroBackdropProps) {
   return (
     <div className={cn("relative size-full overflow-hidden", className)}>
-      <Image
+      <AppImage
         src={image.src}
         alt={image.alt}
         fill

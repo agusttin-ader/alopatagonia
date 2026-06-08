@@ -8,7 +8,7 @@ import { getSiteUrl } from "@/lib/site-url";
 const siteUrl = getSiteUrl();
 
 /** Actualizar al publicar cambios editoriales relevantes para Google. */
-const SITE_LAST_MODIFIED = new Date("2026-06-05");
+const SITE_LAST_MODIFIED = new Date("2026-06-07");
 
 const catalogHubUrls = CATALOG_HUB_PILLARS.filter((pillar) => pillar.status === "live").map(
   (pillar) => ({

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { HERO_COPY, SECTION_IDS, SITE } from "@/lib/constants";
 import {
+  isSiteIntroPending,
   shouldPlaySiteIntro,
   SITE_INTRO_REVEAL_FALLBACK_MS,
 } from "@/lib/site-intro-config";
@@ -59,7 +60,7 @@ export function HeroClient() {
       return;
     }
 
-    if (!document.body.classList.contains("site-intro-pending")) {
+    if (!isSiteIntroPending()) {
       setHeroRevealed(true);
       return;
     }
@@ -106,14 +107,14 @@ export function HeroClient() {
         </motion.p>
         <motion.h1
           variants={heroItem}
-          className="font-heading max-w-[11.5rem] text-[2.2rem] font-medium leading-[1.06] tracking-tight text-white min-[390px]:max-w-none min-[390px]:text-[2.35rem] sm:max-w-none sm:text-5xl sm:leading-[1.08] lg:text-6xl 2xl:text-7xl"
+          className="font-heading max-w-[min(100%,20rem)] text-balance text-[2.2rem] font-medium leading-[1.06] tracking-tight text-white min-[390px]:text-[2.35rem] sm:max-w-none sm:text-5xl sm:leading-[1.08] lg:text-6xl 2xl:text-7xl"
         >
           <span className="sm:hidden">{HERO_COPY.headlineMobile}</span>
           <span className="hidden sm:inline">{HERO_COPY.headline}</span>
         </motion.h1>
         <motion.p
           variants={heroItem}
-          className="mt-3 max-w-[17rem] text-[1.0625rem] leading-snug text-white/90 min-[390px]:max-w-[19rem] min-[390px]:text-lg sm:mt-5 sm:max-w-xl sm:text-xl sm:leading-relaxed 2xl:max-w-2xl 2xl:text-2xl"
+          className="mt-3 max-w-[min(100%,20rem)] text-balance text-[1.0625rem] leading-snug text-white/90 min-[390px]:max-w-[19rem] min-[390px]:text-lg sm:mt-5 sm:max-w-xl sm:text-xl sm:leading-relaxed 2xl:max-w-2xl 2xl:text-2xl"
         >
           <span className="sm:hidden">{HERO_COPY.sublineMobile}</span>
           <span className="hidden sm:inline">{HERO_COPY.subline}</span>
@@ -123,8 +124,7 @@ export function HeroClient() {
             href={`#${SECTION_IDS.planner}`}
             className={cn(
               buttonVariants({ variant: "marketing", size: "lg" }),
-              "motion-cta h-12 w-full border border-primary px-8 text-base font-semibold sm:w-auto 2xl:h-14 2xl:px-10 2xl:text-lg",
-              "bg-primary text-primary-foreground hover:bg-primary",
+              "motion-cta h-12 w-full px-8 text-base font-semibold sm:w-auto 2xl:h-14 2xl:px-10 2xl:text-lg",
             )}
             whileHover={reduceMotion ? undefined : { y: -1.5, scale: 1.015 }}
             whileTap={reduceMotion ? undefined : { y: 0, scale: 0.99 }}

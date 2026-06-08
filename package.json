@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "catalog:manifest": "node scripts/generate-destination-manifest.mjs",
+    "home:manifest": "node scripts/generate-home-images-manifest.mjs",
     "favicon:logos": "node scripts/generate-favicon-logos.mjs",
-    "prebuild": "npm run catalog:manifest && npm run favicon:logos",
+    "prebuild": "npm run catalog:manifest && npm run home:manifest && npm run favicon:logos",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

@@ -12,7 +12,7 @@ import { getGoogleSiteVerification } from "@/lib/seo";
 import { getSiteUrl } from "@/lib/site-url";
 import { SITE } from "@/lib/site";
 import {
-  SITE_INTRO_BOOT_SCRIPT,
+  SITE_INTRO_CRITICAL_CSS,
   SITE_INTRO_IMAGE_PRELOAD,
   SITE_INTRO_LOGO,
   SITE_INTRO_OVERLAY_CSS,
@@ -125,12 +125,12 @@ export default function RootLayout({
       className={`${inter.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
       <head>
+        <style
+          id="alo-site-intro-critical"
+          dangerouslySetInnerHTML={{ __html: SITE_INTRO_CRITICAL_CSS }}
+        />
         <link rel="preload" href={SITE_INTRO_IMAGE_PRELOAD} as="image" fetchPriority="high" />
         <link rel="preload" href={SITE_INTRO_LOGO} as="image" />
-        <script
-          id="alo-site-intro-boot"
-          dangerouslySetInnerHTML={{ __html: SITE_INTRO_BOOT_SCRIPT }}
-        />
       </head>
       <body suppressHydrationWarning className="flex min-h-dvh flex-col">
         <div
@@ -138,7 +138,7 @@ export default function RootLayout({
           suppressHydrationWarning
           className="pointer-events-none fixed inset-0 z-[2199] flex items-center justify-center"
           style={{
-            backgroundColor: "#0a0f0d",
+            backgroundColor: "#1a2f26",
             backgroundImage: `url(${SITE_INTRO_IMAGE_PRELOAD})`,
             backgroundSize: "cover",
             backgroundPosition: "center",

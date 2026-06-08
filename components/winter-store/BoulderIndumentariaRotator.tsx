@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import Image from "next/image";
+import { AppImage } from "@/components/media/AppImage";
 import { useEffect, useState } from "react";
 
 import { BOULDER_INDUMENTARIA_IMAGES, type GalleryImage } from "@/lib/constants";
@@ -56,7 +56,7 @@ export function BoulderIndumentariaRotator({
           }}
           aria-hidden={i !== activeIndex}
         >
-          <Image
+          <AppImage
             src={image.src}
             alt={image.alt}
             fill

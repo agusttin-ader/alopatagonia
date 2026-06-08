@@ -65,6 +65,18 @@ export function Footer() {
               Destinos
             </Link>
             <Link
+              href="/alojamientos"
+              className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            >
+              Alojamientos
+            </Link>
+            <Link
+              href="/excursiones"
+              className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            >
+              Excursiones
+            </Link>
+            <Link
               href="/invierno"
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >

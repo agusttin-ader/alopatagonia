@@ -2,12 +2,24 @@ import {
   getAllDestinations,
   getDestinationBySlug,
 } from "@/lib/catalog/destinations";
-import type { CatalogItem, CatalogItemKind, DestinationCatalog } from "@/lib/catalog/types";
+import type {
+  AccommodationType,
+  CatalogItem,
+  CatalogItemKind,
+  DestinationCatalog,
+  ExcursionCategory,
+} from "@/lib/catalog/types";
 
 export type CatalogItemEntry = {
   destination: DestinationCatalog;
   item: CatalogItem;
   kind: CatalogItemKind;
+};
+
+export type CatalogEntryFilters = {
+  destinationSlug?: string;
+  accommodationType?: AccommodationType;
+  excursionCategory?: ExcursionCategory;
 };
 
 export function getCatalogItemEntry(
@@ -38,6 +50,72 @@ export function getAllCatalogItemParams(): { slug: string; itemSlug: string }[] 
     ];
     return slugs.map((itemSlug) => ({ slug: destination.slug, itemSlug }));
   });
+}
+
+export function getAllAccommodations(): CatalogItemEntry[] {
+  return getAllDestinations().flatMap((destination) =>
+    destination.accommodations.map((item) => ({
+      destination,
+      item,
+      kind: "accommodation" as const,
+    })),
+  );
+}
+
+export function getAllExcursions(): CatalogItemEntry[] {
+  return getAllDestinations().flatMap((destination) =>
+    destination.excursions.map((item) => ({
+      destination,
+      item,
+      kind: "excursion" as const,
+    })),
+  );
+}
+
+export function filterCatalogEntries(
+  entries: CatalogItemEntry[],
+  filters: CatalogEntryFilters,
+): CatalogItemEntry[] {
+  return entries.filter((entry) => {
+    if (filters.destinationSlug && entry.destination.slug !== filters.destinationSlug) {
+      return false;
+    }
+
+    if (filters.accommodationType && entry.kind === "accommodation") {
+      return entry.item.type === filters.accommodationType;
+    }
+
+    if (filters.accommodationType && entry.kind !== "accommodation") {
+      return false;
+    }
+
+    if (filters.excursionCategory && entry.kind === "excursion") {
+      return entry.item.category === filters.excursionCategory;
+    }
+
+    if (filters.excursionCategory && entry.kind !== "excursion") {
+      return false;
+    }
+
+    return true;
+  });
+}
+
+export function groupEntriesByDestination(
+  entries: CatalogItemEntry[],
+): Map<string, CatalogItemEntry[]> {
+  const grouped = new Map<string, CatalogItemEntry[]>();
+
+  for (const destination of getAllDestinations()) {
+    const destinationEntries = entries.filter(
+      (entry) => entry.destination.slug === destination.slug,
+    );
+    if (destinationEntries.length > 0) {
+      grouped.set(destination.slug, destinationEntries);
+    }
+  }
+
+  return grouped;
 }
 
 export function getCatalogItemBadge(entry: CatalogItemEntry): string {

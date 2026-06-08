@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import Image from "next/image";
+import { AppImage } from "@/components/media/AppImage";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
-import { IMAGE_QUALITY_LIGHTBOX, IMAGE_SIZES } from "@/lib/image-config";
+import { IMAGE_SIZES } from "@/lib/image-config";
 
 export type LightboxImage = {
   src: string;
@@ -118,11 +118,11 @@ export function ImageLightbox({
             transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="relative h-full w-full">
-              <Image
+              <AppImage
                 src={activeImage.src}
                 alt={activeImage.alt}
                 fill
-                quality={IMAGE_QUALITY_LIGHTBOX}
+                qualityPreset="lightbox"
                 className="rounded-2xl object-contain"
                 sizes={IMAGE_SIZES.lightbox}
                 priority

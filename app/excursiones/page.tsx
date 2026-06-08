@@ -1,5 +1,7 @@
+import { CatalogBrowsePage } from "@/components/catalog/CatalogBrowsePage";
 import { CatalogHubPageShell } from "@/components/catalog-hub/CatalogHubPageShell";
 import { Footer } from "@/components/footer/Footer";
+import { getAllExcursions } from "@/lib/catalog/catalog-items";
 import { FloatingWhatsAppButton } from "@/components/whatsapp/FloatingWhatsAppButton";
 import { getCatalogHubPillar } from "@/lib/catalog-hub/config";
 import { buildPageMetadata } from "@/lib/seo";
@@ -10,7 +12,7 @@ export const metadata = buildPageMetadata({
   title: "Excursiones en la Patagonia",
   description:
     pillar?.description ??
-    "Trekking, navegación, fauna y más en la Patagonia. Coordinamos según clima y fechas.",
+    "Trekking, navegación, fauna y más en la Patagonia.",
   path: "/excursiones",
   index: pillar?.status === "live",
 });
@@ -20,7 +22,9 @@ export default function ExcursionesPage() {
 
   return (
     <>
-      <CatalogHubPageShell pillar={pillar} />
+      <CatalogHubPageShell pillar={pillar}>
+        <CatalogBrowsePage mode="excursion" entries={getAllExcursions()} />
+      </CatalogHubPageShell>
       <FloatingWhatsAppButton />
       <Footer />
     </>

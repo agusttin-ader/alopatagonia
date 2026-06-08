@@ -18,6 +18,8 @@ const HOME_SECTION_IDS = {
 const HOME_LINKS = [
   { label: "Inicio", href: `#${HOME_SECTION_IDS.inicio}`, id: HOME_SECTION_IDS.inicio },
   { label: "Destinos", href: "/destinos", id: "destinos" },
+  { label: "Alojamientos", href: "/alojamientos", id: "alojamientos" },
+  { label: "Excursiones", href: "/excursiones", id: "excursiones" },
   { label: "Planear mi viaje", href: `#${SECTION_IDS.planner}`, id: SECTION_IDS.planner },
   { label: "Indumentaria", href: "/invierno", id: "invierno" },
 ] as const;
@@ -132,6 +134,8 @@ export function GlobalNav() {
     return [
       { label: "Inicio", href: "/", id: "home" },
       { label: "Destinos", href: "/destinos", id: "destinos" },
+      { label: "Alojamientos", href: "/alojamientos", id: "alojamientos" },
+      { label: "Excursiones", href: "/excursiones", id: "excursiones" },
       { label: "Planear mi viaje", href: `/#${SECTION_IDS.planner}`, id: "planner" },
       { label: "Indumentaria", href: "/invierno", id: "invierno" },
     ];

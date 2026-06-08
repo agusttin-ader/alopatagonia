@@ -1,7 +1,8 @@
-import Image from "next/image";
+import { AppImage } from "@/components/media/AppImage";
 import Link from "next/link";
 
 import { SITE } from "@/lib/constants";
+import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
 const LOGO_WIDTH = 591;
@@ -30,13 +31,15 @@ export function SiteLogo({
   const src = variant === "onDark" ? SITE.logo : SITE.logoOnLight;
 
   const image = (
-    <Image
+    <AppImage
       src={src}
       alt={showWordmark ? "" : SITE.name}
       aria-hidden={showWordmark || undefined}
       width={LOGO_WIDTH}
       height={LOGO_HEIGHT}
       priority={priority}
+      withBlur={false}
+      sizes={IMAGE_SIZES.logo}
       className={cn("h-12 w-auto sm:h-14", className)}
     />
   );

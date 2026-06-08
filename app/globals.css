@@ -35,6 +35,8 @@
   --color-brand-forest-foreground: var(--brand-forest-foreground);
   --color-footer-lake: var(--footer-lake);
   --color-footer-lake-foreground: var(--footer-lake-foreground);
+  --color-cta: var(--cta);
+  --color-cta-foreground: var(--cta-foreground);
   --color-whatsapp: var(--whatsapp);
   --color-whatsapp-hover: var(--whatsapp-hover);
   --color-popover-foreground: var(--popover-foreground);
@@ -53,7 +55,7 @@
 }
 
 :root {
-  /* Tema claro (paleta inspirada en @alo_patagonia) */
+  /* Bosque & Lenga — marca verde; acento ámbar solo en CTAs de conversión */
   --background: #f0eadc;
   --foreground: #1f2a1f;
   --card: #f5efe2;
@@ -70,8 +72,11 @@
   --accent-foreground: #f5efe2;
   --brand-forest: #2d5a47;
   --brand-forest-foreground: #f5efe2;
-  --footer-lake: #0f7f79;
-  --footer-lake-foreground: #eef8f6;
+  --footer-lake: #1a2f26;
+  --footer-lake-foreground: #f5f5f5;
+  --cta: #d4843a;
+  --cta-foreground: #fffaf5;
+  --cta-hover: #c27632;
   --whatsapp: #25d366;
   --whatsapp-hover: #1fb85a;
   --destructive: oklch(0.577 0.245 27.325);
@@ -168,18 +173,18 @@
 }
 
 /* Site intro: foto oscurecida + logo; la página queda oculta hasta el reveal */
-body.site-intro-pending {
-  background-color: #0a0f0d !important;
+html.site-intro-pending {
+  background-color: var(--footer-lake) !important;
   background-image: none !important;
 }
 
-body.site-intro-pending #site-app-shell {
+html.site-intro-pending #site-app-shell {
   visibility: hidden;
 }
 
 #site-intro-placeholder {
   display: none;
-  background-color: #0a0f0d;
+  background-color: var(--footer-lake);
 }
 
 .site-intro-placeholder-brand {
@@ -202,16 +207,16 @@ body.site-intro-pending #site-app-shell {
   }
 }
 
-body.site-intro-pending #site-intro-placeholder,
-body.site-intro-exiting #site-intro-placeholder {
+html.site-intro-pending #site-intro-placeholder,
+html.site-intro-exiting #site-intro-placeholder {
   display: flex;
 }
 
-body.site-intro-exiting #site-intro-placeholder {
+html.site-intro-exiting #site-intro-placeholder {
   transform: translateY(-100%);
   transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-body.site-intro-placeholder-off #site-intro-placeholder {
+html.site-intro-placeholder-off #site-intro-placeholder {
   display: none !important;
 }

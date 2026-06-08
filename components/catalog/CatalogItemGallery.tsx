@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { AppImage } from "@/components/media/AppImage";
 
 import type { CatalogImage } from "@/lib/catalog/types";
 import { IMAGE_QUALITY_GALLERY, IMAGE_SIZES } from "@/lib/image-config";
@@ -113,7 +113,7 @@ export function CatalogItemGallery({
           );
 
         const imageNode = (
-          <Image
+          <AppImage
             src={cell.image.src}
             alt={cell.image.alt}
             fill

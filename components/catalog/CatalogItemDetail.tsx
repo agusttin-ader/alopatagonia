@@ -40,6 +40,7 @@ export function CatalogItemDetail({ entry }: CatalogItemDetailProps) {
           <CatalogDetailGallery
             images={item.images}
             lightboxLabel={`Vista ampliada — ${item.name}`}
+            enableMobileLightbox={entry.kind !== "accommodation"}
           />
         </div>
       </div>

@@ -154,7 +154,7 @@ function PlannerProgressBar({ steps }: { steps: PlannerProgressStep[] }) {
                   "inline-flex size-4 items-center justify-center rounded-full border transition-colors",
                   step.done
                     ? "border-primary/30 bg-primary/12 text-primary"
-                    : "border-[#d9d2c5] bg-[#f5efe2] text-muted-foreground/70",
+                    : "border-border bg-card text-muted-foreground/70",
                 )}
                 aria-hidden
               >
@@ -263,13 +263,13 @@ function PlannerTripPreview({
             </div>
 
             {metaLine ? (
-              <p className="text-[0.68rem] leading-relaxed text-muted-foreground sm:text-[0.72rem]">
+              <p className="text-xs leading-relaxed text-muted-foreground">
                 {metaLine}
               </p>
             ) : null}
 
             {hook ? (
-              <p className="pt-0.5 font-heading text-[0.72rem] italic leading-snug text-foreground/62 sm:text-xs">
+              <p className="pt-0.5 font-heading text-xs italic leading-snug text-foreground/62">
                 {hook}
               </p>
             ) : null}
@@ -782,7 +782,7 @@ export function TripPlannerSection() {
                 aria-disabled={!canSubmit}
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
-                  "h-12 rounded-full border-[#cfc5b4] bg-[#f5efe2] text-foreground hover:bg-[#faf6ef] 2xl:h-14 2xl:text-lg",
+                  "h-12 rounded-full border-border bg-card text-foreground hover:bg-muted 2xl:h-14 2xl:text-lg",
                   !canSubmit && "pointer-events-none opacity-60",
                 )}
               >

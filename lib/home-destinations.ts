@@ -22,7 +22,7 @@ const DESTINATION_META = [
     region: "Neuquén · Lago Lácar",
     description:
       "Bosque andino y rutas junto al lago. Relax, caminatas y ruta escénica.",
-    fallback: "/images/destinations/san-martin/Screenshot_20251106_191521_Instagram.jpg",
+    fallback: "/images/destinations/san-martin/alojamientos/Screenshot_20251106_191521_Instagram.jpg",
   },
   {
     slug: "el-chalten",
@@ -31,7 +31,7 @@ const DESTINATION_META = [
     region: "Santa Cruz · Capital del trekking",
     description:
       "Montaña, senderos y glaciares. Ajustamos el plan según la ventana del día.",
-    fallback: "/images/destinations/chalten/IMG-20260525-WA0136.jpg",
+    fallback: "/images/destinations/chalten/alojamientos/IMG-20260525-WA0136.jpg",
   },
   {
     slug: "esquel",
@@ -39,8 +39,8 @@ const DESTINATION_META = [
     name: "Esquel / Trevelin",
     region: "Chubut · Patagonia andina",
     description:
-      "Estepa, bosque y el Tren Patagónico. Cordillera y paisajes auténticos del sur.",
-    fallback: "/images/destinations/esquel-trevelin /IMG_20231023_203417_099.jpg",
+      "Al pie de los Andes: Parque Nacional Los Alerces, La Hoya y el Tren La Trochita.",
+    fallback: "/images/destinations/esquel-trevelin /alojamientos/IMG_20231023_203417_099.jpg",
   },
   {
     slug: "villa-la-angostura",
@@ -49,7 +49,7 @@ const DESTINATION_META = [
     region: "Neuquén · Reserva Nacional",
     description:
       "Reserva, pueblo chico y lagos cristalinos. Ritmo tranquilo y muy fotografiable.",
-    fallback: "/images/destinations/la-angostura/IMG_20240117_155008_248.jpg",
+    fallback: "/images/destinations/la-angostura/alojamientos/IMG_20240117_155008_248.jpg",
   },
   {
     slug: "puerto-madryn",
@@ -58,7 +58,7 @@ const DESTINATION_META = [
     region: "Chubut · Costa patagónica",
     description:
       "Mar patagónico y fauna en su hábitat. Ballenas, costa y excursiones de día.",
-    fallback: "/images/destinations/madryn/IMG-20260525-WA0122.jpg",
+    fallback: "/images/destinations/madryn/alojamientos/IMG-20260525-WA0122.jpg",
   },
   {
     slug: "el-calafate",
@@ -89,6 +89,9 @@ const DESTINATION_META = [
   },
 ] as const;
 
+/** Fotos en la sección Destinos del home. Más adelante: carpeta `naturaleza` por destino. */
+const HOME_DESTINATION_GALLERY_COUNT = 2;
+
 function buildGalleryImages(
   folder: string,
   name: string,
@@ -98,13 +101,10 @@ function buildGalleryImages(
   const paths = curated?.length
     ? [...curated]
     : getDestinationImagePaths(folder);
-  const barilocheAlts = [
-    "Departamento en Bariloche",
-    "Cabaña en Bariloche",
-    "Hotel en Bariloche",
-    "Hotel en Bariloche",
-  ];
-  const picked = (paths.length > 0 ? paths.slice(0, 4) : [fallback]).map((src, index) => ({
+  const barilocheAlts = ["Departamento en Bariloche", "Cabaña en Bariloche"];
+  const picked = (
+    paths.length > 0 ? paths.slice(0, HOME_DESTINATION_GALLERY_COUNT) : [fallback]
+  ).map((src, index) => ({
     src,
     alt:
       name === "Bariloche" && curated?.length
@@ -112,7 +112,7 @@ function buildGalleryImages(
         : `${name} — foto ${index + 1}`,
   }));
 
-  while (picked.length < 4) {
+  while (picked.length < HOME_DESTINATION_GALLERY_COUNT) {
     const src = picked[picked.length - 1]?.src ?? fallback;
     picked.push({ src, alt: `${name} — foto ${picked.length + 1}` });
   }

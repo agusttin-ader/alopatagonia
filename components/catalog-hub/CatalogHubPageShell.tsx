@@ -49,8 +49,8 @@ export function CatalogHubPageShell({ pillar, children }: CatalogHubPageShellPro
                 <Link
                   href={item.href}
                   className={cn(
-                    "inline-flex rounded-full border border-border/80 px-4 py-2 text-sm font-medium",
-                    "text-foreground/80 transition-colors hover:border-border hover:bg-muted/40 hover:text-foreground",
+                    "inline-flex min-h-11 items-center rounded-full border border-border/80 px-4 py-2 text-sm font-medium",
+                    "text-foreground/80 transition-colors hover:border-border hover:bg-muted/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2",
                   )}
                 >
                   {item.title}

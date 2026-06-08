@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import { AppImage } from "@/components/media/AppImage";
 
 import { CatalogImageCarousel } from "@/components/catalog/CatalogImageCarousel";
 import { CatalogItemGallery } from "@/components/catalog/CatalogItemGallery";
 import { ImageLightbox } from "@/components/media/ImageLightbox";
 import type { CatalogImage } from "@/lib/catalog/types";
-import { IMAGE_QUALITY_GALLERY, IMAGE_SIZES } from "@/lib/image-config";
+import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
 const FEATURED_COUNT = 6;
@@ -25,12 +25,15 @@ type CatalogDetailGalleryProps = {
   images: CatalogImage[];
   className?: string;
   lightboxLabel?: string;
+  /** Tap en fotos del carrusel mobile abre lightbox. Desactivado en alojamientos. */
+  enableMobileLightbox?: boolean;
 };
 
 export function CatalogDetailGallery({
   images,
   className,
   lightboxLabel = "Vista ampliada de alojamiento",
+  enableMobileLightbox = true,
 }: CatalogDetailGalleryProps) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
@@ -42,11 +45,14 @@ export function CatalogDetailGallery({
   return (
     <>
       <div className={cn(className)}>
-        <div className="md:hidden">
-          <CatalogImageCarousel images={images} onImageClick={setLightboxIndex} />
+        <div className="lg:hidden">
+          <CatalogImageCarousel
+            images={images}
+            onImageClick={enableMobileLightbox ? setLightboxIndex : undefined}
+          />
         </div>
 
-        <div className="hidden space-y-3 md:block md:space-y-3.5 lg:space-y-4">
+        <div className="hidden space-y-4 lg:block">
           <CatalogItemGallery images={featured} onImageClick={setLightboxIndex} />
 
           {overflow.length > 0 ? (
@@ -66,14 +72,14 @@ export function CatalogDetailGallery({
                         MOSAIC_ASPECTS[index % MOSAIC_ASPECTS.length],
                       )}
                     >
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      fill
-                      quality={IMAGE_QUALITY_GALLERY}
-                      className="object-cover motion-safe:transition motion-safe:duration-300 group-hover:scale-[1.015]"
-                      sizes={IMAGE_SIZES.catalogItemThumb}
-                    />
+                      <AppImage
+                        src={image.src}
+                        alt={image.alt}
+                        fill
+                        qualityPreset="gallery"
+                        className="object-cover motion-safe:transition motion-safe:duration-300 group-hover:scale-[1.015]"
+                        sizes={IMAGE_SIZES.catalogItemThumb}
+                      />
                   </button>
                 );
               })}

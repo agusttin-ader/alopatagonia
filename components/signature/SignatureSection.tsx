@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import Image from "next/image";
+import { AppImage } from "@/components/media/AppImage";
 
 import { Reveal } from "@/components/motion/reveal";
 import { ScrollParallax } from "@/components/motion/scroll-parallax";
@@ -36,7 +36,7 @@ export function SignatureSection() {
       <div className="mx-auto grid max-w-7xl gap-6 lg:grid-cols-[1.15fr_1fr] lg:items-center 2xl:max-w-[90rem] 2xl:gap-12">
         <Reveal className="relative isolate overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/8">
           <ScrollParallax strength={42} className="relative size-full">
-            <Image
+            <AppImage
               src={EXPERIENCE_IMAGE.src}
               alt="Ruta de lago y montana en Patagonia"
               width={EXPERIENCE_IMAGE.width}
@@ -94,7 +94,7 @@ export function SignatureSection() {
               href={`#${SECTION_IDS.planner}`}
               className={cn(
                 buttonVariants({ variant: "marketing", size: "lg" }),
-                "mt-7 inline-flex h-12 px-8 text-base font-semibold 2xl:h-14 2xl:px-10 2xl:text-lg",
+                "mt-7 inline-flex h-12 w-full px-8 text-base font-semibold sm:w-auto 2xl:h-14 2xl:px-10 2xl:text-lg",
               )}
             >
               Armar mi consulta

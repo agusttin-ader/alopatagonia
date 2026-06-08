@@ -1,5 +1,12 @@
 export { SITE } from "@/lib/site";
 
+import {
+  getHomeExperienceImagePath,
+  getHomeHeroImagePath,
+  getHomeImagePaths,
+  getInstagramImagePaths,
+} from "@/lib/home-images";
+
 export const HERO_COPY = {
   headline: "Organizá tu viaje a Patagonia sin complicaciones",
   headlineMobile: "Patagonia sin complicaciones",
@@ -11,6 +18,7 @@ export const SECTION_IDS = {
   planner: "planear-viaje",
   community: "comunidad",
   signature: "esencia-alo",
+  gallery: "galeria-patagonia",
   testimonials: "testimonios",
   howItWorks: "como-funciona",
   catalogHub: "explorar-catalogo",
@@ -304,6 +312,7 @@ export type GalleryImage = {
 
 /** Reexportado desde lib/image-config.ts (calidad + sizes centralizados). */
 export {
+  IMAGE_BLUR_PLACEHOLDER,
   IMAGE_QUALITY,
   IMAGE_QUALITY_GALLERY,
   IMAGE_QUALITY_HERO,
@@ -314,15 +323,18 @@ export {
   buildNextImageUrl,
 } from "@/lib/image-config";
 
-/**
- * Archivos en `public/images/` → URL `/images/nombre`.
- * Los `width`/`height` son la relación de aspecto a escala 4K para el optimizador (no fuerzan ampliar el archivo).
- */
-const img = (file: string) => `/images/${file}`;
+function galleryFromPaths(paths: string[], altPrefix: string): GalleryImage[] {
+  return paths.map((src, index) => ({
+    src,
+    alt: `${altPrefix} — foto ${index + 1}`,
+    width: 3840,
+    height: 2560,
+  }));
+}
 
 export const HERO_IMAGE: GalleryImage = {
-  src: img("IMG_1506.jpeg"),
-  alt: "Montañas y valle al amanecer en la Patagonia",
+  src: getHomeHeroImagePath(),
+  alt: "Patagonia",
   width: 3840,
   height: 2560,
 };
@@ -346,8 +358,8 @@ export const HERO_VIDEO_MOBILE_LITE = {
 export const HERO_VIDEO_PLAYBACK_RATE = 1 as const;
 
 export const EXPERIENCE_IMAGE: GalleryImage = {
-  src: img("IMG_1459.jpeg"),
-  alt: "Cumbres y lagos de la Patagonia",
+  src: getHomeExperienceImagePath(),
+  alt: "Patagonia",
   width: 3840,
   height: 2880,
 };
@@ -402,71 +414,13 @@ export const BOULDER_INDUMENTARIA_IMAGES = BOULDER_HOME_CAROUSEL_IMAGES;
 /** Primera promo Boulder — OG / fallback estático. */
 export const WINTER_STORE_IMAGE: GalleryImage = BOULDER_INDUMENTARIA_IMAGES[0];
 
-export const GALLERY_IMAGES: GalleryImage[] = [
-  {
-    src: img("IMG_0915.jpeg"),
-    alt: "Lago y montañas nevadas",
-    width: 3840,
-    height: 3840,
-  },
-  {
-    src: img("IMG_1370.jpeg"),
-    alt: "Cordillera al atardecer",
-    width: 3840,
-    height: 2880,
-  },
-  {
-    src: img("IMG_1391.jpeg"),
-    alt: "Sendero entre bosque y montaña",
-    width: 2880,
-    height: 3840,
-  },
-  {
-    src: img("IMG_1398.jpeg"),
-    alt: "Vista panorámica de picos",
-    width: 3840,
-    height: 2560,
-  },
-  {
-    src: img("IMG_1426.jpeg"),
-    alt: "Lago turquesa y bosque",
-    width: 3840,
-    height: 3840,
-  },
-  {
-    src: img("IMG_1437.jpeg"),
-    alt: "Niebla suave sobre el valle",
-    width: 3840,
-    height: 2560,
-  },
-  {
-    src: img("IMG_1446.jpeg"),
-    alt: "Bosque y río de montaña",
-    width: 3072,
-    height: 3840,
-  },
-  {
-    src: img("IMG_1526.jpeg"),
-    alt: "Cumbres rocosas y cielo despejado",
-    width: 3840,
-    height: 3840,
-  },
-  {
-    src: img("IMG_1459.jpeg"),
-    alt: "Cumbres y lagos de la Patagonia",
-    width: 3840,
-    height: 2560,
-  },
-  {
-    src: img("IMG_1667.jpeg"),
-    alt: "Luz y montañas en la Patagonia",
-    width: 3840,
-    height: 2880,
-  },
-  {
-    src: img("IMG_1657.jpeg"),
-    alt: "Nieve y cumbres patagónicas",
-    width: 3840,
-    height: 2560,
-  },
-];
+export const GALLERY_IMAGES: GalleryImage[] = galleryFromPaths(
+  getInstagramImagePaths(),
+  "Patagonia en Instagram",
+);
+
+/** Galería editorial home — todas las fotos de `imagenes-home`. */
+export const HOME_GALLERY_IMAGES: GalleryImage[] = galleryFromPaths(
+  getHomeImagePaths(),
+  "Patagonia",
+);

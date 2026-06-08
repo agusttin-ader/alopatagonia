@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react";
-import Image from "next/image";
+import { AppImage } from "@/components/media/AppImage";
 import Link from "next/link";
 import {
   useCallback,
@@ -25,7 +25,6 @@ const DESTINATION_NAME_MOTION = {
   idle: { scale: 1 },
 };
 
-const MOBILE_DESTINATIONS_MQ = "(max-width: 1023px)";
 const MOBILE_PANEL_MS = 520;
 
 function DestinationName({
@@ -60,18 +59,14 @@ function DestinationName({
 function MobileDestinationPanel({
   isActive,
   itemId,
-  onExpandEnd,
   children,
 }: {
   isActive: boolean;
   itemId: string;
-  onExpandEnd?: () => void;
   children: ReactNode;
 }) {
   const reduceMotion = useReducedMotion();
   const [expanded, setExpanded] = useState(false);
-  const onExpandEndRef = useRef(onExpandEnd);
-  onExpandEndRef.current = onExpandEnd;
 
   useEffect(() => {
     if (!isActive) {
@@ -81,7 +76,6 @@ function MobileDestinationPanel({
 
     if (reduceMotion) {
       setExpanded(true);
-      onExpandEndRef.current?.();
       return;
     }
 
@@ -101,15 +95,6 @@ function MobileDestinationPanel({
         expanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
       )}
       style={{ transitionDuration: reduceMotion ? "0ms" : `${MOBILE_PANEL_MS}ms` }}
-      onTransitionEnd={(event) => {
-        if (
-          event.propertyName === "grid-template-rows" &&
-          expanded &&
-          event.currentTarget === event.target
-        ) {
-          onExpandEndRef.current?.();
-        }
-      }}
     >
       <div className="min-h-0 overflow-hidden">
         <div className="pt-4">{children}</div>
@@ -147,7 +132,7 @@ function DestinationPreview({
                 aria-label={`Ampliar foto de ${destination.name}`}
                 className={tileClassName}
               >
-                <Image
+                <AppImage
                   src={image.src}
                   alt={image.alt}
                   fill
@@ -176,7 +161,7 @@ function DestinationPreview({
               }}
               className={tileClassName}
             >
-              <Image
+              <AppImage
                 src={image.src}
                 alt={image.alt}
                 fill
@@ -189,8 +174,8 @@ function DestinationPreview({
           );
         })}
       </div>
-      <div className="pe-[max(5rem,calc(4.5rem+env(safe-area-inset-right)))] sm:pe-24">
-        <p className="mt-4 line-clamp-1 text-base text-muted-foreground sm:mt-5 sm:text-lg">
+      <div className="pe-4 sm:pe-24">
+        <p className="mt-4 line-clamp-2 text-base text-muted-foreground sm:mt-5 sm:line-clamp-1 sm:text-lg">
           {destination.description}
         </p>
         <Link
@@ -212,7 +197,7 @@ type HomeDestinationsClientProps = {
 export function HomeDestinationsClient({ destinations }: HomeDestinationsClientProps) {
   const [activeSlug, setActiveSlug] = useState(destinations[0]?.slug ?? "");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const mobileItemRefs = useRef(new Map<string, HTMLLIElement>());
+  const listRef = useRef<HTMLUListElement | null>(null);
 
   const activeDestination = useMemo(
     () => destinations.find((item) => item.slug === activeSlug) ?? destinations[0],
@@ -228,19 +213,21 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
     setLightboxIndex(null);
   }, [activeSlug]);
 
-  const scrollActiveDestinationIntoView = useCallback((slug: string) => {
-    if (typeof window === "undefined") return;
-    if (!window.matchMedia(MOBILE_DESTINATIONS_MQ).matches) return;
-
-    const activeItem = mobileItemRefs.current.get(slug);
-    if (!activeItem) return;
-
-    activeItem.scrollIntoView({
-      behavior: "auto",
-      block: "center",
-      inline: "nearest",
-    });
-  }, []);
+  const handleMobileDestinationSelect = useCallback(
+    (slug: string) => {
+      if (slug === activeSlug) return;
+      const listTop = listRef.current?.getBoundingClientRect().top ?? 0;
+      setActiveSlug(slug);
+      requestAnimationFrame(() => {
+        const nextTop = listRef.current?.getBoundingClientRect().top ?? 0;
+        const delta = nextTop - listTop;
+        if (delta !== 0) {
+          window.scrollBy({ top: delta, behavior: "auto" });
+        }
+      });
+    },
+    [activeSlug],
+  );
 
   useEffect(() => {
     if (lightboxIndex === null || !activeDestination) return;
@@ -295,22 +282,18 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
 
         <div className="mt-7 grid gap-6 lg:mt-12 lg:grid-cols-[minmax(260px,0.9fr)_1.1fr] lg:items-start 2xl:gap-12">
           <div className="lg:hidden">
-            <ul className="flex flex-col gap-2.5">
+            <ul ref={listRef} className="flex flex-col gap-2.5">
               {destinations.map((item) => {
                 const isActive = item.slug === activeDestination.slug;
 
                 return (
                   <li
                     key={item.slug}
-                    ref={(node) => {
-                      if (node) mobileItemRefs.current.set(item.slug, node);
-                      else mobileItemRefs.current.delete(item.slug);
-                    }}
-                    className={cn(isActive && "scroll-mt-[18vh]")}
+                    className="scroll-mt-24"
                   >
                     <button
                       type="button"
-                      onClick={() => setActiveSlug(item.slug)}
+                      onClick={() => handleMobileDestinationSelect(item.slug)}
                       aria-pressed={isActive}
                       aria-expanded={isActive}
                       className={cn(
@@ -332,7 +315,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
                       />
                       <span
                         className={cn(
-                          "mt-1.5 block text-[0.62rem] font-medium text-muted-foreground",
+                          "mt-1.5 block text-xs font-medium text-muted-foreground",
                           isActive ? "text-black/70" : "text-black/48",
                         )}
                       >
@@ -343,7 +326,6 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
                     <MobileDestinationPanel
                       isActive={isActive}
                       itemId={item.slug}
-                      onExpandEnd={() => scrollActiveDestinationIntoView(item.slug)}
                     >
                       <DestinationPreview
                         destination={item}
@@ -498,7 +480,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
               exit={{ opacity: 0, scale: 0.985, y: 8 }}
               transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
             >
-              <Image
+              <AppImage
                 src={activeLightboxImage.src}
                 alt={activeLightboxImage.alt}
                 fill

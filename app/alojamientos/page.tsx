@@ -1,5 +1,7 @@
+import { CatalogBrowsePage } from "@/components/catalog/CatalogBrowsePage";
 import { CatalogHubPageShell } from "@/components/catalog-hub/CatalogHubPageShell";
 import { Footer } from "@/components/footer/Footer";
+import { getAllAccommodations } from "@/lib/catalog/catalog-items";
 import { FloatingWhatsAppButton } from "@/components/whatsapp/FloatingWhatsAppButton";
 import { getCatalogHubPillar } from "@/lib/catalog-hub/config";
 import { buildPageMetadata } from "@/lib/seo";
@@ -20,7 +22,9 @@ export default function AlojamientosPage() {
 
   return (
     <>
-      <CatalogHubPageShell pillar={pillar} />
+      <CatalogHubPageShell pillar={pillar}>
+        <CatalogBrowsePage mode="accommodation" entries={getAllAccommodations()} />
+      </CatalogHubPageShell>
       <FloatingWhatsAppButton />
       <Footer />
     </>
