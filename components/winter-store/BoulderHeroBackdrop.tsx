@@ -1,7 +1,6 @@
 import { AppImage } from "@/components/media/AppImage";
 
 import type { GalleryImage } from "@/lib/constants";
-import { IMAGE_QUALITY } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
 type BoulderHeroBackdropProps = {
@@ -28,7 +27,7 @@ export function BoulderHeroBackdrop({
         fill
         priority={priority}
         sizes={sizes}
-        quality={IMAGE_QUALITY}
+        qualityPreset="hero"
         className="object-cover"
       />
       <div

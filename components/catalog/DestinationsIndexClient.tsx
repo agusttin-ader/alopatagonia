@@ -6,8 +6,8 @@ import { useState } from "react";
 import { DestinationIndexCard } from "@/components/catalog/DestinationIndexCard";
 import { EditorialSplitNavItem } from "@/components/catalog/EditorialSplitNavItem";
 import type { DestinationZoneGroup } from "@/lib/catalog/destination-zones";
-import { CATALOG_GRID_GAP, DETAIL_STICKY_TOP } from "@/lib/layout-shell";
-import { cn } from "@/lib/utils";
+import { CATALOG_GRID_GAP, CATALOG_SPLIT_SIDEBAR_STICKY } from "@/lib/layout-shell";
+import { cn, horizontalScrollRailClass } from "@/lib/utils";
 
 const ZONE_NAV_SUBTITLES: Record<string, string> = {
   "corredor-lagos": "Neuquén · Río Negro",
@@ -48,30 +48,30 @@ export function DestinationsIndexClient({ zones }: DestinationsIndexClientProps)
       </div>
 
       <div className="hidden lg:grid lg:grid-cols-[minmax(240px,280px)_minmax(0,1fr)] lg:items-start lg:gap-8 xl:grid-cols-[minmax(260px,300px)_minmax(0,1fr)] xl:gap-10 min-[1920px]:gap-12">
-        <nav
-          aria-label="Elegir corredor"
+        <aside
           className={cn(
-            "flex flex-col gap-0 border-r border-border/45 pr-5 xl:pr-8 min-[1920px]:pr-10",
-            DETAIL_STICKY_TOP,
-            "lg:sticky",
+            "border-r border-border/45 pr-5 xl:pr-8 min-[1920px]:pr-10",
+            CATALOG_SPLIT_SIDEBAR_STICKY,
           )}
         >
-          {zones.map((zone) => {
-            const isActive = activeZoneId === zone.id;
-            const count = zone.destinations.length;
+          <nav aria-label="Elegir corredor" className="flex flex-col gap-0">
+            {zones.map((zone) => {
+              const isActive = activeZoneId === zone.id;
+              const count = zone.destinations.length;
 
-            return (
-              <EditorialSplitNavItem
-                key={zone.id}
-                title={zone.title}
-                subtitle={ZONE_NAV_SUBTITLES[zone.id] ?? ""}
-                meta={destinationCountLabel(count)}
-                isActive={isActive}
-                onClick={() => setActiveZoneId(zone.id)}
-              />
-            );
-          })}
-        </nav>
+              return (
+                <EditorialSplitNavItem
+                  key={zone.id}
+                  title={zone.title}
+                  subtitle={ZONE_NAV_SUBTITLES[zone.id] ?? ""}
+                  meta={destinationCountLabel(count)}
+                  isActive={isActive}
+                  onClick={() => setActiveZoneId(zone.id)}
+                />
+              );
+            })}
+          </nav>
+        </aside>
 
         <div className="min-w-0">
           <DestinationZonePanel zone={activeZone} />
@@ -91,10 +91,14 @@ function DestinationZoneTabs({
   onSelect: (zoneId: string) => void;
 }) {
   return (
-    <nav
-      aria-label="Elegir corredor"
-      className="mb-8 flex gap-5 overflow-x-auto border-b border-border/45 pb-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-    >
+    <div className="max-w-full overflow-hidden">
+      <nav
+        aria-label="Elegir corredor"
+        className={cn(
+          horizontalScrollRailClass,
+          "mb-8 gap-5 border-b border-border/45 pb-0",
+        )}
+      >
       {zones.map((zone) => {
         const isActive = activeZoneId === zone.id;
 
@@ -118,7 +122,8 @@ function DestinationZoneTabs({
           </button>
         );
       })}
-    </nav>
+      </nav>
+    </div>
   );
 }
 

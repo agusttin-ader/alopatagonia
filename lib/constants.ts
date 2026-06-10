@@ -26,6 +26,8 @@ export const SECTION_IDS = {
   catalogHub: "explorar-catalogo",
   destinations: "destinos",
   winterShop: "tienda-invierno",
+  aboutUs: "quienes-somos",
+  escapadasExpress: "escapadas-express",
   cta: "contacto",
 } as const;
 
@@ -365,6 +367,7 @@ export {
   IMAGE_BLUR_PLACEHOLDER,
   IMAGE_QUALITY,
   IMAGE_QUALITY_CARD,
+  IMAGE_QUALITY_DETAIL,
   IMAGE_QUALITY_GALLERY,
   IMAGE_QUALITY_HERO,
   IMAGE_QUALITY_INTRO,
@@ -372,6 +375,8 @@ export {
   IMAGE_PRELOAD_WIDTH,
   IMAGE_SIZES,
   buildNextImageUrl,
+  preloadOptimizedImage,
+  preloadOptimizedImagesIdle,
 } from "@/lib/image-config";
 
 function galleryFromPaths(paths: string[], altPrefix: string): GalleryImage[] {

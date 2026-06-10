@@ -178,7 +178,7 @@ function GalleryCell({
       src={image.src}
       alt={image.alt}
       fill
-      qualityPreset="gallery"
+      qualityPreset={hero ? "detail" : "gallery"}
       withBlur={false}
       sizes={hero ? IMAGE_SIZES.homeGalleryHero : IMAGE_SIZES.homeGalleryTile}
       priority={priority}

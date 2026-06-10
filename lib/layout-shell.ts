@@ -134,6 +134,14 @@ export const DETAIL_STICKY_TOP = cn(
   "min-[1920px]:top-32 min-[2560px]:top-36",
 );
 
+/** Barra lateral del catálogo split — queda fija al hacer scroll. */
+export const CATALOG_SPLIT_SIDEBAR_STICKY = cn(
+  "sticky z-10 self-start",
+  DETAIL_STICKY_TOP,
+  "max-h-[calc(100dvh-7rem)] overflow-y-auto overscroll-y-contain",
+  "[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+);
+
 export const LIGHTBOX_FRAME = cn(
   "h-[min(90vh,820px)] w-[min(92vw,1100px)]",
   "min-[1920px]:h-[min(88vh,980px)] min-[1920px]:w-[min(88vw,1280px)]",

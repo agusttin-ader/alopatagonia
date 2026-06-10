@@ -5,25 +5,12 @@ import { useCallback, useEffect, useState } from "react";
 
 import {
   IMAGE_BLUR_PLACEHOLDER,
-  IMAGE_QUALITY,
-  IMAGE_QUALITY_GALLERY,
-  IMAGE_QUALITY_CARD,
-  IMAGE_QUALITY_HERO,
-  IMAGE_QUALITY_INTRO,
-  IMAGE_QUALITY_LIGHTBOX,
+  IMAGE_QUALITY_BY_PRESET,
+  type ImageQualityPreset,
 } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
-const QUALITY_BY_PRESET = {
-  gallery: IMAGE_QUALITY_GALLERY,
-  card: IMAGE_QUALITY_CARD,
-  default: IMAGE_QUALITY,
-  hero: IMAGE_QUALITY_HERO,
-  intro: IMAGE_QUALITY_INTRO,
-  lightbox: IMAGE_QUALITY_LIGHTBOX,
-} as const;
-
-export type ImageQualityPreset = keyof typeof QUALITY_BY_PRESET;
+export type { ImageQualityPreset };
 
 export type AppImageProps = ImageProps & {
   /** Resuelve `quality` si no se pasa explícito. */
@@ -122,8 +109,9 @@ export function AppImage({
       width={width}
       height={height}
       {...props}
-      quality={quality ?? QUALITY_BY_PRESET[qualityPreset]}
+      quality={quality ?? IMAGE_QUALITY_BY_PRESET[qualityPreset]}
       priority={priority}
+      fetchPriority={priority ? "high" : undefined}
       loading={priority ? undefined : (loading ?? "lazy")}
       placeholder={resolvedPlaceholder}
       blurDataURL={
@@ -136,7 +124,7 @@ export function AppImage({
       className={cn(
         className,
         usePulse &&
-          "transition-opacity duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none",
+          "transition-opacity duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none",
         usePulse && (loaded ? "opacity-100" : "opacity-0"),
         usePulse && (fill ? "z-[1]" : "relative z-[1]"),
       )}

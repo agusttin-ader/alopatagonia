@@ -2,7 +2,8 @@ import { Share2 } from "lucide-react";
 import Link from "next/link";
 
 import { SiteLogo } from "@/components/brand/SiteLogo";
-import { PLANNER_PATH } from "@/lib/constants";
+import { PLANNER_PATH, SECTION_IDS } from "@/lib/constants";
+import { getHomeSectionHref } from "@/lib/home-sections";
 import { SEO_POPULAR_DESTINATIONS } from "@/lib/seo-destinations";
 import { SITE } from "@/lib/site";
 
@@ -83,6 +84,18 @@ export function Footer() {
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
               Planear mi viaje
+            </Link>
+            <Link
+              href={getHomeSectionHref(SECTION_IDS.escapadasExpress, false)}
+              className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            >
+              Escapadas express
+            </Link>
+            <Link
+              href={getHomeSectionHref(SECTION_IDS.aboutUs, false)}
+              className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+            >
+              Quiénes somos
             </Link>
             <Link
               href="/invierno"

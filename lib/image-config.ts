@@ -1,14 +1,17 @@
 /**
- * Calidad por contexto: AVIF/WebP a 80–88 suele verse igual que JPEG 100 en pantalla,
- * con archivos mucho más livianos y decode más rápido. Lightbox un poco más alto.
+ * Calidad por contexto — AVIF/WebP a estos valores se ve nítido en pantalla
+ * con archivos mucho más livianos que JPEG al 100%.
+ *
+ * Regla: subir calidad en vistas grandes (hero, lightbox); acotar ancho con `sizes`
+ * para que el optimizador no sirva píxeles de más en cards.
  */
-export const IMAGE_QUALITY_GALLERY = 82 as const;
-export const IMAGE_QUALITY = 85 as const;
-/** Portadas de cards (catálogo) — un poco más alta para evitar banding en retina + hover zoom. */
-export const IMAGE_QUALITY_CARD = 88 as const;
-export const IMAGE_QUALITY_HERO = 88 as const;
-export const IMAGE_QUALITY_LIGHTBOX = 88 as const;
-export const IMAGE_QUALITY_INTRO = 85 as const;
+export const IMAGE_QUALITY_LIGHTBOX = 92 as const;
+export const IMAGE_QUALITY_DETAIL = 90 as const;
+export const IMAGE_QUALITY_HERO = 90 as const;
+export const IMAGE_QUALITY_CARD = 90 as const;
+export const IMAGE_QUALITY_GALLERY = 88 as const;
+export const IMAGE_QUALITY = 88 as const;
+export const IMAGE_QUALITY_INTRO = 88 as const;
 
 /** Placeholder sólido (--muted) — evita bandas de color al escalar blur en mobile/Safari. */
 export const IMAGE_BLUR_PLACEHOLDER =
@@ -35,18 +38,42 @@ export const IMAGE_SIZES = {
     "(max-width: 1024px) 30vw, (min-width: 3840px) 480px, (min-width: 2560px) 400px, 200px",
   lightbox:
     "(min-width: 3840px) 1680px, (min-width: 2560px) 1480px, (min-width: 1920px) 1280px, (min-width: 1280px) 1200px, 92vw",
+  aboutUsBackground: "100vw",
   logo: "160px",
   avatar: "36px",
 } as const;
 
 export const IMAGE_PRELOAD_WIDTH = {
   introDesktop: 1280,
+  heroDesktop: 1920,
+  cardDesktop: 640,
+  galleryDesktop: 960,
+  lightboxDesktop: 1280,
 } as const;
 
-/** URL del optimizador de Next para fondos CSS / preload (misma calidad que `<Image />`). */
+export type ImageQualityPreset =
+  | "lightbox"
+  | "detail"
+  | "hero"
+  | "card"
+  | "gallery"
+  | "default"
+  | "intro";
+
+export const IMAGE_QUALITY_BY_PRESET: Record<ImageQualityPreset, number> = {
+  lightbox: IMAGE_QUALITY_LIGHTBOX,
+  detail: IMAGE_QUALITY_DETAIL,
+  hero: IMAGE_QUALITY_HERO,
+  card: IMAGE_QUALITY_CARD,
+  gallery: IMAGE_QUALITY_GALLERY,
+  default: IMAGE_QUALITY,
+  intro: IMAGE_QUALITY_INTRO,
+};
+
+/** URL del optimizador de Next — usar la misma en `<Image />` y en preload. */
 export function buildNextImageUrl(
   src: string,
-  options: { width: number; quality?: number } = { width: 1280 },
+  options: { width: number; quality?: number } = { width: IMAGE_PRELOAD_WIDTH.heroDesktop },
 ): string {
   const quality = options.quality ?? IMAGE_QUALITY;
   const params = new URLSearchParams({
@@ -55,4 +82,53 @@ export function buildNextImageUrl(
     q: String(quality),
   });
   return `/_next/image?${params.toString()}`;
+}
+
+/** Precarga una imagen optimizada (misma URL que Next Image). */
+export function preloadOptimizedImage(
+  src: string,
+  options: { width: number; quality?: number; highPriority?: boolean } = {
+    width: IMAGE_PRELOAD_WIDTH.heroDesktop,
+  },
+): void {
+  if (typeof window === "undefined") return;
+
+  const href = buildNextImageUrl(src, options);
+
+  if (!document.querySelector(`link[rel="preload"][href="${href}"]`)) {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = href;
+    if (options.highPriority) {
+      link.setAttribute("fetchpriority", "high");
+    }
+    document.head.appendChild(link);
+  }
+
+  const img = new Image();
+  if (options.highPriority && "fetchPriority" in img) {
+    (img as HTMLImageElement & { fetchPriority: string }).fetchPriority = "high";
+  }
+  img.src = href;
+}
+
+/** Precarga el resto en idle para no competir con LCP. */
+export function preloadOptimizedImagesIdle(
+  sources: string[],
+  options: { width: number; quality?: number },
+): void {
+  if (typeof window === "undefined") return;
+
+  const run = () => {
+    for (const src of sources) {
+      preloadOptimizedImage(src, options);
+    }
+  };
+
+  if ("requestIdleCallback" in window) {
+    window.requestIdleCallback(run, { timeout: 4000 });
+  } else {
+    setTimeout(run, 1200);
+  }
 }

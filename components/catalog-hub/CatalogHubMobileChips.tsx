@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 
 import { CATALOG_HUB_PILLARS } from "@/lib/catalog-hub/config";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
-import { cn } from "@/lib/utils";
+import { cn, horizontalScrollRailClass } from "@/lib/utils";
 
 export function CatalogHubMobileChips({ className }: { className?: string }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -21,13 +21,13 @@ export function CatalogHubMobileChips({ className }: { className?: string }) {
 
   return (
     <div
-      className={cn(
-        "flex gap-2 overflow-x-auto pb-0.5 [-ms-overflow-style:none] [scrollbar-width:none] md:hidden [&::-webkit-scrollbar]:hidden",
-        className,
-      )}
-      role="tablist"
-      aria-label="Categorías del catálogo"
+      className={cn("max-w-full overflow-hidden md:hidden", className)}
     >
+      <div
+        className={cn(horizontalScrollRailClass, "gap-2 pb-0.5")}
+        role="tablist"
+        aria-label="Categorías del catálogo"
+      >
       {CATALOG_HUB_PILLARS.map((pillar, index) => {
         const isActive = index === activeIndex;
         return (
@@ -48,6 +48,7 @@ export function CatalogHubMobileChips({ className }: { className?: string }) {
           </button>
         );
       })}
+      </div>
     </div>
   );
 }

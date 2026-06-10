@@ -9,7 +9,6 @@ import { Reveal } from "@/components/motion/reveal";
 import { ScrollParallax } from "@/components/motion/scroll-parallax";
 import { buttonVariants } from "@/components/ui/button";
 import {
-  IMAGE_QUALITY,
   IMAGE_SIZES,
   PLANNER_PATH,
   SECTION_IDS,
@@ -54,7 +53,7 @@ export function SignatureSection() {
                 src={EXPERIENCE_IMAGE.src}
                 alt="Ruta de lago y montana en Patagonia"
                 fill
-                quality={IMAGE_QUALITY}
+                qualityPreset="hero"
                 className="object-cover"
                 sizes={IMAGE_SIZES.signature}
                 loading="lazy"

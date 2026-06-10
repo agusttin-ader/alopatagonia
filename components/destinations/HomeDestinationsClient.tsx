@@ -15,7 +15,7 @@ import {
 
 import { Reveal } from "@/components/motion/reveal";
 import { SECTION_IDS } from "@/lib/constants";
-import { IMAGE_QUALITY_GALLERY, IMAGE_QUALITY_LIGHTBOX, IMAGE_SIZES } from "@/lib/image-config";
+import { IMAGE_SIZES } from "@/lib/image-config";
 import type { HomeDestinationEditorial } from "@/lib/home-destinations-types";
 import { HOME_DESTINATION_GALLERY_MOBILE_COUNT } from "@/lib/home-destinations";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
@@ -140,11 +140,10 @@ function DestinationPreview({
                   src={image.src}
                   alt={image.alt}
                   fill
-                  quality={IMAGE_QUALITY_GALLERY}
+                  qualityPreset="gallery"
                   className="object-cover"
                   sizes={IMAGE_SIZES.galleryTile}
-                  loading={index === 0 ? "eager" : "lazy"}
-                  fetchPriority={index === 0 ? "high" : undefined}
+                  priority={index === 0}
                 />
               </button>
             );
@@ -169,10 +168,10 @@ function DestinationPreview({
                 src={image.src}
                 alt={image.alt}
                 fill
-                quality={IMAGE_QUALITY_GALLERY}
+                qualityPreset="gallery"
                 className="object-cover"
                 sizes={IMAGE_SIZES.galleryTile}
-                loading={index === 0 ? "eager" : "lazy"}
+                priority={index === 0}
               />
             </motion.button>
           );
@@ -517,7 +516,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
                 src={activeLightboxImage.src}
                 alt={activeLightboxImage.alt}
                 fill
-                quality={IMAGE_QUALITY_LIGHTBOX}
+                qualityPreset="lightbox"
                 className="rounded-2xl object-contain"
                 sizes={IMAGE_SIZES.lightbox}
                 priority

@@ -7,23 +7,22 @@ import { usePathname } from "next/navigation";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { SiteLogo } from "@/components/brand/SiteLogo";
-import { Button } from "@/components/ui/button";
-import { SECTION_IDS, SITE, PLANNER_PATH } from "@/lib/constants";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { SITE } from "@/lib/constants";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
+import {
+  NAV_DESKTOP_LINKS,
+  NAV_PLANNER_LINK,
+  getMobileNavLinks,
+} from "@/lib/nav-links";
 import { cn } from "@/lib/utils";
 
 const HOME_SECTION_IDS = {
   inicio: "inicio",
 } as const;
 
-const HOME_LINKS = [
-  { label: "Inicio", href: `#${HOME_SECTION_IDS.inicio}`, id: HOME_SECTION_IDS.inicio },
-  { label: "Destinos", href: "/destinos", id: "destinos" },
-  { label: "Alojamientos", href: "/alojamientos", id: "alojamientos" },
-  { label: "Excursiones", href: "/excursiones", id: "excursiones" },
-  { label: "Planear mi viaje", href: PLANNER_PATH, id: SECTION_IDS.planner },
-  { label: "Indumentaria", href: "/invierno", id: "invierno" },
-] as const;
+const DESKTOP_LINK_CLASS =
+  "motion-link-underline motion-cta relative inline-flex min-h-11 cursor-pointer select-none items-center justify-center rounded-md px-2.5 py-2 text-[0.92rem] font-medium whitespace-nowrap text-foreground/72 hover:text-footer-lake focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake/45 focus-visible:ring-offset-0 lg:px-3 lg:text-[0.94rem]";
 
 const MOTION_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const HEADER_TRANSITION = { duration: 0.34, ease: MOTION_EASE };
@@ -128,17 +127,7 @@ export function GlobalNav() {
     };
   }, [mobileOpen]);
 
-  const links = useMemo(() => {
-    if (isHome) return HOME_LINKS;
-    return [
-      { label: "Inicio", href: "/", id: "home" },
-      { label: "Destinos", href: "/destinos", id: "destinos" },
-      { label: "Alojamientos", href: "/alojamientos", id: "alojamientos" },
-      { label: "Excursiones", href: "/excursiones", id: "excursiones" },
-      { label: "Planear mi viaje", href: PLANNER_PATH, id: "planner" },
-      { label: "Indumentaria", href: "/invierno", id: "invierno" },
-    ];
-  }, [isHome]);
+  const mobileLinks = useMemo(() => getMobileNavLinks(isHome), [isHome]);
 
   const scrollSectionIntoView = (sectionId: string) => {
     if (sectionId === HOME_SECTION_IDS.inicio) {
@@ -302,26 +291,32 @@ export function GlobalNav() {
       <motion.div className="hidden md:block" transition={headerTransition}>
         <motion.div
           className={cn(
-            "relative flex h-20 items-center justify-between border-b border-border/75 bg-background px-4 transition-[height,box-shadow,border-color] duration-300 ease-out sm:px-8 lg:px-14 2xl:px-20",
+            "relative flex h-20 items-center gap-6 border-b border-border/75 bg-background px-4 transition-[height,box-shadow,border-color] duration-300 ease-out sm:px-8 lg:px-14 2xl:px-20",
             scrolled &&
               "h-18 border-border/80 shadow-[0_10px_24px_-22px_rgba(0,0,0,0.5)]",
           )}
         >
-          <SiteLogo linked priority showWordmark />
+          <SiteLogo linked priority showWordmark className="shrink-0" />
 
-          <div className="hidden items-center gap-2 md:flex">
-            {links.map((link) => {
-              return (
-                <Link
-                  key={link.id}
-                  href={link.href}
-                  onClick={(event) => onNavLinkClick(event, link.href, link.id)}
-                  className="motion-link-underline motion-cta relative inline-flex min-h-11 cursor-pointer select-none items-center justify-center rounded-md px-3.5 py-2 text-[0.98rem] font-medium text-foreground/72 hover:text-footer-lake focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake/45 focus-visible:ring-offset-0"
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
+          <div className="ml-auto hidden min-w-0 items-center gap-0.5 md:flex lg:gap-1">
+            {NAV_DESKTOP_LINKS.map((link) => (
+              <Link
+                key={link.id}
+                href={link.href}
+                className={DESKTOP_LINK_CLASS}
+              >
+                {link.label}
+              </Link>
+            ))}
+            <Link
+              href={NAV_PLANNER_LINK.href}
+              className={cn(
+                buttonVariants({ variant: "marketing", size: "sm" }),
+                "motion-cta ml-1.5 h-10 rounded-full px-4 text-[0.88rem] font-semibold whitespace-nowrap lg:ml-2 lg:px-5 lg:text-[0.9rem]",
+              )}
+            >
+              {NAV_PLANNER_LINK.label}
+            </Link>
           </div>
         </motion.div>
       </motion.div>
@@ -391,7 +386,7 @@ export function GlobalNav() {
                     },
                   }}
                 >
-                  {links.map((link, index) => (
+                  {mobileLinks.map((link, index) => (
                     <motion.div
                       key={link.id}
                       variants={{

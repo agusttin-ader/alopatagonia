@@ -3,6 +3,7 @@ import {
   IMAGE_PRELOAD_WIDTH,
   IMAGE_QUALITY_INTRO,
 } from "@/lib/image-config";
+import { HOME_SECTION_HASH_IDS } from "@/lib/home-sections";
 
 /** Keep in sync with runSiteIntroBoot() (instrumentation-client.ts) */
 export const SITE_INTRO_STORAGE_KEY = "alo-site-intro-seen-v2";
@@ -56,7 +57,10 @@ export function runSiteIntroBoot(): void {
       window.location.pathname === "/" || window.location.pathname === "";
 
     if (home && window.location.hash) {
-      history.replaceState(null, "", window.location.pathname + window.location.search);
+      const hashId = decodeURIComponent(window.location.hash.slice(1));
+      if (!HOME_SECTION_HASH_IDS.has(hashId)) {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
     }
 
     window.scrollTo(0, 0);

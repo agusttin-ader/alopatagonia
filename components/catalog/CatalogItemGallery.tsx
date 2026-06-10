@@ -1,7 +1,7 @@
 import { AppImage } from "@/components/media/AppImage";
 
 import type { CatalogImage } from "@/lib/catalog/types";
-import { IMAGE_QUALITY_GALLERY, IMAGE_SIZES } from "@/lib/image-config";
+import { IMAGE_SIZES } from "@/lib/image-config";
 import {
   CATALOG_GALLERY_GAP,
   CATALOG_GALLERY_GRID_HEIGHT,
@@ -121,7 +121,7 @@ export function CatalogItemGallery({
             alt={cell.image.alt}
             fill
             priority={cell.priority}
-            quality={IMAGE_QUALITY_GALLERY}
+            qualityPreset={cell.priority ? "detail" : "gallery"}
             className={cn(
               "object-cover motion-safe:transition motion-safe:duration-300",
               isInteractive && "group-hover:scale-[1.015]",

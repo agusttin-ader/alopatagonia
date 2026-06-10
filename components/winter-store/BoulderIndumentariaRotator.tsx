@@ -5,7 +5,7 @@ import { AppImage } from "@/components/media/AppImage";
 import { useEffect, useState } from "react";
 
 import { BOULDER_INDUMENTARIA_IMAGES, type GalleryImage } from "@/lib/constants";
-import { IMAGE_QUALITY, IMAGE_SIZES } from "@/lib/image-config";
+import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
 type BoulderIndumentariaRotatorProps = {
@@ -61,7 +61,7 @@ export function BoulderIndumentariaRotator({
             alt={image.alt}
             fill
             sizes={sizes}
-            quality={IMAGE_QUALITY}
+            qualityPreset="gallery"
             priority={priority && i === 0}
             className="object-cover"
           />

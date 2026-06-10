@@ -2,63 +2,31 @@ import type { ReactNode } from "react";
 import { AppImage } from "@/components/media/AppImage";
 import Link from "next/link";
 
-import { CatalogItemShowcase } from "@/components/catalog/CatalogItemShowcase";
+import { CatalogItemGrid } from "@/components/catalog/CatalogItemGrid";
+import { DestinationAccommodationBrowse } from "@/components/catalog/DestinationAccommodationBrowse";
 import { FaqSection } from "@/components/seo/FaqSection";
 import { buttonVariants } from "@/components/ui/button";
 import { buildCarRentalWhatsAppMessage } from "@/lib/catalog/placeholders";
-import type { AccommodationType, CatalogItem, DestinationCatalog } from "@/lib/catalog/types";
+import type { DestinationCatalog } from "@/lib/catalog/types";
 import { PLANNER_PATH, getWhatsAppUrl } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import {
-  CATALOG_GRID_GAP,
   DETAIL_TITLE,
   SECTION_TITLE,
   SHELL_MAX,
   SHELL_PAGE_PT,
   SHELL_PX,
-  SUBSECTION_TITLE,
   siteShell,
 } from "@/lib/layout-shell";
 import { getDestinationSeo } from "@/lib/seo-destinations";
 import { cn } from "@/lib/utils";
 
-function accommodationBadge(item: CatalogItem) {
-  if (item.type === "cabana") return "Cabaña";
-  if (item.type === "departamento") return "Departamento";
-  return "Hotel";
+function accommodationCountLabel(count: number) {
+  return count === 1 ? "1 alojamiento" : `${count} alojamientos`;
 }
 
-const ACCOMMODATION_SECTIONS: {
-  type: AccommodationType;
-  id: string;
-  title: string;
-  description: string;
-}[] = [
-  {
-    type: "cabana",
-    id: "alojamientos-cabanas-heading",
-    title: "Cabañas",
-    description: "Cabañas con privacidad y espacio, cada una con su galería de fotos.",
-  },
-  {
-    type: "departamento",
-    id: "alojamientos-deptos-heading",
-    title: "Departamentos",
-    description: "Deptos en distintos barrios y capacidades. Tocá para ver fotos y consultar.",
-  },
-  {
-    type: "hostel",
-    id: "alojamientos-hoteles-heading",
-    title: "Hoteles",
-    description: "Hoteles según categoría. Mirá las fotos y preguntanos disponibilidad.",
-  },
-];
-
-function groupAccommodationsByType(items: CatalogItem[]) {
-  return ACCOMMODATION_SECTIONS.map((section) => ({
-    ...section,
-    items: items.filter((item) => item.type === section.type),
-  })).filter((section) => section.items.length > 0);
+function excursionCountLabel(count: number) {
+  return count === 1 ? "1 excursión" : `${count} excursiones`;
 }
 
 type CatalogSectionProps = {
@@ -89,6 +57,16 @@ function CatalogSection({ id, title, description, children }: CatalogSectionProp
 export function DestinationDetail({ destination }: { destination: DestinationCatalog }) {
   const carWhatsApp = getWhatsAppUrl(buildCarRentalWhatsAppMessage(destination.name));
   const seo = getDestinationSeo(destination.slug);
+  const accommodationEntries = destination.accommodations.map((item) => ({
+    destination,
+    item,
+    kind: "accommodation" as const,
+  }));
+  const excursionEntries = destination.excursions.map((item) => ({
+    destination,
+    item,
+    kind: "excursion" as const,
+  }));
 
   return (
     <>
@@ -105,7 +83,7 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
           alt={`Viajes a ${destination.name} — Patagonia Argentina`}
           fill
           priority
-          qualityPreset="gallery"
+          qualityPreset="hero"
           className="object-cover"
           sizes={IMAGE_SIZES.viewport}
         />
@@ -158,60 +136,39 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
           </section>
         ) : null}
 
-        <section aria-labelledby="alojamientos-heading" className="scroll-mt-24 sm:scroll-mt-28">
-          <div className="flex flex-col gap-3 border-b border-border/70 pb-5 sm:flex-row sm:items-end sm:justify-between">
-            <div>
+        {accommodationEntries.length > 0 ? (
+          <section aria-labelledby="alojamientos-heading" className="scroll-mt-24 sm:scroll-mt-28">
+            <div className="mb-8 min-w-0">
               <h2 id="alojamientos-heading" className={cn("font-heading", SECTION_TITLE)}>
                 Alojamientos
               </h2>
               <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-                Tocá una opción para ver todas las fotos y preguntar si hay lugar.
+                {destination.region} · {accommodationCountLabel(accommodationEntries.length)}
               </p>
             </div>
-          </div>
 
-          <div className="mt-8 space-y-14 min-[1920px]:space-y-16 min-[2560px]:space-y-20">
-            {groupAccommodationsByType(destination.accommodations).map((section) => (
-              <section key={section.id} aria-labelledby={section.id} className="scroll-mt-24 sm:scroll-mt-28">
-                <div className="mb-6 max-w-2xl">
-                  <h3 id={section.id} className={cn("font-heading", SUBSECTION_TITLE)}>
-                    {section.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                    {section.description}
-                  </p>
-                </div>
-                <div className={cn("grid sm:grid-cols-2 lg:grid-cols-3", CATALOG_GRID_GAP)}>
-                  {section.items.map((item) => (
-                    <CatalogItemShowcase
-                      key={item.id}
-                      item={item}
-                      destinationSlug={destination.slug}
-                      badge={accommodationBadge(item)}
-                    />
-                  ))}
-                </div>
-              </section>
-            ))}
-          </div>
-        </section>
+            <DestinationAccommodationBrowse
+              destination={destination}
+              entries={accommodationEntries}
+            />
+          </section>
+        ) : null}
 
-        <CatalogSection
-          id="excursiones-heading"
-          title="Excursiones"
-          description="Excursiones que trabajamos acá. Fotos y fechas según la temporada."
-        >
-          <div className={cn("grid sm:grid-cols-2 lg:grid-cols-3", CATALOG_GRID_GAP)}>
-            {destination.excursions.map((item) => (
-              <CatalogItemShowcase
-                key={item.id}
-                item={item}
-                destinationSlug={destination.slug}
-                badge="Excursión"
-              />
-            ))}
-          </div>
-        </CatalogSection>
+        {excursionEntries.length > 0 ? (
+          <CatalogSection
+            id="excursiones-heading"
+            title="Excursiones"
+            description={`${destination.region} · ${excursionCountLabel(excursionEntries.length)}`}
+          >
+            <CatalogItemGrid
+              entries={excursionEntries}
+              mode="excursion"
+              compact
+              compactGap
+              gridClassName="grid-cols-2 lg:grid-cols-3"
+            />
+          </CatalogSection>
+        ) : null}
 
         <section
           aria-labelledby="auto-heading"

@@ -85,7 +85,7 @@ export function CatalogImageCarousel({
               alt={image.alt}
               fill
               priority={index === 0}
-              qualityPreset="gallery"
+              qualityPreset={index === 0 ? "detail" : "gallery"}
               className="object-cover"
               sizes={IMAGE_SIZES.catalogItemGallery}
             />
