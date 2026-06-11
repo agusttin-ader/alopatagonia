@@ -23,22 +23,22 @@ function defaultHighlights(type: AccommodationType, destinationName: string): st
   if (type === "departamento") {
     return [
       `Ubicación en ${destinationName} según la unidad`,
-      "Para parejas o familias chicas",
-      "Cocina equipada y espacio para descansar",
-      "Fechas y check-in los vemos por WhatsApp",
+      "Cocina y espacio para varios días de viaje",
+      "Parejas o familias chicas",
+      "Coordinamos fechas y check-in por WhatsApp",
     ];
   }
   if (type === "cabana") {
     return [
       `Entorno natural en ${destinationName}`,
-      "Más privacidad y espacio que un hotel",
-      "Buena opción para varios días de estadía",
-      "Preguntanos capacidad y qué incluye",
+      "Más espacio y privacidad que un hotel",
+      "Buena base si vas a cocinar o quedarte una semana",
+      "Consultanos capacidad y qué incluye",
     ];
   }
   return [
     `Hotel en ${destinationName}, cerca de las salidas del día`,
-    "Servicios según categoría",
+    "Servicios según categoría del establecimiento",
     "Disponibilidad según temporada",
   ];
 }
@@ -49,12 +49,12 @@ function accommodationDescription(
   destinationName: string,
 ): string {
   if (type === "cabana") {
-    return `${name} — cabaña en ${destinationName} para quedarte varios días y salir a recorrer.`;
+    return `${name} — cabaña en ${destinationName} para instalarte varios días y salir a recorrer.`;
   }
   if (type === "departamento") {
-    return `${name} — departamento en ${destinationName} para quedarte varios días y salir a recorrer.`;
+    return `${name} — departamento en ${destinationName} con lo necesario para una estadía más larga.`;
   }
-  return `${name} — hotel en ${destinationName} para quedarte varios días y salir a recorrer.`;
+  return `${name} — hotel en ${destinationName} como base para tus salidas diarias.`;
 }
 
 export function getDestinationAccommodationEntries(

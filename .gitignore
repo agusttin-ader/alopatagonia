@@ -1,3 +1,6 @@
+# Cursor (config local del editor — no versionar)
+.cursor/
+
 # See https://help.github.com/articles/ignoring-files/
 
 # Dependencies

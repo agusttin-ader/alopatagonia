@@ -1,10 +1,11 @@
+import { CLIENT_ABOUT_US_COPY } from "@/lib/client-protected-copy";
 import { HERO_IMAGE, SECTION_IDS } from "@/lib/constants";
 
 export const QUIENES_SOMOS_PATH = `/#${SECTION_IDS.aboutUs}` as const;
 export const ESCAPADAS_EXPRESS_PATH = `/#${SECTION_IDS.escapadasExpress}` as const;
 
 export const ABOUT_US_COPY = {
-  title: "Quiénes somos",
+  title: CLIENT_ABOUT_US_COPY.title,
   heroImage: HERO_IMAGE,
   /** Una por visita, rotan en cada carga de la página. */
   images: [
@@ -25,12 +26,8 @@ export const ABOUT_US_COPY = {
       alt: "Muelle de madera en lago patagónico con montañas al fondo",
     },
   ],
-  paragraphs: [
-    "Alo_patagonia es una empresa dedicada íntegramente al turismo en la Región Patagonia-argentina.",
-    "Porque para nosotros cada pasajero es único...diseñamos experiencias pensadas desde la mirada del viajero, cuidando cada detalle, para que disfrutes de un viaje inolvidable!",
-    "Nuestro objetivo es que te lleves los mejores recuerdos, que vivas una experiencia perfecta de principio a fin, para que siempre quieras volver!!",
-  ],
-  closing: "Si estás list@ para tu próxima aventura...contactános!!",
+  paragraphs: [...CLIENT_ABOUT_US_COPY.paragraphs],
+  closing: CLIENT_ABOUT_US_COPY.closing,
 } as const;
 
 export const ESCAPADAS_EXPRESS_COPY = {

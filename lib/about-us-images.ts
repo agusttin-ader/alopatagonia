@@ -39,6 +39,11 @@ export function commitAboutImageIndex(index: number): void {
   }
 }
 
+export function getAboutUsFallbackImage() {
+  const index = peekAboutImageIndex();
+  return ABOUT_US_COPY.images[index] ?? ABOUT_US_COPY.images[0];
+}
+
 /** Precarga la foto activa ya; el resto en idle. */
 export function preloadAboutUsImages(): void {
   if (typeof window === "undefined") return;

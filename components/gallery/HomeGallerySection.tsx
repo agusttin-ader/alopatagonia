@@ -306,7 +306,8 @@ export function HomeGallerySection() {
             Fotos de viajes que hicimos
           </h2>
           <p className="mt-4 max-w-lg text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Cada vez ves otra mezcla: rutas, lagos y momentos de viajeros que pasaron por acá.
+            Cada visita mezcla distinto: lagos, glaciares, rutas en auto y momentos de viajeros
+            que pasaron por acá.
           </p>
         </Reveal>
       </div>

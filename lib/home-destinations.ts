@@ -12,7 +12,7 @@ const DESTINATION_META = [
     name: "Bariloche",
     region: "San Carlos de Bariloche · Río Negro",
     description:
-      "Bosque, lagos y rutas en auto. La clásica para arrancar en el sur.",
+      "Lagos, bosque andino y el Nahuel Huapi. La base más elegida para arrancar un viaje por el sur.",
     fallback: BARILOCHE_EDITORIAL_IMAGES[0],
     curatedGallery: BARILOCHE_EDITORIAL_IMAGES,
   },
@@ -22,7 +22,7 @@ const DESTINATION_META = [
     name: "San Martín de los Andes",
     region: "Neuquén · Lago Lácar",
     description:
-      "Bosque andino y rutas junto al lago. Relax, caminatas y ruta escénica.",
+      "Más tranquilo que Bariloche: Lácar, Lanín y la Ruta de los Siete Lagos a mano.",
     fallback: "/images/destinations/san-martin/alojamientos/Screenshot_20251106_191521_Instagram.jpg",
   },
   {
@@ -31,7 +31,7 @@ const DESTINATION_META = [
     name: "Traful / Villa Traful",
     region: "Neuquén · Lago Traful",
     description:
-      "Bosque y lago Traful. Pueblo chico, poco tránsito.",
+      "Lago Traful turquesa, bosque sumergido y pueblo chico sin el ritmo de Bariloche.",
     fallback: "/images/IMG_1506.jpeg",
   },
   {
@@ -40,7 +40,7 @@ const DESTINATION_META = [
     name: "Villa La Angostura",
     region: "Neuquén · Reserva Nacional",
     description:
-      "Pueblo chico, reserva y lagos. Para ir sin apuro.",
+      "Arrayanes, bahías del Nahuel Huapi y calles de pueblo. Para bajar un cambio.",
     fallback: "/images/destinations/la-angostura/alojamientos/IMG_20240117_155008_248.jpg",
   },
   {
@@ -49,7 +49,7 @@ const DESTINATION_META = [
     name: "Esquel / Trevelin",
     region: "Chubut · Patagonia andina",
     description:
-      "Al pie de los Andes: Parque Nacional Los Alerces, La Hoya y el Tren La Trochita.",
+      "Los Alerces (Patrimonio UNESCO), La Hoya en invierno y Trevelin gales a pocos kilómetros.",
     fallback: "/images/destinations/esquel-trevelin /alojamientos/IMG_20231023_203417_099.jpg",
   },
   {
@@ -58,7 +58,7 @@ const DESTINATION_META = [
     name: "Puerto Madryn",
     region: "Chubut · Costa patagónica",
     description:
-      "Costa patagónica: ballenas, pingüinos y salidas de un día.",
+      "Ballenas, pingüinos y Península Valdés — cada mes tiene su fauna protagonista.",
     fallback: "/images/destinations/madryn/alojamientos/IMG-20260525-WA0122.jpg",
   },
   {
@@ -67,7 +67,7 @@ const DESTINATION_META = [
     name: "El Calafate",
     region: "Santa Cruz · Glaciar Perito Moreno",
     description:
-      "Glaciares, lagos turquesa y base para recorrer el sur austral en auto.",
+      "Perito Moreno, Lago Argentino y conexión en auto con El Chaltén (220 km).",
     fallback: "/images/IMG_1506.jpeg",
   },
   {
@@ -76,7 +76,7 @@ const DESTINATION_META = [
     name: "El Chaltén",
     region: "Santa Cruz · Capital del trekking",
     description:
-      "Montaña y senderos. Si el clima cambia, cambiamos el plan.",
+      "Trekking al Fitz Roy desde el pueblo. Si el clima cierra un sendero, buscamos otro plan.",
     fallback: "/images/destinations/chalten/alojamientos/IMG-20260525-WA0136.jpg",
   },
   {
@@ -85,7 +85,7 @@ const DESTINATION_META = [
     name: "Ushuaia",
     region: "Tierra del Fuego · Fin del mundo",
     description:
-      "Canal Beagle, montaña y frío de verdad. Te ayudamos con hotel y excursiones.",
+      "Canal Beagle, Parque Nacional Tierra del Fuego y el sur más austral.",
     fallback: "/images/IMG_1506.jpeg",
   },
 ] as const;

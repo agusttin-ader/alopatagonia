@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/motion/reveal";
 import { ScrollParallax } from "@/components/motion/scroll-parallax";
 import { buttonVariants } from "@/components/ui/button";
+import { CLIENT_SIGNATURE_COPY } from "@/lib/client-protected-copy";
 import {
   IMAGE_SIZES,
   PLANNER_PATH,
@@ -18,13 +19,7 @@ import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
 
-const SIGNATURE_POINTS = [
-  "Auto o transfer esperándote en el aeropuerto.",
-  "Hotel según tu ruta y presupuesto",
-  "Excursiones organizadas según el clima.",
-  "WhatsApp activo para acompañarte durante todo tu viaje.",
-  "Itinerario sin cargo para que aproveches tu tiempo a full.",
-] as const;
+const SIGNATURE_POINTS = CLIENT_SIGNATURE_COPY.points;
 
 export function SignatureSection() {
   const reduceMotion = useReducedMotion();
@@ -86,7 +81,7 @@ export function SignatureSection() {
               id="signature-heading"
               className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
             >
-              Coordinamos reservas, traslados y actividades para que viajes con todo resuelto.
+              {CLIENT_SIGNATURE_COPY.heading}
             </h2>
           </Reveal>
 

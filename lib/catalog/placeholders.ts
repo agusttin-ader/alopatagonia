@@ -47,65 +47,71 @@ type ExcursionContent = {
 const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
   bariloche: [
     {
-      name: "Circuito Chico + Punto Panorámico",
+      name: "Circuito Chico y miradores del Llao Llao",
       category: "aventura",
-      description: "Medio día por lagos y miradores del Circuito Chico.",
+      description:
+        "Unos 60 km por la costa oeste del Nahuel Huapi: bosque de coihues, Bahía López y el clásico mirador del Llao Llao. Ideal para el primer día, en auto propio o con guía.",
       highlights: [
-        "Paradas en miradores y puntos fotográficos",
-        "Buena para el primer día",
-        "Salida de medio día con guía local",
+        "Paradas en Punto Panorámico y Colonia Suiza",
+        "Vistas al Lago Moreno y al Cerro López",
+        "Medio día; se combina bien con una tarde libre en el centro",
       ],
     },
     {
-      name: "Navegación Isla Victoria y Arrayanes",
+      name: "Navegación Isla Victoria y Bosque de Arrayanes",
       category: "navegacion",
-      description: "Navegación al Nahuel Huapi: Isla Victoria o Arrayanes, según temporada.",
+      description:
+        "Salida desde Puerto Pañuelo hacia el Parque Nacional Nahuel Huapi. Caminata entre arrayanes centenarios en la península de Quetrihué (acceso según nivel del lago).",
       highlights: [
-        "Embarque según clima y temporada",
-        "Tiempo libre para recorrer senderos",
-        "Recomendado para familias y parejas",
+        "Bosque único de arrayanes en la costa del lago",
+        "Isla Victoria con senderos cortos entre cipreses",
+        "Opera en temporada alta; conviene reservar con anticipación",
       ],
     },
     {
-      name: "Trekking Refugio Frey",
+      name: "Trekking al Refugio Frey",
       category: "trekking",
-      description: "Caminata de montaña con vistas al cordón andino y lagunas de altura.",
+      description:
+        "Subida por el Cerro Catedral hasta el refugio a orillas de la laguna Toncek, con vista directa a las agujas del macizo. Uno de los trekkings más elegidos de Bariloche.",
       highlights: [
-        "Nivel medio/alto según ritmo",
-        "Sugerimos calzado técnico y abrigo",
-        "Salida privada o grupal, según temporada",
+        "Unos 10 km ida (4–5 h) desde la base del Catedral",
+        "Dificultad media; llevar abrigo aunque sea verano",
+        "Se puede hacer por cuenta propia o con guía de montaña",
       ],
     },
   ],
   "san-martin": [
     {
-      name: "Ruta de los 7 Lagos",
+      name: "Ruta de los Siete Lagos",
       category: "aventura",
-      description: "Excursión escénica entre lagos patagónicos y bosques nativos.",
+      description:
+        "Tramo escénico entre San Martín y Villa La Angostura (Ruta 40 / 234): Correntoso, Espejo, Lácar y otros lagos con playas de arena volcánica y bosque andino.",
       highlights: [
-        "Paradas panorámicas durante todo el día",
-        "Se combina bien con Villa La Angostura",
-        "Salida flexible según clima",
+        "Día completo con paradas en miradores y pueblos",
+        "Mejor con auto; también hay salidas organizadas",
+        "En invierno puede haber nieve en tramos altos — consultá antes",
       ],
     },
     {
       name: "Navegación Lago Lácar",
       category: "navegacion",
-      description: "Paseo lacustre con vistas de montaña y costa boscosa.",
+      description:
+        "Paseo lacustre desde el muelle de San Martín con vistas al Volcán Lanín y la costa boscosa. Algunas temporadas extienden hasta Quila Quina.",
       highlights: [
-        "Recorrido apto para todas las edades",
-        "Te pasamos horarios de embarque",
-        "Recomendable en días de calma",
+        "Aguas más calmas que en el Nahuel Huapi",
+        "Apto para familias y adultos mayores",
+        "Horarios según viento y nivel del lago",
       ],
     },
     {
-      name: "Sendero Arrayán y Miradores",
+      name: "Cascada Chachín y playas del Lácar",
       category: "trekking",
-      description: "Caminata de dificultad moderada con vistas abiertas sobre el lago.",
+      description:
+        "Caminata corta hasta la cascada Chachín (acceso desde ruta hacia Hua Hum) o paseo por playas como Yuco y Catritre, a minutos del centro.",
       highlights: [
-        "Trekking de media jornada",
-        "Posibilidad de guía local",
-        "Para quienes van con buen ritmo de caminata",
+        "Opciones de 1 h a medio día según el sendero",
+        "Bosque nativo y sonido del río Bonito",
+        "Buen plan si no querés una jornada exigente",
       ],
     },
   ],
@@ -113,31 +119,34 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
     {
       name: "Laguna de los Tres",
       category: "trekking",
-      description: "Sendero icónico con vistas directas al Fitz Roy en su tramo final.",
+      description:
+        "El trekking emblema del pueblo: subida al mirador frente al Fitz Roy. Último tramo con pendiente fuerte; la recompensa es la vista al glaciar y las agujas.",
       highlights: [
-        "Jornada completa de trekking",
-        "Salida temprana recomendada",
-        "Paisaje de alta montaña",
+        "Jornada completa (8–10 h ida y vuelta desde el pueblo)",
+        "Salir temprano; llevar comida, agua y capas de abrigo",
+        "Si hay viento fuerte en la laguna, conviene reprogramar",
       ],
     },
     {
-      name: "Mirador Cóndores y Águilas",
+      name: "Miradores Cóndores y Águilas",
       category: "fauna",
-      description: "Recorrido corto para observar aves y panorámicas del valle.",
+      description:
+        "Senderos cortos sobre el pueblo con vista al Fitz Roy, al Cerro Torre y al valle del Río de las Vueltas. Cóndores suele verse al atardecer.",
       highlights: [
-        "Buena para la tarde",
-        "Apta para combinar con otros paseos",
-        "Vistas abiertas de cerros y río",
+        "Menos de 2 h ida y vuelta; dificultad baja",
+        "Perfecto el día de llegada para aclimatarse",
+        "Atardeceres muy fotogénicos en Águilas",
       ],
     },
     {
-      name: "Lago del Desierto",
+      name: "Lago del Desierto y Glaciar Huemul",
       category: "aventura",
-      description: "Salida panorámica hacia el norte del valle con caminatas opcionales.",
+      description:
+        "Excursión al norte del valle, cerca de la frontera con Chile. Lago turquesa, glaciar colgante y bosque húmedo; requiere más tiempo que los senderos del pueblo.",
       highlights: [
-        "Paisajes glaciares y bosque nativo",
-        "Opciones de trekking suave o intermedio",
-        "Paradas fotográficas incluidas",
+        "Medio o día completo según si cruzás en lancha",
+        "Paisaje distinto al circuito clásico del Fitz Roy",
+        "Conviene chequear estado de la ruta según la época",
       ],
     },
   ],
@@ -145,31 +154,34 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
     {
       name: "Parque Nacional Los Alerces",
       category: "fauna",
-      description: "Día en Los Alerces: lagos y bosque de alerces milenarios.",
+      description:
+        "Patrimonio UNESCO: lagos verde esmeralda y alerces de más de 2.600 años en el bosque templado lluvioso. Entrada por Villa Futalaufquen o Lago Verde.",
       highlights: [
-        "Recorrido por áreas protegidas",
-        "Interpretación de flora y fauna local",
-        "Salidas durante todo el año",
+        "Lago Menéndez y mirador del Glaciar Torrecillas",
+        "Caminatas guiadas de medio día o jornada completa",
+        "Reserva con tiempo en temporada (cupos limitados)",
       ],
     },
     {
       name: "Navegación Lago Futalaufquen",
       category: "navegacion",
-      description: "Paseo lacustre por uno de los paisajes más representativos de la comarca andina.",
+      description:
+        "Recorrido por el brazo principal del lago dentro del parque, con guías que explican la formación glaciar y la flora del bosque.",
       highlights: [
-        "Navegación tranquila y panorámica",
-        "Apta para familias",
-        "Sujeta a condiciones de viento",
+        "Agua color turquesa entre montañas",
+        "Apto para quienes prefieren ir sin mucho esfuerzo físico",
+        "Sujeta a viento; en días calmos es espectacular",
       ],
     },
     {
-      name: "Valle 16 de Octubre",
+      name: "Valle 16 de Octubre y Trevelin",
       category: "aventura",
-      description: "Circuito por Trevelin y alrededores con foco en paisaje y cultura local.",
+      description:
+        "Ruta por la colonia galesa de Trevelin: molinos, té casero, cascadas y estepa patagónica. Muy común combinarlo con un día en Los Alerces.",
       highlights: [
-        "Visita a zonas rurales y miradores",
-        "Sumá una parada gastronómica en el camino",
-        "Opción de día completo",
+        "Cultura galesa viva (panaderías, museos)",
+        "Cascada Nant y Fall y miradores de la cordillera",
+        "Se hace en auto con paradas; también hay tours de día",
       ],
     },
   ],
@@ -177,63 +189,69 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
     {
       name: "Bosque de Arrayanes",
       category: "trekking",
-      description: "Sendero costero por bosque nativo con vistas al Nahuel Huapi.",
+      description:
+        "Arrayanes naranjas sobre el agua en la península de Quetrihué. Se llega en lancha desde Bahía Brava o por sendero desde el Parque Nacional (según apertura).",
       highlights: [
-        "Trekking de dificultad moderada",
-        "Camino entre bosque y costa",
-        "Se puede combinar con navegación",
+        "Pasarelas sobre el lago entre árboles centenarios",
+        "Combinable con playa Bahía Mansa o centro del pueblo",
+        "En invierno el acceso puede variar — preguntanos fechas",
       ],
     },
     {
       name: "Navegación Brazo Machete",
       category: "navegacion",
-      description: "Paseo lacustre corto para explorar bahías y playas escondidas.",
+      description:
+        "Salida corta por aguas más protegidas del Nahuel Huapi, con bahías poco concurridas y vista al Volcán Batea Mahuida.",
       highlights: [
-        "Ideal en días de buen tiempo",
-        "Paisajes de agua turquesa",
-        "Salida relajada de media jornada",
+        "Ideal con chicos o si es tu primer día en la zona",
+        "Posibilidad de ver aves lacustres y bosque costero",
+        "Mejor en mañanas de poco viento",
       ],
     },
     {
-      name: "Cerro Bayo Panorámico",
+      name: "Cerro Bayo y miradores invernales",
       category: "aventura",
-      description: "Subida al Cerro Bayo con vistas al cordón de lagos.",
+      description:
+        "Centro de ski a 15 km del pueblo; en verano hay chairlift panorámico y rutas de mountain bike. Vistas al Nahuel Huapi y al Corredor de los Lagos.",
       highlights: [
-        "Opciones de ascenso según temporada",
-        "Miradores de altura",
-        "Apta para viajeros con buen estado físico",
+        "Nieve de junio a octubre; pistas para varios niveles",
+        "En verano, cumbre accesible sin trekking largo",
+        "Atardeceres muy lindos desde la confitería de la cima",
       ],
     },
   ],
   "puerto-madryn": [
     {
-      name: "Península Valdés Fauna Marina",
+      name: "Península Valdés",
       category: "fauna",
-      description: "Recorrido completo para avistaje de fauna en áreas naturales protegidas.",
+      description:
+        "Reserva UNESCO: elefantes marinos en Punta Delgada, pingüinos de magallanes en Punta Tombo (temporada) y ballenas en el golfo desde el acantilado.",
       highlights: [
-        "Posibilidad de ver lobos, elefantes y aves",
-        "Temporadas de fauna bien marcadas",
-        "Salida de día completo",
+        "Día completo en vehículo con paradas interpretativas",
+        "Orcas en Caleta Valdés (feb–abr, sujeto a marea)",
+        "Llevar binoculares y abrigo — hace viento todo el año",
       ],
     },
     {
-      name: "Avistaje embarcado",
+      name: "Avistaje de ballenas en embarcación",
       category: "navegacion",
-      description: "Salida en embarcación para observar fauna marina en su hábitat natural.",
+      description:
+        "Salidas desde Puerto Pirámides (Península Valdés) para ver ballenas franca austral a pocos metros del barco. Temporada principal: septiembre a diciembre.",
       highlights: [
-        "Solo en temporada de ballenas",
-        "Navegación corta con guía",
-        "Si te gusta el mar y la fauna",
+        "Regulación estricta para no molestar a los animales",
+        "Reservar con semanas de anticipación en temporada alta",
+        "Si hay mar gruesa, la salida se reprograma",
       ],
     },
     {
-      name: "Punta Loma y costa patagónica",
+      name: "Punta Loma y reservas costeras",
       category: "aventura",
-      description: "Circuito costero con paradas en miradores y reservas cercanas.",
+      description:
+        "Lobo marino de un pelo en la reserva de Punta Loma, a 17 km de Madryn. Complemento ideal si no tenés un día entero para la península.",
       highlights: [
-        "Accesible para todo tipo de viajeros",
-        "Excelente para fotografía de costa",
-        "Combinable con city tour",
+        "Medio día desde el centro de Madryn",
+        "Mirador sobre el Golfo Nuevo",
+        "Se suma bien a un city tour o tarde libre",
       ],
     },
   ],
@@ -241,31 +259,34 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
     {
       name: "Glaciar Perito Moreno",
       category: "aventura",
-      description: "Excursión clásica por pasarelas y miradores frente al glaciar.",
+      description:
+        "Pasarelas frente a una pared de hielo de casi 80 m sobre el Brazo Rico. Desprendimientos y colores azules que cambian con la luz del día.",
       highlights: [
-        "Tiempo libre para recorrer pasarelas",
-        "Salidas regulares durante todo el año",
-        "La clásica si es tu primera vez en Calafate",
+        "Acceso todo el año al Parque Nacional Los Glaciares",
+        "Tiempo libre en los miradores + opción navegación sur del glaciar",
+        "Conviene llegar temprano en enero y febrero",
       ],
     },
     {
       name: "Navegación Todo Glaciares",
       category: "navegacion",
-      description: "Navegación por el Lago Argentino con vistas de glaciares y témpanos.",
+      description:
+        "Día entero por el Brazo Norte del Lago Argentino: Upsala, Spegazzini y témpanos gigantes. Una de las navegaciones más completas del sur.",
       highlights: [
-        "Salida de jornada completa",
-        "Paisajes de hielo azul profundo",
-        "Recomendable reservar con anticipación",
+        "Barco hasta el frente de glaciares poco visitados",
+        "Incluye traslado desde Calafate y tiempo en cubierta",
+        "Reservar con anticipación en verano austral",
       ],
     },
     {
-      name: "Trekking Laguna Capri",
+      name: "Reserva Laguna Nimez",
       category: "trekking",
-      description: "Caminata suave entre bosque y miradores con vista al Fitz Roy a la distancia.",
+      description:
+        "Sendero interpretativo junto al Lago Argentino, a pocos minutos del centro. Flamencos, cisnes de cuello negro y aves migratorias según la estación.",
       highlights: [
-        "Opción activa de medio día",
-        "Para caminar sin mucha exigencia",
-        "Se adapta según clima",
+        "1–2 h de caminata fácil; buen plan de llegada o de despedida",
+        "Atardecer con vista al Lago Argentino",
+        "Entrada aparte del parque de glaciares",
       ],
     },
   ],
@@ -273,31 +294,34 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
     {
       name: "Miradores del Lago Traful",
       category: "trekking",
-      description: "Senderos cortos hacia miradores naturales con vistas del lago.",
+      description:
+        "Senderos cortos desde Villa Traful y la Villa Índica con vistas al lago turquesa y al bosque de lengas. Poco tránsito comparado con Bariloche.",
       highlights: [
-        "Recorridos aptos para media jornada",
-        "Bosque nativo y aguas cristalinas",
-        "Buena para sacar fotos de la costa",
+        "Mirador del Traful y playas de piedra",
+        "Caminatas de 1 a 3 h según el circuito",
+        "Mejor con calzado cómodo y abrigo por el viento",
       ],
     },
     {
       name: "Navegación al Bosque Sumergido",
       category: "navegacion",
-      description: "Excursión lacustre para conocer uno de los clásicos de Villa Traful.",
+      description:
+        "Restos de un bosque sumergido por una erupción volcánica en los años 60. Snorkel o vista desde el barco según operador y condiciones del lago.",
       highlights: [
-        "Salida sujeta a condiciones de lago",
-        "Guías locales durante el recorrido",
-        "Salida tranquila, buena para ir con chicos",
+        "Agua muy clara en días de calma",
+        "Guías locales explican la geología del valle",
+        "Sujeta a clima; en invierno hay menos frecuencia",
       ],
     },
     {
-      name: "Valle Encantado y Ruta escénica",
+      name: "Valle Encantado y Ruta 65",
       category: "aventura",
-      description: "Circuito por ruta panorámica con formaciones naturales y miradores.",
+      description:
+        "Formaciones rocosas erosionadas por el viento en la Ruta 65, camino a Confluencia. Paisaje lunar a minutos del pueblo.",
       highlights: [
-        "Se hace bien en auto con paradas cortas",
-        "Paradas cortas en puntos destacados",
-        "Recomendado en cualquier época del año",
+        "Paradas cortas en auto; no hace falta 4x4",
+        "Muy fotogénico al atardecer",
+        "Combinable con almuerzo en Villa Traful",
       ],
     },
   ],
@@ -305,31 +329,34 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
     {
       name: "Parque Nacional Tierra del Fuego",
       category: "aventura",
-      description: "Recorrido costero y de bosque austral por senderos emblemáticos del parque.",
+      description:
+        "Bosque fueguino, turberas y costa del Canal Beagle. Clásicos: Senda Costera, Lapataia (fin de la Ruta 3) y tren del fin del mundo (opcional).",
       highlights: [
-        "Excursión de media jornada o completa",
-        "Paisajes del fin del mundo",
-        "Apta para combinar con navegación",
+        "Medio día o jornada completa según senderos",
+        "Vistas a montañas chilenas desde la costa",
+        "Viento fuerte frecuente — capa impermeable obligatoria",
       ],
     },
     {
       name: "Navegación Canal Beagle",
       category: "navegacion",
-      description: "Paseo por el Beagle con faros, islotes y fauna marina.",
+      description:
+        "Recorrido por el canal que separa Argentina de Chile: Faro Les Éclaireurs, Isla de los Pájaros y lobos marinos en Isla de los Lobos.",
       highlights: [
-        "Salida clásica en Ushuaia",
-        "Vistas del canal y montañas nevadas",
-        "Para ir con chicos o abuelos",
+        "Salidas de 4–6 h desde el puerto de Ushuaia",
+        "Posibilidad de pisar Estancia Harberton (según tour)",
+        "Hace frío en cubierta aunque sea verano",
       ],
     },
     {
       name: "Trekking Laguna Esmeralda",
       category: "trekking",
-      description: "Caminata por turberas y bosque fueguino hacia una laguna de montaña.",
+      description:
+        "Bosque de lengas y turberas hasta una laguna glaciar color esmeralda, con vista al Valle de Tierra Mayor. Uno de los treks más populares de la ciudad.",
       highlights: [
-        "Dificultad moderada según temporada",
-        "Requiere calzado impermeable",
-        "Paisaje destacado en otoño e invierno",
+        "Unas 4–5 h ida y vuelta; barro en tramos finales",
+        "Botas impermeables casi obligatorias",
+        "En invierno puede requerir raquetas o crampones",
       ],
     },
   ],
@@ -352,27 +379,26 @@ function withFallbackImages(paths: string[]): string[] {
 }
 
 function defaultHighlights(type: AccommodationType, destinationName: string): string[] {
-  const base = destinationName;
   if (type === "departamento") {
     return [
-      `Ubicación céntrica o tranquila en ${base}`,
-      "Para dos o una familia chica",
-      "Cocina equipada y espacio para descansar",
+      `Ubicación en ${destinationName} según la unidad que elijas`,
+      "Cocina y espacio para varios días sin depender del restaurante",
+      "Buena opción para parejas o familias chicas",
       "Fechas y check-in los vemos por WhatsApp",
     ];
   }
   if (type === "cabana") {
     return [
-      `Entorno natural cerca de ${base}`,
-      "Más privacidad y espacio que un hotel",
-      "Buena opción para varios días de estadía",
-      "Preguntanos capacidad y qué incluye",
+      `Entorno natural en ${destinationName}`,
+      "Más espacio y privacidad que un hotel",
+      "Ideal si vas a cocinar o quedarte varios días",
+      "Preguntanos capacidad, camas y qué incluye la estadía",
     ];
   }
   return [
-    `Hotel en ${base}, cerca de las salidas del día`,
-    "Servicios de hotel según categoría",
-    "Disponibilidad según temporada",
+    `Hotel en ${destinationName}, cerca de las salidas del día`,
+    "Desayuno y servicios según categoría del establecimiento",
+    "Disponibilidad según temporada — escribinos con tus fechas",
   ];
 }
 
@@ -398,7 +424,7 @@ function buildAccommodationItems(
       itemSlug: ACCOMMODATION_ITEM_SLUGS[type],
       name,
       type,
-      description: `Alojamiento tipo ${label.toLowerCase()} en ${destinationName} para quedarte varios días y salir a recorrer.`,
+      description: `${label} en ${destinationName} para quedarte varios días y salir a recorrer la zona.`,
       highlights: defaultHighlights(type, destinationName),
       images: group.map((src, i) => toCatalogImage(src, `${name} — foto ${i + 1}`)),
     },
@@ -427,10 +453,10 @@ function buildExcursions(
         content?.description ??
         `Excursión en ${destinationName}. Fechas y salidas según temporada.`,
       highlights: content?.highlights ?? [
-        `Salidas desde ${destinationName}`,
-        "Grupos reducidos o salida privada según opción",
-        "Te decimos horarios y qué llevar",
-        "Reservá con anticipación en temporada alta",
+        `Salidas desde ${destinationName} con guías locales`,
+        "Horarios y cupos según temporada y clima",
+        "Te pasamos qué llevar y cómo vestirte",
+        "Reservá con tiempo en enero, febrero y julio",
       ],
       images: group.map((src, i) => toCatalogImage(src, `${name} — foto ${i + 1}`)),
     };
@@ -555,7 +581,7 @@ export function buildFlatCatalog(config: {
     ),
     carRental: {
       operatorName: "Operador local",
-      description: `Alquiler de auto en ${config.name}. Te pasamos el contacto que usamos.`,
+      description: `Auto en ${config.name} para recorrer rutas largas con libertad. Te pasamos el contacto del operador que usamos en la zona.`,
       images: [toCatalogImage(hero, `Auto en ${config.name}`)],
     },
     published: true,
@@ -587,7 +613,7 @@ export function buildStructuredCatalog(config: {
     ),
     carRental: {
       operatorName: "Operador local",
-      description: `Alquiler de auto en ${config.name}. Te pasamos el contacto que usamos.`,
+      description: `Auto en ${config.name} para recorrer rutas largas con libertad. Te pasamos el contacto del operador que usamos en la zona.`,
       images: [toCatalogImage(hero, `Auto en ${config.name}`)],
     },
     published: true,
@@ -604,7 +630,7 @@ export function buildBarilocheCatalog(): DestinationCatalog {
     name: "Bariloche",
     region: "San Carlos de Bariloche · Río Negro",
     intro:
-      "A orillas del Nahuel Huapi: lagos, bosque y la ruta clásica de Bariloche.",
+      "Capital del Nahuel Huapi: Circuito Chico, Cerro Catedral y navegaciones que salen desde Puerto Pañuelo.",
     heroImage: BARILOCHE_HERO_IMAGE,
     accommodations: buildDestinationAccommodations("bariloche", "Bariloche", all),
     excursions: buildExcursions(
@@ -618,7 +644,8 @@ export function buildBarilocheCatalog(): DestinationCatalog {
     ),
     carRental: {
       operatorName: "Operador local",
-      description: "Alquiler de auto en Bariloche con operador local.",
+      description:
+        "Auto en Bariloche para Circuito Chico, Siete Lagos o ir a San Martín. Te pasamos el contacto del operador local.",
       images: [toCatalogImage(BARILOCHE_HERO_IMAGE, "Auto en Bariloche")],
     },
     published: true,

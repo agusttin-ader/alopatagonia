@@ -1,3 +1,5 @@
+import { CLIENT_ALOJAMIENTOS_HUB_COPY } from "@/lib/client-protected-copy";
+
 export type CatalogHubPillar = {
   slug: "destinos" | "alojamientos" | "excursiones";
   title: string;
@@ -25,9 +27,9 @@ export const CATALOG_HUB_PILLARS: CatalogHubPillar[] = [
   },
   {
     slug: "alojamientos",
-    title: "Alojamientos",
+    title: CLIENT_ALOJAMIENTOS_HUB_COPY.title,
     eyebrow: "Cabañas · Deptos · Hostels",
-    description: "Lo que tenemos hoy en cada zona. Escribinos y te decimos si hay lugar.",
+    description: CLIENT_ALOJAMIENTOS_HUB_COPY.description,
     href: "/alojamientos",
     image: "/images/destinations/traful/alojamientos/cabanas/Cab. Costa/IMG-20260111-WA0009.jpg",
     imageAlt: "Interior de cabaña en Villa Traful — Patagonia",
@@ -37,7 +39,7 @@ export const CATALOG_HUB_PILLARS: CatalogHubPillar[] = [
     slug: "excursiones",
     title: "Excursiones",
     eyebrow: "Por temporada",
-    description: "Trekking, navegación, fauna y más.",
+    description: "Trekking, glaciares, navegación y fauna — según la temporada en cada zona.",
     href: "/excursiones",
     image: "/images/imagenes-home/20260212_125159.jpg",
     imageAlt: "Navegación frente al glaciar — excursión en Patagonia",

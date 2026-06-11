@@ -1,5 +1,6 @@
 import { getAllDestinations } from "@/lib/catalog/destinations";
 import type { DestinationCatalog } from "@/lib/catalog/types";
+import { CLIENT_DESTINATION_ZONES_COPY } from "@/lib/client-protected-copy";
 
 export type DestinationZone = {
   id: string;
@@ -20,28 +21,25 @@ export const DESTINATION_ZONES: DestinationZone[] = [
     id: "corredor-lagos",
     title: "Corredor de los Lagos",
     description:
-      "Lagos glaciares, bosque andino y la Ruta de los Siete Lagos entre Bariloche, Villa La Angostura, San Martín de los Andes y Villa Traful.",
+      "Lagos glaciares, bosque andino y la Ruta de los Siete Lagos: Bariloche, Villa La Angostura, San Martín y Traful en un mismo corredor.",
     destinationSlugs: ["bariloche", "san-martin", "traful", "villa-la-angostura"],
   },
   {
     id: "santa-cruz",
-    title: "Santa Cruz · glaciares y montaña",
-    description:
-      "El Calafate y El Chaltén están a 220 km: glaciares del Lago Argentino y trekking al Fitz Roy en la misma cordillera.",
+    title: CLIENT_DESTINATION_ZONES_COPY["santa-cruz"].title,
+    description: CLIENT_DESTINATION_ZONES_COPY["santa-cruz"].paragraphs.join(" "),
     destinationSlugs: ["el-calafate", "el-chalten"],
   },
   {
     id: "tierra-del-fuego",
-    title: "Tierra del Fuego",
-    description:
-      "Ushuaia, en el Canal Beagle y el Parque Nacional Tierra del Fuego. Suele combinarse con Calafate en vuelo, no en un día de ruta.",
+    title: CLIENT_DESTINATION_ZONES_COPY["tierra-del-fuego"].title,
+    description: CLIENT_DESTINATION_ZONES_COPY["tierra-del-fuego"].paragraphs.join(" "),
     destinationSlugs: ["ushuaia"],
   },
   {
     id: "chubut",
-    title: "Chubut · cordillera y costa",
-    description:
-      "Dos polos de la provincia, separados por cientos de kilómetros: la montaña de Esquel y Trevelin, y la fauna marina de Puerto Madryn.",
+    title: CLIENT_DESTINATION_ZONES_COPY.chubut.title,
+    description: CLIENT_DESTINATION_ZONES_COPY.chubut.paragraphs.join(" "),
     destinationSlugs: ["esquel", "puerto-madryn"],
   },
 ];

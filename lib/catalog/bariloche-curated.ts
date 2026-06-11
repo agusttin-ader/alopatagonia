@@ -13,10 +13,8 @@ export const BARILOCHE_CURATED = {
     covers.cabana ??
     `${BARILOCHE_ALOJAMIENTOS}/Bariloche cabañas/Casa calma/IMG-20260205-WA0029.jpg`,
   hotel3:
-    covers.hotel ??
     `${BARILOCHE_ALOJAMIENTOS}/Bariloche Hoteles/Hotel 1⭐️/Screenshot_20240402_092933_Chrome.jpg`,
   hotel4:
-    covers.hotel ??
     `${BARILOCHE_ALOJAMIENTOS}/Bariloche Hoteles/Hotel 4 ⭐️/Screenshot_20250528_221412_Chrome.jpg`,
 } as const;
 

@@ -1,16 +1,17 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, Mail } from "lucide-react";
+import { CalendarDays, CalendarPlus, Check, ChevronDown, ChevronLeft, ChevronRight, Mail } from "lucide-react";
 import dynamic from "next/dynamic";
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState, type RefObject } from "react";
 
-import { buttonVariants } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
 import {
   PLANNER_DESTINATION_LABELS,
   PLANNER_DESTINATION_HOOKS,
   PLANNER_DESTINATION_OPTIONS,
+  PLANNER_PAGE_COPY,
+  PLANNER_PHONE_VIDEO,
   resolvePlannerDestinationKey,
   SECTION_IDS,
   SITE,
@@ -18,9 +19,11 @@ import {
   type PlannerDestinationValue,
 } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { buildTripCalendarIcs, downloadTripCalendarIcs, tripCalendarFilename } from "@/lib/planner-calendar";
+import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 
-const PlannerMap = dynamic(
-  () => import("@/components/planner/PlannerMap").then((mod) => mod.PlannerMap),
+const PhoneVideoMockup = dynamic(
+  () => import("@/components/media/PhoneVideoMockup").then((mod) => mod.PhoneVideoMockup),
   { ssr: false },
 );
 
@@ -41,8 +44,51 @@ const MONTHS = [
 
 const fieldClassName =
   "h-12 w-full rounded-xl border border-[#d9d2c5]/80 bg-[linear-gradient(160deg,rgba(248,242,232,0.97),rgba(241,234,220,0.93))] px-3.5 text-base sm:text-[0.98rem] text-foreground shadow-[inset_0_1px_0_rgba(252,246,236,0.9),0_12px_26px_-24px_rgba(48,40,28,0.32)] outline-none transition duration-200 placeholder:text-muted-foreground/75 hover:border-[#cabfae] hover:bg-[linear-gradient(160deg,rgba(250,244,234,0.99),rgba(244,237,224,0.96))] focus-visible:border-primary/40 focus-visible:ring-4 focus-visible:ring-primary/14";
+
 const MAX_NAME_LENGTH = 70;
 const MAX_TRAVELERS_LENGTH = 2;
+
+const PLANNER_CTA =
+  "inline-flex min-h-11 w-full items-center justify-center gap-2.5 rounded-full px-5 text-[0.8125rem] font-semibold leading-none transition-colors focus-visible:outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-55";
+
+function WhatsAppIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="size-4 shrink-0" fill="currentColor" aria-hidden>
+      <path d="M19.11 4.93A9.88 9.88 0 0 0 12.03 2C6.58 2 2.14 6.43 2.14 11.89c0 1.74.46 3.44 1.33 4.94L2 22l5.29-1.39a9.85 9.85 0 0 0 4.72 1.2h.01c5.45 0 9.89-4.43 9.89-9.9a9.81 9.81 0 0 0-2.8-6.98ZM12.02 20.1h-.01a8.14 8.14 0 0 1-4.15-1.14l-.3-.18-3.14.82.84-3.06-.2-.31a8.2 8.2 0 0 1-1.27-4.33c0-4.51 3.68-8.18 8.22-8.18a8.15 8.15 0 0 1 5.8 2.39 8.08 8.08 0 0 1 2.4 5.8c0 4.51-3.69 8.19-8.19 8.19Zm4.48-6.14c-.25-.13-1.46-.72-1.68-.8-.22-.08-.38-.12-.54.13-.16.25-.62.8-.76.96-.14.16-.28.18-.53.06-.25-.13-1.04-.38-1.99-1.22-.74-.65-1.24-1.45-1.38-1.7-.14-.25-.01-.39.11-.51.11-.11.25-.28.37-.42.12-.14.16-.25.24-.41.08-.16.04-.31-.02-.44-.06-.13-.54-1.3-.74-1.78-.2-.48-.4-.4-.54-.4h-.46c-.16 0-.41.06-.63.31-.22.25-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.1.16 1.52.1.46-.07 1.46-.6 1.67-1.17.21-.57.21-1.05.15-1.17-.06-.12-.22-.19-.47-.32Z" />
+    </svg>
+  );
+}
+
+function useDismissOnEscapeAndOutside(
+  open: boolean,
+  containerRef: RefObject<HTMLElement | null>,
+  onClose: () => void,
+  returnFocusRef?: RefObject<HTMLElement | null>,
+) {
+  useEffect(() => {
+    if (!open) return;
+
+    const onPointerDown = (event: PointerEvent) => {
+      if (!containerRef.current?.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+        returnFocusRef?.current?.focus();
+      }
+    };
+
+    window.addEventListener("pointerdown", onPointerDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [containerRef, onClose, open, returnFocusRef]);
+}
 
 function toISODate(date: Date) {
   const y = date.getFullYear();
@@ -195,7 +241,6 @@ function PlannerTripPreview({
   const hasDestination = destination !== "none";
   const hasDates = Boolean(fromDate && toDate && nights !== null);
   const hasAnyPreview = hasDestination || hasDates || peopleCount.length > 0;
-  const previewKey = `${destination}-${fromDate}-${toDate}-${travelers}`;
 
   const metaLine = useMemo(() => {
     const parts: string[] = [];
@@ -242,14 +287,7 @@ function PlannerTripPreview({
             Destino, fechas y grupo aparecen acá.
           </motion.p>
         ) : (
-          <motion.div
-            key={previewKey}
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="space-y-1 pl-2.5"
-          >
+          <div className="space-y-1 pl-2.5">
             <div className="flex items-baseline gap-2.5">
               {hasDates ? (
                 <span className="font-heading text-[1.35rem] font-medium tabular-nums leading-none tracking-tight text-brand-forest">
@@ -264,9 +302,7 @@ function PlannerTripPreview({
             </div>
 
             {metaLine ? (
-              <p className="text-xs leading-relaxed text-muted-foreground">
-                {metaLine}
-              </p>
+              <p className="text-xs leading-relaxed text-muted-foreground">{metaLine}</p>
             ) : null}
 
             {hook ? (
@@ -274,7 +310,7 @@ function PlannerTripPreview({
                 {hook}
               </p>
             ) : null}
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </div>
@@ -320,6 +356,8 @@ function DateField({
     return new Date(viewDate.getFullYear(), viewDate.getMonth(), dayNumber);
   });
 
+  useDismissOnEscapeAndOutside(open, fieldRef, () => setOpen(false), triggerRef);
+
   useEffect(() => {
     if (!open) return;
 
@@ -329,26 +367,6 @@ function DateField({
       const spaceBelow = window.innerHeight - triggerRect.bottom;
       setOpenUpward(spaceBelow < panelHeight);
     }
-
-    const onPointerDown = (event: PointerEvent) => {
-      if (!fieldRef.current?.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    };
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setOpen(false);
-        triggerRef.current?.focus();
-      }
-    };
-
-    window.addEventListener("pointerdown", onPointerDown);
-    window.addEventListener("keydown", onKeyDown);
-    return () => {
-      window.removeEventListener("pointerdown", onPointerDown);
-      window.removeEventListener("keydown", onKeyDown);
-    };
   }, [open]);
 
   useEffect(() => {
@@ -470,6 +488,7 @@ function DateField({
 }
 
 export function TripPlannerSection({ showHeading = true }: { showHeading?: boolean }) {
+  const isCoarseMobile = useCoarseMobile();
   const [name, setName] = useState("");
   const [destination, setDestination] = useState<PlannerDestinationValue>("none");
   const [travelers, setTravelers] = useState("");
@@ -477,7 +496,6 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [destinationOpen, setDestinationOpen] = useState(false);
-  const [showDesktopMap, setShowDesktopMap] = useState(false);
   const destinationButtonId = useId();
   const destinationPanelId = useId();
   const destinationContainerRef = useRef<HTMLDivElement>(null);
@@ -488,11 +506,18 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
   const message = useMemo(() => {
     const personName = name.trim().slice(0, MAX_NAME_LENGTH) || "sin nombre";
     const destinationText = PLANNER_DESTINATION_LABELS[resolvedDestination];
-    const people = travelers.trim().slice(0, MAX_TRAVELERS_LENGTH) || "sin definir";
+    const people = travelers.trim().slice(0, MAX_TRAVELERS_LENGTH);
     const from = formatDate(fromDate);
     const to = formatDate(toDate);
+    const peopleCount = Number(people);
+    const groupLine =
+      people && !Number.isNaN(peopleCount)
+        ? peopleCount === 1
+          ? "somos 1"
+          : `somos ${people}`
+        : "todavía no definí cuántos somos";
 
-    return `Hola! Soy ${personName}, quiero ir a ${destinationText} con ${people} personas del ${from} al ${to}. ¿Me ayudan a armarlo?`;
+    return `Hola! Soy ${personName}. Queremos ir a ${destinationText}, ${groupLine}, del ${from} al ${to}. ¿Nos ayudan a armarlo?`;
   }, [name, resolvedDestination, travelers, fromDate, toDate]);
 
   const completionCount = useMemo(() => {
@@ -510,6 +535,23 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
   const plannerReady = completionCount >= 4 && !invalidDateRange;
   const honeypotTriggered = website.trim().length > 0;
   const canSubmit = plannerReady && !honeypotTriggered;
+  const canAddToCalendar =
+    isCoarseMobile &&
+    Boolean(fromDate && toDate && !invalidDateRange && resolvedDestination !== "none");
+
+  const handleAddToCalendar = () => {
+    if (!canAddToCalendar) return;
+
+    const destinationLabel = PLANNER_DESTINATION_LABELS[resolvedDestination];
+    const ics = buildTripCalendarIcs({
+      destinationLabel,
+      fromDate,
+      toDate,
+      travelers: travelers.trim(),
+      contactName: name.trim(),
+    });
+    downloadTripCalendarIcs(ics, tripCalendarFilename(destinationLabel));
+  };
 
   const progressSteps = useMemo<PlannerProgressStep[]>(
     () => [
@@ -543,38 +585,12 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
     }
   }, [destination]);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const mq = window.matchMedia("(min-width: 768px)");
-    const update = () => setShowDesktopMap(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  useEffect(() => {
-    if (!destinationOpen) return;
-
-    const onPointerDown = (event: PointerEvent) => {
-      if (!destinationContainerRef.current?.contains(event.target as Node)) {
-        setDestinationOpen(false);
-      }
-    };
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setDestinationOpen(false);
-        destinationButtonRef.current?.focus();
-      }
-    };
-
-    window.addEventListener("pointerdown", onPointerDown);
-    window.addEventListener("keydown", onKeyDown);
-    return () => {
-      window.removeEventListener("pointerdown", onPointerDown);
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  }, [destinationOpen]);
+  useDismissOnEscapeAndOutside(
+    destinationOpen,
+    destinationContainerRef,
+    () => setDestinationOpen(false),
+    destinationButtonRef,
+  );
 
   const selectDestination = (value: PlannerDestinationValue) => {
     setDestination(value);
@@ -600,7 +616,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
               Planear mi viaje
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground 2xl:text-xl">
-              Completá el formulario y te dejamos el mensaje para WhatsApp o mail.
+              {PLANNER_PAGE_COPY.intro}
             </p>
           </Reveal>
         ) : null}
@@ -683,10 +699,8 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                               type="button"
                               onPointerDown={(event) => {
                                 event.preventDefault();
-                                event.stopPropagation();
                                 selectDestination(option.value);
                               }}
-                              onClick={() => selectDestination(option.value)}
                               className={cn(
                                 "w-full rounded-xl px-3 py-2.5 text-left text-sm transition",
                                 destination === option.value
@@ -740,7 +754,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
 
               <div className="pt-2">
                 <p className="text-xs text-muted-foreground">
-                  El mensaje se completa solo con lo que cargás.
+                  WhatsApp con todo armado según lo que cargás.
                 </p>
                 {invalidDateRange ? (
                   <p className="mt-2 text-xs font-semibold text-destructive">
@@ -756,13 +770,27 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                   )}
                 >
                   {plannerReady
-                    ? "Mensaje listo para enviar"
+                    ? "Listo para escribirnos"
                     : `Completá ${5 - completionCount} dato${5 - completionCount === 1 ? "" : "s"} para enviar más completo`}
                 </p>
               </div>
             </form>
 
-            <div className="mt-6 grid gap-3 sm:grid-cols-2 2xl:gap-4">
+            {canAddToCalendar ? (
+              <button
+                type="button"
+                onClick={handleAddToCalendar}
+                className={cn(
+                  PLANNER_CTA,
+                  "mt-4 border border-border bg-card text-foreground hover:bg-muted focus-visible:ring-ring/30 md:hidden",
+                )}
+              >
+                <CalendarPlus className="size-4 shrink-0" />
+                Agregar fechas al calendario
+              </button>
+            ) : null}
+
+            <div className="mt-6 flex flex-col gap-2.5 lg:grid lg:grid-cols-2 lg:gap-3">
               <a
                 href={whatsappUrl}
                 target="_blank"
@@ -773,20 +801,13 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                 }}
                 aria-disabled={!canSubmit}
                 className={cn(
-                  buttonVariants({ size: "lg" }),
-                  "h-12 whitespace-normal rounded-full bg-whatsapp text-center leading-tight text-white hover:bg-whatsapp-hover 2xl:h-14 2xl:text-lg",
-                  !canSubmit && "pointer-events-none opacity-60",
+                  PLANNER_CTA,
+                  "bg-whatsapp text-white hover:bg-whatsapp-hover focus-visible:ring-whatsapp/35",
+                  !canSubmit && "pointer-events-none opacity-55",
                 )}
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="mr-1 size-4"
-                  fill="currentColor"
-                  aria-hidden
-                >
-                  <path d="M19.11 4.93A9.88 9.88 0 0 0 12.03 2C6.58 2 2.14 6.43 2.14 11.89c0 1.74.46 3.44 1.33 4.94L2 22l5.29-1.39a9.85 9.85 0 0 0 4.72 1.2h.01c5.45 0 9.89-4.43 9.89-9.9a9.81 9.81 0 0 0-2.8-6.98ZM12.02 20.1h-.01a8.14 8.14 0 0 1-4.15-1.14l-.3-.18-3.14.82.84-3.06-.2-.31a8.2 8.2 0 0 1-1.27-4.33c0-4.51 3.68-8.18 8.22-8.18a8.15 8.15 0 0 1 5.8 2.39 8.08 8.08 0 0 1 2.4 5.8c0 4.51-3.69 8.19-8.19 8.19Zm4.48-6.14c-.25-.13-1.46-.72-1.68-.8-.22-.08-.38-.12-.54.13-.16.25-.62.8-.76.96-.14.16-.28.18-.53.06-.25-.13-1.04-.38-1.99-1.22-.74-.65-1.24-1.45-1.38-1.7-.14-.25-.01-.39.11-.51.11-.11.25-.28.37-.42.12-.14.16-.25.24-.41.08-.16.04-.31-.02-.44-.06-.13-.54-1.3-.74-1.78-.2-.48-.4-.4-.54-.4h-.46c-.16 0-.41.06-.63.31-.22.25-.84.82-.84 2 0 1.18.86 2.32.98 2.48.12.16 1.7 2.6 4.12 3.64.58.25 1.03.4 1.38.51.58.18 1.1.16 1.52.1.46-.07 1.46-.6 1.67-1.17.21-.57.21-1.05.15-1.17-.06-.12-.22-.19-.47-.32Z" />
-                </svg>
-                {plannerReady ? "Enviar por WhatsApp" : "Completar y enviar por WhatsApp"}
+                <WhatsAppIcon />
+                {plannerReady ? "Enviar por WhatsApp" : "Completar para WhatsApp"}
               </a>
               <a
                 href={mailUrl}
@@ -796,27 +817,25 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                 }}
                 aria-disabled={!canSubmit}
                 className={cn(
-                  buttonVariants({ variant: "outline", size: "lg" }),
-                  "h-12 rounded-full border-border bg-card text-foreground hover:bg-muted 2xl:h-14 2xl:text-lg",
-                  !canSubmit && "pointer-events-none opacity-60",
+                  PLANNER_CTA,
+                  "border border-border bg-card text-foreground hover:bg-muted focus-visible:ring-ring/30",
+                  !canSubmit && "pointer-events-none opacity-55",
                 )}
               >
-                <Mail className="mr-1 size-4" />
+                <Mail className="size-4 shrink-0" />
                 Consultar por mail
               </a>
             </div>
           </Reveal>
 
-          <Reveal className="hidden h-full flex-col overflow-hidden rounded-3xl border border-border/80 bg-secondary/30 p-4 sm:p-6 md:flex 2xl:p-7">
-            <div className="mb-4">
-              <p className="text-sm font-medium text-muted-foreground">
-                Mapa · {PLANNER_DESTINATION_LABELS[resolvedDestination]}
-              </p>
-            </div>
-
-            <div className="relative min-h-[360px] flex-1 overflow-hidden rounded-2xl border border-border/60 bg-background sm:min-h-[420px] 2xl:min-h-[500px]">
-              {showDesktopMap ? <PlannerMap destination={resolvedDestination} /> : null}
-            </div>
+          <Reveal className="hidden min-h-[360px] items-center justify-center md:flex sm:min-h-[420px] 2xl:min-h-[500px]">
+            <PhoneVideoMockup
+              src={PLANNER_PHONE_VIDEO.src}
+              poster={PLANNER_PHONE_VIDEO.poster}
+              label={PLANNER_PHONE_VIDEO.label}
+              size="lg"
+              variant="plain"
+            />
           </Reveal>
         </div>
       </div>

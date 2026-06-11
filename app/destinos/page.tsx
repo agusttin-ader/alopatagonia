@@ -6,6 +6,7 @@ import { Footer } from "@/components/footer/Footer";
 import { FloatingWhatsAppButton } from "@/components/whatsapp/FloatingWhatsAppButton";
 import { JsonLdScript } from "@/components/seo/JsonLdScript";
 import { getAllDestinations } from "@/lib/catalog/destinations";
+import { CLIENT_DESTINATIONS_INDEX_COPY } from "@/lib/client-protected-copy";
 import { buildDestinosHubGraphJsonLd } from "@/lib/json-ld";
 import { PAGE_TITLE, SHELL_PAGE_PT, siteShell } from "@/lib/layout-shell";
 import { buildPageMetadata } from "@/lib/seo";
@@ -39,10 +40,10 @@ export default function DestinosPage() {
           </nav>
 
           <h1 className={cn("font-heading mt-4", PAGE_TITLE)}>
-            Destinos en la Patagonia Argentina
+            {CLIENT_DESTINATIONS_INDEX_COPY.title}
           </h1>
           <p className="mt-4 max-w-3xl text-lg leading-relaxed text-muted-foreground">
-            {SITE_SEO.destinos.intro}
+            {CLIENT_DESTINATIONS_INDEX_COPY.intro}
           </p>
 
           <DestinationsIndex />

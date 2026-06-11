@@ -1,25 +1,19 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { AppImage } from "@/components/media/AppImage";
 import Link from "next/link";
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type ReactNode,
-} from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useMemo, useRef, useState, type MouseEvent, type TouchEvent } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
+import { CLIENT_HOME_DESTINATIONS_COPY } from "@/lib/client-protected-copy";
 import { SECTION_IDS } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import type { HomeDestinationEditorial } from "@/lib/home-destinations-types";
-import { HOME_DESTINATION_GALLERY_MOBILE_COUNT } from "@/lib/home-destinations";
+import { getHomeSectionHref, scrollToHomeSection } from "@/lib/home-sections";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
-import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
 
 const DESTINATION_NAME_MOTION = {
@@ -27,7 +21,65 @@ const DESTINATION_NAME_MOTION = {
   idle: { scale: 1 },
 };
 
-const MOBILE_PANEL_MS = 520;
+function CatalogLink({
+  className,
+  mobileProminent = false,
+  compactMobile = false,
+}: {
+  className?: string;
+  mobileProminent?: boolean;
+  compactMobile?: boolean;
+}) {
+  const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
+  const isHome = pathname === "/";
+  const href = getHomeSectionHref(SECTION_IDS.catalogHub, isHome);
+
+  const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (!isHome) return;
+
+    event.preventDefault();
+    scrollToHomeSection(SECTION_IDS.catalogHub, {
+      behavior: reduceMotion ? "auto" : "smooth",
+    });
+    window.history.replaceState(null, "", href);
+  };
+
+  return (
+    <Link
+      href={href}
+      onClick={onClick}
+      className={cn(
+        "inline-flex items-center justify-center gap-2 font-medium transition-colors",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2",
+        mobileProminent
+          ? cn(
+              compactMobile ? "mt-0 py-2.5" : "mt-4 py-3",
+              "w-full rounded-full px-4 text-sm font-semibold",
+              "bg-footer-lake-foreground text-footer-lake",
+              "shadow-[0_12px_28px_-16px_rgba(0,0,0,0.5)]",
+              "max-md:focus-visible:ring-white/45 max-md:focus-visible:ring-offset-footer-lake",
+              "lg:mt-4 lg:w-auto lg:justify-start lg:rounded-none lg:bg-transparent lg:px-0 lg:py-0 lg:text-sm lg:font-medium lg:text-primary lg:shadow-none lg:underline-offset-4 lg:hover:underline",
+            )
+          : "text-sm text-primary underline-offset-4 hover:underline",
+        className,
+      )}
+    >
+      Ver catálogo
+      <ChevronDown className="size-4 shrink-0 lg:hidden" aria-hidden />
+      <ArrowUpRight className="hidden size-4 shrink-0 lg:inline" aria-hidden />
+    </Link>
+  );
+}
+
+function uniqueGalleryImages(destination: HomeDestinationEditorial) {
+  const seen = new Set<string>();
+  return destination.galleryImages.filter((image) => {
+    if (seen.has(image.src)) return false;
+    seen.add(image.src);
+    return true;
+  });
+}
 
 function DestinationName({
   name,
@@ -58,111 +110,199 @@ function DestinationName({
   );
 }
 
-function MobileDestinationPanel({
-  isActive,
-  itemId,
-  children,
+function SpreadImageButton({
+  image,
+  destinationName,
+  index,
+  onImageClick,
+  className,
+  sizes,
+  priority = false,
+  animated = true,
 }: {
-  isActive: boolean;
-  itemId: string;
-  children: ReactNode;
+  image: { src: string; alt: string };
+  destinationName: string;
+  index: number;
+  onImageClick: (index: number) => void;
+  className?: string;
+  sizes: string;
+  priority?: boolean;
+  animated?: boolean;
 }) {
   const reduceMotion = useReducedMotion();
-  const [expanded, setExpanded] = useState(false);
+  const tileClassName = cn(
+    "relative overflow-hidden bg-muted shadow-[0_16px_30px_-20px_rgba(15,23,42,0.32)]",
+    "transition-transform hover:scale-[1.012] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2",
+    className,
+  );
 
-  useEffect(() => {
-    if (!isActive) {
-      setExpanded(false);
-      return;
-    }
+  const content = (
+    <AppImage
+      src={image.src}
+      alt={image.alt}
+      fill
+      qualityPreset="gallery"
+      className="object-cover"
+      sizes={sizes}
+      priority={priority}
+    />
+  );
 
-    if (reduceMotion) {
-      setExpanded(true);
-      return;
-    }
-
-    setExpanded(false);
-    const frameId = window.requestAnimationFrame(() => {
-      setExpanded(true);
-    });
-    return () => window.cancelAnimationFrame(frameId);
-  }, [isActive, itemId, reduceMotion]);
-
-  if (!isActive) return null;
+  if (!animated || reduceMotion) {
+    return (
+      <button
+        type="button"
+        onClick={() => onImageClick(index)}
+        aria-label={`Ampliar foto de ${destinationName}`}
+        className={tileClassName}
+      >
+        {content}
+      </button>
+    );
+  }
 
   return (
-    <div
-      className={cn(
-        "grid transition-[grid-template-rows,opacity] ease-[cubic-bezier(0.22,0.03,0.26,1)] motion-reduce:transition-none",
-        expanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
-      )}
-      style={{ transitionDuration: reduceMotion ? "0ms" : `${MOBILE_PANEL_MS}ms` }}
+    <motion.button
+      type="button"
+      onClick={() => onImageClick(index)}
+      aria-label={`Ampliar foto de ${destinationName}`}
+      initial={{ opacity: 0, scale: 0.985 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 0.34,
+        delay: 0.05 * index,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      className={tileClassName}
     >
-      <div className="min-h-0 overflow-hidden">
-        <div className="pt-4">{children}</div>
-      </div>
-    </div>
+      {content}
+    </motion.button>
   );
 }
 
-function DestinationPreview({
+const MOBILE_MOTION_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+const MOBILE_ACCORDION_CONTENT_VARIANTS = {
+  open: {
+    transition: { staggerChildren: 0.07, delayChildren: 0.06 },
+  },
+  closed: {
+    transition: { staggerChildren: 0.04, staggerDirection: -1 },
+  },
+} as const;
+
+const MOBILE_ACCORDION_ITEM_VARIANTS = {
+  open: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.38, ease: MOBILE_MOTION_EASE },
+  },
+  closed: {
+    opacity: 0,
+    y: 10,
+    transition: { duration: 0.22, ease: MOBILE_MOTION_EASE },
+  },
+} as const;
+
+function DestinationMobileImageCarousel({
   destination,
   onImageClick,
-  instant = false,
 }: {
   destination: HomeDestinationEditorial;
   onImageClick: (index: number) => void;
-  instant?: boolean;
 }) {
   const reduceMotion = useReducedMotion();
-  const isCoarseMobile = useCoarseMobile();
-  const useStaticTiles = instant || isCoarseMobile || reduceMotion;
+  const images = useMemo(() => uniqueGalleryImages(destination), [destination]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+
+  useEffect(() => {
+    setActiveIndex(0);
+  }, [destination.slug]);
+
+  if (images.length === 0) return null;
+
+  const resolveIndex = (image: { src: string; alt: string }) =>
+    destination.galleryImages.findIndex((item) => item.src === image.src);
+
+  const shiftSlide = (direction: 1 | -1) => {
+    setActiveIndex((current) => (current + direction + images.length) % images.length);
+  };
+
+  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0];
+    if (!touch) return;
+    touchStart.current = { x: touch.clientX, y: touch.clientY };
+  };
+
+  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    if (images.length <= 1 || !touchStart.current) return;
+
+    const touch = event.changedTouches[0];
+    if (!touch) return;
+
+    const deltaX = touch.clientX - touchStart.current.x;
+    const deltaY = touch.clientY - touchStart.current.y;
+    touchStart.current = null;
+
+    if (Math.abs(deltaX) < 40 || Math.abs(deltaX) < Math.abs(deltaY)) return;
+
+    if (deltaX < 0) shiftSlide(1);
+    else shiftSlide(-1);
+  };
+
+  const handleSlideClick = (index: number, image: { src: string; alt: string }) => {
+    if (index !== activeIndex) {
+      setActiveIndex(index);
+      return;
+    }
+    const galleryIndex = resolveIndex(image);
+    onImageClick(galleryIndex >= 0 ? galleryIndex : index);
+  };
+
+  const hasMultiple = images.length > 1;
+  const transitionClass = reduceMotion
+    ? ""
+    : "transition-transform duration-[420ms] ease-[cubic-bezier(0.16,1,0.3,1)]";
 
   return (
-    <>
-      <div className="grid grid-cols-2 gap-3">
-        {destination.galleryImages.map((image, index) => {
-          const tileClassName = cn(
-            "relative aspect-[5/4] overflow-hidden rounded-2xl bg-muted shadow-[0_16px_30px_-20px_rgba(15,23,42,0.32)] transition-transform hover:scale-[1.01] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2 sm:aspect-[4/3]",
-            index >= HOME_DESTINATION_GALLERY_MOBILE_COUNT && "hidden lg:block",
-          );
-
-          if (useStaticTiles) {
-            return (
-              <button
-                type="button"
-                key={`${destination.slug}-${index}`}
-                onClick={() => onImageClick(index)}
-                aria-label={`Ampliar foto de ${destination.name}`}
-                className={tileClassName}
-              >
-                <AppImage
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  qualityPreset="gallery"
-                  className="object-cover"
-                  sizes={IMAGE_SIZES.galleryTile}
-                  priority={index === 0}
-                />
-              </button>
-            );
-          }
+    <div
+      className="overflow-hidden touch-pan-y"
+      aria-label={`Fotos de ${destination.name}`}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      <div
+        className={cn("flex gap-2 will-change-transform", transitionClass)}
+        style={
+          hasMultiple
+            ? {
+                transform: `translateX(calc((100% - 78%) / 2 - ${activeIndex} * (78% + 0.5rem)))`,
+              }
+            : undefined
+        }
+      >
+        {images.map((image, index) => {
+          const isActive = index === activeIndex;
 
           return (
-            <motion.button
+            <button
+              key={image.src}
               type="button"
-              key={`${destination.slug}-${index}`}
-              onClick={() => onImageClick(index)}
-              aria-label={`Ampliar foto de ${destination.name}`}
-              initial={{ opacity: 0, scale: 0.985 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{
-                duration: 0.32,
-                delay: 0.04 * index,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className={tileClassName}
+              onClick={() => handleSlideClick(index, image)}
+              aria-label={
+                isActive
+                  ? `Ampliar foto ${index + 1} de ${destination.name}`
+                  : `Ver foto ${index + 1} de ${destination.name}`
+              }
+              aria-current={isActive ? "true" : undefined}
+              className={cn(
+                "relative shrink-0 overflow-hidden",
+                "aspect-[3/4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake-foreground/55 focus-visible:ring-offset-2 focus-visible:ring-offset-footer-lake",
+                "transition-opacity duration-[420ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
+                hasMultiple ? "w-[78%]" : "mx-auto w-[min(100%,20rem)]",
+                isActive ? "opacity-100" : "opacity-55",
+              )}
             >
               <AppImage
                 src={image.src}
@@ -170,24 +310,259 @@ function DestinationPreview({
                 fill
                 qualityPreset="gallery"
                 className="object-cover"
-                sizes={IMAGE_SIZES.galleryTile}
+                sizes="(max-width: 767px) 78vw, 300px"
                 priority={index === 0}
               />
-            </motion.button>
+            </button>
           );
         })}
       </div>
-      <div className="pe-4 sm:pe-24">
-        <p className="mt-4 line-clamp-2 text-base text-muted-foreground sm:mt-5 sm:line-clamp-1 sm:text-lg">
+    </div>
+  );
+}
+
+function DestinationMobileAccordionItem({
+  destination,
+  isOpen,
+  onToggle,
+  onImageClick,
+  reduceMotion,
+}: {
+  destination: HomeDestinationEditorial;
+  isOpen: boolean;
+  onToggle: () => void;
+  onImageClick: (index: number) => void;
+  reduceMotion: boolean | null;
+}) {
+  const itemRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!isOpen || !itemRef.current) return;
+    const frameId = window.requestAnimationFrame(() => {
+      itemRef.current?.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "nearest",
+      });
+    });
+    return () => window.cancelAnimationFrame(frameId);
+  }, [isOpen, reduceMotion]);
+
+  return (
+    <article ref={itemRef} className="transition-colors duration-300">
+      <button
+        type="button"
+        aria-expanded={isOpen}
+        onClick={onToggle}
+        className={cn(
+          "group flex w-full items-start justify-between gap-3 py-3.5 text-left",
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake-foreground/45 focus-visible:ring-offset-2 focus-visible:ring-offset-footer-lake",
+        )}
+      >
+        <span className="min-w-0 flex-1">
+          <DestinationName
+            name={destination.name}
+            isActive={isOpen}
+            disableScale={Boolean(reduceMotion)}
+            className={cn(
+              "font-heading block font-semibold uppercase leading-[0.94] tracking-[-0.02em] transition-colors duration-300",
+              isOpen
+                ? "text-[clamp(1.35rem,5.8vw,1.72rem)] text-footer-lake-foreground"
+                : "text-[clamp(1.15rem,4.8vw,1.45rem)] text-footer-lake-foreground/36 group-hover:text-footer-lake-foreground/56",
+            )}
+          />
+          <span
+            className={cn(
+              "mt-1.5 block text-[10px] font-medium uppercase tracking-[0.12em] transition-colors duration-300",
+              isOpen
+                ? "text-footer-lake-foreground/58"
+                : "text-footer-lake-foreground/32 group-hover:text-footer-lake-foreground/46",
+            )}
+          >
+            {destination.region}
+          </span>
+        </span>
+
+        <motion.span
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.32, ease: MOBILE_MOTION_EASE }}
+          className="mt-1 shrink-0 text-footer-lake-foreground/45"
+          aria-hidden
+        >
+          <ChevronDown className={cn("size-5", isOpen && "text-footer-lake-foreground/72")} />
+        </motion.span>
+      </button>
+
+      <AnimatePresence initial={false}>
+        {isOpen ? (
+          <motion.div
+            key={`panel-${destination.slug}`}
+            initial={reduceMotion ? false : { height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease: MOBILE_MOTION_EASE }}
+            className="overflow-hidden"
+          >
+            <motion.div
+              variants={MOBILE_ACCORDION_CONTENT_VARIANTS}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              className="space-y-4 px-0.5 pb-6 pt-0.5"
+            >
+              <motion.div variants={MOBILE_ACCORDION_ITEM_VARIANTS}>
+                <DestinationMobileImageCarousel
+                  destination={destination}
+                  onImageClick={onImageClick}
+                />
+              </motion.div>
+
+              <motion.p
+                variants={MOBILE_ACCORDION_ITEM_VARIANTS}
+                className="text-[0.9375rem] leading-[1.55] text-footer-lake-foreground/86"
+              >
+                {destination.description}
+              </motion.p>
+
+              <motion.div
+                variants={MOBILE_ACCORDION_ITEM_VARIANTS}
+                className="max-w-[calc(100%-3.25rem)]"
+              >
+                <CatalogLink mobileProminent compactMobile />
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+    </article>
+  );
+}
+
+
+function DestinationMobileAccordion({
+  destinations,
+  openSlug,
+  onToggle,
+  onImageClick,
+}: {
+  destinations: HomeDestinationEditorial[];
+  openSlug: string | null;
+  onToggle: (slug: string) => void;
+  onImageClick: (destination: HomeDestinationEditorial, index: number) => void;
+}) {
+  const reduceMotion = useReducedMotion();
+
+  return (
+    <div className="divide-y divide-white/10">
+      {destinations.map((destination) => (
+        <DestinationMobileAccordionItem
+          key={destination.slug}
+          destination={destination}
+          isOpen={destination.slug === openSlug}
+          onToggle={() => onToggle(destination.slug)}
+          onImageClick={(index) => onImageClick(destination, index)}
+          reduceMotion={reduceMotion}
+        />
+      ))}
+    </div>
+  );
+}
+
+function DestinationEditorialSpread({
+  destination,
+  onImageClick,
+  animated = true,
+}: {
+  destination: HomeDestinationEditorial;
+  onImageClick: (index: number) => void;
+  animated?: boolean;
+}) {
+  const images = useMemo(() => uniqueGalleryImages(destination), [destination]);
+  const hero = images[0];
+  const sidePrimary = images[1];
+  const sideSecondary = images[2];
+  const inset = images[3];
+
+  if (!hero) return null;
+
+  const resolveIndex = (image: { src: string; alt: string }) =>
+    destination.galleryImages.findIndex((item) => item.src === image.src);
+
+  return (
+    <>
+      <div className="hidden lg:block">
+        {images.length === 1 ? (
+          <SpreadImageButton
+            image={hero}
+            destinationName={destination.name}
+            index={resolveIndex(hero)}
+            onImageClick={onImageClick}
+            className="aspect-[16/12] max-h-[min(52vh,420px)] w-full rounded-[1.35rem]"
+            sizes={IMAGE_SIZES.galleryTile}
+            priority
+            animated={animated}
+          />
+        ) : (
+          <div className="relative flex h-[min(46vh,380px)] gap-2.5 xl:gap-3">
+            <div className="relative h-full min-w-0 flex-[1.42]">
+              <SpreadImageButton
+                image={hero}
+                destinationName={destination.name}
+                index={resolveIndex(hero)}
+                onImageClick={onImageClick}
+                className="h-full w-full rounded-[1.35rem]"
+                sizes="(min-width: 1024px) 36vw, 50vw"
+                priority
+                animated={animated}
+              />
+
+              {inset ? (
+                <SpreadImageButton
+                  image={inset}
+                  destinationName={destination.name}
+                  index={resolveIndex(inset)}
+                  onImageClick={onImageClick}
+                  className="absolute bottom-1 -left-2 z-[2] aspect-[3/4] w-[34%] max-w-[132px] rotate-[-2.5deg] rounded-xl shadow-[0_22px_54px_-26px_rgba(15,23,42,0.5)] ring-2 ring-background"
+                  sizes="132px"
+                  animated={animated}
+                />
+              ) : null}
+            </div>
+
+            {(sidePrimary || sideSecondary) && (
+              <div className="flex h-full min-w-0 flex-[0.68] flex-col gap-2.5 xl:gap-3">
+                {sidePrimary ? (
+                  <SpreadImageButton
+                    image={sidePrimary}
+                    destinationName={destination.name}
+                    index={resolveIndex(sidePrimary)}
+                    onImageClick={onImageClick}
+                    className="min-h-0 flex-1 w-full rounded-[1.15rem]"
+                    sizes="(min-width: 1024px) 18vw, 28vw"
+                    animated={animated}
+                  />
+                ) : null}
+                {sideSecondary ? (
+                  <SpreadImageButton
+                    image={sideSecondary}
+                    destinationName={destination.name}
+                    index={resolveIndex(sideSecondary)}
+                    onImageClick={onImageClick}
+                    className="min-h-0 flex-1 w-full rounded-[1.15rem]"
+                    sizes="(min-width: 1024px) 18vw, 28vw"
+                    animated={animated}
+                  />
+                ) : null}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div className="hidden pe-0 sm:pe-8 lg:block lg:pe-12 xl:pe-14">
+        <p className="mt-3 line-clamp-2 text-[0.9375rem] leading-snug text-muted-foreground sm:text-lg lg:mt-4">
           {destination.description}
         </p>
-        <Link
-          href={`/destinos/${destination.slug}`}
-          className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
-        >
-          Ver catálogo
-          <ArrowUpRight className="size-4" />
-        </Link>
+        <CatalogLink mobileProminent />
       </div>
     </>
   );
@@ -199,57 +574,74 @@ type HomeDestinationsClientProps = {
 
 export function HomeDestinationsClient({ destinations }: HomeDestinationsClientProps) {
   const [activeSlug, setActiveSlug] = useState(destinations[0]?.slug ?? "");
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const listRef = useRef<HTMLUListElement | null>(null);
+  const [mobileOpenSlug, setMobileOpenSlug] = useState<string | null>(
+    destinations[0]?.slug ?? null,
+  );
+  const [lightbox, setLightbox] = useState<{ slug: string; index: number } | null>(null);
 
   const activeDestination = useMemo(
     () => destinations.find((item) => item.slug === activeSlug) ?? destinations[0],
     [activeSlug, destinations],
   );
 
-  const activeLightboxImage =
-    lightboxIndex !== null && activeDestination
-      ? activeDestination.galleryImages[lightboxIndex]
-      : null;
-
-  useEffect(() => {
-    setLightboxIndex(null);
-  }, [activeSlug]);
-
-  const handleMobileDestinationSelect = useCallback(
-    (slug: string) => {
-      if (slug === activeSlug) return;
-      const listTop = listRef.current?.getBoundingClientRect().top ?? 0;
-      setActiveSlug(slug);
-      requestAnimationFrame(() => {
-        const nextTop = listRef.current?.getBoundingClientRect().top ?? 0;
-        const delta = nextTop - listTop;
-        if (delta !== 0) {
-          window.scrollBy({ top: delta, behavior: "auto" });
-        }
-      });
-    },
-    [activeSlug],
+  const lightboxDestination = useMemo(
+    () =>
+      lightbox ? destinations.find((item) => item.slug === lightbox.slug) ?? null : null,
+    [destinations, lightbox],
   );
 
+  const activeLightboxImage =
+    lightbox !== null && lightboxDestination
+      ? lightboxDestination.galleryImages[lightbox.index]
+      : null;
+
+  const openMobileAccordion = (slug: string) => {
+    setMobileOpenSlug((current) => (current === slug ? null : slug));
+  };
+
+  const openLightbox = (destination: HomeDestinationEditorial, index: number) => {
+    setLightbox({ slug: destination.slug, index });
+  };
+
+  const openDesktopLightbox = (index: number) => {
+    if (!activeDestination) return;
+    setLightbox({ slug: activeDestination.slug, index });
+  };
+
   useEffect(() => {
-    if (lightboxIndex === null || !activeDestination) return;
+    setLightbox(null);
+  }, [activeSlug, mobileOpenSlug]);
+
+  useEffect(() => {
+    if (lightbox === null || !lightboxDestination) return;
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setLightboxIndex(null);
+        setLightbox(null);
       } else if (event.key === "ArrowLeft") {
-        setLightboxIndex((current) => {
+        setLightbox((current) => {
           if (current === null) return current;
-          return current === 0 ? activeDestination.galleryImages.length - 1 : current - 1;
+          return {
+            ...current,
+            index:
+              current.index === 0
+                ? lightboxDestination.galleryImages.length - 1
+                : current.index - 1,
+          };
         });
       } else if (event.key === "ArrowRight") {
-        setLightboxIndex((current) => {
+        setLightbox((current) => {
           if (current === null) return current;
-          return current === activeDestination.galleryImages.length - 1 ? 0 : current + 1;
+          return {
+            ...current,
+            index:
+              current.index === lightboxDestination.galleryImages.length - 1
+                ? 0
+                : current.index + 1,
+          };
         });
       }
     };
@@ -259,7 +651,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [lightboxIndex, activeDestination]);
+  }, [lightbox, lightboxDestination]);
 
   if (!activeDestination || destinations.length === 0) return null;
 
@@ -267,108 +659,47 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
     <section
       id={SECTION_IDS.destinations}
       className={cn(
-        "scroll-mt-24 bg-background px-4 py-12 sm:px-8 sm:py-20 lg:px-14 2xl:px-20",
+        "relative scroll-mt-24 bg-background px-4 py-12 sm:px-8 sm:py-20 lg:px-14 2xl:px-20",
         MOBILE_MAGAZINE_G_ENABLED &&
-          "max-md:bg-footer-lake max-md:px-4 max-md:py-14 max-md:text-footer-lake-foreground",
+          "max-md:bg-footer-lake max-md:px-4 max-md:pb-24 max-md:pt-10 max-md:text-footer-lake-foreground",
       )}
       aria-labelledby="destinos-heading"
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
-        <Reveal className="max-w-3xl 2xl:max-w-4xl">
+        <Reveal className="max-w-3xl max-md:max-w-none 2xl:max-w-4xl">
           <h2
             id="destinos-heading"
             className={cn(
               "font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl",
-              MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground",
+              MOBILE_MAGAZINE_G_ENABLED &&
+                "max-md:text-footer-lake-foreground max-md:text-[1.75rem] max-md:leading-tight",
             )}
           >
-            Destinos
+            {CLIENT_HOME_DESTINATIONS_COPY.title}
           </h2>
-          <p
+          <div
             className={cn(
-              "mt-4 text-lg leading-relaxed text-muted-foreground 2xl:text-xl",
+              "mt-4 space-y-2 text-lg leading-relaxed text-muted-foreground max-md:mt-3 max-md:space-y-1.5 max-md:text-[0.9375rem] max-md:leading-snug 2xl:text-xl",
               MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground/78",
             )}
           >
-            Elegí la ciudad que más te guste, descubrí fotos reales y encontrá todas las
-            diferentes opciones para tu próximo viaje.
-          </p>
-          <p
-            className={cn(
-              "mt-3 text-lg leading-relaxed text-muted-foreground 2xl:text-xl",
-              MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground/78",
-            )}
-          >
-            Si tenés alguna duda… consultanos por WhatsApp.
-          </p>
+            <p>{CLIENT_HOME_DESTINATIONS_COPY.lead}</p>
+            <p>{CLIENT_HOME_DESTINATIONS_COPY.cta}</p>
+          </div>
         </Reveal>
 
-        <div className="mt-7 grid gap-6 lg:mt-12 lg:grid-cols-[minmax(260px,0.9fr)_1.1fr] lg:items-start 2xl:gap-12">
-          <div className="lg:hidden">
-            <ul ref={listRef} className="flex flex-col gap-2.5">
-              {destinations.map((item) => {
-                const isActive = item.slug === activeDestination.slug;
-
-                return (
-                  <li
-                    key={item.slug}
-                    className="scroll-mt-24"
-                  >
-                    <button
-                      type="button"
-                      onClick={() => handleMobileDestinationSelect(item.slug)}
-                      aria-pressed={isActive}
-                      aria-expanded={isActive}
-                      className={cn(
-                        "group w-full rounded-2xl border px-4 py-3 text-left transition-colors",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2",
-                        isActive
-                          ? "border-black/18 bg-black/[0.03]"
-                          : "border-border/65 bg-card/70",
-                        MOBILE_MAGAZINE_G_ENABLED &&
-                          "max-md:border-transparent max-md:bg-card max-md:shadow-[0_18px_40px_-28px_rgba(0,0,0,0.55)] max-md:ring-1 max-md:ring-black/6",
-                        MOBILE_MAGAZINE_G_ENABLED &&
-                          isActive &&
-                          "max-md:ring-primary/35",
-                      )}
-                    >
-                      <DestinationName
-                        name={item.name}
-                        isActive={isActive}
-                        disableScale
-                        className={cn(
-                          "font-heading block text-[clamp(1.5rem,8vw,2.2rem)] font-semibold uppercase leading-[0.9] tracking-[-0.02em]",
-                          isActive ? "text-black" : "text-black/58",
-                        )}
-                      />
-                      <span
-                        className={cn(
-                          "mt-1.5 block text-xs font-medium text-muted-foreground",
-                          isActive ? "text-black/70" : "text-black/48",
-                        )}
-                      >
-                        {item.region}
-                      </span>
-                    </button>
-
-                    <MobileDestinationPanel
-                      isActive={isActive}
-                      itemId={item.slug}
-                    >
-                      <DestinationPreview
-                        destination={item}
-                        onImageClick={setLightboxIndex}
-                        instant
-                      />
-                    </MobileDestinationPanel>
-                  </li>
-                );
-              })}
-            </ul>
+        <div className="mt-5 grid gap-6 max-md:mt-4 lg:mt-12 lg:grid-cols-[minmax(260px,0.9fr)_1.1fr] lg:items-start 2xl:gap-12">
+          <div className="min-w-0 lg:hidden">
+            <DestinationMobileAccordion
+              destinations={destinations}
+              openSlug={mobileOpenSlug}
+              onToggle={openMobileAccordion}
+              onImageClick={openLightbox}
+            />
           </div>
 
           <Reveal>
-            <motion.ul layout className="hidden space-y-2 lg:block">
+            <motion.ul layout className="hidden space-y-0.5 lg:block">
               {destinations.map((item) => {
                 const isActive = item.slug === activeDestination.slug;
                 return (
@@ -380,7 +711,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
                       className={cn(
                         "group relative w-full text-left transition",
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-4",
-                        "rounded-xl px-1 py-2",
+                        "rounded-xl px-1 py-1.5",
                       )}
                     >
                       <DestinationName
@@ -419,22 +750,22 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
               >
-                <DestinationPreview
+                <DestinationEditorialSpread
                   destination={activeDestination}
-                  onImageClick={setLightboxIndex}
+                  onImageClick={openDesktopLightbox}
                 />
               </motion.div>
             </AnimatePresence>
           </Reveal>
         </div>
 
-        <Reveal delay={0.1} className="mt-10 text-center lg:mt-12">
+        <Reveal delay={0.1} className="mt-6 text-center max-md:mt-5 max-md:pb-2 lg:mt-12">
           <Link
             href="/destinos"
             className={cn(
               "text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2",
               MOBILE_MAGAZINE_G_ENABLED &&
-                "max-md:text-footer-lake-foreground max-md:focus-visible:ring-white/45 max-md:focus-visible:ring-offset-footer-lake",
+                "max-md:text-footer-lake-foreground/72 max-md:text-xs max-md:font-normal max-md:no-underline max-md:hover:text-footer-lake-foreground",
             )}
           >
             Ver todos los destinos
@@ -442,13 +773,20 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
         </Reveal>
       </div>
 
+      {MOBILE_MAGAZINE_G_ENABLED ? (
+        <div
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-b from-transparent to-secondary/35 md:hidden"
+          aria-hidden
+        />
+      ) : null}
+
       <AnimatePresence>
-        {activeLightboxImage ? (
+        {activeLightboxImage && lightboxDestination ? (
           <motion.div
             className="fixed inset-0 z-[1450] flex items-center justify-center bg-black/88 p-3"
             role="dialog"
             aria-modal="true"
-            aria-label={`Vista ampliada de ${activeDestination.name}`}
+            aria-label={`Vista ampliada de ${lightboxDestination.name}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -457,13 +795,13 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
             <button
               type="button"
               className="absolute inset-0"
-              onClick={() => setLightboxIndex(null)}
+              onClick={() => setLightbox(null)}
               aria-label="Cerrar vista ampliada"
             />
 
             <button
               type="button"
-              onClick={() => setLightboxIndex(null)}
+              onClick={() => setLightbox(null)}
               className="absolute right-[max(0.75rem,env(safe-area-inset-right))] top-[max(0.75rem,env(safe-area-inset-top))] z-[2] inline-flex size-11 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               aria-label="Cerrar"
             >
@@ -474,11 +812,15 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
               type="button"
               onClick={(event) => {
                 event.stopPropagation();
-                setLightboxIndex((current) => {
+                setLightbox((current) => {
                   if (current === null) return current;
-                  return current === 0
-                    ? activeDestination.galleryImages.length - 1
-                    : current - 1;
+                  return {
+                    ...current,
+                    index:
+                      current.index === 0
+                        ? lightboxDestination.galleryImages.length - 1
+                        : current.index - 1,
+                  };
                 });
               }}
               className="absolute left-[max(0.45rem,env(safe-area-inset-left))] top-1/2 z-[2] inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:left-4"
@@ -491,11 +833,15 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
               type="button"
               onClick={(event) => {
                 event.stopPropagation();
-                setLightboxIndex((current) => {
+                setLightbox((current) => {
                   if (current === null) return current;
-                  return current === activeDestination.galleryImages.length - 1
-                    ? 0
-                    : current + 1;
+                  return {
+                    ...current,
+                    index:
+                      current.index === lightboxDestination.galleryImages.length - 1
+                        ? 0
+                        : current.index + 1,
+                  };
                 });
               }}
               className="absolute right-[max(0.45rem,env(safe-area-inset-right))] top-1/2 z-[2] inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-4"
@@ -505,7 +851,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
             </button>
 
             <motion.div
-              key={`${activeDestination.slug}-${lightboxIndex}`}
+              key={`${lightboxDestination.slug}-${lightbox?.index ?? 0}`}
               className="relative z-[1] h-[min(90vh,820px)] w-[min(92vw,1100px)]"
               initial={{ opacity: 0, scale: 0.985, y: 8 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}

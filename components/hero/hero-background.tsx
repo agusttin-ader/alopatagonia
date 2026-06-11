@@ -1,17 +1,19 @@
 "use client";
 
 import { AppImage } from "@/components/media/AppImage";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 
+import { ABOUT_US_COPY } from "@/lib/about-pages";
+import { getAboutUsFallbackImage } from "@/lib/about-us-images";
 import {
-  HERO_IMAGE,
   HERO_VIDEO,
   HERO_VIDEO_MOBILE,
   HERO_VIDEO_MOBILE_LITE,
   HERO_VIDEO_PLAYBACK_RATE,
   IMAGE_SIZES,
 } from "@/lib/constants";
+import { canPlayInlineVideo } from "@/lib/media-video-support";
 import {
   shouldPlaySiteIntro,
   SITE_INTRO_REVEAL_FALLBACK_MS,
@@ -36,11 +38,22 @@ export function HeroBackground() {
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [videoReady, setVideoReady] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
+  const [videoSupported, setVideoSupported] = useState<boolean | null>(null);
+  const [fallbackImage, setFallbackImage] = useState<(typeof ABOUT_US_COPY.images)[number]>(
+    ABOUT_US_COPY.images[0],
+  );
   const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useLayoutEffect(() => {
+    setFallbackImage(getAboutUsFallbackImage());
+    setVideoSupported(canPlayInlineVideo(reduceMotion));
+  }, [reduceMotion]);
+
+  const showVideo = videoSupported === true && !videoFailed && reduceMotion !== true;
 
   /** El shell está oculto durante la intro — el autoplay falla si montamos antes. */
   useEffect(() => {
-    if (reduceMotion) return;
+    if (!showVideo) return;
 
     const activate = () => {
       setVideoSrc((current) => current ?? pickHeroVideoSrc());
@@ -58,7 +71,7 @@ export function HeroBackground() {
       window.removeEventListener("alo-site-intro-reveal", activate);
       window.clearTimeout(fallbackId);
     };
-  }, [reduceMotion]);
+  }, [showVideo]);
 
   const startPlayback = useCallback(async () => {
     const video = videoRef.current;
@@ -74,28 +87,31 @@ export function HeroBackground() {
       setVideoReady(true);
     } catch {
       window.setTimeout(() => {
-        void video.play().then(() => setVideoReady(true)).catch(() => {});
+        void video
+          .play()
+          .then(() => setVideoReady(true))
+          .catch(() => setVideoFailed(true));
       }, 120);
     }
   }, []);
 
   useEffect(() => {
-    if (!videoSrc || videoFailed) return;
+    if (!showVideo || !videoSrc || videoFailed) return;
     void startPlayback();
-  }, [videoSrc, videoFailed, startPlayback]);
+  }, [showVideo, videoSrc, videoFailed, startPlayback]);
 
   useEffect(() => {
-    if (!videoSrc || videoReady) return;
+    if (!showVideo || !videoSrc || videoReady) return;
     const fallbackId = window.setTimeout(() => setVideoReady(true), 2800);
     return () => window.clearTimeout(fallbackId);
-  }, [videoSrc, videoReady]);
+  }, [showVideo, videoSrc, videoReady]);
 
-  if (reduceMotion || videoFailed) {
+  if (!showVideo) {
     return (
       <div className="absolute inset-0 z-0">
         <AppImage
-          src={HERO_IMAGE.src}
-          alt={HERO_IMAGE.alt}
+          src={fallbackImage.src}
+          alt={fallbackImage.alt}
           fill
           priority
           qualityPreset="hero"
@@ -110,7 +126,7 @@ export function HeroBackground() {
   return (
     <div
       className="absolute inset-0 z-0 bg-cover bg-center"
-      style={{ backgroundImage: "url(/videos/hero-poster.jpg)" }}
+      style={{ backgroundImage: `url(${fallbackImage.src})` }}
       aria-hidden
     >
       {videoSrc ? (
@@ -126,7 +142,7 @@ export function HeroBackground() {
           loop
           playsInline
           preload="auto"
-          poster="/videos/hero-poster.jpg"
+          poster={fallbackImage.src}
           onLoadedData={() => void startPlayback()}
           onCanPlay={() => void startPlayback()}
           onPlaying={() => setVideoReady(true)}

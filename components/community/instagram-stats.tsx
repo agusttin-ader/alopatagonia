@@ -15,6 +15,7 @@ import { AppImage } from "@/components/media/AppImage";
 import { useEffect, useRef, useState } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
+import { InstagramProfileAvatar } from "@/components/community/InstagramProfileAvatar";
 import {
   GALLERY_IMAGES,
   INSTAGRAM_STATS,
@@ -28,7 +29,7 @@ import { cn } from "@/lib/utils";
 
 const FEED_POST = {
   caption:
-    "Rutas, clima y atardeceres de la Patagonia — lo que subimos cada semana.",
+    "Rutas, clima y atardeceres de la Patagonia — lo que subimos cada semana desde Bariloche al fin del mundo.",
   likes: 1240,
 } as const;
 
@@ -41,25 +42,7 @@ function formatLikes(n: number) {
 }
 
 function FeedAvatar() {
-  return (
-    <div className="shrink-0 rounded-full bg-[linear-gradient(45deg,#f58529,#dd2a7b,#515bd4)] p-[1.5px]">
-      <div className="size-7 overflow-hidden rounded-full bg-white">
-        <div className="relative flex size-full items-center justify-center p-1">
-          <AppImage
-            src={SITE.logoOnLight}
-            alt=""
-            width={591}
-            height={586}
-            sizes={IMAGE_SIZES.avatar}
-            withBlur={false}
-            loadingPulse={false}
-            className="size-full object-contain"
-            aria-hidden
-          />
-        </div>
-      </div>
-    </div>
-  );
+  return <InstagramProfileAvatar size="sm" />;
 }
 
 function FeedPostCarousel({
@@ -296,26 +279,13 @@ export function InstagramStats() {
         <div className="w-full overflow-hidden bg-footer-lake text-white">
           <div className="grid lg:grid-cols-2 lg:items-stretch">
             <div className="flex flex-col justify-center px-6 py-8 sm:px-10 sm:py-10 lg:px-14 lg:py-12 2xl:px-20 2xl:py-14">
-                <div className="flex items-center gap-4">
-                  <div className="shrink-0 rounded-full bg-[linear-gradient(45deg,#f58529,#dd2a7b,#515bd4)] p-[2.5px]">
-                    <div className="relative size-16 overflow-hidden rounded-full bg-footer-lake ring-2 ring-footer-lake sm:size-[4.5rem]">
-                      <div className="flex size-full items-center justify-center p-2.5 sm:p-3">
-                        <AppImage
-                          src={SITE.faviconOnDark}
-                          alt={SITE.name}
-                          width={591}
-                          height={586}
-                          sizes={IMAGE_SIZES.avatar}
-                          withBlur={false}
-                          loadingPulse={false}
-                          className="h-full w-full object-contain"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-sm text-white/65">@{SITE.instagramHandle}</p>
-                    <div className="mt-1 flex items-baseline gap-2">
+                <div className="flex items-center gap-5 sm:gap-6">
+                  <InstagramProfileAvatar size="lg" linked />
+                  <div className="min-w-0">
+                    <p className="text-base font-semibold text-white sm:text-lg">
+                      @{SITE.instagramHandle}
+                    </p>
+                    <div className="mt-1.5 flex items-baseline gap-2">
                       <AnimatedFollowers started={inView} />
                       <span className="text-sm text-white/70">seguidores</span>
                     </div>
@@ -329,8 +299,8 @@ export function InstagramStats() {
                   Patagonia en tu feed
                 </h2>
                 <p className="mt-4 max-w-md text-base leading-relaxed text-white/78 sm:text-lg">
-                  Subimos rutas, clima y fotos de Bariloche, Calafate, Ushuaia y más. Cuando
-                  quieras viajar, escribinos.
+                  Subimos rutas, clima y fotos de Bariloche, Calafate, Chaltén, Ushuaia y más.
+                  Cuando quieras armar el viaje, escribinos.
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-2.5">

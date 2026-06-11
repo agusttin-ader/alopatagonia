@@ -102,7 +102,7 @@ export function CatalogItemDetail({ entry }: CatalogItemDetailProps) {
                 Preguntanos si hay lugar
               </p>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground min-[1920px]:text-base">
-                Por WhatsApp te decimos fechas, capacidad y qué hay disponible.
+                Por WhatsApp te decimos fechas, capacidad y qué hay disponible en esa zona.
               </p>
               <a
                 href={whatsAppHref}

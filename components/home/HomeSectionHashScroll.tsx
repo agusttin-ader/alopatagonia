@@ -5,6 +5,10 @@ import { useReducedMotion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
 import {
+  HOME_SECTION_HASH_IDS,
+  scrollToHomeSection,
+} from "@/lib/home-sections";
+import {
   SITE_INTRO_REVEAL_FALLBACK_MS,
   shouldPlaySiteIntro,
 } from "@/lib/site-intro-config";
@@ -14,13 +18,10 @@ function scrollToHomeHash(reduceMotion: boolean | null) {
   if (!hash) return;
 
   const sectionId = decodeURIComponent(hash.slice(1));
-  const section = document.getElementById(sectionId);
-  if (!section) return;
+  if (!HOME_SECTION_HASH_IDS.has(sectionId)) return;
 
-  section.scrollIntoView({
+  scrollToHomeSection(sectionId, {
     behavior: reduceMotion ? "auto" : "smooth",
-    block: "start",
-    inline: "nearest",
   });
 }
 
@@ -46,6 +47,14 @@ export function HomeSectionHashScroll() {
       window.removeEventListener("alo-site-intro-reveal", run);
       window.clearTimeout(fallbackId);
     };
+  }, [pathname, reduceMotion]);
+
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const onHashChange = () => scrollToHomeHash(reduceMotion);
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
   }, [pathname, reduceMotion]);
 
   return null;

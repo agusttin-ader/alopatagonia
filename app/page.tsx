@@ -43,8 +43,8 @@ export default function Home() {
       <main className="min-w-0 flex-1 pb-20 sm:pb-0">
         <SignatureSection />
         <HomeGallerySection />
-        <CatalogHubSection />
         <HomeDestinations />
+        <CatalogHubSection />
         <WinterStorePromoSection />
         <TripPlannerTeaser />
         <EscapadasExpressSection />

@@ -1,5 +1,6 @@
 export { SITE } from "@/lib/site";
 
+import { CLIENT_HERO_COPY } from "@/lib/client-protected-copy";
 import {
   getHomeExperienceImagePath,
   getHomeHeroImagePath,
@@ -7,14 +8,7 @@ import {
   getInstagramImagePaths,
 } from "@/lib/home-images";
 
-export const HERO_COPY = {
-  headline: "Organizá con nosotros tu viaje a Patagonia sin complicaciones",
-  headlineMobile: "Tu viaje a Patagonia, sin complicaciones",
-  subline:
-    "Alojamientos + transfers + alquiler de autos y excursiones… todo en un solo lugar.",
-  sublineMobile:
-    "Alojamientos, transfers, autos y excursiones en un solo lugar.",
-} as const;
+export const HERO_COPY = CLIENT_HERO_COPY;
 
 export const SECTION_IDS = {
   planner: "planear-viaje",
@@ -43,15 +37,15 @@ export const PLANNER_BANNER = {
 export const PLANNER_PAGE_COPY = {
   title: "Planear mi viaje",
   description:
-    "Decinos a dónde querés ir, cuándo y cuántos son. Te dejamos el texto para WhatsApp o mail.",
+    "Contanos destino, fechas y cuántos viajan. Te armamos el mensaje para WhatsApp o mail con todo en un solo texto.",
   intro:
-    "En dos minutos completás destino, fechas y datos. Nosotros te escribimos el mensaje; vos solo lo enviás.",
+    "En dos minutos cargás lo básico. Nosotros redactamos el mensaje; vos solo lo enviás y seguimos charlando por ahí.",
 } as const;
 
 export const PLANNER_TEASER_COPY = {
   title: "¿Tenés fechas? Empecemos.",
   description:
-    "Elegí destino, fechas y cuántos son. Te dejamos el mensaje listo para mandar por WhatsApp.",
+    "Elegí destino, fechas y cuántos son. Te dejamos el mensaje listo para mandar por WhatsApp — sin formularios eternos.",
   cta: "Armar mi consulta",
 } as const;
 
@@ -121,7 +115,7 @@ export type InstagramStatItem = {
 };
 
 const DEFAULT_WHATSAPP_MESSAGE =
-  "Hola! Quiero ir a la Patagonia. ¿Me ayudan con auto, alojamiento y excursiones?";
+  "Hola! Quiero planear un viaje a la Patagonia. ¿Me ayudan con alojamiento, auto y excursiones?";
 
 export const WHATSAPP_MESSAGES = {
   primary: DEFAULT_WHATSAPP_MESSAGE,
@@ -172,70 +166,65 @@ export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
     label: "Bariloche",
     mapCenter: [-41.1335, -71.3103],
     mapZoom: 12,
-    previewHook: "Lagos, cipreses y ruta en auto sin apuro.",
+    previewHook: "Circuito Chico, Catedral y el Nahuel Huapi en auto.",
   },
   {
     key: "san-martin",
     label: "San Martín de los Andes",
     mapCenter: [-40.1579, -71.3534],
     mapZoom: 12.2,
-    previewHook: "Bosque andino y rutas junto al lago.",
+    previewHook: "Lácar, Lanín y la Ruta de los Siete Lagos.",
   },
   {
     key: "el-chalten",
     label: "El Chaltén",
     mapCenter: [-49.3317, -72.8866],
     mapZoom: 12.4,
-    previewHook: "Trekking al pie del Fitz Roy y senderos de montaña.",
+    previewHook: "Laguna de los Tres y el Fitz Roy — el clima manda.",
   },
   {
     key: "esquel",
     label: "Esquel / Trevelin",
     mapCenter: [-42.9115, -71.3195],
     mapZoom: 12.8,
-    previewHook: "Estepa, bosque y el Tren Patagónico.",
+    previewHook: "Los Alerces, La Hoya y Trevelin gales.",
   },
   {
     key: "villa-la-angostura",
     label: "Villa La Angostura",
     mapCenter: [-40.7617, -71.6463],
     mapZoom: 13,
-    previewHook: "Reserva, pueblo chico y lagos para ir sin apuro.",
+    previewHook: "Arrayanes, Cerro Bayo y el Nahuel Huapi sin apuro.",
   },
   {
     key: "puerto-madryn",
     label: "Puerto Madryn",
     mapCenter: [-42.7692, -65.0385],
     mapZoom: 12.4,
-    previewHook: "Ballenas, pingüinos y costa atlántica.",
+    previewHook: "Ballenas sep–dic, Península Valdés y pingüinos.",
   },
   {
     key: "el-calafate",
     label: "El Calafate",
     mapCenter: [-50.3379, -72.2648],
     mapZoom: 12.2,
-    previewHook: "Glaciares que se escuchan antes de verse.",
+    previewHook: "Perito Moreno y el azul del Lago Argentino.",
   },
   {
     key: "traful",
     label: "Traful / Villa Traful",
     mapCenter: [-40.6583, -71.4597],
     mapZoom: 12.6,
-    previewHook: "Lago Traful, el bosque sumergido y la ruta de los Siete Lagos.",
+    previewHook: "Lago Traful turquesa y bosque sumergido.",
   },
   {
     key: "ushuaia",
     label: "Ushuaia",
     mapCenter: [-54.8019, -68.303],
     mapZoom: 12.2,
-    previewHook: "Canal Beagle, montaña y el sur más sur.",
+    previewHook: "Canal Beagle, Tierra del Fuego y viento del sur.",
   },
 ];
-
-export const PLANNER_DEFAULT_FOCUS = {
-  center: [-44.5, -70.2] as [number, number],
-  zoom: 4.6,
-};
 
 export const PLANNER_DESTINATION_OPTIONS: Array<{
   value: PlannerDestinationValue;
@@ -293,32 +282,27 @@ export function resolvePlannerDestinationKey(value: string): PlannerDestinationV
     : "none";
 }
 
-export function getPlannerDestinationFocus(destination: PlannerDestinationValue) {
-  const key = resolvePlannerDestinationKey(destination);
-  return key === "none" ? PLANNER_DEFAULT_FOCUS : PLANNER_DESTINATION_FOCUS[key];
-}
-
 export const INSTAGRAM_STATS: InstagramStatItem[] = [
   {
     id: "posts",
     label: "Publicaciones",
     target: 1408,
     variant: "integer",
-    description: "Rutas, clima y tips de cada zona.",
+    description: "Rutas, clima y lo que vimos en cada zona.",
   },
   {
     id: "followers",
     label: "Seguidores",
     target: 12.7,
     variant: "k",
-    description: "Comunidad que sigue el sur.",
+    description: "Gente que sigue el sur desde el celular.",
   },
   {
     id: "coverage",
     label: "Destinos",
     target: PLANNER_DESTINATIONS.length,
     variant: "integer",
-    description: "Zonas donde trabajamos.",
+    description: "Bases donde armamos viajes.",
   },
 ];
 
@@ -333,25 +317,25 @@ export const TESTIMONIALS: Testimonial[] = [
     name: "Florencia y Tomás, Buenos Aires",
     highlight: "8 días · Bariloche y Calafate",
     quote:
-      "En un chat nos quedó el auto, el hotel y el Perito Moreno. Llegamos y no tuvimos que correr.",
+      "En un chat nos cerraron auto, hotel y el día del Perito Moreno. Llegamos y solo disfrutamos — cero llamadas de último momento.",
   },
   {
     name: "Camila R., Córdoba",
     highlight: "4 días · Ushuaia",
     quote:
-      "Nos respondieron el mismo día. Cambiaron una excursión por lluvia y nos salió mejor que el plan original.",
+      "Nos respondieron el mismo día. Llovió el martes, movieron la navegación al miércoles y nos quedó mejor: más calma en el Canal Beagle.",
   },
   {
     name: "Familia Quiroga, Rosario",
     highlight: "10 días · con chicos",
     quote:
-      "Sin días corridos, hoteles bien ubicados y paradas para que los chicos no se fundan.",
+      "Itinerario sin días corridos: hoteles cerca de todo, paradas para que los chicos descansen y excursiones que no eran maratones.",
   },
   {
     name: "Nicolás M., Mendoza",
     highlight: "Primera vez en el sur",
     quote:
-      "En dos días teníamos fechas, auto y alojamiento. Nos respondieron por WhatsApp durante todo el viaje.",
+      "En dos días teníamos fechas, auto y alojamiento. Durante el viaje les escribimos por WhatsApp dos veces y siempre contestaron al toque.",
   },
 ];
 
@@ -412,6 +396,13 @@ export const HERO_VIDEO_MOBILE_LITE = {
 
 /** Velocidad del video del hero: 1 = normal; valores menores = más lento (más pausado). */
 export const HERO_VIDEO_PLAYBACK_RATE = 1 as const;
+
+/** Video vertical dentro del mockup de iPhone en planear mi viaje. */
+export const PLANNER_PHONE_VIDEO = {
+  src: "/videos/formulario.mp4",
+  poster: "/images/quienes-somos/quienes-somos-1.jpg",
+  label: "Video de la Patagonia — Alo Patagonia",
+} as const;
 
 export const EXPERIENCE_IMAGE: GalleryImage = {
   src: getHomeExperienceImagePath(),

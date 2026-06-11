@@ -18,6 +18,7 @@ import {
   SHELL_PX,
   siteShell,
 } from "@/lib/layout-shell";
+import { getClientDestinationPageCopy } from "@/lib/client-protected-copy";
 import { getDestinationSeo } from "@/lib/seo-destinations";
 import { cn } from "@/lib/utils";
 
@@ -57,6 +58,8 @@ function CatalogSection({ id, title, description, children }: CatalogSectionProp
 export function DestinationDetail({ destination }: { destination: DestinationCatalog }) {
   const carWhatsApp = getWhatsAppUrl(buildCarRentalWhatsAppMessage(destination.name));
   const seo = getDestinationSeo(destination.slug);
+  const clientPageCopy = getClientDestinationPageCopy(destination.slug);
+  const showIntroSection = Boolean(clientPageCopy || seo);
   const accommodationEntries = destination.accommodations.map((item) => ({
     destination,
     item,
@@ -116,14 +119,22 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
           "min-[1920px]:space-y-24 min-[2560px]:space-y-28",
         )}
       >
-        {seo ? (
+        {showIntroSection ? (
           <section aria-labelledby="destination-seo-heading" className="max-w-3xl">
             <h2 id="destination-seo-heading" className={cn("font-heading", SECTION_TITLE)}>
-              Viajes a {destination.name}
+              {clientPageCopy?.title ?? `Viajes a ${destination.name}`}
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
-              {seo.seoIntro}
-            </p>
+            {clientPageCopy ? (
+              <div className="mt-4 space-y-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+                {clientPageCopy.paragraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+            ) : (
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
+                {seo?.seoIntro}
+              </p>
+            )}
             <Link
               href={PLANNER_PATH}
               className={cn(

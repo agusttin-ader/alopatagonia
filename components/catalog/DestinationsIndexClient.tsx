@@ -6,6 +6,7 @@ import { useState } from "react";
 import { DestinationIndexCard } from "@/components/catalog/DestinationIndexCard";
 import { EditorialSplitNavItem } from "@/components/catalog/EditorialSplitNavItem";
 import type { DestinationZoneGroup } from "@/lib/catalog/destination-zones";
+import { getClientDestinationZoneCopy } from "@/lib/client-protected-copy";
 import { CATALOG_GRID_GAP, CATALOG_SPLIT_SIDEBAR_STICKY } from "@/lib/layout-shell";
 import { cn, horizontalScrollRailClass } from "@/lib/utils";
 
@@ -130,6 +131,8 @@ function DestinationZoneTabs({
 function DestinationZonePanel({ zone }: { zone: DestinationZoneGroup }) {
   const reduceMotion = useReducedMotion();
   const countLabel = destinationCountLabel(zone.destinations.length);
+  const clientZoneCopy = getClientDestinationZoneCopy(zone.id);
+  const panelTitle = clientZoneCopy?.title ?? zone.title;
 
   return (
     <AnimatePresence mode="wait">
@@ -146,12 +149,20 @@ function DestinationZonePanel({ zone }: { zone: DestinationZoneGroup }) {
             id={`${zone.id}-panel-heading`}
             className="font-heading text-2xl font-medium tracking-tight sm:text-3xl min-[1920px]:text-4xl"
           >
-            {zone.title}
+            {panelTitle}
           </h2>
           <p className="mt-1.5 text-sm text-muted-foreground sm:text-base">{countLabel}</p>
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-            {zone.description}
-          </p>
+          {clientZoneCopy ? (
+            <div className="mt-4 max-w-2xl space-y-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+              {clientZoneCopy.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          ) : (
+            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+              {zone.description}
+            </p>
+          )}
         </div>
 
         <div className={cn("grid", CATALOG_GRID_GAP, "sm:grid-cols-2 xl:grid-cols-3")}>

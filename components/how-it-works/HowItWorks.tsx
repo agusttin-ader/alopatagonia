@@ -7,19 +7,19 @@ const STEPS = [
   {
     title: "Nos contás tu viaje",
     description:
-      "Escribís por WhatsApp con fechas, presupuesto y qué te gustaría hacer.",
+      "Escribís por WhatsApp con destino, fechas, cuántos son y qué te gustaría hacer (trekking, glaciares, playa…).",
     icon: MessageCircle,
   },
   {
     title: "Te mandamos el plan",
     description:
-      "Auto, hospedaje y excursiones según tu forma de viajar y la temporada.",
+      "Auto o transfer, hospedaje y excursiones según temporada y clima — sin paquete rígido que no se pueda mover.",
     icon: ClipboardCheck,
   },
   {
     title: "Viajás con todo ordenado",
     description:
-      "Llegás con reservas hechas y seguimos respondiendo si surge alguna duda.",
+      "Llegás con reservas hechas. Si el clima cambia un día, seguimos respondiendo por WhatsApp.",
     icon: Mountain,
   },
 ] as const;
