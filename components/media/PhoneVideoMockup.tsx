@@ -57,25 +57,14 @@ function IPhoneSideButtons() {
   );
 }
 
-const HOVER_MOTION =
-  "motion-safe:transition-[transform,box-shadow,opacity,width,min-width,padding] motion-safe:duration-[900ms] motion-safe:ease-[cubic-bezier(0.16,1,0.3,1)]";
-
-function formatRecordingTime(seconds: number): string {
-  const total = Math.max(0, Math.floor(seconds));
-  const minutes = Math.floor(total / 60);
-  const secs = total % 60;
-  return `${minutes}:${secs.toString().padStart(2, "0")}`;
-}
+const PHONE_TILT_MOTION =
+  "motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:will-change-transform [transform:translateZ(0)]";
 
 function DynamicIsland({ elapsedLabel }: { elapsedLabel: string }) {
   return (
     <>
       <div
-        className={cn(
-          "pointer-events-none absolute left-1/2 top-[2.4%] z-[4] flex h-[3.8%] min-h-[1rem] w-[31%] min-w-[3.65rem] -translate-x-1/2 items-center justify-center gap-1.5 rounded-full bg-black px-2.5 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.07),0_1px_2px_rgba(0,0,0,0.28)]",
-          HOVER_MOTION,
-          "group-hover:w-[33%] group-hover:min-w-[3.8rem] group-hover:px-2.5",
-        )}
+        className="pointer-events-none absolute left-1/2 top-[2.4%] z-[4] flex h-[3.8%] min-h-[1rem] w-[31%] min-w-[3.65rem] -translate-x-1/2 items-center justify-center gap-1.5 rounded-full bg-black px-2.5 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.07),0_1px_2px_rgba(0,0,0,0.28)]"
         aria-hidden
       >
         <span className="relative flex size-[0.38rem] shrink-0 sm:size-[0.42rem]">
@@ -89,11 +78,7 @@ function DynamicIsland({ elapsedLabel }: { elapsedLabel: string }) {
 
       {/* Botón stop — Cámara iOS al grabar: anillo blanco + cuadrado rojo */}
       <div
-        className={cn(
-          "pointer-events-none absolute bottom-[5.8%] left-1/2 z-[4] -translate-x-1/2",
-          HOVER_MOTION,
-          "group-hover:scale-[1.02]",
-        )}
+        className="pointer-events-none absolute bottom-[5.8%] left-1/2 z-[4] -translate-x-1/2"
         aria-hidden
       >
         <div className="flex size-[3rem] items-center justify-center rounded-full border-[2px] border-white sm:size-[3.15rem]">
@@ -107,6 +92,13 @@ function DynamicIsland({ elapsedLabel }: { elapsedLabel: string }) {
       />
     </>
   );
+}
+
+function formatRecordingTime(seconds: number): string {
+  const total = Math.max(0, Math.floor(seconds));
+  const minutes = Math.floor(total / 60);
+  const secs = total % 60;
+  return `${minutes}:${secs.toString().padStart(2, "0")}`;
 }
 
 export function PhoneVideoMockup({
@@ -210,11 +202,11 @@ export function PhoneVideoMockup({
       {/* Animación en wrapper aparte para no romper el clip de esquinas */}
       <div
         className={cn(
-          "relative origin-center",
+          "relative origin-center [perspective:1200px]",
           !reduceMotion &&
             cn(
-              HOVER_MOTION,
-              "lg:rotate-0 lg:group-hover:rotate-[1deg]",
+              PHONE_TILT_MOTION,
+              "md:-rotate-[0.4deg] md:group-hover:rotate-[0.55deg]",
             ),
         )}
       >
@@ -223,10 +215,9 @@ export function PhoneVideoMockup({
             "relative bg-black ring-1 ring-black",
             FRAME_RADIUS,
             BEZEL,
-            HOVER_MOTION,
             isPlain
-              ? "shadow-[0_18px_40px_-24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.08)] group-hover:shadow-[0_22px_44px_-22px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.09)]"
-              : "shadow-[0_28px_56px_-26px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.1)] group-hover:shadow-[0_32px_58px_-24px_rgba(0,0,0,0.58),inset_0_1px_0_rgba(255,255,255,0.1)]",
+              ? "shadow-[0_18px_40px_-24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.08)]"
+              : "shadow-[0_28px_56px_-26px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.1)]",
           )}
         >
           <IPhoneSideButtons />
