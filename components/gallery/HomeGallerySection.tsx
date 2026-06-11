@@ -8,6 +8,7 @@ import { AppImage } from "@/components/media/AppImage";
 import { ImageLightbox } from "@/components/media/ImageLightbox";
 import { Reveal } from "@/components/motion/reveal";
 import { HOME_GALLERY_IMAGES, SECTION_IDS } from "@/lib/constants";
+import { GALLERY_TILE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import {
   GALLERY_MAX_FLEX,
@@ -182,7 +183,7 @@ function GalleryCell({
       withBlur={false}
       sizes={hero ? IMAGE_SIZES.homeGalleryHero : IMAGE_SIZES.homeGalleryTile}
       priority={priority}
-      className="object-cover motion-safe:transition motion-safe:duration-500 group-hover:scale-[1.012]"
+      className={cn("object-cover", GALLERY_TILE_HOVER_EXPAND)}
     />
   );
 

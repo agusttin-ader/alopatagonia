@@ -3,6 +3,7 @@ import { AppImage } from "@/components/media/AppImage";
 import Link from "next/link";
 
 import type { CatalogHubPillar } from "@/lib/catalog-hub/config";
+import { HUB_PILLAR_IMAGE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
@@ -82,10 +83,7 @@ function HubPillarMagazineMobileCard({ pillar, priority }: CatalogHubPillarCardP
           priority={priority}
           qualityPreset="card"
           sizes={IMAGE_SIZES.catalogHubCard}
-          className={cn(
-            "object-cover transition duration-700 motion-safe:[@media(hover:hover)]:group-hover:scale-[1.05]",
-            pillar.imagePosition,
-          )}
+          className={cn(HUB_PILLAR_IMAGE_HOVER_EXPAND, pillar.imagePosition)}
         />
         <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-black/90 via-black/40 to-black/5" />
         {!isLive ? <ComingSoonBadge className="absolute right-3 top-3" /> : null}
@@ -125,10 +123,7 @@ function HubPillarDesktopPosterCard({ pillar, priority }: CatalogHubPillarCardPr
           priority={priority}
           qualityPreset="card"
           sizes={IMAGE_SIZES.catalogHubCard}
-          className={cn(
-            "object-cover transition duration-700 [@media(hover:hover)]:group-hover:scale-[1.05]",
-            pillar.imagePosition,
-          )}
+          className={cn(HUB_PILLAR_IMAGE_HOVER_EXPAND, pillar.imagePosition)}
         />
         <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-black/88 via-black/35 to-black/10" />
         {!isLive ? <ComingSoonBadge className="absolute right-4 top-4" /> : null}

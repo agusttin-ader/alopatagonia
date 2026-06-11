@@ -13,6 +13,7 @@ import { SECTION_IDS } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import type { HomeDestinationEditorial } from "@/lib/home-destinations-types";
 import { getHomeSectionHref, scrollToHomeSection } from "@/lib/home-sections";
+import { SPREAD_TILE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { cn } from "@/lib/utils";
 
@@ -132,7 +133,8 @@ function SpreadImageButton({
   const reduceMotion = useReducedMotion();
   const tileClassName = cn(
     "relative overflow-hidden bg-muted shadow-[0_16px_30px_-20px_rgba(15,23,42,0.32)]",
-    "transition-transform hover:scale-[1.012] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2",
+    SPREAD_TILE_HOVER_EXPAND,
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2",
     className,
   );
 

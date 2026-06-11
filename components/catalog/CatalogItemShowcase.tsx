@@ -4,15 +4,9 @@ import { ArrowUpRight } from "lucide-react";
 
 import { getCatalogItemPath } from "@/lib/catalog/catalog-items";
 import type { CatalogItem } from "@/lib/catalog/types";
+import { CARD_IMAGE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
-
-const CARD_IMAGE_MOTION = cn(
-  "object-cover origin-center [image-rendering:auto]",
-  "motion-safe:transition-[transform] motion-safe:duration-[1000ms] motion-safe:ease-[cubic-bezier(0.16,1,0.3,1)]",
-  "[@media(hover:hover)]:group-hover:scale-[1.04]",
-  "motion-safe:group-active:scale-[1.025]",
-);
 
 const CARD_LINK_MOTION = cn(
   "group transition-[color,border-color,background-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
@@ -124,7 +118,7 @@ export function CatalogItemShowcase({
               alt={cover.alt}
               fill
               qualityPreset="card"
-              className={CARD_IMAGE_MOTION}
+              className={CARD_IMAGE_HOVER_EXPAND}
               sizes={IMAGE_SIZES.catalogCard}
             />
           </div>
@@ -154,7 +148,7 @@ export function CatalogItemShowcase({
               alt={cover.alt}
               fill
               qualityPreset="card"
-              className={CARD_IMAGE_MOTION}
+              className={CARD_IMAGE_HOVER_EXPAND}
               sizes={IMAGE_SIZES.catalogCard}
             />
           </div>

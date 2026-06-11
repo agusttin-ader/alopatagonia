@@ -1,6 +1,7 @@
 import { AppImage } from "@/components/media/AppImage";
 
 import type { CatalogImage } from "@/lib/catalog/types";
+import { CATALOG_GALLERY_IMAGE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import {
   CATALOG_GALLERY_GAP,
@@ -123,8 +124,8 @@ export function CatalogItemGallery({
             priority={cell.priority}
             qualityPreset={cell.priority ? "detail" : "gallery"}
             className={cn(
-              "object-cover motion-safe:transition motion-safe:duration-300",
-              isInteractive && "group-hover:scale-[1.015]",
+              "object-cover",
+              isInteractive && CATALOG_GALLERY_IMAGE_HOVER_EXPAND,
             )}
             sizes={
               cell.priority ? IMAGE_SIZES.catalogItemGallery : IMAGE_SIZES.catalogItemThumb

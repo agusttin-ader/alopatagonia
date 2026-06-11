@@ -94,6 +94,7 @@
   --motion-duration-fast: 0.18s;
   --motion-duration-base: 0.32s;
   --motion-duration-slow: 0.52s;
+  --motion-duration-hover-expand: 1.4s;
   --motion-ease-emphasis: cubic-bezier(0.22, 1, 0.36, 1);
   --motion-ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
   --sidebar: oklch(0.985 0 0);
@@ -131,6 +132,7 @@
       --motion-duration-fast: 0.01ms;
       --motion-duration-base: 0.01ms;
       --motion-duration-slow: 0.01ms;
+      --motion-duration-hover-expand: 0.01ms;
     }
     .animate-spin {
       animation: none;
@@ -202,6 +204,19 @@
   .motion-cta:focus-visible {
     transform: translateY(-2px);
     box-shadow: 0 10px 24px -16px color-mix(in oklch, var(--foreground) 52%, transparent);
+  }
+
+  .motion-hover-expand {
+    @apply motion-safe:transition-transform motion-safe:will-change-transform;
+    transform: translateZ(0);
+    transition-duration: var(--motion-duration-hover-expand);
+    transition-timing-function: var(--motion-ease-emphasis);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .motion-hover-expand {
+      transition: none;
+    }
   }
 }
 

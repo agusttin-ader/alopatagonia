@@ -7,6 +7,7 @@ import { AppImage } from "@/components/media/AppImage";
 import { ABOUT_US_COPY } from "@/lib/about-pages";
 import { getAboutUsFallbackImage } from "@/lib/about-us-images";
 import { canPlayInlineVideo } from "@/lib/media-video-support";
+import { HOVER_EXPAND_MOTION } from "@/lib/hover-expand-motion";
 import { cn } from "@/lib/utils";
 
 type PhoneVideoMockupProps = {
@@ -57,8 +58,7 @@ function IPhoneSideButtons() {
   );
 }
 
-const PHONE_TILT_MOTION =
-  "motion-safe:transition-transform motion-safe:duration-[1400ms] motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)] motion-safe:will-change-transform [transform:translateZ(0)]";
+const PHONE_TILT_MOTION = HOVER_EXPAND_MOTION;
 
 function DynamicIsland({ elapsedLabel }: { elapsedLabel: string }) {
   return (

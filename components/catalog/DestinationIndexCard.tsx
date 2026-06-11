@@ -3,6 +3,7 @@ import { AppImage } from "@/components/media/AppImage";
 import Link from "next/link";
 
 import type { DestinationCatalog } from "@/lib/catalog/types";
+import { CARD_IMAGE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
@@ -11,13 +12,6 @@ type DestinationIndexCardProps = {
   /** Más compacta dentro del panel split (como cards de alojamiento). */
   compact?: boolean;
 };
-
-const CARD_IMAGE_MOTION = cn(
-  "object-cover origin-center [image-rendering:auto]",
-  "motion-safe:transition-[transform] motion-safe:duration-[1000ms] motion-safe:ease-[cubic-bezier(0.16,1,0.3,1)]",
-  "[@media(hover:hover)]:group-hover:scale-[1.04]",
-  "motion-safe:group-active:scale-[1.025]",
-);
 
 export function DestinationIndexCard({ destination, compact = false }: DestinationIndexCardProps) {
   return (
@@ -42,7 +36,7 @@ export function DestinationIndexCard({ destination, compact = false }: Destinati
               alt={destination.name}
               fill
               qualityPreset="card"
-              className={compact ? CARD_IMAGE_MOTION : "object-cover transition duration-500 group-hover:scale-[1.03]"}
+              className={CARD_IMAGE_HOVER_EXPAND}
               sizes={IMAGE_SIZES.catalogCard}
             />
           </div>
