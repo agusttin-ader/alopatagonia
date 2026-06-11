@@ -19,7 +19,7 @@ import {
   type PlannerDestinationValue,
 } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { buildTripCalendarIcs, downloadTripCalendarIcs, tripCalendarFilename } from "@/lib/planner-calendar";
+import { addTripToCalendar } from "@/lib/planner-calendar";
 import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 
 const PhoneVideoMockup = dynamic(
@@ -542,15 +542,13 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
   const handleAddToCalendar = () => {
     if (!canAddToCalendar) return;
 
-    const destinationLabel = PLANNER_DESTINATION_LABELS[resolvedDestination];
-    const ics = buildTripCalendarIcs({
-      destinationLabel,
+    addTripToCalendar({
+      destinationLabel: PLANNER_DESTINATION_LABELS[resolvedDestination],
       fromDate,
       toDate,
       travelers: travelers.trim(),
       contactName: name.trim(),
     });
-    downloadTripCalendarIcs(ics, tripCalendarFilename(destinationLabel));
   };
 
   const progressSteps = useMemo<PlannerProgressStep[]>(
@@ -777,17 +775,22 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
             </form>
 
             {canAddToCalendar ? (
-              <button
-                type="button"
-                onClick={handleAddToCalendar}
-                className={cn(
-                  PLANNER_CTA,
-                  "mt-4 border border-border bg-card text-foreground hover:bg-muted focus-visible:ring-ring/30 md:hidden",
-                )}
-              >
-                <CalendarPlus className="size-4 shrink-0" />
-                Agregar fechas al calendario
-              </button>
+              <div className="mt-4 md:hidden">
+                <button
+                  type="button"
+                  onClick={handleAddToCalendar}
+                  className={cn(
+                    PLANNER_CTA,
+                    "border border-border bg-card text-foreground hover:bg-muted focus-visible:ring-ring/30",
+                  )}
+                >
+                  <CalendarPlus className="size-4 shrink-0" />
+                  Guardar en calendario
+                </button>
+                <p className="mt-2 text-center text-[0.68rem] text-muted-foreground">
+                  Se abre Calendario o Google Calendar — confirmás ahí.
+                </p>
+              </div>
             ) : null}
 
             <div className="mt-6 flex flex-col gap-2.5 lg:grid lg:grid-cols-2 lg:gap-3">

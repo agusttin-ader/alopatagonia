@@ -26,7 +26,7 @@ function formatIcsStamp(date: Date) {
   return `${y}${m}${d}T${h}${min}${s}Z`;
 }
 
-type TripCalendarEvent = {
+export type TripCalendarEvent = {
   destinationLabel: string;
   fromDate: string;
   toDate: string;
@@ -34,24 +34,31 @@ type TripCalendarEvent = {
   contactName?: string;
 };
 
-export function buildTripCalendarIcs({
+function buildTripSummary(destinationLabel: string) {
+  return `Viaje a ${destinationLabel}`;
+}
+
+function buildTripDescription({
   destinationLabel,
-  fromDate,
-  toDate,
   travelers,
   contactName,
 }: TripCalendarEvent) {
-  const summary = `Viaje a ${destinationLabel}`;
   const peopleLine = travelers?.trim()
     ? `${travelers.trim()} ${Number(travelers) === 1 ? "persona" : "personas"}`
     : "";
-  const descriptionParts = [
+  return [
     contactName?.trim() ? `Consulta de ${contactName.trim()}` : "Consulta armada con Alo Patagonia",
     peopleLine,
     "Patagonia Argentina — alopatagonia.com.ar",
-  ].filter(Boolean);
+  ]
+    .filter(Boolean)
+    .join(" · ");
+}
 
-  const uid = `alo-patagonia-${toIcsDate(fromDate)}-${toIcsDate(toDate)}-${destinationLabel.toLowerCase().replace(/\s+/g, "-")}@alopatagonia.com.ar`;
+export function buildTripCalendarIcs(event: TripCalendarEvent) {
+  const summary = buildTripSummary(event.destinationLabel);
+  const description = buildTripDescription(event);
+  const uid = `alo-patagonia-${toIcsDate(event.fromDate)}-${toIcsDate(event.toDate)}-${event.destinationLabel.toLowerCase().replace(/\s+/g, "-")}@alopatagonia.com.ar`;
 
   return [
     "BEGIN:VCALENDAR",
@@ -62,36 +69,61 @@ export function buildTripCalendarIcs({
     "BEGIN:VEVENT",
     `UID:${uid}`,
     `DTSTAMP:${formatIcsStamp(new Date())}`,
-    `DTSTART;VALUE=DATE:${toIcsDate(fromDate)}`,
-    `DTEND;VALUE=DATE:${toIcsDate(addDaysToIso(toDate, 1))}`,
+    `DTSTART;VALUE=DATE:${toIcsDate(event.fromDate)}`,
+    `DTEND;VALUE=DATE:${toIcsDate(addDaysToIso(event.toDate, 1))}`,
     `SUMMARY:${escapeIcsText(summary)}`,
-    `DESCRIPTION:${escapeIcsText(descriptionParts.join(" · "))}`,
-    `LOCATION:${escapeIcsText(`${destinationLabel}, Patagonia Argentina`)}`,
+    `DESCRIPTION:${escapeIcsText(description)}`,
+    `LOCATION:${escapeIcsText(`${event.destinationLabel}, Patagonia Argentina`)}`,
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");
 }
 
-export function downloadTripCalendarIcs(content: string, filename: string) {
-  const blob = new Blob([content], { type: "text/calendar;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  link.rel = "noopener";
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  window.setTimeout(() => URL.revokeObjectURL(url), 0);
+function buildGoogleCalendarUrl(event: TripCalendarEvent) {
+  const summary = buildTripSummary(event.destinationLabel);
+  const description = buildTripDescription(event);
+  const location = `${event.destinationLabel}, Patagonia Argentina`;
+  const dates = `${toIcsDate(event.fromDate)}/${toIcsDate(addDaysToIso(event.toDate, 1))}`;
+
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: summary,
+    dates,
+    details: description,
+    location,
+  });
+
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
-export function tripCalendarFilename(destinationLabel: string) {
-  const slug = destinationLabel
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
+export function isIosDevice() {
+  if (typeof navigator === "undefined") return false;
+  const ua = navigator.userAgent;
+  return (
+    /iPad|iPhone|iPod/.test(ua) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+  );
+}
 
-  return `viaje-${slug || "patagonia"}.ics`;
+function openAppleCalendar(ics: string) {
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  window.location.assign(url);
+  window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
+}
+
+function openGoogleCalendar(event: TripCalendarEvent) {
+  window.location.assign(buildGoogleCalendarUrl(event));
+}
+
+/** iPhone/iPad → Calendario de Apple. Android y resto → Google Calendar. */
+export function addTripToCalendar(event: TripCalendarEvent) {
+  if (typeof window === "undefined") return;
+
+  if (isIosDevice()) {
+    openAppleCalendar(buildTripCalendarIcs(event));
+    return;
+  }
+
+  openGoogleCalendar(event);
 }
