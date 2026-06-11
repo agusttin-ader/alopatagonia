@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { CalendarDays, CalendarPlus, Check, ChevronDown, ChevronLeft, ChevronRight, Mail } from "lucide-react";
+import { CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, Mail } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useEffect, useId, useMemo, useRef, useState, type RefObject } from "react";
 
@@ -19,8 +19,6 @@ import {
   type PlannerDestinationValue,
 } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { addTripToCalendar } from "@/lib/planner-calendar";
-import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 
 const PhoneVideoMockup = dynamic(
   () => import("@/components/media/PhoneVideoMockup").then((mod) => mod.PhoneVideoMockup),
@@ -488,7 +486,6 @@ function DateField({
 }
 
 export function TripPlannerSection({ showHeading = true }: { showHeading?: boolean }) {
-  const isCoarseMobile = useCoarseMobile();
   const [name, setName] = useState("");
   const [destination, setDestination] = useState<PlannerDestinationValue>("none");
   const [travelers, setTravelers] = useState("");
@@ -535,21 +532,6 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
   const plannerReady = completionCount >= 4 && !invalidDateRange;
   const honeypotTriggered = website.trim().length > 0;
   const canSubmit = plannerReady && !honeypotTriggered;
-  const canAddToCalendar =
-    isCoarseMobile &&
-    Boolean(fromDate && toDate && !invalidDateRange && resolvedDestination !== "none");
-
-  const handleAddToCalendar = () => {
-    if (!canAddToCalendar) return;
-
-    addTripToCalendar({
-      destinationLabel: PLANNER_DESTINATION_LABELS[resolvedDestination],
-      fromDate,
-      toDate,
-      travelers: travelers.trim(),
-      contactName: name.trim(),
-    });
-  };
 
   const progressSteps = useMemo<PlannerProgressStep[]>(
     () => [
@@ -773,25 +755,6 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                 </p>
               </div>
             </form>
-
-            {canAddToCalendar ? (
-              <div className="mt-4 md:hidden">
-                <button
-                  type="button"
-                  onClick={handleAddToCalendar}
-                  className={cn(
-                    PLANNER_CTA,
-                    "border border-border bg-card text-foreground hover:bg-muted focus-visible:ring-ring/30",
-                  )}
-                >
-                  <CalendarPlus className="size-4 shrink-0" />
-                  Guardar en calendario
-                </button>
-                <p className="mt-2 text-center text-[0.68rem] text-muted-foreground">
-                  Se abre Calendario o Google Calendar — confirmás ahí.
-                </p>
-              </div>
-            ) : null}
 
             <div className="mt-6 flex flex-col gap-2.5 lg:grid lg:grid-cols-2 lg:gap-3">
               <a

@@ -58,7 +58,7 @@ function IPhoneSideButtons() {
 }
 
 const HOVER_MOTION =
-  "duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:transition-[transform,box-shadow,opacity,width,min-width,padding]";
+  "motion-safe:transition-[transform,box-shadow,opacity,width,min-width,padding] motion-safe:duration-[900ms] motion-safe:ease-[cubic-bezier(0.16,1,0.3,1)]";
 
 function formatRecordingTime(seconds: number): string {
   const total = Math.max(0, Math.floor(seconds));
@@ -210,15 +210,12 @@ export function PhoneVideoMockup({
       {/* Animación en wrapper aparte para no romper el clip de esquinas */}
       <div
         className={cn(
-          "relative",
+          "relative origin-center",
           !reduceMotion &&
             cn(
               HOVER_MOTION,
-              "group-hover:-translate-y-0.5 group-hover:scale-[1.012]",
+              "lg:rotate-0 lg:group-hover:rotate-[1deg]",
             ),
-          !isPlain &&
-            !reduceMotion &&
-            "lg:-rotate-2 lg:transition-transform lg:duration-[900ms] lg:ease-[cubic-bezier(0.16,1,0.3,1)] lg:group-hover:rotate-0",
         )}
       >
         <div
@@ -226,9 +223,10 @@ export function PhoneVideoMockup({
             "relative bg-black ring-1 ring-black",
             FRAME_RADIUS,
             BEZEL,
+            HOVER_MOTION,
             isPlain
-              ? "shadow-[0_18px_40px_-24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.08)] group-hover:shadow-[0_26px_48px_-22px_rgba(0,0,0,0.42),inset_0_1px_0_rgba(255,255,255,0.1)]"
-              : "shadow-[0_28px_56px_-26px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.1)]",
+              ? "shadow-[0_18px_40px_-24px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.08)] group-hover:shadow-[0_22px_44px_-22px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.09)]"
+              : "shadow-[0_28px_56px_-26px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.1)] group-hover:shadow-[0_32px_58px_-24px_rgba(0,0,0,0.58),inset_0_1px_0_rgba(255,255,255,0.1)]",
           )}
         >
           <IPhoneSideButtons />
