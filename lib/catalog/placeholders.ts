@@ -597,7 +597,6 @@ export function buildStructuredCatalog(config: {
   heroImage?: string;
 }): DestinationCatalog {
   const hero = pickCatalogHeroImage(config.imagePaths, config.heroImage);
-  const accommodationPools = splitAccommodationPools(config.imagePaths);
 
   return {
     slug: config.slug,
@@ -605,7 +604,11 @@ export function buildStructuredCatalog(config: {
     region: config.region,
     intro: config.intro,
     heroImage: hero,
-    accommodations: buildStandardAccommodations(config.slug, config.name, accommodationPools),
+    accommodations: buildDestinationAccommodations(
+      config.slug,
+      config.name,
+      config.imagePaths,
+    ),
     excursions: buildExcursions(
       config.slug,
       buildExcursionImageGroups(config.imagePaths),

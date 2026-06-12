@@ -1,3 +1,4 @@
+import { getClientAccommodationCopy } from "@/lib/client-protected-copy";
 import manifest from "@/lib/catalog/generated/destination-accommodations.json";
 import type { AccommodationType, CatalogImage, CatalogItem } from "@/lib/catalog/types";
 
@@ -80,15 +81,21 @@ export function buildDestinationAccommodationItems(
     usedSlugs.add(itemSlug);
 
     const images = entry.images.length > 0 ? entry.images : [FALLBACK_IMAGE];
-    const name = entry.name.trim();
+    const manifestName = entry.name.trim();
+    const clientCopy = getClientAccommodationCopy(destinationSlug, itemSlug);
+    const name = clientCopy?.name ?? manifestName;
 
     return {
       id: `${destinationSlug}-${itemSlug}`,
       itemSlug,
       name,
       type: entry.type,
-      description: accommodationDescription(name, entry.type, destinationName),
-      highlights: defaultHighlights(entry.type, destinationName),
+      description:
+        clientCopy?.description ??
+        accommodationDescription(name, entry.type, destinationName),
+      highlights: clientCopy?.highlights
+        ? [...clientCopy.highlights]
+        : defaultHighlights(entry.type, destinationName),
       images: images.map((src, index) =>
         toCatalogImage(src, `${name} — foto ${index + 1}`),
       ),

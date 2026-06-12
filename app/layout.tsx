@@ -129,6 +129,7 @@ export default function RootLayout({
     <html
       lang="es"
       suppressHydrationWarning
+      data-scroll-behavior="smooth"
       className={`${inter.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
       <head>

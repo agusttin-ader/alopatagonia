@@ -31,25 +31,19 @@ export function CatalogSplitBrowsePanel({
 
   if (stableGroups.length === 0) return null;
 
-  if (stableGroups.length === 1 && stableGroups[0]) {
-    return (
-      <CatalogSplitPanel
-        group={stableGroups[0]}
-        mode={mode}
-        action={panelAction?.(stableGroups[0])}
-      />
-    );
-  }
+  const showMobileTabs = stableGroups.length > 1;
 
   return (
     <div className="min-h-[420px]">
       <div className="lg:hidden">
-        <CatalogSplitTabs
-          groups={stableGroups}
-          activeId={activeGroup?.id ?? ""}
-          onSelect={setActiveId}
-          navAriaLabel={navAriaLabel}
-        />
+        {showMobileTabs ? (
+          <CatalogSplitTabs
+            groups={stableGroups}
+            activeId={activeGroup?.id ?? ""}
+            onSelect={setActiveId}
+            navAriaLabel={navAriaLabel}
+          />
+        ) : null}
         {activeGroup ? (
           <CatalogSplitPanel
             group={activeGroup}
@@ -188,7 +182,7 @@ function CatalogSplitPanel({
         <CatalogItemGrid
           entries={group.entries}
           mode={mode}
-          gridClassName="grid-cols-2 lg:grid-cols-3"
+          gridClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
           compactGap
         />
       </motion.section>

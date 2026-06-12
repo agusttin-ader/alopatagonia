@@ -1,9 +1,8 @@
-import type { ReactNode } from "react";
 import { AppImage } from "@/components/media/AppImage";
 import Link from "next/link";
 
-import { CatalogItemGrid } from "@/components/catalog/CatalogItemGrid";
 import { DestinationAccommodationBrowse } from "@/components/catalog/DestinationAccommodationBrowse";
+import { DestinationExcursionBrowse } from "@/components/catalog/DestinationExcursionBrowse";
 import { FaqSection } from "@/components/seo/FaqSection";
 import { buttonVariants } from "@/components/ui/button";
 import { buildCarRentalWhatsAppMessage } from "@/lib/catalog/placeholders";
@@ -28,31 +27,6 @@ function accommodationCountLabel(count: number) {
 
 function excursionCountLabel(count: number) {
   return count === 1 ? "1 excursión" : `${count} excursiones`;
-}
-
-type CatalogSectionProps = {
-  id: string;
-  title: string;
-  description: string;
-  children: ReactNode;
-};
-
-function CatalogSection({ id, title, description, children }: CatalogSectionProps) {
-  return (
-    <section aria-labelledby={id} className="scroll-mt-24 sm:scroll-mt-28">
-      <div className="flex flex-col gap-3 border-b border-border/70 pb-5 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h2 id={id} className={cn("font-heading", SECTION_TITLE)}>
-            {title}
-          </h2>
-          <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-            {description}
-          </p>
-        </div>
-      </div>
-      <div className="mt-8">{children}</div>
-    </section>
-  );
 }
 
 export function DestinationDetail({ destination }: { destination: DestinationCatalog }) {
@@ -166,19 +140,21 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
         ) : null}
 
         {excursionEntries.length > 0 ? (
-          <CatalogSection
-            id="excursiones-heading"
-            title="Excursiones"
-            description={`${destination.region} · ${excursionCountLabel(excursionEntries.length)}`}
-          >
-            <CatalogItemGrid
+          <section aria-labelledby="excursiones-heading" className="scroll-mt-24 sm:scroll-mt-28">
+            <div className="mb-8 min-w-0">
+              <h2 id="excursiones-heading" className={cn("font-heading", SECTION_TITLE)}>
+                Excursiones
+              </h2>
+              <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+                {destination.region} · {excursionCountLabel(excursionEntries.length)}
+              </p>
+            </div>
+
+            <DestinationExcursionBrowse
+              destination={destination}
               entries={excursionEntries}
-              mode="excursion"
-              compact
-              compactGap
-              gridClassName="grid-cols-2 lg:grid-cols-3"
             />
-          </CatalogSection>
+          </section>
         ) : null}
 
         <section

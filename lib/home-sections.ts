@@ -10,6 +10,11 @@ export function getHomeSectionHref(sectionId: string, isHome: boolean): string {
   return isHome ? `#${sectionId}` : `/#${sectionId}`;
 }
 
+/** App Router puede fallar con `<Link href="/#…">`; usar `<a>` nativo. */
+export function isCrossPageHomeHashHref(href: string): boolean {
+  return href.startsWith("/#");
+}
+
 export function scrollToHomeSection(
   sectionId: string,
   options?: { behavior?: ScrollBehavior },

@@ -47,7 +47,7 @@ function CatalogLink({
   };
 
   return (
-    <Link
+    <a
       href={href}
       onClick={onClick}
       className={cn(
@@ -69,7 +69,7 @@ function CatalogLink({
       Ver catálogo
       <ChevronDown className="size-4 shrink-0 lg:hidden" aria-hidden />
       <ArrowUpRight className="hidden size-4 shrink-0 lg:inline" aria-hidden />
-    </Link>
+    </a>
   );
 }
 

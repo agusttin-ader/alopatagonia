@@ -85,18 +85,18 @@ export function Footer() {
             >
               Planear mi viaje
             </Link>
-            <Link
+            <a
               href={getHomeSectionHref(SECTION_IDS.escapadasExpress, false)}
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
               Escapadas express
-            </Link>
-            <Link
+            </a>
+            <a
               href={getHomeSectionHref(SECTION_IDS.aboutUs, false)}
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
               Quiénes somos
-            </Link>
+            </a>
             <Link
               href="/invierno"
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"

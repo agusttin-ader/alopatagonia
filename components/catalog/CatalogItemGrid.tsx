@@ -1,17 +1,10 @@
 import { CatalogItemShowcase } from "@/components/catalog/CatalogItemShowcase";
 import { getCatalogItemBadge, type CatalogItemEntry } from "@/lib/catalog/catalog-items";
-import type { ExcursionCategory } from "@/lib/catalog/types";
+import { EXCURSION_CATEGORY_LABELS } from "@/lib/catalog/excursion-categories";
 import { CATALOG_GRID_GAP } from "@/lib/layout-shell";
 import { cn } from "@/lib/utils";
 
 export type CatalogGridMode = "accommodation" | "excursion";
-
-const EXCURSION_CATEGORY_LABELS: Record<ExcursionCategory, string> = {
-  trekking: "Trekking",
-  navegacion: "Navegación",
-  fauna: "Fauna",
-  aventura: "Aventura",
-};
 
 type CatalogItemGridProps = {
   entries: CatalogItemEntry[];

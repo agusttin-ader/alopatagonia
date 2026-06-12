@@ -21,9 +21,9 @@ export function CatalogHubPageShell({ pillar, children }: CatalogHubPageShellPro
             Inicio
           </Link>
           <span className="mx-2">/</span>
-          <Link href={`/#${SECTION_IDS.catalogHub}`} className="hover:text-foreground">
+          <a href={`/#${SECTION_IDS.catalogHub}`} className="hover:text-foreground">
             Catálogo
-          </Link>
+          </a>
           <span className="mx-2">/</span>
           <span className="text-foreground">{pillar.title}</span>
         </nav>

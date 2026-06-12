@@ -194,3 +194,360 @@ export function mergeClientDestinationFaq(
 
   return fallback.map((item, index) => clientItems[index] ?? item);
 }
+
+export type ClientAccommodationCopy = {
+  name?: string;
+  description: string;
+  highlights: readonly string[];
+};
+
+const BARILOCHE_DPTO_MONOAMBIENTE_CENTRICO_COPY = {
+  description: "Departamento monoambiente céntrico con capacidad para 2 pax.",
+  highlights: [
+    "Cocina completa, heladera frigobar y ropa de blanco para dormitorio y baño",
+    "TV smart, Internet y calefacción central",
+    "Ubicación estratégica frente al Centro Cívico y excelentes vistas al lago",
+  ],
+} as const satisfies ClientAccommodationCopy;
+
+const BARILOCHE_DPTO_MONOAMBIENTE_2_4_PAX_COPY = {
+  description: "Departamento monoambiente céntrico con capacidad para 2 a 4 pax.",
+  highlights: [
+    "Cocina completa y ropa de blanco para dormitorio y baño",
+    "TV smart, Internet y calefacción central",
+    "Ubicación estratégica frente al Centro Cívico y excelentes vistas",
+  ],
+} as const satisfies ClientAccommodationCopy;
+
+export const CLIENT_ACCOMMODATION_COPY = {
+  "bariloche/arelauquen": {
+    description:
+      "Casa ubicada en Villa Arelauquen, dentro de barrio privado. Con capacidad para hasta 5 pax.",
+    highlights: [
+      "Cocina completa, horno a gas, heladera con freezer, lavarropas, cafetera expreso y ropa de blanco para dormitorio y baño",
+      "TV smart en ambas habitaciones e Internet por fibra óptica",
+      "Calefacción smart por caldera y parrilla en el deck de la cabaña",
+      "Estacionamiento interno, amplias áreas de parque y fogonero",
+      "A 150 m de Lago Gutiérrez",
+    ],
+  },
+  "bariloche/cab-2-pax": {
+    description:
+      "Ubicada a la altura de km 7 de Av. Pioneros. Con capacidad para 2 pax.",
+    highlights: [
+      "Cocina completa, heladera con freezer, lavarropas, cafetera y ropa de blanco para dormitorio y baño",
+      "TV smart e Internet",
+      "Calefacción smart por caldera y parrilla en el deck de la cabaña",
+      "Estacionamiento, amplia área de parque y fogonero",
+    ],
+  },
+  "bariloche/cab-sauco-grande": {
+    description:
+      "Casa ubicada a la altura de km 7 de Av. Pioneros. Con capacidad para hasta 9 pax.",
+    highlights: [
+      "Cocina completa, horno a gas, heladera con freezer, cafetera, microondas, tostadora y ropa de blanco para dormitorio y baño",
+      "3 habitaciones, una en suite con jacuzzi, 2 baños",
+      "TV smart en ambas habitaciones y en el living e Internet",
+      "Calefacción a gas y parrilla en el deck de la cabaña",
+      "Estacionamiento en nivel superior y amplias áreas de parque",
+      "Vista a la bahía de Playa Bonita",
+    ],
+  },
+  "bariloche/cabana-otto": {
+    description:
+      "Casa ubicada a la altura de km 5 de Av. Pioneros. Con capacidad para hasta 5 pax.",
+    highlights: [
+      "Cocina completa, horno a gas, heladera con freezer, cafetera, microondas, tostadora, lavarropas y ropa de blanco para dormitorio y baño",
+      "2 habitaciones, 1 baño",
+      "TV en habitación y en el living e Internet",
+      "Calefacción a gas y parrilla",
+      "Estacionamiento y amplias áreas de parque",
+    ],
+  },
+  "bariloche/cabanas-sauco": {
+    description:
+      "Casa ubicada a la altura de km 7 de Av. Pioneros. Con capacidad para hasta 6 pax.",
+    highlights: [
+      "Cocina completa, horno a gas, heladera frigobar, cafetera, microondas, tostadora y ropa de blanco para dormitorio y baño",
+      "2 habitaciones, 1 baño",
+      "TV en habitación y en el living e Internet",
+      "Calefacción a gas y parrilla en el deck de la cabaña tipo chulengo",
+      "Estacionamiento en nivel superior y amplias áreas de parque",
+      "Vista a la bahía de Playa Bonita",
+    ],
+  },
+  "bariloche/casa-calma": {
+    description:
+      "Casa ubicada a la altura de km 7 de Av. Pioneros. Con capacidad para hasta 3 pax.",
+    highlights: [
+      "Cocina completa, horno a gas, heladera con freezer, cafetera, microondas, tostadora, lavarropas y ropa de blanco para dormitorio y baño",
+      "2 habitaciones, 2 baños",
+      "TV en habitación y en el living e Internet",
+      "Calefacción a gas y a leña, parrilla en parque",
+      "Estacionamiento y amplias áreas de exterior",
+    ],
+  },
+  "bariloche/dpto-1": BARILOCHE_DPTO_MONOAMBIENTE_CENTRICO_COPY,
+  "bariloche/dpto-2": BARILOCHE_DPTO_MONOAMBIENTE_CENTRICO_COPY,
+  "bariloche/dpto-3": BARILOCHE_DPTO_MONOAMBIENTE_CENTRICO_COPY,
+  "bariloche/dpto-4": BARILOCHE_DPTO_MONOAMBIENTE_CENTRICO_COPY,
+  "bariloche/dpto-5": BARILOCHE_DPTO_MONOAMBIENTE_CENTRICO_COPY,
+  "bariloche/dpto-6": BARILOCHE_DPTO_MONOAMBIENTE_CENTRICO_COPY,
+  "bariloche/dpto-4-pax": BARILOCHE_DPTO_MONOAMBIENTE_2_4_PAX_COPY,
+  "bariloche/dpto-cerros": BARILOCHE_DPTO_MONOAMBIENTE_2_4_PAX_COPY,
+  "bariloche/dpto-lago": BARILOCHE_DPTO_MONOAMBIENTE_2_4_PAX_COPY,
+  "bariloche/dpto-huapi": BARILOCHE_DPTO_MONOAMBIENTE_2_4_PAX_COPY,
+  "bariloche/dpto-luxury": {
+    description: "Departamento céntrico con capacidad para 2 a 5 pax.",
+    highlights: [
+      "Cocina completa, horno a gas, heladera con freezer y ropa de blanco para dormitorio y baño",
+      "TV smart, Internet y calefacción central",
+      "Ubicación estratégica frente al Centro Cívico y excelentes vistas de 360°",
+      "Detalles de categoría 4 estrellas",
+    ],
+  },
+  "bariloche/dpto-espana": {
+    description: "Departamento céntrico, con capacidad para hasta 4 pax.",
+    highlights: [
+      "Cocina completa, horno a gas, heladera con freezer, cafetera, microondas, tostadora y ropa de blanco para dormitorio y baño",
+      "2 habitaciones, 2 baños",
+      "TV en habitación y en el living e Internet",
+      "Calefacción a gas",
+      "Balcón terraza con vista al lago",
+    ],
+  },
+  "bariloche/hotel-1": {
+    description:
+      "Hotel de ubicación céntrica, a una cuadra del lago y 3 de la zona comercial peatonal del Centro de Bariloche.",
+    highlights: [
+      "Habitaciones para 2 a 5 pax con baño privado",
+      "Desayuno y acceso a piscina incluidos en la tarifa",
+    ],
+  },
+  "bariloche/hotel-4": {
+    description:
+      "Hotel de ubicación céntrica de categoría 4 estrellas, con playa y acceso al lago, a 3 cuadras de la zona comercial peatonal del Centro Cívico de Bariloche.",
+    highlights: [
+      "Habitaciones para 2 a 4 pax con baño privado e hidromasaje",
+      "Nivel de juegos y entretenimiento cerrado",
+      "Sala de lectura y cafetería con vista al lago",
+      "Desayuno buffet y acceso a piscina incluidos en la tarifa",
+      "Estacionamiento",
+    ],
+  },
+  "san-martin/apart-rotui": {
+    description:
+      "Rotuí Apart Hotel los invita a disfrutar de una cálida estadía a 200 m de la avenida principal de la ciudad. Una zona estratégica donde la calidez y el murmullo de sus 120 m de costa de arroyo se mezclan para brindarle un descanso único.",
+    highlights: [
+      "Departamentos para 2 pax con servicio de limpieza y desayuno",
+    ],
+  },
+  "san-martin/viejo-esquiador": {
+    description:
+      "Los invitamos a conocer uno de los hoteles icónicos más emblemáticos en San Martín de los Andes. El Viejo Esquiador es un hotel alpino ubicado en el corazón de nuestra localidad, en una zona privilegiada sobre la avenida principal y a metros del centro cívico.",
+    highlights: [
+      "Habitaciones para 2 a 4 pax",
+      "Desayuno incluido en la tarifa",
+    ],
+  },
+  "san-martin/hosteria-y-cabanas": {
+    name: "La Fontaine Apart y hotel",
+    description:
+      "Nuestro hotel está ubicado a 400 m de la avenida principal de San Martín de los Andes. Un lugar ideal, céntrico y en conexión con la naturaleza para una estadía inolvidable.",
+    highlights: [
+      "Amplio parque con costa de arroyo y juegos para niños",
+      "Piscina climatizada y quincho cerrado con parrilla y cocina industrial",
+      "Habitaciones y departamentos para 2 a 4 pax",
+    ],
+  },
+  "san-martin/rotui-luxury": {
+    name: "Rotui Luxury Village",
+    description:
+      "En San Martín de los Andes, preciosa aldea de montaña, Rotuí ofrece glamorosas mansiones de ensueño, cabañas y apartamentos exclusivos para visitantes que gustan de finos detalles en la decoración, comodidad, tranquilidad y privacidad.",
+    highlights: [
+      "Cabañas con equipamiento de excelencia, capacidad para 2 a 12 pax",
+      "Piscinas, saunas y cascadas",
+      "Parque y vistas únicas de San Martín de los Andes, a solo 5 minutos del centro de la ciudad",
+    ],
+  },
+  "san-martin/dptos-lago": {
+    name: "Dptos. Lago",
+    description: "Departamentos con capacidad para 2 a 6 pax.",
+    highlights: [
+      "Cocina completa, horno a gas, heladera con freezer, 2 habitaciones y 2 baños",
+      "Ropa de blanco para dormitorio y baño",
+      "Ubicación privilegiada frente al Lago Lácar",
+    ],
+  },
+  "villa-la-angostura/cab-4-pax": {
+    description: "Cabaña con capacidad para 4 pax.",
+    highlights: [
+      "Cocina completa, horno a gas, heladera con freezer, lavarropas y ropa de blanco para dormitorio y baño",
+      "TV smart, Internet, 2 habitaciones y 1 baño",
+      "Calefacción a gas, amplio parque con solarium y fogonero, estacionamiento interno",
+      "Ubicada en la zona de los puertos de Bahía Mansa y Brava",
+    ],
+  },
+  "villa-la-angostura/cab-6-pax": {
+    description: "Cabaña con capacidad para 6 pax.",
+    highlights: [
+      "Cocina completa, horno a gas, heladera con freezer, lavarropas y ropa de blanco para dormitorio y baño",
+      "TV smart, Internet, 2 habitaciones, bohardilla y 2 baños",
+      "Calefacción a gas y hogar a leña, amplio parque con solarium y fogonero",
+      "Parrilla, mesa de exterior y sillas, estacionamiento interno",
+      "Ubicada en la zona de los puertos de Bahía Mansa y Brava",
+    ],
+  },
+  "el-calafate/casa-grande": {
+    name: "Casa 6 pax",
+    description: "Casa con capacidad para 6 pax.",
+    highlights: [
+      "Cocina completa, horno a gas, heladera con freezer y ropa de blanco para dormitorio y baño",
+      "TV smart, Internet, 2 habitaciones y 2 baños",
+      "Calefacción a gas, parque con parrilla, mesa de exterior y sillas",
+    ],
+  },
+  "el-calafate/dpto-4-pax": {
+    name: "Dpto 4 pax",
+    description: "Departamento con capacidad para hasta 4 pax.",
+    highlights: [
+      "Cocina completa, horno a gas, heladera con freezer, cafetera, microondas, tostadora y ropa de blanco para dormitorio y baño",
+      "2 habitaciones, 1 baño, TV e Internet",
+      "Calefacción a gas",
+    ],
+  },
+  "el-calafate/hosteria": {
+    name: "Hostería de montaña",
+    description: "Hostería y cabañas de montaña en Calafate.",
+    highlights: [
+      "Habitaciones con vista al lago e hidromasaje — Standard, Superiores o Suites",
+      "Cabañas con capacidad hasta 7 pax, hogar y parrilla, equipamiento full",
+      "Servicio personalizado y de alta calidad",
+    ],
+  },
+  "el-calafate/hotel-1": {
+    name: "Hotel 1",
+    description: "Hotel céntrico con habitaciones equipadas para 2 a 4 pax.",
+    highlights: [
+      "Desayuno incluido en la tarifa",
+      "Excelente ubicación a metros de la Av. del Libertador y en zona gastronómica de El Calafate",
+    ],
+  },
+  "el-calafate/hotel-4": {
+    name: "Hotel 4",
+    description:
+      "Hotel de categoría 4 estrellas, con habitaciones dobles, triples y conectadas.",
+    highlights: [
+      "Área de Spa, restaurante gourmet, cafetería y desayuno buffet incluido en la tarifa",
+      "Ubicado en las periferias de El Calafate, bicicletas para recorrer la zona y pet friendly",
+      "Transfers sin cargo al centro en diferentes horarios",
+      "Increíble vista al Lago Argentino",
+    ],
+  },
+  "puerto-madryn/madryn-hotel-4": {
+    name: "Hotel 4",
+    description:
+      "Hotel de categoría 4 estrellas, con habitaciones dobles, triples y conectadas.",
+    highlights: [
+      "Área de Spa, restaurante gourmet, cafetería y piscina climatizada",
+      "Desayuno buffet incluido en la tarifa",
+      "Ubicado frente al mar, con increíble vista al Mar Argentino",
+    ],
+  },
+  "el-chalten/cabanas": {
+    name: "Cabañas",
+    description: "Cabañas para 2 a 6 pax.",
+    highlights: [
+      "Equipamiento full, cocina completa y ropa de blanco para dormitorio y baño",
+      "TV e Internet, calefacción por sistema de caldera",
+      "Excelente ubicación, a metros de Av. Principal y a 100 m del inicio al sendero a Laguna Torre",
+    ],
+  },
+  "el-chalten/complejo": {
+    name: "Complejo de cabañas",
+    description: "Cabañas para 2 a 6 pax.",
+    highlights: [
+      "Equipamiento full, cocina completa y ropa de blanco para dormitorio y baño",
+      "TV e Internet, calefacción por sistema de caldera",
+      "Excelente ubicación, a metros de Av. Principal y a 200 m del inicio al sendero a Laguna Torre",
+      "Quincho cerrado, parrilla y parque",
+    ],
+  },
+  "ushuaia/dpto-3-amb": {
+    name: "Dptos. 5 pax",
+    description: "Departamento con capacidad para 2 a 5 pax.",
+    highlights: [
+      "Cocina completa, horno a gas, heladera con freezer y lavarropas",
+      "2 habitaciones, 1 baño, ropa de blanco para dormitorio y baño",
+      "Ubicación a pocos minutos del centro comercial de Ushuaia",
+    ],
+  },
+  "ushuaia/dpto-2-amb": {
+    name: "Dptos. 2/3 pax",
+    description: "Departamento con capacidad para 2 a 3 pax.",
+    highlights: [
+      "Cocina completa, horno a gas, heladera con freezer y lavarropas",
+      "1 habitación, 1 baño, ropa de blanco para dormitorio y baño",
+      "Ubicación a pocos minutos del centro comercial de Ushuaia",
+    ],
+  },
+  "ushuaia/hotel-3": {
+    name: "Hotel 3",
+    description:
+      "Hotel de categoría 3 estrellas, con habitaciones dobles, triples y conectadas.",
+    highlights: [
+      "Área de Spa, restaurante gourmet, cafetería y piscina climatizada",
+      "Desayuno buffet incluido en la tarifa",
+      "Ubicado frente al mar, con increíble vista al Canal Beagle",
+    ],
+  },
+  "ushuaia/hotel-4": {
+    name: "Hotel 4",
+    description:
+      "Hotel de categoría 4 estrellas, con habitaciones dobles, triples y conectadas.",
+    highlights: [
+      "Área de Spa, restaurante gourmet y cafetería",
+      "Desayuno buffet incluido en la tarifa",
+      "Excelente ubicación céntrica, con increíble vista al Canal Beagle desde el desayunador",
+    ],
+  },
+  "esquel/hosteria-esquel": {
+    name: "Hostería de montaña Esquel",
+    description: "Hostería con habitaciones para 2 a 5 pax.",
+    highlights: [
+      "Desayuno artesanal y media pensión incluidos en la tarifa",
+      "Actividades como avistamientos, trekking, cabalgatas y tirolesa",
+      "Ubicada a 5 minutos del ingreso al portal Norte del Parque Nacional Los Alerces",
+    ],
+  },
+  "esquel/hosteria-trevelin": {
+    name: "Hostería de montaña Trevelin",
+    description: "Hostería con habitaciones para 2 a 5 pax.",
+    highlights: [
+      "Desayuno artesanal incluido en la tarifa",
+      "Piscina cubierta climatizada y jacuzzi",
+      "Amplio parque verde con zona de lectura, descanso, parrillas y mesas",
+      "Actividades como avistamientos, trekking y cabalgatas",
+      "Ubicada a 5 minutos de Trevelín centro y del ingreso al portal Norte del Parque Nacional Los Alerces",
+    ],
+  },
+  "traful/cab-costa": {
+    name: "Cabañas Costa",
+    description: "Cabañas con capacidad para 2 a 3 pax.",
+    highlights: [
+      "Equipadas con cocina completa, heladera frigobar con freezer, anafe y microondas; baño",
+      "Ropa de blanco para dormitorio y baño; deck con solarium",
+      "Ubicadas sobre la costa, con playa, amplio parque y vista increíble al Lago Traful",
+      "En el predio hay restaurante y cafetería con amplia carta",
+    ],
+  },
+} as const satisfies Record<string, ClientAccommodationCopy>;
+
+export function getClientAccommodationCopy(
+  destinationSlug: string,
+  itemSlug: string,
+): ClientAccommodationCopy | undefined {
+  return CLIENT_ACCOMMODATION_COPY[
+    `${destinationSlug}/${itemSlug}` as keyof typeof CLIENT_ACCOMMODATION_COPY
+  ];
+}

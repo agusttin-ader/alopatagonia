@@ -34,7 +34,7 @@ export function CatalogItemDetail({ entry }: CatalogItemDetailProps) {
   const sectionLabel = entry.kind === "excursion" ? "excursiones" : "alojamientos";
 
   return (
-    <div className={cn("pb-16 min-[1920px]:pb-20 min-[2560px]:pb-24", SHELL_PAGE_PT)}>
+    <div className={cn("pb-24 sm:pb-28 min-[1920px]:pb-32 min-[2560px]:pb-36", SHELL_PAGE_PT)}>
       <div className={siteShell()}>
         <nav className="mb-4 text-sm text-muted-foreground md:mb-5 min-[1920px]:text-[0.9375rem]">
           <Link href="/destinos" className="inline-flex items-center gap-1.5 hover:text-foreground">
