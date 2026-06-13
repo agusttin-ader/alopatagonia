@@ -1,36 +1,20 @@
 import { CalendarDays, MapPin, MessageCircle } from "lucide-react";
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 import { Reveal } from "@/components/motion/reveal";
 import { MagazinePillCta } from "@/components/ui/magazine-pill-cta";
 import { buttonVariants } from "@/components/ui/button";
-import {
-  PLANNER_PATH,
-  PLANNER_TEASER_COPY,
-  SECTION_IDS,
-} from "@/lib/constants";
+import { Link } from "@/i18n/navigation";
+import { PLANNER_PATH, SECTION_IDS } from "@/lib/constants";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { cn } from "@/lib/utils";
 
-const STEPS = [
-  {
-    icon: MapPin,
-    title: "Destino",
-    text: "Bariloche, El Chaltén, Madryn y más.",
-  },
-  {
-    icon: CalendarDays,
-    title: "Fechas",
-    text: "Cuándo viajás y cuántos son.",
-  },
-  {
-    icon: MessageCircle,
-    title: "WhatsApp",
-    text: "Mensaje armado, listo para enviar.",
-  },
-] as const;
+const STEP_ICONS = [MapPin, CalendarDays, MessageCircle] as const;
+const STEP_KEYS = ["destination", "dates", "whatsapp"] as const;
 
-export function TripPlannerTeaser() {
+export async function TripPlannerTeaser() {
+  const t = await getTranslations("plannerTeaser");
+
   return (
     <section
       id={SECTION_IDS.planner}
@@ -53,64 +37,61 @@ export function TripPlannerTeaser() {
                 : "text-foreground",
             )}
           >
-            {PLANNER_TEASER_COPY.title}
+            {t("title")}
           </h2>
           <p
             className={cn(
               "mt-4 text-lg leading-relaxed 2xl:text-xl",
               MOBILE_MAGAZINE_G_ENABLED
-                ? "max-md:text-footer-lake-foreground/82"
+                ? "max-md:text-footer-lake-foreground/88"
                 : "text-muted-foreground",
             )}
           >
-            {PLANNER_TEASER_COPY.description}
+            {t("description")}
           </p>
         </Reveal>
 
-        <ol className="mt-8 grid list-none gap-3 sm:mt-10 sm:grid-cols-3 sm:gap-4">
-          {STEPS.map((step, index) => {
-            const Icon = step.icon;
+        <ol className="mt-10 grid list-none gap-4 sm:grid-cols-3 sm:gap-5 lg:mt-12">
+          {STEP_KEYS.map((key, index) => {
+            const Icon = STEP_ICONS[index] ?? MapPin;
             return (
-              <li key={step.title}>
+              <li key={key}>
                 <Reveal delay={index * 0.06}>
                   <div
                     className={cn(
-                      "flex h-full flex-col rounded-2xl px-4 py-4 ring-1 sm:px-5 sm:py-5",
+                      "flex h-full flex-col rounded-2xl px-5 py-5 ring-1 sm:px-6 sm:py-6",
                       MOBILE_MAGAZINE_G_ENABLED
-                        ? "max-md:bg-white/10 max-md:ring-white/14 sm:bg-card/60 sm:ring-brand-forest/10"
-                        : "bg-card/60 ring-brand-forest/10",
+                        ? "max-md:bg-white/10 max-md:ring-white/15"
+                        : "bg-card/40 ring-border/70",
                     )}
                   >
                     <div
                       className={cn(
-                        "flex size-10 items-center justify-center rounded-xl",
+                        "mb-4 flex size-10 items-center justify-center rounded-xl",
                         MOBILE_MAGAZINE_G_ENABLED
-                          ? "max-md:bg-white/12 max-md:text-footer-lake-foreground sm:bg-brand-forest/10 sm:text-brand-forest"
+                          ? "max-md:bg-white/12 max-md:text-footer-lake-foreground"
                           : "bg-brand-forest/10 text-brand-forest",
                       )}
-                      aria-hidden
                     >
-                      <Icon className="size-5" strokeWidth={1.9} />
+                      <Icon className="size-5" strokeWidth={1.9} aria-hidden />
                     </div>
                     <h3
                       className={cn(
-                        "mt-3 font-heading text-lg font-semibold tracking-tight",
-                        MOBILE_MAGAZINE_G_ENABLED
-                          ? "max-md:text-footer-lake-foreground sm:text-foreground"
-                          : "text-foreground",
+                        "font-heading text-lg font-semibold",
+                        MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground",
                       )}
                     >
-                      {step.title}
+                      {t(`steps.${key}.title`)}
                     </h3>
                     <p
                       className={cn(
-                        "mt-1.5 text-sm leading-relaxed",
+                        "mt-2 text-[0.95rem] leading-relaxed",
                         MOBILE_MAGAZINE_G_ENABLED
-                          ? "max-md:text-footer-lake-foreground/78 sm:text-muted-foreground"
+                          ? "max-md:text-footer-lake-foreground/82"
                           : "text-muted-foreground",
                       )}
                     >
-                      {step.text}
+                      {t(`steps.${key}.text`)}
                     </p>
                   </div>
                 </Reveal>
@@ -119,25 +100,21 @@ export function TripPlannerTeaser() {
           })}
         </ol>
 
-        <Reveal delay={0.14} className="mt-8 sm:mt-10">
+        <Reveal delay={0.14} className="mt-10 flex justify-start lg:mt-12">
           {MOBILE_MAGAZINE_G_ENABLED ? (
-            <MagazinePillCta
-              href={PLANNER_PATH}
-              tone="cta"
-              className="mx-auto max-w-md md:hidden"
-            >
-              {PLANNER_TEASER_COPY.cta}
+            <MagazinePillCta href={PLANNER_PATH} tone="cta" className="md:hidden">
+              {t("cta")}
             </MagazinePillCta>
           ) : null}
           <Link
             href={PLANNER_PATH}
             className={cn(
               buttonVariants({ variant: "marketing", size: "lg" }),
-              "motion-cta inline-flex h-12 px-10 text-base font-semibold 2xl:h-14 2xl:px-12 2xl:text-lg",
+              "inline-flex h-12 rounded-full px-8 text-base font-semibold 2xl:h-14 2xl:px-10 2xl:text-lg",
               MOBILE_MAGAZINE_G_ENABLED && "max-md:hidden",
             )}
           >
-            {PLANNER_TEASER_COPY.cta}
+            {t("cta")}
           </Link>
         </Reveal>
       </div>

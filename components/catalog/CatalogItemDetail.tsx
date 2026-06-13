@@ -1,12 +1,15 @@
-import Link from "next/link";
+import { getLocale, getTranslations } from "next-intl/server";
 import { ArrowLeft, MapPin } from "lucide-react";
 
 import { CatalogDetailGallery } from "@/components/catalog/CatalogDetailGallery";
 import { buttonVariants } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import type { CatalogItemEntry } from "@/lib/catalog/catalog-items";
 import { getCatalogItemBadge } from "@/lib/catalog/catalog-items";
 import { buildCatalogWhatsAppMessage } from "@/lib/catalog/placeholders";
 import { getWhatsAppUrl } from "@/lib/constants";
+import { localizeAccommodationItem } from "@/lib/i18n/localized-accommodations";
+import { localizeDestinationCatalog } from "@/lib/i18n/localized-destinations-page";
 import {
   DETAIL_SIDEBAR_GRID,
   DETAIL_STICKY_TOP,
@@ -22,8 +25,25 @@ type CatalogItemDetailProps = {
   entry: CatalogItemEntry;
 };
 
-export function CatalogItemDetail({ entry }: CatalogItemDetailProps) {
-  const { destination, item } = entry;
+export async function CatalogItemDetail({ entry: rawEntry }: CatalogItemDetailProps) {
+  const locale = await getLocale();
+  const t = await getTranslations("catalog");
+  const tHome = await getTranslations("homeDestinations");
+  const tAcc = await getTranslations("accommodations");
+
+  const destination = localizeDestinationCatalog(tHome, rawEntry.destination);
+  const item =
+    rawEntry.kind === "accommodation"
+      ? localizeAccommodationItem(
+          tAcc,
+          locale,
+          destination.slug,
+          destination.name,
+          rawEntry.item,
+        )
+      : rawEntry.item;
+  const entry = { ...rawEntry, destination, item };
+
   const badge = getCatalogItemBadge(entry);
   const whatsAppHref = getWhatsAppUrl(
     buildCatalogWhatsAppMessage(item.name, destination.name),
@@ -31,7 +51,8 @@ export function CatalogItemDetail({ entry }: CatalogItemDetailProps) {
   const backHref = `/destinos/${destination.slug}#${
     entry.kind === "excursion" ? "excursiones" : "alojamientos"
   }-heading`;
-  const sectionLabel = entry.kind === "excursion" ? "excursiones" : "alojamientos";
+  const sectionKey =
+    entry.kind === "excursion" ? "excursions" : ("accommodations" as const);
 
   return (
     <div className={cn("pb-24 sm:pb-28 min-[1920px]:pb-32 min-[2560px]:pb-36", SHELL_PAGE_PT)}>
@@ -48,7 +69,7 @@ export function CatalogItemDetail({ entry }: CatalogItemDetailProps) {
         <div className={GALLERY_MAX}>
           <CatalogDetailGallery
             images={item.images}
-            lightboxLabel={`Vista ampliada — ${item.name}`}
+            lightboxLabel={t("lightboxAlt", { name: item.name })}
             enableMobileLightbox={entry.kind !== "accommodation"}
           />
         </div>
@@ -99,10 +120,10 @@ export function CatalogItemDetail({ entry }: CatalogItemDetailProps) {
           <aside className={cn("lg:sticky", DETAIL_STICKY_TOP)}>
             <div className="rounded-2xl border border-border/80 bg-card p-6 shadow-sm sm:p-7 min-[1920px]:rounded-3xl min-[1920px]:p-8 min-[2560px]:p-9">
               <p className="font-heading text-lg font-medium tracking-tight min-[1920px]:text-xl">
-                Preguntanos si hay lugar
+                {t("itemDetail.askTitle")}
               </p>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground min-[1920px]:text-base">
-                Por WhatsApp te decimos fechas, capacidad y qué hay disponible en esa zona.
+                {t("itemDetail.askBody")}
               </p>
               <a
                 href={whatsAppHref}
@@ -113,14 +134,17 @@ export function CatalogItemDetail({ entry }: CatalogItemDetailProps) {
                   "mt-5 w-full min-[1920px]:mt-6 min-[1920px]:h-12 min-[1920px]:text-base",
                 )}
               >
-                Consultar
+                {t("itemDetail.askCta")}
               </a>
               <div className="mt-6 space-y-2 border-t border-border/70 pt-5 text-sm min-[1920px]:mt-8 min-[1920px]:text-base">
                 <Link href={backHref} className="block text-muted-foreground hover:text-foreground">
-                  ← Volver a {sectionLabel} en {destination.name}
+                  {t("itemDetail.backTo", {
+                    section: t(`itemDetail.sections.${sectionKey}`),
+                    destination: destination.name,
+                  })}
                 </Link>
                 <Link href="/destinos" className="block text-muted-foreground hover:text-foreground">
-                  Ver todos los destinos
+                  {t("viewAllDestinations")}
                 </Link>
               </div>
             </div>

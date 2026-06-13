@@ -2,12 +2,12 @@
 
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useState } from "react";
 
 import { EscapadasExpressMedia } from "@/components/about/EscapadasExpressMedia";
 import { EscapadasExpressThumbnailCard } from "@/components/about/EscapadasExpressThumbnailCard";
 import { MagazinePillCta } from "@/components/ui/magazine-pill-cta";
-import { PROMOS_PATAGONIA_COPY } from "@/lib/about-pages";
 import type { EscapadaExpressPromo } from "@/lib/escapadas-express";
 import { getWhatsAppUrl } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
@@ -33,6 +33,7 @@ function formatIndex(value: number) {
 }
 
 export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedCarouselProps) {
+  const t = useTranslations("promosPatagonia");
   const reduceMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -76,7 +77,7 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
       }}
     >
       <LayoutGroup id="promos-patagonia">
-        <div className="relative size-full" aria-roledescription="carousel" aria-label="Promos Patagonia">
+        <div className="relative size-full" aria-roledescription="carousel" aria-label={t("sectionAria")}>
           {useSharedLayout ? (
             <motion.div
               key={activePromo.id}
@@ -139,16 +140,16 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
               <div className="flex min-h-0 flex-col lg:max-w-xl lg:justify-between">
                 <div className="shrink-0">
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/75">
-                    Paquetes armados
+                    {t("packagesLabel")}
                   </p>
                   <h2
                     id="promos-patagonia-heading"
                     className="font-heading mt-2 text-2xl font-semibold tracking-tight text-white sm:mt-3 sm:text-3xl lg:text-4xl"
                   >
-                    {PROMOS_PATAGONIA_COPY.title}
+                    {t("title")}
                   </h2>
                   <p className="mt-2 line-clamp-2 max-w-lg text-sm leading-relaxed text-white/75 sm:text-base">
-                    {PROMOS_PATAGONIA_COPY.subtitle}
+                    {t("subtitle")}
                   </p>
                 </div>
 
@@ -164,7 +165,7 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
                         className="flex flex-col"
                       >
                         <p className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-white/72 sm:text-xs">
-                          Promo {formatIndex(activeIndex + 1)} · Patagonia
+                          {t("promoIndex", { index: formatIndex(activeIndex + 1) })}
                         </p>
                         <h3 className="font-heading mt-2 text-[clamp(1.75rem,4vw,2.65rem)] font-semibold leading-[1.08] tracking-tight text-white">
                           {activePromo.title}
@@ -187,7 +188,7 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
                           tone="surface"
                           className="mt-4 max-w-sm sm:mt-5"
                         >
-                          Consultar esta promo
+                          {t("consultCta")}
                         </MagazinePillCta>
                       </motion.div>
                     </AnimatePresence>
@@ -199,7 +200,7 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
                         <button
                           type="button"
                           onClick={goPrev}
-                          aria-label="Promo anterior"
+                          aria-label={t("prevPromo")}
                           className="inline-flex size-9 items-center justify-center rounded-full border border-white/25 bg-black/25 text-white backdrop-blur-sm transition hover:bg-black/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:size-10"
                         >
                           <ChevronLeft className="size-4" aria-hidden />
@@ -207,7 +208,7 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
                         <button
                           type="button"
                           onClick={goNext}
-                          aria-label="Promo siguiente"
+                          aria-label={t("nextPromo")}
                           className="inline-flex size-9 items-center justify-center rounded-full border border-white/25 bg-black/25 text-white backdrop-blur-sm transition hover:bg-black/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:size-10"
                         >
                           <ChevronRight className="size-4" aria-hidden />

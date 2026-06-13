@@ -1,4 +1,7 @@
+"use client";
+
 import { AppImage } from "@/components/media/AppImage";
+import { useTranslations } from "next-intl";
 
 import { SITE } from "@/lib/site";
 import { IMAGE_SIZES } from "@/lib/image-config";
@@ -36,6 +39,7 @@ export function InstagramProfileAvatar({
   className,
   linked = false,
 }: InstagramProfileAvatarProps) {
+  const t = useTranslations("community");
   const scale = SIZE_CLASS[size];
 
   const avatar = (
@@ -65,7 +69,7 @@ export function InstagramProfileAvatar({
       target="_blank"
       rel="noopener noreferrer"
       className="inline-flex shrink-0 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-footer-lake"
-      aria-label={`Perfil de Instagram @${SITE.instagramHandle}`}
+      aria-label={t("profileAria", { handle: SITE.instagramHandle })}
     >
       {avatar}
     </a>

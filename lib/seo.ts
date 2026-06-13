@@ -14,7 +14,7 @@ export function formatSiteTitle(pageTitle: string): string {
   return `${SITE_TITLE_PREFIX}${pageTitle}`;
 }
 
-type PageSeoOptions = {
+export type PageSeoOptions = {
   /** Parte descriptiva del título. */
   title: string;
   description: string;

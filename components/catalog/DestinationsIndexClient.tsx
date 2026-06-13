@@ -1,40 +1,30 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { DestinationIndexCard } from "@/components/catalog/DestinationIndexCard";
 import { EditorialSplitNavItem } from "@/components/catalog/EditorialSplitNavItem";
 import type { DestinationZoneGroup } from "@/lib/catalog/destination-zones";
-import { getClientDestinationZoneCopy } from "@/lib/client-protected-copy";
+import { catalogDestinationCount } from "@/lib/i18n/localized-catalog";
 import { CATALOG_GRID_GAP, CATALOG_SPLIT_SIDEBAR_STICKY } from "@/lib/layout-shell";
 import { cn, horizontalScrollRailClass } from "@/lib/utils";
-
-const ZONE_NAV_SUBTITLES: Record<string, string> = {
-  "corredor-lagos": "Neuquén · Río Negro",
-  "santa-cruz": "Santa Cruz",
-  "tierra-del-fuego": "Tierra del Fuego",
-  chubut: "Chubut",
-};
-
-function destinationCountLabel(count: number) {
-  return count === 1 ? "1 destino" : `${count} destinos`;
-}
 
 type DestinationsIndexClientProps = {
   zones: DestinationZoneGroup[];
 };
 
 export function DestinationsIndexClient({ zones }: DestinationsIndexClientProps) {
+  const t = useTranslations("destinationsPage");
+  const tCatalog = useTranslations("catalog");
   const [activeZoneId, setActiveZoneId] = useState(() => zones[0]?.id ?? "");
   const activeZone = zones.find((zone) => zone.id === activeZoneId) ?? zones[0];
 
   if (!activeZone) return null;
 
   if (zones.length === 1) {
-    return (
-      <DestinationZonePanel zone={activeZone} />
-    );
+    return <DestinationZonePanel zone={activeZone} tCatalog={tCatalog} />;
   }
 
   return (
@@ -44,8 +34,9 @@ export function DestinationsIndexClient({ zones }: DestinationsIndexClientProps)
           zones={zones}
           activeZoneId={activeZoneId}
           onSelect={setActiveZoneId}
+          chooseCorridorLabel={tCatalog("chooseCorridor")}
         />
-        <DestinationZonePanel zone={activeZone} />
+        <DestinationZonePanel zone={activeZone} tCatalog={tCatalog} />
       </div>
 
       <div className="hidden lg:grid lg:grid-cols-[minmax(240px,280px)_minmax(0,1fr)] lg:items-start lg:gap-8 xl:grid-cols-[minmax(260px,300px)_minmax(0,1fr)] xl:gap-10 min-[1920px]:gap-12">
@@ -55,17 +46,20 @@ export function DestinationsIndexClient({ zones }: DestinationsIndexClientProps)
             CATALOG_SPLIT_SIDEBAR_STICKY,
           )}
         >
-          <nav aria-label="Elegir corredor" className="flex flex-col gap-0">
+          <nav aria-label={tCatalog("chooseCorridor")} className="flex flex-col gap-0">
             {zones.map((zone) => {
               const isActive = activeZoneId === zone.id;
               const count = zone.destinations.length;
+              const subtitle = t.has(`zoneNavSubtitles.${zone.id}`)
+                ? t(`zoneNavSubtitles.${zone.id}`)
+                : "";
 
               return (
                 <EditorialSplitNavItem
                   key={zone.id}
                   title={zone.title}
-                  subtitle={ZONE_NAV_SUBTITLES[zone.id] ?? ""}
-                  meta={destinationCountLabel(count)}
+                  subtitle={subtitle}
+                  meta={catalogDestinationCount(tCatalog, count)}
                   isActive={isActive}
                   onClick={() => setActiveZoneId(zone.id)}
                 />
@@ -75,7 +69,7 @@ export function DestinationsIndexClient({ zones }: DestinationsIndexClientProps)
         </aside>
 
         <div className="min-w-0">
-          <DestinationZonePanel zone={activeZone} />
+          <DestinationZonePanel zone={activeZone} tCatalog={tCatalog} />
         </div>
       </div>
     </div>
@@ -86,15 +80,17 @@ function DestinationZoneTabs({
   zones,
   activeZoneId,
   onSelect,
+  chooseCorridorLabel,
 }: {
   zones: DestinationZoneGroup[];
   activeZoneId: string;
   onSelect: (zoneId: string) => void;
+  chooseCorridorLabel: string;
 }) {
   return (
     <div className="max-w-full overflow-hidden">
       <nav
-        aria-label="Elegir corredor"
+        aria-label={chooseCorridorLabel}
         className={cn(
           horizontalScrollRailClass,
           "mb-8 gap-5 border-b border-border/45 pb-0",
@@ -128,11 +124,16 @@ function DestinationZoneTabs({
   );
 }
 
-function DestinationZonePanel({ zone }: { zone: DestinationZoneGroup }) {
+function DestinationZonePanel({
+  zone,
+  tCatalog,
+}: {
+  zone: DestinationZoneGroup;
+  tCatalog: ReturnType<typeof useTranslations<"catalog">>;
+}) {
   const reduceMotion = useReducedMotion();
-  const countLabel = destinationCountLabel(zone.destinations.length);
-  const clientZoneCopy = getClientDestinationZoneCopy(zone.id);
-  const panelTitle = clientZoneCopy?.title ?? zone.title;
+  const countLabel = catalogDestinationCount(tCatalog, zone.destinations.length);
+  const panelTitle = zone.title;
 
   return (
     <AnimatePresence mode="wait">
@@ -152,17 +153,11 @@ function DestinationZonePanel({ zone }: { zone: DestinationZoneGroup }) {
             {panelTitle}
           </h2>
           <p className="mt-1.5 text-sm text-muted-foreground sm:text-base">{countLabel}</p>
-          {clientZoneCopy ? (
-            <div className="mt-4 max-w-2xl space-y-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-              {clientZoneCopy.paragraphs.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-            </div>
-          ) : (
-            <p className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-              {zone.description}
-            </p>
-          )}
+          <div className="mt-4 max-w-2xl space-y-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+            {(zone.paragraphs ?? [zone.description]).map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
         </div>
 
         <div className={cn("grid", CATALOG_GRID_GAP, "sm:grid-cols-2 xl:grid-cols-3")}>

@@ -1,13 +1,17 @@
 import { Share2 } from "lucide-react";
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 import { SiteLogo } from "@/components/brand/SiteLogo";
+import { Link } from "@/i18n/navigation";
 import { PLANNER_PATH, SECTION_IDS } from "@/lib/constants";
 import { getHomeSectionHref } from "@/lib/home-sections";
 import { SEO_POPULAR_DESTINATIONS } from "@/lib/seo-destinations";
 import { SITE } from "@/lib/site";
 
-export function Footer() {
+export async function Footer() {
+  const t = await getTranslations("footer");
+  const tNav = await getTranslations("nav");
+
   return (
     <footer className="relative z-30 -mt-12 sm:-mt-20">
       <div className="h-22 w-full overflow-hidden sm:h-24" aria-hidden>
@@ -28,23 +32,23 @@ export function Footer() {
           <div className="space-y-4">
             <SiteLogo variant="onDark" showWordmark className="h-11 sm:h-12" />
             <p className="max-w-sm text-[0.92rem] leading-relaxed text-white/88">
-              {SITE.about}
+              {t("about")}
             </p>
-            <p className="text-[0.9rem] text-white/78">{SITE.location}</p>
+            <p className="text-[0.9rem] text-white/78">{t("location")}</p>
           </div>
 
           <div className="space-y-2.5 text-[0.92rem] text-white/88">
             <p className="text-[0.74rem] font-semibold uppercase tracking-[0.12em] text-white">
-              Consultas
+              {t("inquiries")}
             </p>
             <a
               href={`mailto:${SITE.email}`}
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
-              Email: {SITE.email}
+              {t("email", { email: SITE.email })}
             </a>
             {SITE.phoneDisplay ? (
-              <p>Teléfono: {SITE.phoneDisplay}</p>
+              <p>{t("phone", { phone: SITE.phoneDisplay })}</p>
             ) : null}
             <a
               href={SITE.instagram}
@@ -53,61 +57,61 @@ export function Footer() {
               className="inline-flex items-center gap-2 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
               <Share2 className="size-4" aria-hidden />
-              Instagram: @{SITE.instagramHandle}
+              {t("instagram", { handle: SITE.instagramHandle })}
             </a>
           </div>
 
           <div className="space-y-2.5 text-[0.92rem] text-white/88">
             <p className="text-[0.74rem] font-semibold uppercase tracking-[0.12em] text-white">
-              Explorar
+              {t("explore")}
             </p>
             <Link
               href="/destinos"
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
-              Destinos
+              {tNav("destinations")}
             </Link>
             <Link
               href="/alojamientos"
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
-              Alojamientos
+              {tNav("accommodations")}
             </Link>
             <Link
               href="/excursiones"
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
-              Excursiones
+              {tNav("excursions")}
             </Link>
             <Link
               href={PLANNER_PATH}
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
-              Planear mi viaje
+              {tNav("planTrip")}
             </Link>
             <a
               href={getHomeSectionHref(SECTION_IDS.promosPatagonia, false)}
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
-              Promos Patagonia
+              {t("promosPatagonia")}
             </a>
             <a
               href={getHomeSectionHref(SECTION_IDS.aboutUs, false)}
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
-              Quiénes somos
+              {t("aboutUs")}
             </a>
             <Link
               href="/invierno"
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
-              Indumentaria
+              {tNav("winterShop")}
             </Link>
           </div>
 
           <div className="space-y-2.5 text-[0.92rem] text-white/88">
             <p className="text-[0.74rem] font-semibold uppercase tracking-[0.12em] text-white">
-              Destinos populares
+              {t("popularDestinations")}
             </p>
             {SEO_POPULAR_DESTINATIONS.map((destination) => (
               <Link
@@ -122,7 +126,7 @@ export function Footer() {
         </div>
 
         <div className="mx-auto mt-7 max-w-7xl border-t border-white/14 pt-4 text-[0.72rem] text-white/62 2xl:max-w-[90rem]">
-          © {new Date().getFullYear()} {SITE.name}. Todos los derechos reservados.
+          {t("copyright", { year: new Date().getFullYear() })}
         </div>
       </div>
     </footer>

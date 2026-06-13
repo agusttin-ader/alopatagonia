@@ -1,22 +1,23 @@
+import type { Metadata } from "next";
+import { getLocale } from "next-intl/server";
+
 import { CatalogBrowsePage } from "@/components/catalog/CatalogBrowsePage";
 import { CatalogHubPageShell } from "@/components/catalog-hub/CatalogHubPageShell";
 import { Footer } from "@/components/footer/Footer";
 import { getAllExcursions } from "@/lib/catalog/catalog-items";
 import { FloatingWhatsAppButton } from "@/components/whatsapp/FloatingWhatsAppButton";
 import { getCatalogHubPillar } from "@/lib/catalog-hub/config";
-import { buildPageMetadata } from "@/lib/seo";
-import { SITE_SEO } from "@/lib/seo-destinations";
+import type { AppLocale } from "@/i18n/routing";
+import { buildHubPageMetadata } from "@/lib/i18n/localized-seo-metadata";
 
 const pillar = getCatalogHubPillar("excursiones");
 
-export const metadata = buildPageMetadata({
-  title: SITE_SEO.excursiones.title,
-  description: SITE_SEO.excursiones.description,
-  path: "/excursiones",
-  keywords: [...SITE_SEO.excursiones.keywords],
-  titleOrder: "keyword-first",
-  index: pillar?.status === "live",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = (await getLocale()) as AppLocale;
+  return buildHubPageMetadata(locale, "excursiones", {
+    index: pillar?.status === "live",
+  });
+}
 
 export default function ExcursionesPage() {
   if (!pillar) return null;

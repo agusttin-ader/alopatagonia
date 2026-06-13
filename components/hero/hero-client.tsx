@@ -1,10 +1,12 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
-import { HERO_COPY, PLANNER_PATH, SITE } from "@/lib/constants";
+import { Link } from "@/i18n/navigation";
+import { PLANNER_PATH, SITE } from "@/lib/constants";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import {
   isSiteIntroPending,
@@ -49,6 +51,7 @@ const mobileItem = {
 };
 
 export function HeroClient() {
+  const t = useTranslations("hero");
   const reduceMotion = useReducedMotion();
   const isCoarseMobile = useCoarseMobile();
   const [heroRevealed, setHeroRevealed] = useState(() =>
@@ -110,21 +113,21 @@ export function HeroClient() {
           variants={heroItem}
           className="font-heading max-w-[min(100%,20rem)] text-balance text-[2.2rem] font-medium leading-[1.06] tracking-tight text-white min-[390px]:text-[2.35rem] sm:max-w-none sm:text-5xl sm:leading-[1.08] lg:text-6xl 2xl:text-7xl"
         >
-          <span className="sm:hidden">{HERO_COPY.headlineMobile}</span>
-          <span className="hidden sm:inline">{HERO_COPY.headline}</span>
+          <span className="sm:hidden">{t("headlineMobile")}</span>
+          <span className="hidden sm:inline">{t("headline")}</span>
         </motion.h1>
         <motion.p
           variants={heroItem}
           className="mt-3 max-w-[min(100%,20rem)] text-balance text-[1.0625rem] leading-snug text-white/90 min-[390px]:max-w-[19rem] min-[390px]:text-lg sm:mt-5 sm:max-w-xl sm:text-xl sm:leading-relaxed 2xl:max-w-2xl 2xl:text-2xl"
         >
-          <span className="sm:hidden">{HERO_COPY.sublineMobile}</span>
-          <span className="hidden sm:inline">{HERO_COPY.subline}</span>
+          <span className="sm:hidden">{t("sublineMobile")}</span>
+          <span className="hidden sm:inline">{t("subline")}</span>
         </motion.p>
         <motion.div
           variants={heroItem}
           className={cn("mt-7 flex sm:mt-10", MOBILE_MAGAZINE_G_ENABLED && "max-md:mt-6")}
         >
-          <motion.a
+          <Link
             href={PLANNER_PATH}
             className={cn(
               buttonVariants({ variant: "marketing", size: "lg" }),
@@ -133,16 +136,9 @@ export function HeroClient() {
                 ? "max-md:h-11 max-md:w-auto max-md:max-w-[15.5rem] max-md:px-6 max-md:text-sm"
                 : "w-full",
             )}
-            whileHover={reduceMotion ? undefined : { y: -1.5, scale: 1.015 }}
-            whileTap={reduceMotion ? undefined : { y: 0, scale: 0.99 }}
-            transition={
-              reduceMotion
-                ? undefined
-                : { type: "tween", duration: 0.22, ease: [0.22, 1, 0.36, 1] }
-            }
           >
-            Planear mi viaje
-          </motion.a>
+            {t("cta")}
+          </Link>
         </motion.div>
       </motion.div>
     </div>

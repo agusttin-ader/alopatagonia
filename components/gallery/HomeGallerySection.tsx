@@ -2,7 +2,8 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useCallback, useEffect, useLayoutEffect, useReducer, useState } from "react";
+import { useTranslations } from "next-intl";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useReducer, useState } from "react";
 
 import { AppImage } from "@/components/media/AppImage";
 import { ImageLightbox } from "@/components/media/ImageLightbox";
@@ -226,15 +227,16 @@ function GalleryNavButton({
   disabled,
   onClick,
   className,
+  labels,
 }: {
   direction: "prev" | "next";
   disabled?: boolean;
   onClick: () => void;
   className?: string;
+  labels: { prev: string; next: string };
 }) {
   const Icon = direction === "prev" ? ChevronLeft : ChevronRight;
-  const label =
-    direction === "prev" ? "Ver selección anterior" : "Ver otra selección de fotos";
+  const label = direction === "prev" ? labels.prev : labels.next;
 
   return (
     <button
@@ -250,7 +252,15 @@ function GalleryNavButton({
 }
 
 export function HomeGallerySection() {
-  const images = HOME_GALLERY_IMAGES;
+  const t = useTranslations("gallery");
+  const images = useMemo(
+    () =>
+      HOME_GALLERY_IMAGES.map((image, index) => ({
+        ...image,
+        alt: t("photoAlt", { n: index + 1 }),
+      })),
+    [t],
+  );
   const total = images.length;
   const reduceMotion = useReducedMotion();
   const [{ sets: selectionSets, index: setIndex }, dispatch] = useReducer(
@@ -280,6 +290,11 @@ export function HomeGallerySection() {
 
   const mobileSlotCount = Math.min(MOBILE_DISPLAY_COUNT, visibleCount);
 
+  const navLabels = useMemo(
+    () => ({ prev: t("prevSelection"), next: t("nextSelection") }),
+    [t],
+  );
+
   if (total === 0) return null;
 
   const canNavigate = total > DISPLAY_COUNT;
@@ -298,17 +313,16 @@ export function HomeGallerySection() {
       <div className={siteShell()}>
         <Reveal className="max-w-xl lg:max-w-2xl">
           <p className="text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Galería
+            {t("eyebrow")}
           </p>
           <h2
             id="home-gallery-heading"
             className="font-heading mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-[2.6rem]"
           >
-            Fotos de viajes que hicimos
+            {t("heading")}
           </h2>
           <p className="mt-4 max-w-lg text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Cada visita mezcla distinto: lagos, glaciares, rutas en auto y momentos de viajeros
-            que pasaron por acá.
+            {t("body")}
           </p>
         </Reveal>
       </div>
@@ -352,7 +366,7 @@ export function HomeGallerySection() {
                           hero={"hero" in slotConfig && slotConfig.hero}
                           priority={setIndex === 0 && slot === 0}
                           onClick={() => setLightboxIndex(pickedIndices[slot])}
-                          slotLabel={`Ver foto ${slot + 1} ampliada`}
+                          slotLabel={t("viewPhoto", { n: slot + 1 })}
                         />
                       );
                     })}
@@ -363,25 +377,25 @@ export function HomeGallerySection() {
 
             {canNavigate && MOBILE_MAGAZINE_G_ENABLED ? (
               <div className="mt-3 flex items-center justify-center gap-3">
-                <GalleryNavButton direction="prev" onClick={goPrev} disabled={!canGoPrev} />
+                <GalleryNavButton direction="prev" onClick={goPrev} disabled={!canGoPrev} labels={navLabels} />
                 <span className="min-w-[3.25rem] text-center text-xs font-semibold tabular-nums text-muted-foreground">
                   {setIndex + 1} / {selectionSets.length}
                 </span>
-                <GalleryNavButton direction="next" onClick={goNext} />
+                <GalleryNavButton direction="next" onClick={goNext} labels={navLabels} />
               </div>
             ) : null}
 
             {canNavigate && !MOBILE_MAGAZINE_G_ENABLED ? (
               <div className="mt-3 flex items-center justify-center gap-3">
-                <GalleryNavButton direction="prev" onClick={goPrev} disabled={!canGoPrev} />
-                <GalleryNavButton direction="next" onClick={goNext} />
+                <GalleryNavButton direction="prev" onClick={goPrev} disabled={!canGoPrev} labels={navLabels} />
+                <GalleryNavButton direction="next" onClick={goNext} labels={navLabels} />
               </div>
             ) : null}
           </div>
 
           <div className="hidden sm:flex sm:items-center sm:justify-center sm:gap-3 md:gap-4">
             {canNavigate ? (
-              <GalleryNavButton direction="prev" onClick={goPrev} disabled={!canGoPrev} />
+              <GalleryNavButton direction="prev" onClick={goPrev} disabled={!canGoPrev} labels={navLabels} />
             ) : null}
 
             <div className={cn(GALLERY_WIDTH, GRID_HEIGHT, "relative isolate")} aria-live="polite">
@@ -410,7 +424,7 @@ export function HomeGallerySection() {
                           hero={"hero" in slotConfig && slotConfig.hero}
                           priority={setIndex === 0 && slot === 0}
                           onClick={() => setLightboxIndex(pickedIndices[slot])}
-                          slotLabel={`Ver foto ${slot + 1} ampliada`}
+                          slotLabel={t("viewPhoto", { n: slot + 1 })}
                         />
                       );
                     })}
@@ -420,7 +434,7 @@ export function HomeGallerySection() {
             </div>
 
             {canNavigate ? (
-              <GalleryNavButton direction="next" onClick={goNext} />
+              <GalleryNavButton direction="next" onClick={goNext} labels={navLabels} />
             ) : null}
           </div>
         </div>
@@ -431,7 +445,7 @@ export function HomeGallerySection() {
         activeIndex={lightboxIndex}
         onClose={() => setLightboxIndex(null)}
         onIndexChange={setLightboxIndex}
-        ariaLabel="Vista ampliada de galería Patagonia"
+        ariaLabel={t("lightboxTitle")}
       />
     </section>
   );

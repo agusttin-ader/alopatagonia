@@ -46,6 +46,8 @@ export const DESTINATION_ZONES: DestinationZone[] = [
 
 export type DestinationZoneGroup = DestinationZone & {
   destinations: DestinationCatalog[];
+  /** Párrafos editoriales localizados (si hay copy aprobado). */
+  paragraphs?: readonly string[];
 };
 
 export function getDestinationsByZone(): DestinationZoneGroup[] {

@@ -1,8 +1,9 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
+import { getTranslations } from "next-intl/server";
 
-import { CATALOG_HUB_PILLARS } from "@/lib/catalog-hub/config";
 import type { CatalogHubPillar } from "@/lib/catalog-hub/config";
+import { localizeCatalogHubPillars } from "@/lib/i18n/localized-home";
+import { Link as LocaleLink } from "@/i18n/navigation";
 import { PAGE_TITLE, SHELL_PAGE_PT, siteShell } from "@/lib/layout-shell";
 import { SECTION_IDS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -12,40 +13,44 @@ type CatalogHubPageShellProps = {
   children: ReactNode;
 };
 
-export function CatalogHubPageShell({ pillar, children }: CatalogHubPageShellProps) {
+export async function CatalogHubPageShell({ pillar, children }: CatalogHubPageShellProps) {
+  const t = await getTranslations("catalog");
+  const tNav = await getTranslations("nav");
+  const localizedPillars = localizeCatalogHubPillars(await getTranslations("catalogHub"));
+  const localizedPillar =
+    localizedPillars.find((item) => item.slug === pillar.slug) ?? pillar;
+
   return (
     <main className={cn("min-w-0 flex-1 bg-background pb-14", SHELL_PAGE_PT)}>
       <div className={siteShell()}>
         <nav className="text-sm text-muted-foreground">
-          <Link href="/" className="hover:text-foreground">
-            Inicio
-          </Link>
+          <LocaleLink href="/" className="hover:text-foreground">
+            {tNav("home")}
+          </LocaleLink>
           <span className="mx-2">/</span>
           <a href={`/#${SECTION_IDS.catalogHub}`} className="hover:text-foreground">
-            Catálogo
+            {t("breadcrumbCatalog")}
           </a>
           <span className="mx-2">/</span>
-          <span className="text-foreground">{pillar.title}</span>
+          <span className="text-foreground">{localizedPillar.title}</span>
         </nav>
 
         <p className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-primary/85">
-          {pillar.eyebrow}
+          {localizedPillar.eyebrow}
         </p>
-        <h1 className={cn("font-heading mt-2", PAGE_TITLE)}>
-          {pillar.title}
-        </h1>
+        <h1 className={cn("font-heading mt-2", PAGE_TITLE)}>{localizedPillar.title}</h1>
         <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          {pillar.description}
+          {localizedPillar.description}
         </p>
 
         {children}
 
         <aside className="mt-12 border-t border-border/70 pt-8">
-          <p className="text-sm font-medium text-foreground">También podés explorar</p>
+          <p className="text-sm font-medium text-foreground">{t("alsoExplore")}</p>
           <ul className="mt-4 flex flex-wrap gap-2.5">
-            {CATALOG_HUB_PILLARS.filter((item) => item.slug !== pillar.slug).map((item) => (
+            {localizedPillars.filter((item) => item.slug !== pillar.slug).map((item) => (
               <li key={item.slug}>
-                <Link
+                <LocaleLink
                   href={item.href}
                   className={cn(
                     "inline-flex min-h-11 items-center rounded-full border border-border/80 px-4 py-2 text-sm font-medium",
@@ -53,7 +58,7 @@ export function CatalogHubPageShell({ pillar, children }: CatalogHubPageShellPro
                   )}
                 >
                   {item.title}
-                </Link>
+                </LocaleLink>
               </li>
             ))}
           </ul>

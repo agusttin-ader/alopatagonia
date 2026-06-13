@@ -1,13 +1,23 @@
-import { AppImage } from "@/components/media/AppImage";
-import Link from "next/link";
+import { getLocale, getTranslations } from "next-intl/server";
 
+import { AppImage } from "@/components/media/AppImage";
 import { DestinationAccommodationBrowse } from "@/components/catalog/DestinationAccommodationBrowse";
 import { DestinationExcursionBrowse } from "@/components/catalog/DestinationExcursionBrowse";
 import { FaqSection } from "@/components/seo/FaqSection";
 import { buttonVariants } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import { buildCarRentalWhatsAppMessage } from "@/lib/catalog/placeholders";
 import type { DestinationCatalog } from "@/lib/catalog/types";
 import { PLANNER_PATH, getWhatsAppUrl } from "@/lib/constants";
+import { localizeAccommodationItem } from "@/lib/i18n/localized-accommodations";
+import {
+  catalogAccommodationCount,
+  catalogExcursionCount,
+} from "@/lib/i18n/localized-catalog";
+import {
+  getLocalizedDestinationPageCopy,
+  localizeDestinationCatalog,
+} from "@/lib/i18n/localized-destinations-page";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import {
   DETAIL_TITLE,
@@ -17,26 +27,30 @@ import {
   SHELL_PX,
   siteShell,
 } from "@/lib/layout-shell";
-import { getClientDestinationPageCopy } from "@/lib/client-protected-copy";
 import { getDestinationSeo } from "@/lib/seo-destinations";
 import { cn } from "@/lib/utils";
 
-function accommodationCountLabel(count: number) {
-  return count === 1 ? "1 alojamiento" : `${count} alojamientos`;
-}
+export async function DestinationDetail({
+  destination: rawDestination,
+}: {
+  destination: DestinationCatalog;
+}) {
+  const locale = await getLocale();
+  const tCatalog = await getTranslations("catalog");
+  const tNav = await getTranslations("nav");
+  const tHome = await getTranslations("homeDestinations");
+  const tDest = await getTranslations("destinationsPage");
+  const tAcc = await getTranslations("accommodations");
 
-function excursionCountLabel(count: number) {
-  return count === 1 ? "1 excursión" : `${count} excursiones`;
-}
-
-export function DestinationDetail({ destination }: { destination: DestinationCatalog }) {
+  const destination = localizeDestinationCatalog(tHome, rawDestination);
   const carWhatsApp = getWhatsAppUrl(buildCarRentalWhatsAppMessage(destination.name));
   const seo = getDestinationSeo(destination.slug);
-  const clientPageCopy = getClientDestinationPageCopy(destination.slug);
+  const clientPageCopy = getLocalizedDestinationPageCopy(tDest, locale, destination.slug);
   const showIntroSection = Boolean(clientPageCopy || seo);
+
   const accommodationEntries = destination.accommodations.map((item) => ({
     destination,
-    item,
+    item: localizeAccommodationItem(tAcc, locale, destination.slug, destination.name, item),
     kind: "accommodation" as const,
   }));
   const excursionEntries = destination.excursions.map((item) => ({
@@ -57,7 +71,7 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
       >
         <AppImage
           src={destination.heroImage}
-          alt={`Viajes a ${destination.name} — Patagonia Argentina`}
+          alt={tCatalog("heroAlt", { destination: destination.name })}
           fill
           priority
           qualityPreset="hero"
@@ -68,11 +82,11 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
         <div className={cn("relative", SHELL_MAX)}>
           <nav className="mb-4 text-sm text-white/85 min-[1920px]:text-[0.9375rem]">
             <Link href="/" className="hover:text-white">
-              Inicio
+              {tNav("home")}
             </Link>
             <span className="mx-2">/</span>
             <Link href="/destinos" className="hover:text-white">
-              Destinos
+              {tNav("destinations")}
             </Link>
             <span className="mx-2">/</span>
             <span className="text-white">{destination.name}</span>
@@ -96,7 +110,7 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
         {showIntroSection ? (
           <section aria-labelledby="destination-seo-heading" className="max-w-3xl">
             <h2 id="destination-seo-heading" className={cn("font-heading", SECTION_TITLE)}>
-              {clientPageCopy?.title ?? `Viajes a ${destination.name}`}
+              {clientPageCopy?.title ?? tCatalog("tripsTo", { destination: destination.name })}
             </h2>
             {clientPageCopy ? (
               <div className="mt-4 space-y-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
@@ -116,7 +130,7 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
                 "mt-6 inline-flex",
               )}
             >
-              Planear viaje a {destination.name}
+              {tCatalog("planTripTo", { destination: destination.name })}
             </Link>
           </section>
         ) : null}
@@ -125,10 +139,11 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
           <section aria-labelledby="alojamientos-heading" className="scroll-mt-24 sm:scroll-mt-28">
             <div className="mb-8 min-w-0">
               <h2 id="alojamientos-heading" className={cn("font-heading", SECTION_TITLE)}>
-                Alojamientos
+                {tCatalog("sections.accommodations")}
               </h2>
               <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-                {destination.region} · {accommodationCountLabel(accommodationEntries.length)}
+                {destination.region} ·{" "}
+                {catalogAccommodationCount(tCatalog, accommodationEntries.length)}
               </p>
             </div>
 
@@ -143,17 +158,14 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
           <section aria-labelledby="excursiones-heading" className="scroll-mt-24 sm:scroll-mt-28">
             <div className="mb-8 min-w-0">
               <h2 id="excursiones-heading" className={cn("font-heading", SECTION_TITLE)}>
-                Excursiones
+                {tCatalog("sections.excursions")}
               </h2>
               <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-                {destination.region} · {excursionCountLabel(excursionEntries.length)}
+                {destination.region} · {catalogExcursionCount(tCatalog, excursionEntries.length)}
               </p>
             </div>
 
-            <DestinationExcursionBrowse
-              destination={destination}
-              entries={excursionEntries}
-            />
+            <DestinationExcursionBrowse destination={destination} entries={excursionEntries} />
           </section>
         ) : null}
 
@@ -164,11 +176,11 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
               <h2 id="auto-heading" className={cn("font-heading", SECTION_TITLE)}>
-                Alquiler de auto
+                {tCatalog("sections.carRental")}
               </h2>
               <p className="mt-3 text-muted-foreground">{destination.carRental.description}</p>
               <p className="mt-2 text-sm font-medium">
-                Operador:{" "}
+                {tCatalog("sections.operator")}{" "}
                 <span className="font-normal text-muted-foreground">
                   {destination.carRental.operatorName}
                 </span>
@@ -180,7 +192,7 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
               rel="noopener noreferrer"
               className={cn(buttonVariants({ variant: "marketing", size: "lg" }), "shrink-0")}
             >
-              Consultar auto
+              {tCatalog("carRentalCta")}
             </a>
           </div>
         </section>
@@ -188,7 +200,7 @@ export function DestinationDetail({ destination }: { destination: DestinationCat
         {seo?.faq.length ? (
           <FaqSection
             items={seo.faq}
-            title={`Preguntas sobre viajar a ${destination.name}`}
+            title={tCatalog("faqAbout", { destination: destination.name })}
             className="border-t border-border/70 pt-12 lg:pt-14"
           />
         ) : null}

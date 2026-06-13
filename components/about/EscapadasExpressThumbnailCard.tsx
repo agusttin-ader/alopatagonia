@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import type { Transition } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 import { EscapadasExpressMedia } from "@/components/about/EscapadasExpressMedia";
 import type { EscapadaExpressPromo } from "@/lib/escapadas-express";
@@ -26,12 +27,14 @@ export function EscapadasExpressThumbnailCard({
   layoutTransition,
   className,
 }: EscapadasExpressThumbnailCardProps) {
+  const t = useTranslations("promosPatagonia");
+
   return (
     <motion.button
       type="button"
       layout
       onClick={onSelect}
-      aria-label={`Ver ${promo.title}`}
+      aria-label={t("viewPromo", { title: promo.title })}
       initial={{ opacity: 0, scale: 0.92 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.94 }}

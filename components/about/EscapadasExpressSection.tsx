@@ -1,15 +1,17 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 import { EscapadasExpressPromoDeck } from "@/components/about/EscapadasExpressPromoDeck";
 import { buttonVariants } from "@/components/ui/button";
-import { PROMOS_PATAGONIA_COPY } from "@/lib/about-pages";
 import { PLANNER_PATH, SECTION_IDS } from "@/lib/constants";
 import { getPublishedEscapadasExpressPromos } from "@/lib/escapadas-express";
+import { localizeEscapadasPromos } from "@/lib/i18n/localized-home";
 import { SHELL_PX } from "@/lib/layout-shell";
 import { cn } from "@/lib/utils";
 
-export function EscapadasExpressSection() {
-  const promos = getPublishedEscapadasExpressPromos();
+export async function EscapadasExpressSection() {
+  const t = await getTranslations("promosPatagonia");
+  const promos = localizeEscapadasPromos(t, getPublishedEscapadasExpressPromos());
   const hasPromos = promos.length > 0;
 
   if (hasPromos) {
@@ -38,22 +40,19 @@ export function EscapadasExpressSection() {
     >
       <div className="mx-auto max-w-3xl">
         <p className="text-[0.72rem] font-medium uppercase tracking-[0.22em] text-muted-foreground">
-          Paquetes armados
+          {t("packagesLabel")}
         </p>
         <h2
           id="promos-patagonia-heading"
           className="font-heading mt-3 text-3xl font-medium tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
         >
-          {PROMOS_PATAGONIA_COPY.title}
+          {t("title")}
         </h2>
         <p className="mt-4 text-lg leading-relaxed text-muted-foreground 2xl:text-xl">
-          {PROMOS_PATAGONIA_COPY.subtitle}
-        </p>
-        <p className="mt-3 text-base leading-relaxed text-muted-foreground/90">
-          {PROMOS_PATAGONIA_COPY.body}
+          {t("subtitle")}
         </p>
         <p className="mt-10 text-base leading-relaxed text-muted-foreground">
-          Próximamente vas a encontrar acá las propuestas listas para reservar.
+          {t("fallbackBody")}
         </p>
         <Link
           href={PLANNER_PATH}
@@ -62,7 +61,7 @@ export function EscapadasExpressSection() {
             "motion-cta mt-8 inline-flex h-12 rounded-full px-10 text-base font-semibold 2xl:h-14 2xl:px-12 2xl:text-lg",
           )}
         >
-          Planear mi viaje
+          {t("fallbackCta")}
         </Link>
       </div>
     </section>

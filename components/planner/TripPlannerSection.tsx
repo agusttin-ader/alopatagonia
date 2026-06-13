@@ -3,42 +3,31 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { CalendarDays, Check, ChevronDown, ChevronLeft, ChevronRight, Mail } from "lucide-react";
 import dynamic from "next/dynamic";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useId, useMemo, useRef, useState, type RefObject } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
 import {
-  PLANNER_DESTINATION_LABELS,
-  PLANNER_DESTINATION_HOOKS,
-  PLANNER_DESTINATION_OPTIONS,
-  PLANNER_PAGE_COPY,
   PLANNER_PHONE_VIDEO,
   resolvePlannerDestinationKey,
   SECTION_IDS,
   SITE,
   getWhatsAppUrl,
+  type PlannerDestinationKey,
   type PlannerDestinationValue,
 } from "@/lib/constants";
+import {
+  buildLocalizedPlannerMessage,
+  getLocalizedPlannerDestinationHook,
+  getLocalizedPlannerDestinationLabel,
+  getLocalizedPlannerDestinationOptions,
+} from "@/lib/i18n/localized-planner";
 import { cn } from "@/lib/utils";
 
 const PhoneVideoMockup = dynamic(
   () => import("@/components/media/PhoneVideoMockup").then((mod) => mod.PhoneVideoMockup),
   { ssr: false },
 );
-
-const MONTHS = [
-  "Enero",
-  "Febrero",
-  "Marzo",
-  "Abril",
-  "Mayo",
-  "Junio",
-  "Julio",
-  "Agosto",
-  "Septiembre",
-  "Octubre",
-  "Noviembre",
-  "Diciembre",
-];
 
 const fieldClassName =
   "h-12 w-full rounded-xl border border-[#d9d2c5]/80 bg-[linear-gradient(160deg,rgba(248,242,232,0.97),rgba(241,234,220,0.93))] px-3.5 text-base sm:text-[0.98rem] text-foreground shadow-[inset_0_1px_0_rgba(252,246,236,0.9),0_12px_26px_-24px_rgba(48,40,28,0.32)] outline-none transition duration-200 placeholder:text-muted-foreground/75 hover:border-[#cabfae] hover:bg-[linear-gradient(160deg,rgba(250,244,234,0.99),rgba(244,237,224,0.96))] focus-visible:border-primary/40 focus-visible:ring-4 focus-visible:ring-primary/14";
@@ -101,12 +90,27 @@ function fromISODate(value: string) {
   return Number.isNaN(parsed.getTime()) ? null : parsed;
 }
 
-function formatDate(value: string) {
+function formatDate(value: string, locale: string, noDateLabel: string) {
   const date = fromISODate(value);
-  if (!date) return "sin fecha";
-  const d = `${date.getDate()}`.padStart(2, "0");
-  const m = `${date.getMonth() + 1}`.padStart(2, "0");
-  return `${d}/${m}/${date.getFullYear()}`;
+  if (!date) return noDateLabel;
+  return new Intl.DateTimeFormat(locale, {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  }).format(date);
+}
+
+function formatDateCompact(value: string, locale: string) {
+  const date = fromISODate(value);
+  if (!date) return "";
+  return new Intl.DateTimeFormat(locale, { day: "numeric", month: "short" }).format(date);
+}
+
+function getSeasonLabel(month: number, t: ReturnType<typeof useTranslations<"planner">>) {
+  if (month === 11 || month <= 1) return t("seasons.summer");
+  if (month <= 4) return t("seasons.autumn");
+  if (month <= 7) return t("seasons.winter");
+  return t("seasons.spring");
 }
 
 function isPastDay(date: Date) {
@@ -118,32 +122,6 @@ function isBeforeMonth(year: number, month: number) {
   return year < today.getFullYear() || (year === today.getFullYear() && month < today.getMonth());
 }
 
-function formatDateCompact(value: string) {
-  const date = fromISODate(value);
-  if (!date) return "";
-  const months = [
-    "ene",
-    "feb",
-    "mar",
-    "abr",
-    "may",
-    "jun",
-    "jul",
-    "ago",
-    "sep",
-    "oct",
-    "nov",
-    "dic",
-  ];
-  return `${date.getDate()} ${months[date.getMonth()]}`;
-}
-
-function getSeasonLabel(month: number) {
-  if (month === 11 || month <= 1) return "verano";
-  if (month <= 4) return "otoño";
-  if (month <= 7) return "invierno";
-  return "primavera";
-}
 
 function getTripNightCount(fromDate: string, toDate: string) {
   const from = fromISODate(fromDate);
@@ -159,7 +137,17 @@ type PlannerProgressStep = {
   done: boolean;
 };
 
-function PlannerProgressBar({ steps }: { steps: PlannerProgressStep[] }) {
+function PlannerProgressBar({
+  steps,
+  progressAria,
+  stepDone,
+  stepPending,
+}: {
+  steps: PlannerProgressStep[];
+  progressAria: string;
+  stepDone: string;
+  stepPending: string;
+}) {
   const completedSteps = steps.filter((step) => step.done).length;
   const progress = (completedSteps / steps.length) * 100;
 
@@ -170,7 +158,7 @@ function PlannerProgressBar({ steps }: { steps: PlannerProgressStep[] }) {
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={Math.round(progress)}
-      aria-label="Progreso del planificador"
+      aria-label={progressAria}
     >
       <div className="h-1 overflow-hidden rounded-full bg-[#e8e0d2]">
         <motion.div
@@ -207,9 +195,9 @@ function PlannerProgressBar({ steps }: { steps: PlannerProgressStep[] }) {
               </span>
               {step.label}
               {step.done ? (
-                <span className="sr-only"> completado</span>
+                <span className="sr-only"> {stepDone}</span>
               ) : (
-                <span className="sr-only"> pendiente</span>
+                <span className="sr-only"> {stepPending}</span>
               )}
             </span>
           </span>
@@ -224,17 +212,24 @@ function PlannerTripPreview({
   fromDate,
   toDate,
   travelers,
+  locale,
+  t,
 }: {
   destination: PlannerDestinationValue;
   fromDate: string;
   toDate: string;
   travelers: string;
+  locale: string;
+  t: ReturnType<typeof useTranslations<"planner">>;
 }) {
-  const destinationLabel = PLANNER_DESTINATION_LABELS[destination];
-  const hook = destination !== "none" ? PLANNER_DESTINATION_HOOKS[destination] : null;
+  const destinationLabel = getLocalizedPlannerDestinationLabel(t, destination);
+  const hook =
+    destination !== "none"
+      ? getLocalizedPlannerDestinationHook(t, destination as PlannerDestinationKey)
+      : null;
   const nights = getTripNightCount(fromDate, toDate);
   const fromParsed = fromISODate(fromDate);
-  const season = fromParsed ? getSeasonLabel(fromParsed.getMonth()) : null;
+  const season = fromParsed ? getSeasonLabel(fromParsed.getMonth(), t) : null;
   const peopleCount = travelers.trim();
   const hasDestination = destination !== "none";
   const hasDates = Boolean(fromDate && toDate && nights !== null);
@@ -244,19 +239,21 @@ function PlannerTripPreview({
     const parts: string[] = [];
 
     if (fromDate && toDate) {
-      parts.push(`${formatDateCompact(fromDate)} – ${formatDateCompact(toDate)}`);
+      parts.push(`${formatDateCompact(fromDate, locale)} – ${formatDateCompact(toDate, locale)}`);
     }
     if (peopleCount) {
-      parts.push(`${peopleCount} ${Number(peopleCount) === 1 ? "persona" : "personas"}`);
+      parts.push(
+        `${peopleCount} ${Number(peopleCount) === 1 ? t("preview.personOne") : t("preview.personMany")}`,
+      );
     }
     if (season) {
       parts.push(season);
     }
 
     return parts.join(" · ");
-  }, [fromDate, peopleCount, season, toDate]);
+  }, [fromDate, locale, peopleCount, season, t, toDate]);
 
-  const title = hasDestination ? destinationLabel : hasDates ? "Patagonia" : null;
+  const title = hasDestination ? destinationLabel : hasDates ? t("preview.patagonia") : null;
 
   return (
     <div
@@ -282,7 +279,7 @@ function PlannerTripPreview({
             transition={{ duration: 0.18 }}
             className="pl-2.5 text-[0.72rem] leading-relaxed text-muted-foreground/85 sm:text-xs"
           >
-            Destino, fechas y grupo aparecen acá.
+            {t("preview.empty")}
           </motion.p>
         ) : (
           <div className="space-y-1 pl-2.5">
@@ -319,10 +316,14 @@ function DateField({
   label,
   value,
   onChange,
+  locale,
+  t,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
+  locale: string;
+  t: ReturnType<typeof useTranslations<"planner">>;
 }) {
   const today = new Date();
   const selectedDate = fromISODate(value);
@@ -375,6 +376,11 @@ function DateField({
   }, [onChange, value]);
 
   const viewingPastMonth = isBeforeMonth(viewDate.getFullYear(), viewDate.getMonth());
+  const weekdays = t.raw("calendar.weekdaysShort") as string[];
+  const monthLabel = new Intl.DateTimeFormat(locale, {
+    month: "long",
+    year: "numeric",
+  }).format(viewDate);
 
   return (
     <div ref={fieldRef} className="relative space-y-1.5">
@@ -393,7 +399,7 @@ function DateField({
         aria-controls={panelId}
       >
         <span className={value ? "text-foreground" : "text-muted-foreground"}>
-          {value ? formatDate(value) : "dd/mm/aaaa"}
+          {value ? formatDate(value, locale, t("form.noDate")) : t("form.datePlaceholder")}
         </span>
         <CalendarDays className="size-4 text-muted-foreground" />
       </button>
@@ -419,13 +425,11 @@ function DateField({
                 )
               }
               className="inline-flex size-11 items-center justify-center rounded-lg text-foreground transition hover:bg-[#f2ede3] disabled:cursor-not-allowed disabled:opacity-40"
-              aria-label="Mes anterior"
+              aria-label={t("calendar.prevMonth")}
             >
               <ChevronLeft className="size-4" />
             </button>
-            <p className="text-sm font-semibold text-foreground">
-              {MONTHS[viewDate.getMonth()]} {viewDate.getFullYear()}
-            </p>
+            <p className="text-sm font-semibold text-foreground">{monthLabel}</p>
             <button
               type="button"
               onClick={() =>
@@ -434,14 +438,14 @@ function DateField({
                 )
               }
               className="inline-flex size-11 items-center justify-center rounded-lg text-foreground transition hover:bg-[#f2ede3]"
-              aria-label="Mes siguiente"
+              aria-label={t("calendar.nextMonth")}
             >
               <ChevronRight className="size-4" />
             </button>
           </div>
 
           <div className="mb-1 grid grid-cols-7 gap-1 text-center text-xs text-muted-foreground">
-            {["L", "M", "M", "J", "V", "S", "D"].map((d, idx) => (
+            {weekdays.map((d, idx) => (
               <span key={`${d}-${idx}`}>{d}</span>
             ))}
           </div>
@@ -486,6 +490,9 @@ function DateField({
 }
 
 export function TripPlannerSection({ showHeading = true }: { showHeading?: boolean }) {
+  const t = useTranslations("planner");
+  const locale = useLocale();
+  const destinationOptions = useMemo(() => getLocalizedPlannerDestinationOptions(t), [t]);
   const [name, setName] = useState("");
   const [destination, setDestination] = useState<PlannerDestinationValue>("none");
   const [travelers, setTravelers] = useState("");
@@ -501,21 +508,17 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
   const resolvedDestination = resolvePlannerDestinationKey(destination);
 
   const message = useMemo(() => {
-    const personName = name.trim().slice(0, MAX_NAME_LENGTH) || "sin nombre";
-    const destinationText = PLANNER_DESTINATION_LABELS[resolvedDestination];
-    const people = travelers.trim().slice(0, MAX_TRAVELERS_LENGTH);
-    const from = formatDate(fromDate);
-    const to = formatDate(toDate);
-    const peopleCount = Number(people);
-    const groupLine =
-      people && !Number.isNaN(peopleCount)
-        ? peopleCount === 1
-          ? "somos 1"
-          : `somos ${people}`
-        : "todavía no definí cuántos somos";
+    const personName = name.trim().slice(0, MAX_NAME_LENGTH) || t("message.noName");
 
-    return `Soy ${personName}. Queremos ir a ${destinationText}, ${groupLine}, del ${from} al ${to}. ¿Nos ayudan a armarlo?`;
-  }, [name, resolvedDestination, travelers, fromDate, toDate]);
+    return buildLocalizedPlannerMessage(t, {
+      name: personName,
+      destination: resolvedDestination,
+      travelers,
+      fromDate,
+      toDate,
+      formatDate: (value) => formatDate(value, locale, t("form.noDate")),
+    });
+  }, [name, resolvedDestination, travelers, fromDate, toDate, t, locale]);
 
   const completionCount = useMemo(() => {
     const checks = [
@@ -537,25 +540,25 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
     () => [
       {
         id: "destination",
-        label: "Destino",
+        label: t("steps.destination"),
         done: resolvedDestination !== "none",
       },
       {
         id: "dates",
-        label: "Fechas",
+        label: t("steps.dates"),
         done: Boolean(fromDate && toDate && !invalidDateRange),
       },
       {
         id: "contact",
-        label: "Contacto",
+        label: t("steps.contact"),
         done: name.trim().length > 1 && travelers.trim().length > 0,
       },
     ],
-    [resolvedDestination, fromDate, invalidDateRange, name, toDate, travelers],
+    [resolvedDestination, fromDate, invalidDateRange, name, toDate, travelers, t],
   );
 
   const whatsappUrl = getWhatsAppUrl(message);
-  const mailUrl = `mailto:${SITE.email}?subject=${encodeURIComponent("Consulta viaje Patagonia")}&body=${encodeURIComponent(message)}`;
+  const mailUrl = `mailto:${SITE.email}?subject=${encodeURIComponent(t("mailSubject"))}&body=${encodeURIComponent(message)}`;
 
   useEffect(() => {
     if (destination === "none") return;
@@ -593,22 +596,29 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
               id="planner-heading"
               className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
             >
-              Planear mi viaje
+              {t("page.title")}
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-muted-foreground 2xl:text-xl">
-              {PLANNER_PAGE_COPY.intro}
+              {t("page.intro")}
             </p>
           </Reveal>
         ) : null}
 
         <div className={cn("grid gap-6 lg:grid-cols-[1fr_1.05fr] 2xl:gap-8", showHeading ? "mt-7 lg:mt-10" : "mt-0")}>
           <Reveal className="rounded-2xl border border-border/80 bg-card p-5 shadow-sm sm:p-7 2xl:p-8">
-            <PlannerProgressBar steps={progressSteps} />
+            <PlannerProgressBar
+              steps={progressSteps}
+              progressAria={t("progressAria")}
+              stepDone={t("stepDone")}
+              stepPending={t("stepPending")}
+            />
             <PlannerTripPreview
               destination={resolvedDestination}
               fromDate={fromDate}
               toDate={toDate}
               travelers={travelers}
+              locale={locale}
+              t={t}
             />
             <div
               className="mb-6 h-px w-28 bg-[linear-gradient(to_right,rgba(13,148,136,0.72),rgba(13,148,136,0.08))]"
@@ -616,11 +626,11 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
             />
             <form className="space-y-4">
               <label className="block space-y-1.5">
-                <span className="text-sm font-semibold text-foreground">Nombre</span>
+                <span className="text-sm font-semibold text-foreground">{t("form.name")}</span>
                 <input
                   value={name}
                   onChange={(e) => setName(e.target.value.slice(0, MAX_NAME_LENGTH))}
-                  placeholder="Tu nombre"
+                  placeholder={t("form.namePlaceholder")}
                   required
                   maxLength={MAX_NAME_LENGTH}
                   autoComplete="name"
@@ -629,7 +639,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
               </label>
 
               <label className="block space-y-1.5">
-                <span className="text-sm font-semibold text-foreground">Destino</span>
+                <span className="text-sm font-semibold text-foreground">{t("form.destination")}</span>
                 <div ref={destinationContainerRef} className="relative">
                   <button
                     id={destinationButtonId}
@@ -648,7 +658,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                   >
                     <span>
                       {
-                        PLANNER_DESTINATION_OPTIONS.find((option) => option.value === destination)
+                        destinationOptions.find((option) => option.value === destination)
                           ?.label
                       }
                     </span>
@@ -673,7 +683,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                         transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
                       >
                         <div className="max-h-64 overflow-auto">
-                          {PLANNER_DESTINATION_OPTIONS.map((option) => (
+                          {destinationOptions.map((option) => (
                             <button
                               key={option.value}
                               type="button"
@@ -702,14 +712,14 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
 
               <label className="block space-y-1.5">
                 <span className="text-sm font-semibold text-foreground">
-                  Cuantas personas viajan
+                  {t("form.travelers")}
                 </span>
                 <input
                   value={travelers}
                   onChange={(e) =>
                     setTravelers(e.target.value.replace(/[^\d]/g, "").slice(0, MAX_TRAVELERS_LENGTH))
                   }
-                  placeholder="Ej: 2"
+                  placeholder={t("form.travelersPlaceholder")}
                   inputMode="numeric"
                   required
                   maxLength={MAX_TRAVELERS_LENGTH}
@@ -718,8 +728,8 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
               </label>
 
               <div className="grid gap-4 sm:grid-cols-2">
-                <DateField label="Desde" value={fromDate} onChange={setFromDate} />
-                <DateField label="Hasta" value={toDate} onChange={setToDate} />
+                <DateField label={t("form.from")} value={fromDate} onChange={setFromDate} locale={locale} t={t} />
+                <DateField label={t("form.to")} value={toDate} onChange={setToDate} locale={locale} t={t} />
               </div>
 
               <label className="hidden" aria-hidden>
@@ -733,12 +743,10 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
               </label>
 
               <div className="pt-2">
-                <p className="text-xs text-muted-foreground">
-                  WhatsApp con todo armado según lo que cargás.
-                </p>
+                <p className="text-xs text-muted-foreground">{t("form.whatsappHint")}</p>
                 {invalidDateRange ? (
                   <p className="mt-2 text-xs font-semibold text-destructive">
-                    Revisá las fechas: la fecha de regreso debe ser posterior al inicio.
+                    {t("form.invalidDates")}
                   </p>
                 ) : null}
                 <p
@@ -750,8 +758,11 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                   )}
                 >
                   {plannerReady
-                    ? "Listo para escribirnos"
-                    : `Completá ${5 - completionCount} dato${5 - completionCount === 1 ? "" : "s"} para enviar más completo`}
+                    ? t("form.ready")
+                    : t(
+                        5 - completionCount === 1 ? "form.incompleteOne" : "form.incompleteMany",
+                        { count: 5 - completionCount },
+                      )}
                 </p>
               </div>
             </form>
@@ -773,7 +784,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                 )}
               >
                 <WhatsAppIcon />
-                {plannerReady ? "Enviar por WhatsApp" : "Completar para WhatsApp"}
+                {plannerReady ? t("form.sendWhatsApp") : t("form.completeWhatsApp")}
               </a>
               <a
                 href={mailUrl}
@@ -789,7 +800,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                 )}
               >
                 <Mail className="size-4 shrink-0" />
-                Consultar por mail
+                {t("form.sendMail")}
               </a>
             </div>
           </Reveal>
@@ -798,7 +809,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
             <PhoneVideoMockup
               src={PLANNER_PHONE_VIDEO.src}
               poster={PLANNER_PHONE_VIDEO.poster}
-              label={PLANNER_PHONE_VIDEO.label}
+              label={t("phoneVideoLabel")}
               size="lg"
               variant="plain"
             />

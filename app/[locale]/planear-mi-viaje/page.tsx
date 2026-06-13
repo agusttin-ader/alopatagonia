@@ -1,13 +1,15 @@
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { TripPlannerPageIntro } from "@/components/planner/TripPlannerPageIntro";
 import { Footer } from "@/components/footer/Footer";
 import { JsonLdScript } from "@/components/seo/JsonLdScript";
 import { FloatingWhatsAppButton } from "@/components/whatsapp/FloatingWhatsAppButton";
-import { PLANNER_BANNER, PLANNER_PAGE_COPY, PLANNER_PATH } from "@/lib/constants";
+import type { AppLocale } from "@/i18n/routing";
+import { PLANNER_BANNER, PLANNER_PATH } from "@/lib/constants";
+import { buildHubPageMetadata } from "@/lib/i18n/localized-seo-metadata";
 import { buildBreadcrumbJsonLd } from "@/lib/json-ld";
-import { buildPageMetadata } from "@/lib/seo";
-import { SITE_SEO } from "@/lib/seo-destinations";
 import { getSiteUrl } from "@/lib/site-url";
 
 const TripPlannerSection = dynamic(
@@ -16,22 +18,23 @@ const TripPlannerSection = dynamic(
   { loading: () => <div className="min-h-[480px]" aria-hidden /> },
 );
 
-export const metadata = buildPageMetadata({
-  title: SITE_SEO.planner.title,
-  description: SITE_SEO.planner.description,
-  path: PLANNER_PATH,
-  ogImage: PLANNER_BANNER.src,
-  ogImageAlt: PLANNER_BANNER.alt,
-  keywords: [...SITE_SEO.planner.keywords],
-  titleOrder: "keyword-first",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = (await getLocale()) as AppLocale;
+  return buildHubPageMetadata(locale, "planner", {
+    ogImage: PLANNER_BANNER.src,
+    ogImageAlt: PLANNER_BANNER.alt,
+  });
+}
 
-const breadcrumbJsonLd = buildBreadcrumbJsonLd(getSiteUrl(), [
-  { name: "Inicio", path: "/" },
-  { name: PLANNER_PAGE_COPY.title, path: PLANNER_PATH },
-]);
+export default async function PlanearMiViajePage() {
+  const t = await getTranslations("planner");
+  const tNav = await getTranslations("nav");
 
-export default function PlanearMiViajePage() {
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(getSiteUrl(), [
+    { name: tNav("home"), path: "/" },
+    { name: t("page.title"), path: PLANNER_PATH },
+  ]);
+
   return (
     <>
       <JsonLdScript id="alo-planner-breadcrumb-jsonld" data={breadcrumbJsonLd} />

@@ -2,12 +2,13 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import type { MouseEvent } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 
 import { SiteLogo } from "@/components/brand/SiteLogo";
+import { LocaleSwitcher } from "@/components/navigation/LocaleSwitcher";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { Link, usePathname } from "@/i18n/navigation";
 import { SITE } from "@/lib/constants";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import {
@@ -31,6 +32,7 @@ const DRAWER_TRANSITION = { duration: 0.42, ease: MOTION_EASE };
 
 export function GlobalNav() {
   const pathname = usePathname();
+  const t = useTranslations("nav");
   const reduceMotion = useReducedMotion();
   const isHome = pathname === "/";
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -232,7 +234,7 @@ export function GlobalNav() {
           />
           <Button
             ref={menuButtonRef}
-            aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-label={mobileOpen ? t("closeMenu") : t("openMenu")}
             aria-controls={menuPanelId}
             aria-expanded={mobileOpen}
             size="icon"
@@ -298,14 +300,14 @@ export function GlobalNav() {
         >
           <SiteLogo linked priority showWordmark className="shrink-0" />
 
-          <div className="ml-auto hidden min-w-0 items-center gap-0.5 md:flex lg:gap-1">
+          <div className="ml-auto hidden min-w-0 items-center gap-2 md:flex lg:gap-3">
             {NAV_DESKTOP_LINKS.map((link) => (
               <Link
                 key={link.id}
                 href={link.href}
                 className={DESKTOP_LINK_CLASS}
               >
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             ))}
             <Link
@@ -315,8 +317,9 @@ export function GlobalNav() {
                 "motion-cta ml-1.5 h-10 rounded-full px-4 text-[0.88rem] font-semibold whitespace-nowrap lg:ml-2 lg:px-5 lg:text-[0.9rem]",
               )}
             >
-              {NAV_PLANNER_LINK.label}
+              {t(NAV_PLANNER_LINK.labelKey)}
             </Link>
+            <LocaleSwitcher className="ml-1 shrink-0" />
           </div>
         </motion.div>
       </motion.div>
@@ -326,7 +329,7 @@ export function GlobalNav() {
           <div className="fixed inset-0 z-[1300] md:hidden">
             <motion.button
               type="button"
-              aria-label="Cerrar menú"
+              aria-label={t("closeMenu")}
               className="absolute inset-0 bg-black/36"
               onClick={() => setMobileOpen(false)}
               initial={{ opacity: 0 }}
@@ -339,7 +342,7 @@ export function GlobalNav() {
               ref={drawerRef}
               role="dialog"
               aria-modal="true"
-              aria-label="Navegación principal"
+              aria-label={t("mainNav")}
               className="fixed inset-0 h-dvh w-screen bg-[color-mix(in_oklch,var(--background)_98%,white)] shadow-[0_22px_60px_-36px_rgba(34,39,14,0.55)]"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -360,7 +363,7 @@ export function GlobalNav() {
                     type="button"
                     variant="ghost"
                     size="icon"
-                    aria-label="Cerrar menú"
+                    aria-label={t("closeMenu")}
                     className="min-h-12 min-w-12"
                     onClick={() => {
                       setMobileOpen(false);
@@ -412,11 +415,14 @@ export function GlobalNav() {
                         }}
                         className="motion-cta block rounded-xl px-4 py-4 text-[1.32rem] font-semibold leading-tight text-foreground hover:bg-secondary/65 hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-2"
                       >
-                        {link.label}
+                        {t(link.labelKey)}
                       </Link>
                     </motion.div>
                   ))}
                 </motion.div>
+                <div className="mt-6 border-t border-border/60 pt-5">
+                  <LocaleSwitcher />
+                </div>
               </div>
             </motion.div>
           </div>

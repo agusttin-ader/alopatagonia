@@ -2,11 +2,18 @@
 
 import { useCallback, useRef, useState } from "react";
 
-import { CATALOG_HUB_PILLARS } from "@/lib/catalog-hub/config";
+import type { CatalogHubPillar } from "@/lib/catalog-hub/config";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { cn, horizontalScrollRailClass } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
-export function CatalogHubMobileChips({ className }: { className?: string }) {
+type CatalogHubMobileChipsProps = {
+  pillars: CatalogHubPillar[];
+  className?: string;
+};
+
+export function CatalogHubMobileChips({ pillars, className }: CatalogHubMobileChipsProps) {
+  const t = useTranslations("catalogHub");
   const [activeIndex, setActiveIndex] = useState(0);
   const railRef = useRef<HTMLDivElement>(null);
 
@@ -31,7 +38,7 @@ export function CatalogHubMobileChips({ className }: { className?: string }) {
   return (
     <div className={cn("max-w-full overflow-hidden md:hidden", className)}>
       <p className="mb-2.5 text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
-        Elegí categoría
+        {t("chooseCategory")}
       </p>
       <div className="relative -mx-1 px-1">
         <div
@@ -46,9 +53,9 @@ export function CatalogHubMobileChips({ className }: { className?: string }) {
           ref={railRef}
           className={cn(horizontalScrollRailClass, "relative gap-2 pb-0.5")}
           role="tablist"
-          aria-label="Categorías del catálogo"
+          aria-label={t("categoriesAria")}
         >
-          {CATALOG_HUB_PILLARS.map((pillar, index) => {
+          {pillars.map((pillar, index) => {
             const isActive = index === activeIndex;
             return (
               <button

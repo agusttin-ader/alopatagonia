@@ -1,7 +1,9 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { CatalogSplitBrowsePanel } from "@/components/catalog/CatalogSplitBrowsePanel";
-import { groupAccommodationEntriesByType } from "@/lib/catalog/accommodation-types";
+import { groupAccommodationEntriesByTypeLocalized } from "@/lib/catalog/accommodation-types";
 import type { CatalogItemEntry } from "@/lib/catalog/catalog-items";
 import type { DestinationCatalog } from "@/lib/catalog/types";
 
@@ -14,7 +16,8 @@ export function DestinationAccommodationBrowse({
   destination,
   entries,
 }: DestinationAccommodationBrowseProps) {
-  const groups = groupAccommodationEntriesByType(entries).map((group) => ({
+  const t = useTranslations("catalog");
+  const groups = groupAccommodationEntriesByTypeLocalized(t, entries).map((group) => ({
     ...group,
     panelSubtitle: `${destination.region} · ${group.meta}`,
   }));
@@ -23,9 +26,9 @@ export function DestinationAccommodationBrowse({
     <CatalogSplitBrowsePanel
       groups={groups}
       mode="accommodation"
-      navAriaLabel="Elegir tipo de alojamiento"
+      navAriaLabel={t("chooseAccommodationType")}
       panelAction={() => ({
-        label: "Ver catálogo",
+        label: t("viewCatalog"),
         href: "/alojamientos",
       })}
     />

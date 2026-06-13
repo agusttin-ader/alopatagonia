@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useTranslations } from "next-intl";
 
 import { CatalogSplitBrowsePanel } from "@/components/catalog/CatalogSplitBrowsePanel";
 import type { CatalogSplitGroup } from "@/lib/catalog/accommodation-types";
@@ -8,15 +9,12 @@ import {
   groupEntriesByDestination,
   type CatalogItemEntry,
 } from "@/lib/catalog/catalog-items";
+import {
+  catalogAccommodationCount,
+  catalogExcursionCount,
+} from "@/lib/i18n/localized-catalog";
 
 type CatalogBrowseMode = "accommodation" | "excursion";
-
-function itemCountLabel(count: number, mode: CatalogBrowseMode) {
-  if (mode === "excursion") {
-    return count === 1 ? "1 excursión" : `${count} excursiones`;
-  }
-  return count === 1 ? "1 alojamiento" : `${count} alojamientos`;
-}
 
 function destinationSectionHash(mode: CatalogBrowseMode) {
   return mode === "accommodation" ? "alojamientos-heading" : "excursiones-heading";
@@ -28,11 +26,16 @@ type CatalogBrowsePageProps = {
 };
 
 export function CatalogBrowsePage({ mode, entries }: CatalogBrowsePageProps) {
+  const t = useTranslations("catalog");
+
   const groups = useMemo(
     (): CatalogSplitGroup[] =>
       Array.from(groupEntriesByDestination(entries).entries()).map(([slug, destinationEntries]) => {
         const destination = destinationEntries[0]!.destination;
-        const meta = itemCountLabel(destinationEntries.length, mode);
+        const meta =
+          mode === "excursion"
+            ? catalogExcursionCount(t, destinationEntries.length)
+            : catalogAccommodationCount(t, destinationEntries.length);
 
         return {
           id: slug,
@@ -43,7 +46,7 @@ export function CatalogBrowsePage({ mode, entries }: CatalogBrowsePageProps) {
           entries: destinationEntries,
         };
       }),
-    [entries, mode],
+    [entries, mode, t],
   );
 
   return (
@@ -51,9 +54,9 @@ export function CatalogBrowsePage({ mode, entries }: CatalogBrowsePageProps) {
       <CatalogSplitBrowsePanel
         groups={groups}
         mode={mode}
-        navAriaLabel="Elegir destino"
+        navAriaLabel={t("chooseDestination")}
         panelAction={(group) => ({
-          label: "Ver destino",
+          label: t("viewDestination"),
           href: `/destinos/${group.id}#${destinationSectionHash(mode)}`,
         })}
       />

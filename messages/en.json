@@ -1,0 +1,669 @@
+{
+  "nav": {
+    "home": "Home",
+    "destinations": "Destinations",
+    "accommodations": "Accommodation",
+    "excursions": "Excursions",
+    "winterShop": "Outdoor gear",
+    "planTrip": "Plan my trip",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "mainNav": "Main navigation",
+    "language": "Language"
+  },
+  "footer": {
+    "about": "We help with car rental, accommodation and excursions across Patagonia — all from a single WhatsApp.",
+    "location": "Patagonia, Argentina",
+    "inquiries": "Contact",
+    "email": "Email: {email}",
+    "phone": "Phone: {phone}",
+    "instagram": "Instagram: @{handle}",
+    "explore": "Explore",
+    "promosPatagonia": "Patagonia deals",
+    "aboutUs": "About us",
+    "popularDestinations": "Popular destinations",
+    "copyright": "© {year} Alo Patagonia. All rights reserved."
+  },
+  "hero": {
+    "headline": "Plan your Patagonia trip with us — hassle-free",
+    "headlineMobile": "Your Patagonia trip, made simple",
+    "subline": "Accommodation + transfers + car rental and excursions… everything in one place.",
+    "sublineMobile": "Accommodation, transfers, cars and excursions in one place.",
+    "cta": "Plan my trip"
+  },
+  "signature": {
+    "imageAlt": "Lake and mountain route in Patagonia",
+    "caption": "Patagonia Argentina — one contact for your entire trip",
+    "heading": "We coordinate bookings, transfers and activities so you travel with everything sorted.",
+    "points": [
+      "Car or transfer waiting at the airport.",
+      "Hotels matched to your route and budget",
+      "Excursions planned around the weather.",
+      "WhatsApp support throughout your trip.",
+      "Free itinerary so you make the most of your time."
+    ],
+    "cta": "Start my inquiry"
+  },
+  "gallery": {
+    "eyebrow": "Gallery",
+    "heading": "Photos from trips we've done",
+    "body": "Every visit is different: lakes, glaciers, road trips and moments from travellers who came through here.",
+    "photoAlt": "Patagonia — photo {n}",
+    "prevSelection": "View previous selection",
+    "nextSelection": "View another photo selection",
+    "viewPhoto": "View enlarged photo {n}",
+    "lightboxTitle": "Enlarged Patagonia gallery view"
+  },
+  "homeDestinations": {
+    "title": "Destinations",
+    "lead": "Pick the city you like most, see real photos and find all the options for your next trip.",
+    "cta": "Any questions? Message us on WhatsApp.",
+    "viewCatalog": "View catalog",
+    "viewAll": "View all destinations",
+    "photoAlt": "{destination} — photo {n}",
+    "expandPhoto": "Enlarge photo of {destination}",
+    "photosOf": "Photos of {destination}",
+    "expandPhotoN": "Enlarge photo {n} of {destination}",
+    "viewPhotoN": "View photo {n} of {destination}",
+    "lightboxOf": "Enlarged view of {destination}",
+    "destinations": {
+      "bariloche": {
+        "name": "Bariloche",
+        "region": "San Carlos de Bariloche · Río Negro",
+        "description": "Lakes, Andean forest and Nahuel Huapi. The most popular base to start a trip through the south.",
+        "galleryAlts": ["Apartment in Bariloche", "Cabin in Bariloche", "Hotel in Bariloche", "Hotel in Bariloche"]
+      },
+      "san-martin": {
+        "name": "San Martín de los Andes",
+        "region": "Neuquén · Lácar Lake",
+        "description": "Quieter than Bariloche: Lácar, Lanín and the Seven Lakes Route within reach."
+      },
+      "traful": {
+        "name": "Traful / Villa Traful",
+        "region": "Neuquén · Traful Lake",
+        "description": "Turquoise Traful Lake, submerged forest and a small town without Bariloche's pace."
+      },
+      "villa-la-angostura": {
+        "name": "Villa La Angostura",
+        "region": "Neuquén · National Reserve",
+        "description": "Arrayán trees, Nahuel Huapi bays and village streets. For slowing down."
+      },
+      "esquel": {
+        "name": "Esquel / Trevelin",
+        "region": "Chubut · Andean Patagonia",
+        "description": "Los Alerces (UNESCO), La Hoya in winter and Welsh Trevelin a few kilometres away."
+      },
+      "puerto-madryn": {
+        "name": "Puerto Madryn",
+        "region": "Chubut · Patagonian coast",
+        "description": "Whales, penguins and Península Valdés — each month has its star wildlife."
+      },
+      "el-calafate": {
+        "name": "El Calafate",
+        "region": "Santa Cruz · Perito Moreno Glacier",
+        "description": "Perito Moreno, Lago Argentino and a 220 km drive to El Chaltén."
+      },
+      "el-chalten": {
+        "name": "El Chaltén",
+        "region": "Santa Cruz · Trekking capital",
+        "description": "Fitz Roy trekking from town. If weather closes a trail, we find another plan."
+      },
+      "ushuaia": {
+        "name": "Ushuaia",
+        "region": "Tierra del Fuego · End of the world",
+        "description": "Beagle Channel, Tierra del Fuego National Park and the southernmost tip."
+      }
+    }
+  },
+  "catalogHub": {
+    "eyebrow": "Catalog",
+    "title": "Browse by category",
+    "description": "Browse destinations, accommodation and excursions… see the photos and ask about what interests you most.",
+    "chooseCategory": "Choose category",
+    "categoriesAria": "Catalog categories",
+    "comingSoon": "Coming soon",
+    "explore": "Explore",
+    "preview": "Preview",
+    "pillars": {
+      "destinos": {
+        "title": "Destinations",
+        "eyebrow": "By region",
+        "description": "Bariloche, Calafate, Ushuaia, Madryn and more. Where do you start?",
+        "imageAlt": "Bariloche Civic Centre — Patagonia Argentina"
+      },
+      "alojamientos": {
+        "title": "Accommodation",
+        "eyebrow": "Cabins · Apartments · Hostels",
+        "description": "Hotels of different categories, cabins and apartments, with excellent service so you feel at home… in Patagonia!",
+        "imageAlt": "Cabin interior in Villa Traful — Patagonia"
+      },
+      "excursiones": {
+        "title": "Excursions",
+        "eyebrow": "By season",
+        "description": "Trekking, glaciers, boat trips and wildlife — depending on the season in each area.",
+        "imageAlt": "Boat trip in front of a glacier — Patagonia excursion"
+      }
+    }
+  },
+  "winterPromo": {
+    "eyebrow": "Outdoor gear",
+    "heading": "Because the trip starts with planning — gear up for the mountains!",
+    "body": [
+      "Everything you need for your next adventure is here.",
+      "Travel comfortably and prepared for Patagonian weather. Discover Boulder outdoor gear and complete your experience — visit the online store and take advantage of our offer!"
+    ],
+    "cta": "View outdoor gear",
+    "carouselAlts": [
+      "Boulder outdoor gear for women — jackets and coats",
+      "Boulder — 3, 6 and 9 interest-free instalments",
+      "Boulder outdoor gear for men — jackets and coats",
+      "Boulder — 15% off by bank transfer and free shipping"
+    ]
+  },
+  "plannerTeaser": {
+    "title": "Got dates? Let's start.",
+    "description": "Pick destination, dates and group size. We'll prepare the WhatsApp message for you — no endless forms.",
+    "cta": "Start my inquiry",
+    "steps": {
+      "destination": {
+        "title": "Destination",
+        "text": "Bariloche, El Chaltén, Madryn and more."
+      },
+      "dates": {
+        "title": "Dates",
+        "text": "When you travel and how many you are."
+      },
+      "whatsapp": {
+        "title": "WhatsApp",
+        "text": "Message ready to send."
+      }
+    }
+  },
+  "promosPatagonia": {
+    "title": "Patagonia deals",
+    "subtitle": "Ready-made packages to experience Patagonia without hassle.",
+    "packagesLabel": "Ready packages",
+    "consultCta": "Ask about this deal",
+    "prevPromo": "Previous deal",
+    "nextPromo": "Next deal",
+    "sectionAria": "Patagonia deals",
+    "promoIndex": "Deal {index} · Patagonia",
+    "fallbackBody": "You'll soon find ready-to-book packages here.",
+    "fallbackCta": "Plan my trip",
+    "viewPromo": "View {title}",
+    "items": {
+      "bariloche-express": {
+        "title": "Bariloche",
+        "subtitle": "4 nights · accommodation + Circuito Chico",
+        "badge": "Active deal",
+        "highlights": ["Hotel or cabin subject to availability", "Circuito Chico with scenic stops", "Free itinerary via WhatsApp"],
+        "whatsappMessage": "I'm interested in the Bariloche deal. Can you send dates and price?",
+        "mediaAlt": "Panorama of lakes and mountains in Bariloche"
+      },
+      "siete-lagos-express": {
+        "title": "Seven Lakes",
+        "subtitle": "San Martín and Villa La Angostura · 5 nights",
+        "badge": "New",
+        "highlights": ["Base in San Martín or La Angostura", "Scenic Seven Lakes Route", "Excursions based on weather and season"],
+        "whatsappMessage": "I'd like to ask about the Seven Lakes deal. Do you have dates?",
+        "mediaAlt": "Lácar Lake and mountains in San Martín de los Andes"
+      },
+      "sur-patagonico-express": {
+        "title": "Southern Patagonia",
+        "subtitle": "Calafate + Ushuaia · combined package",
+        "badge": "Check availability",
+        "highlights": ["Perito Moreno Glacier and boat trip", "Beagle Channel and Tierra del Fuego", "Coordinated transfers and hotels"],
+        "whatsappMessage": "I'm interested in the Southern Patagonia deal. How does it work?",
+        "mediaAlt": "Forest and lake in Patagonia"
+      }
+    }
+  },
+  "testimonials": {
+    "eyebrow": "Reviews",
+    "heading": "Travellers who went with us",
+    "lead": "They wrote on Instagram and booked everything on WhatsApp — no back-and-forth emails.",
+    "stats": "{count} reviews · verified travellers",
+    "ratingAria": "Average {rating} out of 5 stars from {count} reviews",
+    "items": [
+      {
+        "name": "Florencia y Tomás, Buenos Aires",
+        "highlight": "8 days · Bariloche and Calafate",
+        "timeAgo": "1 month ago",
+        "quote": "In one chat they booked our car, hotel and Perito Moreno day. We arrived and just enjoyed — zero last-minute calls."
+      },
+      {
+        "name": "Camila R., Córdoba",
+        "highlight": "4 days · Ushuaia",
+        "timeAgo": "3 weeks ago",
+        "quote": "They replied the same day. It rained Tuesday, they moved the boat trip to Wednesday and it was better: calmer on the Beagle Channel."
+      },
+      {
+        "name": "Familia Quiroga, Rosario",
+        "highlight": "10 days · with kids",
+        "timeAgo": "2 months ago",
+        "quote": "Itinerary without rushed days: hotels near everything, breaks for the kids and excursions that weren't marathons."
+      },
+      {
+        "name": "Nicolás M., Mendoza",
+        "highlight": "First time in the south",
+        "timeAgo": "5 weeks ago",
+        "quote": "In two days we had dates, car and accommodation. During the trip we wrote on WhatsApp twice and they always replied quickly."
+      }
+    ]
+  },
+  "howItWorks": {
+    "heading": "Three steps on WhatsApp",
+    "steps": [
+      {
+        "title": "Tell us about your trip",
+        "description": "Message us on WhatsApp with destination, dates, group size and what you'd like to do (trekking, glaciers, beach…)."
+      },
+      {
+        "title": "We send you a plan",
+        "description": "Car or transfer, lodging and excursions based on season and weather — no rigid package that can't be adjusted."
+      },
+      {
+        "title": "Travel with everything sorted",
+        "description": "You arrive with bookings done. If the weather changes one day, we keep answering on WhatsApp."
+      }
+    ]
+  },
+  "aboutUs": {
+    "eyebrow": "Patagonia Argentina",
+    "title": "About us",
+    "paragraphs": [
+      "Alo_patagonia is a company fully dedicated to tourism in the Argentine Patagonia region.",
+      "Because every traveller is unique to us… we design experiences from the traveller's perspective, caring for every detail so you enjoy an unforgettable trip!",
+      "Our goal is for you to take home the best memories, live a perfect experience from start to finish, and always want to come back!!"
+    ],
+    "closing": "If you're ready for your next adventure… contact us!!",
+    "cta": "Contact us",
+    "whatsappMessage": "I want to plan my next adventure in Patagonia."
+  },
+  "cta": {
+    "heading": "Any questions before writing to us?",
+    "body": "Send us destination and dates on WhatsApp. We reply with concrete options — not a generic catalog.",
+    "button": "Write on WhatsApp"
+  },
+  "whatsapp": {
+    "ariaLabel": "Chat on WhatsApp",
+    "srOnly": "WhatsApp",
+    "primaryMessage": "I want to plan a trip to Patagonia. Can you help with accommodation, car rental and excursions?"
+  },
+  "common": {
+    "close": "Close",
+    "closeExpanded": "Close enlarged view",
+    "prevImage": "Previous image",
+    "nextImage": "Next image"
+  },
+  "notFound": {
+    "metaTitle": "Page not found",
+    "metaDescription": "This page doesn't exist. Go back home or browse destinations.",
+    "eyebrow": "Error 404",
+    "heading": "We couldn't find this page",
+    "body": "The link may be outdated. Try the home page or the destinations catalog.",
+    "homeCta": "Go home",
+    "destinationsCta": "View destinations"
+  },
+  "community": {
+    "followers": "followers",
+    "heading": "Patagonia on your feed",
+    "body": "We share routes, weather and photos from Bariloche, Calafate, Chaltén, Ushuaia and more. When you're ready to plan your trip, message us.",
+    "postsBadge": "{count} posts",
+    "destinationsBadge": "{count} destinations",
+    "followCta": "Follow @{handle}",
+    "feedCaption": "Routes, weather and Patagonian sunsets — what we post every week from Bariloche to the end of the world.",
+    "feedFollow": "Follow",
+    "feedLikes": "{count} likes",
+    "feedOpenProfile": "Open profile",
+    "feedOpenProfileAria": "Open Instagram profile @{handle}",
+    "feedPrevPhoto": "Previous photo",
+    "feedNextPhoto": "Next photo",
+    "feedPhotoAlt": "Patagonia on Instagram — photo {n}",
+    "profileAria": "Instagram profile @{handle}"
+  },
+  "catalog": {
+    "breadcrumbCatalog": "Catalog",
+    "alsoExplore": "You can also explore",
+    "viewCatalog": "View catalog",
+    "viewDestination": "View destination",
+    "viewAllDestinations": "View all destinations",
+    "chooseCorridor": "Choose region",
+    "chooseDestination": "Choose destination",
+    "chooseAccommodationType": "Choose accommodation type",
+    "patagoniaArgentina": "Patagonian Argentina",
+    "heroAlt": "Trips to {destination} — Patagonian Argentina",
+    "planTripTo": "Plan a trip to {destination}",
+    "tripsTo": "Trips to {destination}",
+    "faqAbout": "Questions about travelling to {destination}",
+    "faqPatagonia": "Questions about Patagonia trips",
+    "photoAlt": "{name} — photo {n}",
+    "lightboxAlt": "Enlarged view — {name}",
+    "lightboxAccommodation": "Enlarged accommodation view",
+    "counts": {
+      "destinationOne": "1 destination",
+      "destinationMany": "{count} destinations",
+      "accommodationOne": "1 accommodation",
+      "accommodationMany": "{count} accommodations",
+      "excursionOne": "1 excursion",
+      "excursionMany": "{count} excursions"
+    },
+    "sections": {
+      "accommodations": "Accommodation",
+      "excursions": "Excursions",
+      "carRental": "Car rental",
+      "operator": "Operator:"
+    },
+    "accommodationTypes": {
+      "cabana": { "title": "Cabins", "subtitle": "Privacy and space" },
+      "departamento": { "title": "Apartments", "subtitle": "Neighbourhoods and capacity" },
+      "hostel": { "title": "Hotels", "subtitle": "By category" }
+    },
+    "carRentalCta": "Ask about car rental",
+    "itemDetail": {
+      "askTitle": "Ask us about availability",
+      "askBody": "On WhatsApp we'll tell you dates, capacity and what's available in that area.",
+      "askCta": "Enquire",
+      "backTo": "← Back to {section} in {destination}",
+      "sections": {
+        "accommodations": "accommodation",
+        "excursions": "excursions"
+      }
+    }
+  },
+  "planner": {
+    "page": {
+      "title": "Plan my trip",
+      "description": "Tell us destination, dates and how many are travelling. We'll draft the WhatsApp or email message with everything in one text.",
+      "intro": "In two minutes you fill in the basics. We write the message; you just send it and we keep chatting from there.",
+      "regionLabel": "Patagonian Argentina"
+    },
+    "breadcrumbHome": "Home",
+    "bannerAlt": "Panorama of lakes and mountains in Bariloche, Patagonian Argentina",
+    "phoneVideoLabel": "Patagonia video — Alo Patagonia",
+    "mailSubject": "Patagonia trip enquiry",
+    "progressAria": "Trip planner progress",
+    "stepDone": "completed",
+    "stepPending": "pending",
+    "steps": {
+      "destination": "Destination",
+      "dates": "Dates",
+      "contact": "Contact"
+    },
+    "preview": {
+      "empty": "Destination, dates and group appear here.",
+      "patagonia": "Patagonia",
+      "personOne": "person",
+      "personMany": "people"
+    },
+    "seasons": {
+      "summer": "summer",
+      "autumn": "autumn",
+      "winter": "winter",
+      "spring": "spring"
+    },
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "destination": "Destination",
+      "travelers": "How many people are travelling",
+      "travelersPlaceholder": "E.g. 2",
+      "from": "From",
+      "to": "To",
+      "datePlaceholder": "dd/mm/yyyy",
+      "noDate": "no date",
+      "whatsappHint": "WhatsApp message built from what you enter.",
+      "invalidDates": "Check the dates: return date must be after departure.",
+      "ready": "Ready to message us",
+      "incompleteOne": "Fill in {count} more field to send a complete message",
+      "incompleteMany": "Fill in {count} more fields to send a complete message",
+      "sendWhatsApp": "Send via WhatsApp",
+      "completeWhatsApp": "Complete to use WhatsApp",
+      "sendMail": "Enquire by email"
+    },
+    "calendar": {
+      "prevMonth": "Previous month",
+      "nextMonth": "Next month",
+      "weekdaysShort": ["M", "T", "W", "T", "F", "S", "S"]
+    },
+    "message": {
+      "noName": "no name",
+      "groupOne": "somos 1",
+      "groupMany": "there are {count} of us",
+      "groupUnknown": "group size not set yet",
+      "body": "I'm {name}. We want to go to {destination}, {group}, from {from} to {to}. Can you help us plan it?"
+    },
+    "destinations": {
+      "none": "No destination yet",
+      "bariloche": {
+        "label": "Bariloche",
+        "hook": "Circuito Chico, Cerro Catedral and Nahuel Huapi by car."
+      },
+      "san-martin": {
+        "label": "San Martín de los Andes",
+        "hook": "Lácar, Lanín and the Seven Lakes Route."
+      },
+      "el-chalten": {
+        "label": "El Chaltén",
+        "hook": "Laguna de los Tres and Fitz Roy — weather rules."
+      },
+      "esquel": {
+        "label": "Esquel / Trevelin",
+        "hook": "Los Alerces, La Hoya and Welsh Trevelin."
+      },
+      "villa-la-angostura": {
+        "label": "Villa La Angostura",
+        "hook": "Arrayán forest, Cerro Bayo and Nahuel Huapi at your pace."
+      },
+      "puerto-madryn": {
+        "label": "Puerto Madryn",
+        "hook": "Whales Sep–Dec, Península Valdés and penguins."
+      },
+      "el-calafate": {
+        "label": "El Calafate",
+        "hook": "Perito Moreno and the blue of Lago Argentino."
+      },
+      "traful": {
+        "label": "Traful / Villa Traful",
+        "hook": "Turquoise Traful Lake and submerged forest."
+      },
+      "ushuaia": {
+        "label": "Ushuaia",
+        "hook": "Beagle Channel, Tierra del Fuego and southern wind."
+      }
+    }
+  },
+  "winterPage": {
+    "metaDescription": "Boulder outdoor gear for Patagonian cold. 3, 6 and 9 interest-free instalments, 15% off by bank transfer and free shipping from $130,000.",
+    "heroTitle": "Gear up for Patagonian cold",
+    "heroSubtitle": "Boulder outdoor jackets, hoodies and trousers. 3, 6 and 9 interest-free instalments, 15% off by transfer and free shipping from $130,000.",
+    "ctaPrimary": "Go to Boulder",
+    "ctaSecondaryHome": "Back to home",
+    "breadcrumbLabel": "Outdoor gear",
+    "ogAlt": "Boulder outdoor gear — jackets and coats for Patagonia",
+    "bullets": [
+      "3, 6 and 9 interest-free instalments, no minimum",
+      "15% off paying by bank transfer on the full site",
+      "Free shipping from $130,000 · nationwide"
+    ]
+  },
+  "destinationsPage": {
+    "title": "Destinations in Patagonian Argentina",
+    "intro": "Discover the most incredible destinations in Patagonia. Accommodation, excursions and car hire with personalised advice so you travel worry-free.",
+    "zoneNavSubtitles": {
+      "corredor-lagos": "Neuquén · Río Negro",
+      "santa-cruz": "Santa Cruz",
+      "tierra-del-fuego": "Tierra del Fuego",
+      "chubut": "Chubut"
+    },
+    "zones": {
+      "corredor-lagos": {
+        "title": "Lake District corridor",
+        "paragraphs": [
+          "Glacial lakes, Andean forest and the Seven Lakes Route: Bariloche, Villa La Angostura, San Martín and Traful in one corridor."
+        ]
+      },
+      "chubut": {
+        "title": "Chubut: mountains and coast",
+        "paragraphs": [
+          "Two extremes of the province, 670 km apart.",
+          "Los Alerces National Park in Esquel with its mountains, lakes and ancient forests, and Planet Madryn with the world's most amazing marine wildlife!",
+          "Browse our accommodation and book activities and car hire in both towns!"
+        ]
+      },
+      "santa-cruz": {
+        "title": "Santa Cruz: land of glaciers",
+        "paragraphs": [
+          "El Calafate and El Chaltén are 220 km apart…",
+          "El Calafate with its ice fields, pioneer estancias and origin story… El Chaltén, our National Trekking Capital, world-famous for trails like Laguna de los Tres… or Laguna Capri, the easiest and family-friendly.",
+          "Browse our catalog for all the accommodation we offer in each town, plus activities, transfers and cars to enjoy the region end to end!"
+        ]
+      },
+      "tierra-del-fuego": {
+        "title": "Tierra del Fuego",
+        "paragraphs": [
+          "Ushuaia, Beagle Channel and Tierra del Fuego National Park.",
+          "The End of the World awaits with lighthouses, peat bogs, penguins… and the experience of standing at the southernmost tip of the continent.",
+          "Browse our accommodation, book transfers or rent a car and explore without limits!"
+        ]
+      }
+    },
+    "pages": {
+      "bariloche": {
+        "title": "Bariloche",
+        "paragraphs": [
+          "The gateway to Argentine Patagonia.",
+          "Lakes, forests, mountains… and the best chocolate!",
+          "We have the best accommodation, experiences, transfers and car hire to offer you."
+        ]
+      },
+      "san-martin": {
+        "title": "San Martín de los Andes",
+        "paragraphs": [
+          "One of the most beautiful cities in Neuquén.",
+          "Lácar Lake, Cerro Chapelco, Lanín Volcano… rivers, lakes, waterfalls and trails galore…",
+          "Browse all the accommodation, activities and cars available to explore this magical corner of Patagonia."
+        ]
+      },
+      "traful": {
+        "title": "Villa Traful",
+        "paragraphs": [
+          "This beautiful village between San Martín de los Andes and Villa La Angostura will amaze you at every turn — its beaches, deep blue lake, green forest and submerged forest…",
+          "We have cabins and the finest activities so you can enjoy it and take home the best memories!"
+        ]
+      },
+      "villa-la-angostura": {
+        "title": "Villa La Angostura",
+        "paragraphs": [
+          "A charming mountain village on the shores of Nahuel Huapi, surrounded by forests and unique landscapes. Gateway to Nahuel Huapi National Park and one of Patagonia's most chosen destinations for nature, tranquillity and outdoor activities year-round.",
+          "In this destination we have cabins, hotels and typical outdoor activities!"
+        ]
+      },
+      "el-calafate": {
+        "title": "El Calafate",
+        "paragraphs": [
+          "Land of glaciers and true Patagonian steppe.",
+          "Walkways, boat trips, sheep shearing and typical Patagonian cuisine.",
+          "Browse our accommodation, activities, transfers and available cars!"
+        ]
+      },
+      "el-chalten": {
+        "title": "El Chaltén",
+        "paragraphs": [
+          "National trekking capital — trails, mountains, rivers and lakes of indescribable beauty.",
+          "Browse the catalog for different accommodation and activities to enjoy it to the full."
+        ]
+      }
+    },
+    "faq": [
+      {
+        "question": "How do we organise your trip?",
+        "answer": "Fill in the form with destination, number of travellers and travel dates, then send us a WhatsApp. We arrange accommodation, activities, transfer or car to your preference, plus a free itinerary so you make the most of your time!"
+      },
+      {
+        "question": "Which destinations do we cover?",
+        "answer": "Bariloche, San Martín de los Andes, Villa La Angostura, Esquel, Trevelin, Puerto Madryn, El Calafate, El Chaltén, Ushuaia"
+      },
+      {
+        "question": "Can I book everything separately?",
+        "answer": "Of course! Accommodation, activities, transfers or car hire can be booked separately… or if you prefer, we organise everything together so you travel with everything sorted and only worry about enjoying yourself!!"
+      }
+    ]
+  },
+  "accommodations": {
+    "photoAlt": "{name} — photo {n}",
+    "fallback": {
+      "cabana": {
+        "description": "{name} — cabin in {destination} to settle in for several days and explore.",
+        "highlights": [
+          "Natural setting in {destination}",
+          "More space and privacy than a hotel",
+          "Great base if you're cooking or staying a week",
+          "Ask us about capacity and what's included"
+        ]
+      },
+      "departamento": {
+        "description": "{name} — apartment in {destination} with what you need for a longer stay.",
+        "highlights": [
+          "Location in {destination} depending on the unit",
+          "Kitchen and space for several days",
+          "Couples or small families",
+          "We coordinate dates and check-in via WhatsApp"
+        ]
+      },
+      "hostel": {
+        "description": "{name} — hotel in {destination} as a base for your daily outings.",
+        "highlights": [
+          "Hotel in {destination}, close to day-trip starting points",
+          "Services according to property category",
+          "Availability depending on season"
+        ]
+      }
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "Patagonia Argentina trips — Bariloche, Ushuaia and El Calafate",
+      "description": "We plan your Patagonia trip: car hire, accommodation and excursions in Bariloche, Calafate, Ushuaia, Madryn and the Lake District. Message us on WhatsApp.",
+      "keywords": ["patagonia trips", "argentine patagonia", "patagonia travel", "patagonia vacation", "plan patagonia trip", "bariloche", "ushuaia", "el calafate"]
+    },
+    "destinos": {
+      "title": "Destinations in Patagonian Argentina",
+      "description": "Discover the most incredible destinations in Patagonia. Accommodation, excursions and car hire with personalised advice so you travel worry-free.",
+      "keywords": ["patagonia destinations", "patagonia argentina tourism", "bariloche trips", "el calafate trips", "ushuaia trips", "san martin de los andes", "puerto madryn", "el chalten"]
+    },
+    "alojamientos": {
+      "title": "Patagonia accommodation — hotels, cabins and apartments",
+      "description": "Hotels of different categories, cabins and apartments, with excellent service so you feel at home… in Patagonia!",
+      "keywords": ["patagonia accommodation", "bariloche hotels", "patagonia cabins", "bariloche apartments", "patagonia hostels"]
+    },
+    "excursiones": {
+      "title": "Patagonia excursions — trekking, boat trips and wildlife",
+      "description": "Perito Moreno, Laguna de los Tres, whales in Madryn, Beagle Channel and more. Ask on WhatsApp according to season and weather.",
+      "keywords": ["patagonia excursions", "bariloche excursions", "el chalten trekking", "perito moreno glacier", "puerto madryn whales"]
+    },
+    "planner": {
+      "title": "Plan your Patagonia trip — WhatsApp enquiry",
+      "description": "Enter destination, dates and group size. We'll draft your WhatsApp message with accommodation, car hire and excursions.",
+      "keywords": ["plan patagonia trip", "patagonia itinerary", "bariloche trip", "patagonia travel enquiry"]
+    },
+    "invierno": {
+      "title": "Boulder outdoor gear for Patagonian cold",
+      "description": "Boulder outdoor gear for Patagonian cold. 3, 6 and 9 interest-free instalments, 15% off by bank transfer and free shipping from $130,000.",
+      "keywords": ["patagonia outdoor gear", "bariloche outdoor clothing", "boulder patagonia", "patagonia jackets"]
+    },
+    "destination": {
+      "title": "{name} — accommodation and excursions",
+      "ogAlt": "Trips to {name} — {site}",
+      "notFound": "Destination not found"
+    },
+    "catalogItem": {
+      "title": "{name} in {destination} — {kind}",
+      "descriptionFallback": "{kind} in {destination}. Photos and enquiry on WhatsApp.",
+      "ogAlt": "{name} in {destination} — {site}",
+      "notFound": "Option not found",
+      "kindAccommodation": "accommodation",
+      "kindExcursion": "excursion"
+    }
+  }
+}

@@ -1,30 +1,15 @@
 import { ClipboardCheck, MessageCircle, Mountain } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 import { Reveal } from "@/components/motion/reveal";
 import { SECTION_IDS } from "@/lib/constants";
 
-const STEPS = [
-  {
-    title: "Nos contás tu viaje",
-    description:
-      "Escribís por WhatsApp con destino, fechas, cuántos son y qué te gustaría hacer (trekking, glaciares, playa…).",
-    icon: MessageCircle,
-  },
-  {
-    title: "Te mandamos el plan",
-    description:
-      "Auto o transfer, hospedaje y excursiones según temporada y clima — sin paquete rígido que no se pueda mover.",
-    icon: ClipboardCheck,
-  },
-  {
-    title: "Viajás con todo ordenado",
-    description:
-      "Llegás con reservas hechas. Si el clima cambia un día, seguimos respondiendo por WhatsApp.",
-    icon: Mountain,
-  },
-] as const;
+const STEP_ICONS = [MessageCircle, ClipboardCheck, Mountain] as const;
 
-export function HowItWorks() {
+export async function HowItWorks() {
+  const t = await getTranslations("howItWorks");
+  const steps = t.raw("steps") as Array<{ title: string; description: string }>;
+
   return (
     <section
       id={SECTION_IDS.howItWorks}
@@ -37,13 +22,13 @@ export function HowItWorks() {
             id="como-funciona-heading"
             className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-[2.1rem] sm:leading-snug 2xl:text-5xl"
           >
-            Tres pasos por WhatsApp
+            {t("heading")}
           </h2>
         </Reveal>
 
         <ol className="mt-8 grid list-none gap-6 py-2 sm:mt-16 md:mt-20 md:grid-cols-3 md:items-stretch md:gap-6 lg:gap-8 2xl:gap-10">
-          {STEPS.map((step, index) => {
-            const Icon = step.icon;
+          {steps.map((step, index) => {
+            const Icon = STEP_ICONS[index] ?? MessageCircle;
             return (
               <li key={step.title} className="h-full min-h-0">
                 <Reveal delay={index * 0.09} className="block h-full min-h-0 w-full">

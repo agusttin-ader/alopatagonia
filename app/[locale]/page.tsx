@@ -1,4 +1,6 @@
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
+import { getLocale, setRequestLocale } from "next-intl/server";
 
 import { AboutUsImagePreload } from "@/components/about/AboutUsImagePreload";
 import { AboutUsSection } from "@/components/about/AboutUsSection";
@@ -17,23 +19,27 @@ import { SignatureSection } from "@/components/signature/SignatureSection";
 import { Testimonials } from "@/components/testimonials/Testimonials";
 import { WinterStorePromoSection } from "@/components/winter-store/WinterStorePromoSection";
 import { FloatingWhatsAppButton } from "@/components/whatsapp/FloatingWhatsAppButton";
-import { buildPageMetadata } from "@/lib/seo";
-import { SITE_SEO } from "@/lib/seo-destinations";
+import type { AppLocale } from "@/i18n/routing";
+import { buildHubPageMetadata } from "@/lib/i18n/localized-seo-metadata";
 
 const InstagramStats = dynamic(
   () => import("@/components/community/instagram-stats").then((mod) => mod.InstagramStats),
   { loading: () => <div className="min-h-[320px]" aria-hidden /> },
 );
 
-export const metadata = buildPageMetadata({
-  title: SITE_SEO.home.title,
-  description: SITE_SEO.home.description,
-  path: "/",
-  keywords: [...SITE_SEO.home.keywords],
-  titleOrder: "keyword-first",
-});
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = (await getLocale()) as AppLocale;
+  return buildHubPageMetadata(locale, "home");
+}
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
   return (
     <>
       <PlannerLegacyHashRedirect />

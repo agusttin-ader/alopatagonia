@@ -1,29 +1,37 @@
 import { SECTION_IDS, PLANNER_PATH } from "@/lib/constants";
 
+export type NavLabelKey =
+  | "home"
+  | "destinations"
+  | "accommodations"
+  | "excursions"
+  | "winterShop"
+  | "planTrip";
+
 export type NavLink = {
-  label: string;
+  labelKey: NavLabelKey;
   href: string;
   id: string;
 };
 
 export const NAV_EXPLORE_LINKS: NavLink[] = [
-  { label: "Destinos", href: "/destinos", id: "destinos" },
-  { label: "Alojamientos", href: "/alojamientos", id: "alojamientos" },
-  { label: "Excursiones", href: "/excursiones", id: "excursiones" },
+  { labelKey: "destinations", href: "/destinos", id: "destinos" },
+  { labelKey: "accommodations", href: "/alojamientos", id: "alojamientos" },
+  { labelKey: "excursions", href: "/excursiones", id: "excursiones" },
 ];
 
 export const NAV_COMPANY_LINKS: NavLink[] = [
-  { label: "Indumentaria", href: "/invierno", id: "invierno" },
+  { labelKey: "winterShop", href: "/invierno", id: "invierno" },
 ];
 
 export const NAV_PLANNER_LINK: NavLink = {
-  label: "Planear mi viaje",
+  labelKey: "planTrip",
   href: PLANNER_PATH,
   id: SECTION_IDS.planner,
 };
 
 export const NAV_HOME_LINK: NavLink = {
-  label: "Inicio",
+  labelKey: "home",
   href: "#inicio",
   id: "inicio",
 };
@@ -36,7 +44,7 @@ export function getMobileNavLinks(isHome: boolean): NavLink[] {
   }
 
   return [
-    { label: "Inicio", href: "/", id: "home" },
+    { labelKey: "home", href: "/", id: "home" },
     ...NAV_EXPLORE_LINKS,
     NAV_PLANNER_LINK,
     ...NAV_COMPANY_LINKS,

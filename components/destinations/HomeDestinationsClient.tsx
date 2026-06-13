@@ -3,12 +3,11 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, ChevronDown, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { AppImage } from "@/components/media/AppImage";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef, useState, type MouseEvent, type TouchEvent } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
-import { CLIENT_HOME_DESTINATIONS_COPY } from "@/lib/client-protected-copy";
 import { SECTION_IDS } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import type { HomeDestinationEditorial } from "@/lib/home-destinations-types";
@@ -31,6 +30,7 @@ function CatalogLink({
   mobileProminent?: boolean;
   compactMobile?: boolean;
 }) {
+  const t = useTranslations("homeDestinations");
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
   const isHome = pathname === "/";
@@ -66,7 +66,7 @@ function CatalogLink({
         className,
       )}
     >
-      Ver catálogo
+      {t("viewCatalog")}
       <ChevronDown className="size-4 shrink-0 lg:hidden" aria-hidden />
       <ArrowUpRight className="hidden size-4 shrink-0 lg:inline" aria-hidden />
     </a>
@@ -93,6 +93,7 @@ function DestinationName({
   className?: string;
   disableScale?: boolean;
 }) {
+  const t = useTranslations("homeDestinations");
   const reduceMotion = useReducedMotion();
 
   if (disableScale || reduceMotion) {
@@ -130,6 +131,7 @@ function SpreadImageButton({
   priority?: boolean;
   animated?: boolean;
 }) {
+  const t = useTranslations("homeDestinations");
   const reduceMotion = useReducedMotion();
   const tileClassName = cn(
     "relative overflow-hidden bg-muted shadow-[0_16px_30px_-20px_rgba(15,23,42,0.32)]",
@@ -155,7 +157,7 @@ function SpreadImageButton({
       <button
         type="button"
         onClick={() => onImageClick(index)}
-        aria-label={`Ampliar foto de ${destinationName}`}
+        aria-label={t("expandPhoto", { destination: destinationName })}
         className={tileClassName}
       >
         {content}
@@ -167,7 +169,7 @@ function SpreadImageButton({
     <motion.button
       type="button"
       onClick={() => onImageClick(index)}
-      aria-label={`Ampliar foto de ${destinationName}`}
+      aria-label={t("expandPhoto", { destination: destinationName })}
       initial={{ opacity: 0, scale: 0.985 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{
@@ -213,6 +215,7 @@ function DestinationMobileImageCarousel({
   destination: HomeDestinationEditorial;
   onImageClick: (index: number) => void;
 }) {
+  const t = useTranslations("homeDestinations");
   const reduceMotion = useReducedMotion();
   const images = useMemo(() => uniqueGalleryImages(destination), [destination]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -270,7 +273,7 @@ function DestinationMobileImageCarousel({
   return (
     <div
       className="overflow-hidden touch-pan-y"
-      aria-label={`Fotos de ${destination.name}`}
+      aria-label={t("photosOf", { destination: destination.name })}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
@@ -294,8 +297,8 @@ function DestinationMobileImageCarousel({
               onClick={() => handleSlideClick(index, image)}
               aria-label={
                 isActive
-                  ? `Ampliar foto ${index + 1} de ${destination.name}`
-                  : `Ver foto ${index + 1} de ${destination.name}`
+                  ? t("expandPhotoN", { n: index + 1, destination: destination.name })
+                  : t("viewPhotoN", { n: index + 1, destination: destination.name })
               }
               aria-current={isActive ? "true" : undefined}
               className={cn(
@@ -451,6 +454,7 @@ function DestinationMobileAccordion({
   onToggle: (slug: string) => void;
   onImageClick: (destination: HomeDestinationEditorial, index: number) => void;
 }) {
+  const t = useTranslations("homeDestinations");
   const reduceMotion = useReducedMotion();
 
   return (
@@ -575,6 +579,8 @@ type HomeDestinationsClientProps = {
 };
 
 export function HomeDestinationsClient({ destinations }: HomeDestinationsClientProps) {
+  const t = useTranslations("homeDestinations");
+  const tCommon = useTranslations("common");
   const [activeSlug, setActiveSlug] = useState(destinations[0]?.slug ?? "");
   const [mobileOpenSlug, setMobileOpenSlug] = useState<string | null>(
     destinations[0]?.slug ?? null,
@@ -677,7 +683,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
                 "max-md:text-footer-lake-foreground max-md:text-[1.75rem] max-md:leading-tight",
             )}
           >
-            {CLIENT_HOME_DESTINATIONS_COPY.title}
+            {t("title")}
           </h2>
           <div
             className={cn(
@@ -685,8 +691,8 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
               MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground/78",
             )}
           >
-            <p>{CLIENT_HOME_DESTINATIONS_COPY.lead}</p>
-            <p>{CLIENT_HOME_DESTINATIONS_COPY.cta}</p>
+            <p>{t("lead")}</p>
+            <p>{t("cta")}</p>
           </div>
         </Reveal>
 
@@ -770,7 +776,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
                 "max-md:text-footer-lake-foreground/72 max-md:text-xs max-md:font-normal max-md:no-underline max-md:hover:text-footer-lake-foreground",
             )}
           >
-            Ver todos los destinos
+            {t("viewAll")}
           </Link>
         </Reveal>
       </div>
@@ -788,7 +794,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
             className="fixed inset-0 z-[1450] flex items-center justify-center bg-black/88 p-3"
             role="dialog"
             aria-modal="true"
-            aria-label={`Vista ampliada de ${lightboxDestination.name}`}
+            aria-label={t("lightboxOf", { destination: lightboxDestination.name })}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -798,14 +804,14 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
               type="button"
               className="absolute inset-0"
               onClick={() => setLightbox(null)}
-              aria-label="Cerrar vista ampliada"
+              aria-label={tCommon("closeExpanded")}
             />
 
             <button
               type="button"
               onClick={() => setLightbox(null)}
               className="absolute right-[max(0.75rem,env(safe-area-inset-right))] top-[max(0.75rem,env(safe-area-inset-top))] z-[2] inline-flex size-11 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-              aria-label="Cerrar"
+              aria-label={tCommon("close")}
             >
               <X className="size-5" />
             </button>
@@ -826,7 +832,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
                 });
               }}
               className="absolute left-[max(0.45rem,env(safe-area-inset-left))] top-1/2 z-[2] inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:left-4"
-              aria-label="Imagen anterior"
+              aria-label={tCommon("prevImage")}
             >
               <ChevronLeft className="size-6" />
             </button>
@@ -847,7 +853,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
                 });
               }}
               className="absolute right-[max(0.45rem,env(safe-area-inset-right))] top-1/2 z-[2] inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:right-4"
-              aria-label="Imagen siguiente"
+              aria-label={tCommon("nextImage")}
             >
               <ChevronRight className="size-6" />
             </button>

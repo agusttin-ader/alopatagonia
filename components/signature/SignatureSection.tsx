@@ -1,14 +1,14 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { AppImage } from "@/components/media/AppImage";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 import { Reveal } from "@/components/motion/reveal";
 import { ScrollParallax } from "@/components/motion/scroll-parallax";
 import { buttonVariants } from "@/components/ui/button";
-import { CLIENT_SIGNATURE_COPY } from "@/lib/client-protected-copy";
 import {
   IMAGE_SIZES,
   PLANNER_PATH,
@@ -19,9 +19,11 @@ import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
 
-const SIGNATURE_POINTS = CLIENT_SIGNATURE_COPY.points;
+const SIGNATURE_POINT_COUNT = 5;
 
 export function SignatureSection() {
+  const t = useTranslations("signature");
+  const points = t.raw("points") as string[];
   const reduceMotion = useReducedMotion();
   const isCoarseMobile = useCoarseMobile();
   const animateProgress = !reduceMotion && !isCoarseMobile;
@@ -46,7 +48,7 @@ export function SignatureSection() {
             <div className="relative aspect-[16/11] w-full">
               <AppImage
                 src={EXPERIENCE_IMAGE.src}
-                alt="Ruta de lago y montana en Patagonia"
+                alt={t("imageAlt")}
                 fill
                 qualityPreset="hero"
                 className="object-cover"
@@ -70,7 +72,7 @@ export function SignatureSection() {
           />
           <div className="absolute bottom-8 left-5 right-5 text-white">
             <p className="text-sm font-medium leading-relaxed text-white/95">
-              Patagonia Argentina — un solo contacto para todo el viaje
+              {t("caption")}
             </p>
           </div>
         </Reveal>
@@ -81,12 +83,12 @@ export function SignatureSection() {
               id="signature-heading"
               className="font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
             >
-              {CLIENT_SIGNATURE_COPY.heading}
+              {t("heading")}
             </h2>
           </Reveal>
 
           <Reveal delay={0.08} className="mt-6 space-y-2.5 border-l border-primary/25 pl-4">
-            {SIGNATURE_POINTS.map((point) => (
+            {points.slice(0, SIGNATURE_POINT_COUNT).map((point) => (
               <p key={point} className="text-[0.95rem] leading-relaxed text-foreground/88 2xl:text-base">
                 {point}
               </p>
@@ -103,7 +105,7 @@ export function SignatureSection() {
                   "max-md:h-11 max-md:w-auto max-md:max-w-[15.5rem] max-md:px-6 max-md:text-sm",
               )}
             >
-              Armar mi consulta
+              {t("cta")}
             </Link>
           </Reveal>
         </div>

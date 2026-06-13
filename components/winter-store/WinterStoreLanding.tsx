@@ -1,19 +1,16 @@
 "use client";
 
 import { Check, ExternalLink } from "lucide-react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import { SiteLogo } from "@/components/brand/SiteLogo";
 import { BoulderHeroBackdrop } from "@/components/winter-store/BoulderHeroBackdrop";
 import { BoulderLogo } from "@/components/winter-store/BoulderLogo";
 import { Reveal } from "@/components/motion/reveal";
+import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import type { GalleryImage } from "@/lib/constants";
-import {
-  getWinterStoreUrl,
-  IMAGE_SIZES,
-  WINTER_STORE_COPY,
-} from "@/lib/constants";
+import { getWinterStoreUrl, IMAGE_SIZES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 type WinterStoreLandingProps = {
@@ -21,7 +18,9 @@ type WinterStoreLandingProps = {
 };
 
 export function WinterStoreLanding({ heroImage }: WinterStoreLandingProps) {
+  const t = useTranslations("winterPage");
   const storeUrl = getWinterStoreUrl();
+  const bullets = t.raw("bullets") as string[];
 
   return (
     <>
@@ -52,16 +51,16 @@ export function WinterStoreLanding({ heroImage }: WinterStoreLandingProps) {
               id="winter-landing-heading"
               className="font-heading text-3xl font-medium tracking-tight text-white [text-shadow:0_3px_18px_rgba(0,0,0,0.5)] sm:text-4xl 2xl:text-5xl"
             >
-              {WINTER_STORE_COPY.heroTitle}
+              {t("heroTitle")}
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/96 [text-shadow:0_2px_12px_rgba(0,0,0,0.45)] 2xl:text-xl">
-              {WINTER_STORE_COPY.heroSubtitle}
+              {t("heroSubtitle")}
             </p>
           </Reveal>
 
           <Reveal delay={0.08} className="mt-10 w-full">
             <ul className="mx-auto flex flex-col items-center gap-3 text-base text-white">
-              {WINTER_STORE_COPY.bullets.map((line) => (
+              {bullets.map((line) => (
                 <li key={line} className="inline-flex max-w-md items-start gap-3 sm:max-w-lg">
                   <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-white/20 ring-1 ring-white/35">
                     <Check className="size-3.5 text-white" aria-hidden />
@@ -82,7 +81,7 @@ export function WinterStoreLanding({ heroImage }: WinterStoreLandingProps) {
                 "inline-flex h-12 w-full items-center justify-center gap-2 rounded-full px-8 text-base font-semibold shadow-lg sm:w-auto 2xl:h-14 2xl:px-10 2xl:text-lg",
               )}
             >
-              {WINTER_STORE_COPY.ctaPrimary}
+              {t("ctaPrimary")}
               <ExternalLink className="size-4 opacity-80" aria-hidden />
             </a>
             <Link
@@ -92,7 +91,7 @@ export function WinterStoreLanding({ heroImage }: WinterStoreLandingProps) {
                 "inline-flex h-12 w-full items-center justify-center rounded-full border-white/45 bg-white/16 px-8 text-base font-semibold text-white backdrop-blur-sm hover:bg-white/22 hover:text-white sm:w-auto 2xl:h-14 2xl:px-10 2xl:text-lg",
               )}
             >
-              {WINTER_STORE_COPY.ctaSecondaryHome}
+              {t("ctaSecondaryHome")}
             </Link>
           </Reveal>
         </div>

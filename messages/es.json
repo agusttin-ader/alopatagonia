@@ -1,0 +1,576 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "destinations": "Destinos",
+    "accommodations": "Alojamientos",
+    "excursions": "Excursiones",
+    "winterShop": "Indumentaria",
+    "planTrip": "Planear mi viaje",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "mainNav": "Navegación principal",
+    "language": "Idioma"
+  },
+  "footer": {
+    "about": "Te ayudamos con auto, alojamiento y excursiones en la Patagonia — todo desde un solo WhatsApp.",
+    "location": "Patagonia, Argentina",
+    "inquiries": "Consultas",
+    "email": "Email: {email}",
+    "phone": "Teléfono: {phone}",
+    "instagram": "Instagram: @{handle}",
+    "explore": "Explorar",
+    "promosPatagonia": "Promos Patagonia",
+    "aboutUs": "Quiénes somos",
+    "popularDestinations": "Destinos populares",
+    "copyright": "© {year} Alo Patagonia. Todos los derechos reservados."
+  },
+  "hero": {
+    "headline": "Organizá con nosotros tu viaje a Patagonia sin complicaciones",
+    "headlineMobile": "Tu viaje a Patagonia, sin complicaciones",
+    "subline": "Alojamientos + transfers + alquiler de autos y excursiones… todo en un solo lugar.",
+    "sublineMobile": "Alojamientos, transfers, autos y excursiones en un solo lugar.",
+    "cta": "Planear mi viaje"
+  },
+  "signature": {
+    "imageAlt": "Ruta de lago y montaña en Patagonia",
+    "caption": "Patagonia Argentina — un solo contacto para todo el viaje",
+    "heading": "Coordinamos reservas, traslados y actividades para que viajes con todo resuelto.",
+    "points": [
+      "Auto o transfer esperándote en el aeropuerto.",
+      "Hotel según tu ruta y presupuesto",
+      "Excursiones organizadas según el clima.",
+      "WhatsApp activo para acompañarte durante todo tu viaje.",
+      "Itinerario sin cargo para que aproveches tu tiempo a full."
+    ],
+    "cta": "Armar mi consulta"
+  },
+  "gallery": {
+    "eyebrow": "Galería",
+    "heading": "Fotos de viajes que hicimos",
+    "body": "Cada visita mezcla distinto: lagos, glaciares, rutas en auto y momentos de viajeros que pasaron por acá.",
+    "photoAlt": "Patagonia — foto {n}",
+    "prevSelection": "Ver selección anterior",
+    "nextSelection": "Ver otra selección de fotos",
+    "viewPhoto": "Ver foto {n} ampliada",
+    "lightboxTitle": "Vista ampliada de galería Patagonia"
+  },
+  "homeDestinations": {
+    "title": "Destinos",
+    "lead": "Elegí la ciudad que más te guste, descubrí fotos reales y encontrá todas las diferentes opciones para tu próximo viaje.",
+    "cta": "Si tenés alguna duda… consultanos por WhatsApp.",
+    "viewCatalog": "Ver catálogo",
+    "viewAll": "Ver todos los destinos",
+    "photoAlt": "{destination} — foto {n}",
+    "expandPhoto": "Ampliar foto de {destination}",
+    "photosOf": "Fotos de {destination}",
+    "expandPhotoN": "Ampliar foto {n} de {destination}",
+    "viewPhotoN": "Ver foto {n} de {destination}",
+    "lightboxOf": "Vista ampliada de {destination}",
+    "destinations": {
+      "bariloche": {
+        "name": "Bariloche",
+        "region": "San Carlos de Bariloche · Río Negro",
+        "description": "Lagos, bosque andino y el Nahuel Huapi. La base más elegida para arrancar un viaje por el sur.",
+        "galleryAlts": ["Departamento en Bariloche", "Cabaña en Bariloche", "Hotel en Bariloche", "Hotel en Bariloche"]
+      },
+      "san-martin": {
+        "name": "San Martín de los Andes",
+        "region": "Neuquén · Lago Lácar",
+        "description": "Más tranquilo que Bariloche: Lácar, Lanín y la Ruta de los Siete Lagos a mano."
+      },
+      "traful": {
+        "name": "Traful / Villa Traful",
+        "region": "Neuquén · Lago Traful",
+        "description": "Lago Traful turquesa, bosque sumergido y pueblo chico sin el ritmo de Bariloche."
+      },
+      "villa-la-angostura": {
+        "name": "Villa La Angostura",
+        "region": "Neuquén · Reserva Nacional",
+        "description": "Arrayanes, bahías del Nahuel Huapi y calles de pueblo. Para bajar un cambio."
+      },
+      "esquel": {
+        "name": "Esquel / Trevelin",
+        "region": "Chubut · Patagonia andina",
+        "description": "Los Alerces (Patrimonio UNESCO), La Hoya en invierno y Trevelin gales a pocos kilómetros."
+      },
+      "puerto-madryn": {
+        "name": "Puerto Madryn",
+        "region": "Chubut · Costa patagónica",
+        "description": "Ballenas, pingüinos y Península Valdés — cada mes tiene su fauna protagonista."
+      },
+      "el-calafate": {
+        "name": "El Calafate",
+        "region": "Santa Cruz · Glaciar Perito Moreno",
+        "description": "Perito Moreno, Lago Argentino y conexión en auto con El Chaltén (220 km)."
+      },
+      "el-chalten": {
+        "name": "El Chaltén",
+        "region": "Santa Cruz · Capital del trekking",
+        "description": "Trekking al Fitz Roy desde el pueblo. Si el clima cierra un sendero, buscamos otro plan."
+      },
+      "ushuaia": {
+        "name": "Ushuaia",
+        "region": "Tierra del Fuego · Fin del mundo",
+        "description": "Canal Beagle, Parque Nacional Tierra del Fuego y el sur más austral."
+      }
+    }
+  },
+  "catalogHub": {
+    "eyebrow": "Catálogo",
+    "title": "Explorá por categorías",
+    "description": "Navegá entre destinos, alojamientos y excursiones… mirá las fotos y consultá sobre las opciones que más te interesen.",
+    "chooseCategory": "Elegí categoría",
+    "categoriesAria": "Categorías del catálogo",
+    "comingSoon": "Próximamente",
+    "explore": "Explorar",
+    "preview": "Ver avance",
+    "pillars": {
+      "destinos": {
+        "title": "Destinos",
+        "eyebrow": "Por zona",
+        "description": "Bariloche, Calafate, Ushuaia, Madryn y más. ¿Por dónde arrancás?",
+        "imageAlt": "Centro Cívico de Bariloche — Patagonia Argentina"
+      },
+      "alojamientos": {
+        "title": "Alojamientos",
+        "eyebrow": "Cabañas · Deptos · Hostels",
+        "description": "Contamos con Hoteles de diferentes categorías, cabañas y departamentos, con un servicio de excelencia para que te sientas como en casa...pero en Patagonia!",
+        "imageAlt": "Interior de cabaña en Villa Traful — Patagonia"
+      },
+      "excursiones": {
+        "title": "Excursiones",
+        "eyebrow": "Por temporada",
+        "description": "Trekking, glaciares, navegación y fauna — según la temporada en cada zona.",
+        "imageAlt": "Navegación frente al glaciar — excursión en Patagonia"
+      }
+    }
+  },
+  "winterPromo": {
+    "eyebrow": "Indumentaria",
+    "heading": "Porque el viaje comienza con la planificación, equipate fuerte para la montaña!!",
+    "body": [
+      "Todo lo que necesitás para tu próxima aventura… está acá.",
+      "Viajá cómodo y preparado para afrontar el clima patagónico. Conocé la calidad de la indumentaria Boulder y completá tu experiencia… entrá a la tienda online y aprovechá nuestro beneficio para llevarte todo!!"
+    ],
+    "cta": "Ver indumentaria",
+    "carouselAlts": [
+      "Indumentaria Boulder para mujer — camperas y abrigos outdoor",
+      "Boulder — 3, 6 y 9 cuotas sin interés",
+      "Indumentaria Boulder para hombre — camperas y abrigos outdoor",
+      "Boulder — 15% off por transferencia y envíos gratis"
+    ]
+  },
+  "plannerTeaser": {
+    "title": "¿Tenés fechas? Empecemos.",
+    "description": "Elegí destino, fechas y cuántos son. Te dejamos el mensaje listo para mandar por WhatsApp — sin formularios eternos.",
+    "cta": "Armar mi consulta",
+    "steps": {
+      "destination": {
+        "title": "Destino",
+        "text": "Bariloche, El Chaltén, Madryn y más."
+      },
+      "dates": {
+        "title": "Fechas",
+        "text": "Cuándo viajás y cuántos son."
+      },
+      "whatsapp": {
+        "title": "WhatsApp",
+        "text": "Mensaje armado, listo para enviar."
+      }
+    }
+  },
+  "promosPatagonia": {
+    "title": "Promos Patagonia",
+    "subtitle": "Paquetes listos para vivir la Patagonia sin complicaciones.",
+    "packagesLabel": "Paquetes armados",
+    "consultCta": "Consultar esta promo",
+    "prevPromo": "Promo anterior",
+    "nextPromo": "Promo siguiente",
+    "sectionAria": "Promos Patagonia",
+    "promoIndex": "Promo {index} · Patagonia",
+    "fallbackBody": "Próximamente vas a encontrar acá las propuestas listas para reservar.",
+    "fallbackCta": "Planear mi viaje",
+    "viewPromo": "Ver {title}",
+    "items": {
+      "bariloche-express": {
+        "title": "Bariloche",
+        "subtitle": "4 noches · alojamiento + Circuito Chico",
+        "badge": "Promo vigente",
+        "highlights": ["Hotel o cabaña según disponibilidad", "Circuito Chico con paradas en miradores", "Itinerario sin cargo por WhatsApp"],
+        "whatsappMessage": "Me interesa la promo Bariloche. ¿Me pasan fechas y tarifa?",
+        "mediaAlt": "Panorámica de lagos y montaña en Bariloche"
+      },
+      "siete-lagos-express": {
+        "title": "Siete Lagos",
+        "subtitle": "San Martín y Villa La Angostura · 5 noches",
+        "badge": "Nueva",
+        "highlights": ["Base en San Martín o La Angostura", "Ruta escénica de los Siete Lagos", "Excursiones según clima y temporada"],
+        "whatsappMessage": "Quiero consultar por la promo Siete Lagos. ¿Tienen fechas?",
+        "mediaAlt": "Lago Lácar y cordillera en San Martín de los Andes"
+      },
+      "sur-patagonico-express": {
+        "title": "Sur patagónico",
+        "subtitle": "Calafate + Ushuaia · paquete combinado",
+        "badge": "Consultar cupos",
+        "highlights": ["Glaciar Perito Moreno y navegación", "Canal Beagle y Tierra del Fuego", "Traslados y hoteles coordinados"],
+        "whatsappMessage": "Me interesa la promo Sur patagónico. ¿Cómo funciona?",
+        "mediaAlt": "Bosque y lago en la Patagonia"
+      }
+    }
+  },
+  "testimonials": {
+    "eyebrow": "Opiniones",
+    "heading": "Quienes ya viajaron con nosotros",
+    "lead": "Nos escribieron por Instagram y cerraron todo por WhatsApp — sin mails de ida y vuelta.",
+    "stats": "{count} opiniones · viajeros verificados",
+    "ratingAria": "Promedio {rating} de 5 estrellas en {count} opiniones",
+    "items": [
+      {
+        "name": "Florencia y Tomás, Buenos Aires",
+        "highlight": "8 días · Bariloche y Calafate",
+        "timeAgo": "Hace 1 mes",
+        "quote": "En un chat nos cerraron auto, hotel y el día del Perito Moreno. Llegamos y solo disfrutamos — cero llamadas de último momento."
+      },
+      {
+        "name": "Camila R., Córdoba",
+        "highlight": "4 días · Ushuaia",
+        "timeAgo": "Hace 3 semanas",
+        "quote": "Nos respondieron el mismo día. Llovió el martes, movieron la navegación al miércoles y nos quedó mejor: más calma en el Canal Beagle."
+      },
+      {
+        "name": "Familia Quiroga, Rosario",
+        "highlight": "10 días · con chicos",
+        "timeAgo": "Hace 2 meses",
+        "quote": "Itinerario sin días corridos: hoteles cerca de todo, paradas para que los chicos descansen y excursiones que no eran maratones."
+      },
+      {
+        "name": "Nicolás M., Mendoza",
+        "highlight": "Primera vez en el sur",
+        "timeAgo": "Hace 5 semanas",
+        "quote": "En dos días teníamos fechas, auto y alojamiento. Durante el viaje les escribimos por WhatsApp dos veces y siempre contestaron al toque."
+      }
+    ]
+  },
+  "howItWorks": {
+    "heading": "Tres pasos por WhatsApp",
+    "steps": [
+      {
+        "title": "Nos contás tu viaje",
+        "description": "Escribís por WhatsApp con destino, fechas, cuántos son y qué te gustaría hacer (trekking, glaciares, playa…)."
+      },
+      {
+        "title": "Te mandamos el plan",
+        "description": "Auto o transfer, hospedaje y excursiones según temporada y clima — sin paquete rígido que no se pueda mover."
+      },
+      {
+        "title": "Viajás con todo ordenado",
+        "description": "Llegás con reservas hechas. Si el clima cambia un día, seguimos respondiendo por WhatsApp."
+      }
+    ]
+  },
+  "aboutUs": {
+    "eyebrow": "Patagonia Argentina",
+    "title": "Quiénes somos",
+    "paragraphs": [
+      "Alo_patagonia es una empresa dedicada íntegramente al turismo en la Región Patagonia-argentina.",
+      "Porque para nosotros cada pasajero es único...diseñamos experiencias pensadas desde la mirada del viajero, cuidando cada detalle, para que disfrutes de un viaje inolvidable!",
+      "Nuestro objetivo es que te lleves los mejores recuerdos, que vivas una experiencia perfecta de principio a fin, para que siempre quieras volver!!"
+    ],
+    "closing": "Si estás list@ para tu próxima aventura...contactános!!",
+    "cta": "Contactanos",
+    "whatsappMessage": "Quiero planear mi próxima aventura en la Patagonia."
+  },
+  "cta": {
+    "heading": "¿Alguna duda antes de escribirnos?",
+    "body": "Mandanos destino y fechas por WhatsApp. Te contestamos con opciones concretas — no un catálogo genérico.",
+    "button": "Escribir por WhatsApp"
+  },
+  "whatsapp": {
+    "ariaLabel": "Hablar por WhatsApp",
+    "srOnly": "WhatsApp",
+    "primaryMessage": "Quiero planear un viaje a la Patagonia. ¿Me ayudan con alojamiento, auto y excursiones?"
+  },
+  "common": {
+    "close": "Cerrar",
+    "closeExpanded": "Cerrar vista ampliada",
+    "prevImage": "Imagen anterior",
+    "nextImage": "Imagen siguiente"
+  },
+  "notFound": {
+    "metaTitle": "Página no encontrada",
+    "metaDescription": "Esta página no está. Volvé al inicio o mirá los destinos.",
+    "eyebrow": "Error 404",
+    "heading": "No encontramos esta página",
+    "body": "Puede que el enlace esté desactualizado. Probá desde el inicio o el catálogo de destinos.",
+    "homeCta": "Ir al inicio",
+    "destinationsCta": "Ver destinos"
+  },
+  "community": {
+    "followers": "seguidores",
+    "heading": "Patagonia en tu feed",
+    "body": "Subimos rutas, clima y fotos de Bariloche, Calafate, Chaltén, Ushuaia y más. Cuando quieras armar el viaje, escribinos.",
+    "postsBadge": "{count} publicaciones",
+    "destinationsBadge": "{count} destinos",
+    "followCta": "Seguir @{handle}",
+    "feedCaption": "Rutas, clima y atardeceres de la Patagonia — lo que subimos cada semana desde Bariloche al fin del mundo.",
+    "feedFollow": "Seguir",
+    "feedLikes": "{count} Me gusta",
+    "feedOpenProfile": "Abrir perfil",
+    "feedOpenProfileAria": "Abrir el perfil de Instagram @{handle}",
+    "feedPrevPhoto": "Foto anterior",
+    "feedNextPhoto": "Foto siguiente",
+    "feedPhotoAlt": "Patagonia en Instagram — foto {n}",
+    "profileAria": "Perfil de Instagram @{handle}"
+  },
+  "catalog": {
+    "breadcrumbCatalog": "Catálogo",
+    "alsoExplore": "También podés explorar",
+    "viewCatalog": "Ver catálogo",
+    "viewDestination": "Ver destino",
+    "viewAllDestinations": "Ver todos los destinos",
+    "chooseCorridor": "Elegir corredor",
+    "chooseDestination": "Elegir destino",
+    "chooseAccommodationType": "Elegir tipo de alojamiento",
+    "patagoniaArgentina": "Patagonia Argentina",
+    "heroAlt": "Viajes a {destination} — Patagonia Argentina",
+    "planTripTo": "Planear viaje a {destination}",
+    "tripsTo": "Viajes a {destination}",
+    "faqAbout": "Preguntas sobre viajar a {destination}",
+    "faqPatagonia": "Preguntas sobre viajes a la Patagonia",
+    "photoAlt": "{name} — foto {n}",
+    "lightboxAlt": "Vista ampliada — {name}",
+    "lightboxAccommodation": "Vista ampliada de alojamiento",
+    "counts": {
+      "destinationOne": "1 destino",
+      "destinationMany": "{count} destinos",
+      "accommodationOne": "1 alojamiento",
+      "accommodationMany": "{count} alojamientos",
+      "excursionOne": "1 excursión",
+      "excursionMany": "{count} excursiones"
+    },
+    "sections": {
+      "accommodations": "Alojamientos",
+      "excursions": "Excursiones",
+      "carRental": "Alquiler de auto",
+      "operator": "Operador:"
+    },
+    "accommodationTypes": {
+      "cabana": { "title": "Cabañas", "subtitle": "Privacidad y espacio" },
+      "departamento": { "title": "Departamentos", "subtitle": "Barrios y capacidades" },
+      "hostel": { "title": "Hoteles", "subtitle": "Según categoría" }
+    },
+    "carRentalCta": "Consultar auto",
+    "itemDetail": {
+      "askTitle": "Preguntanos si hay lugar",
+      "askBody": "Por WhatsApp te decimos fechas, capacidad y qué hay disponible en esa zona.",
+      "askCta": "Consultar",
+      "backTo": "← Volver a {section} en {destination}",
+      "sections": {
+        "accommodations": "alojamientos",
+        "excursions": "excursiones"
+      }
+    }
+  },
+  "planner": {
+    "page": {
+      "title": "Planear mi viaje",
+      "description": "Contanos destino, fechas y cuántos viajan. Te armamos el mensaje para WhatsApp o mail con todo en un solo texto.",
+      "intro": "En dos minutos cargás lo básico. Nosotros redactamos el mensaje; vos solo lo enviás y seguimos charlando por ahí.",
+      "regionLabel": "Patagonia Argentina"
+    },
+    "breadcrumbHome": "Inicio",
+    "bannerAlt": "Panorámica de lagos y montaña en Bariloche, Patagonia Argentina",
+    "phoneVideoLabel": "Video de la Patagonia — Alo Patagonia",
+    "mailSubject": "Consulta viaje Patagonia",
+    "progressAria": "Progreso del planificador",
+    "stepDone": "completado",
+    "stepPending": "pendiente",
+    "steps": {
+      "destination": "Destino",
+      "dates": "Fechas",
+      "contact": "Contacto"
+    },
+    "preview": {
+      "empty": "Destino, fechas y grupo aparecen acá.",
+      "patagonia": "Patagonia",
+      "personOne": "persona",
+      "personMany": "personas"
+    },
+    "seasons": {
+      "summer": "verano",
+      "autumn": "otoño",
+      "winter": "invierno",
+      "spring": "primavera"
+    },
+    "form": {
+      "name": "Nombre",
+      "namePlaceholder": "Tu nombre",
+      "destination": "Destino",
+      "travelers": "Cuantas personas viajan",
+      "travelersPlaceholder": "Ej: 2",
+      "from": "Desde",
+      "to": "Hasta",
+      "datePlaceholder": "dd/mm/aaaa",
+      "noDate": "sin fecha",
+      "whatsappHint": "WhatsApp con todo armado según lo que cargás.",
+      "invalidDates": "Revisá las fechas: la fecha de regreso debe ser posterior al inicio.",
+      "ready": "Listo para escribirnos",
+      "incompleteOne": "Completá {count} dato para enviar más completo",
+      "incompleteMany": "Completá {count} datos para enviar más completo",
+      "sendWhatsApp": "Enviar por WhatsApp",
+      "completeWhatsApp": "Completar para WhatsApp",
+      "sendMail": "Consultar por mail"
+    },
+    "calendar": {
+      "prevMonth": "Mes anterior",
+      "nextMonth": "Mes siguiente",
+      "weekdaysShort": ["L", "M", "M", "J", "V", "S", "D"]
+    },
+    "message": {
+      "noName": "sin nombre",
+      "groupOne": "somos 1",
+      "groupMany": "somos {count}",
+      "groupUnknown": "todavía no definí cuántos somos",
+      "body": "Soy {name}. Queremos ir a {destination}, {group}, del {from} al {to}. ¿Nos ayudan a armarlo?"
+    },
+    "destinations": {
+      "none": "Sin destino definido",
+      "bariloche": {
+        "label": "Bariloche",
+        "hook": "Circuito Chico, Catedral y el Nahuel Huapi en auto."
+      },
+      "san-martin": {
+        "label": "San Martín de los Andes",
+        "hook": "Lácar, Lanín y la Ruta de los Siete Lagos."
+      },
+      "el-chalten": {
+        "label": "El Chaltén",
+        "hook": "Laguna de los Tres y el Fitz Roy — el clima manda."
+      },
+      "esquel": {
+        "label": "Esquel / Trevelin",
+        "hook": "Los Alerces, La Hoya y Trevelin gales."
+      },
+      "villa-la-angostura": {
+        "label": "Villa La Angostura",
+        "hook": "Arrayanes, Cerro Bayo y el Nahuel Huapi sin apuro."
+      },
+      "puerto-madryn": {
+        "label": "Puerto Madryn",
+        "hook": "Ballenas sep–dic, Península Valdés y pingüinos."
+      },
+      "el-calafate": {
+        "label": "El Calafate",
+        "hook": "Perito Moreno y el azul del Lago Argentino."
+      },
+      "traful": {
+        "label": "Traful / Villa Traful",
+        "hook": "Lago Traful turquesa y bosque sumergido."
+      },
+      "ushuaia": {
+        "label": "Ushuaia",
+        "hook": "Canal Beagle, Tierra del Fuego y viento del sur."
+      }
+    }
+  },
+  "winterPage": {
+    "metaDescription": "Indumentaria Boulder para el frío patagónico. 3, 6 y 9 cuotas sin interés, 15% off por transferencia y envíos gratis desde $130.000.",
+    "heroTitle": "Equipate para el frío patagónico",
+    "heroSubtitle": "Camperas, buzos y pantalones outdoor Boulder. 3, 6 y 9 cuotas sin interés, 15% off por transferencia y envíos gratis desde $130.000.",
+    "ctaPrimary": "Ir a Boulder",
+    "ctaSecondaryHome": "Volver al inicio",
+    "breadcrumbLabel": "Indumentaria",
+    "ogAlt": "Indumentaria outdoor Boulder — camperas y abrigos para la Patagonia",
+    "bullets": [
+      "3, 6 y 9 cuotas sin interés, sin monto mínimo",
+      "15% off pagando por transferencia en toda la web",
+      "Envíos gratis a partir de $130.000 · a todo el país"
+    ]
+  },
+  "destinationsPage": {
+    "title": "Destinos en la Patagonia Argentina",
+    "intro": "Descubrí los destinos más increíbles de la Patagonia. Alojamiento, excursiones y autos, con asesoramiento personalizado para que viajes sin preocupaciones.",
+    "zoneNavSubtitles": {
+      "corredor-lagos": "Neuquén · Río Negro",
+      "santa-cruz": "Santa Cruz",
+      "tierra-del-fuego": "Tierra del Fuego",
+      "chubut": "Chubut"
+    }
+  },
+  "accommodations": {
+    "photoAlt": "{name} — foto {n}",
+    "fallback": {
+      "cabana": {
+        "description": "{name} — cabaña en {destination} para instalarte varios días y salir a recorrer.",
+        "highlights": [
+          "Entorno natural en {destination}",
+          "Más espacio y privacidad que un hotel",
+          "Buena base si vas a cocinar o quedarte una semana",
+          "Consultanos capacidad y qué incluye"
+        ]
+      },
+      "departamento": {
+        "description": "{name} — departamento en {destination} con lo necesario para una estadía más larga.",
+        "highlights": [
+          "Ubicación en {destination} según la unidad",
+          "Cocina y espacio para varios días de viaje",
+          "Parejas o familias chicas",
+          "Coordinamos fechas y check-in por WhatsApp"
+        ]
+      },
+      "hostel": {
+        "description": "{name} — hotel en {destination} como base para tus salidas diarias.",
+        "highlights": [
+          "Hotel en {destination}, cerca de las salidas del día",
+          "Servicios según categoría del establecimiento",
+          "Disponibilidad según temporada"
+        ]
+      }
+    }
+  },
+  "seo": {
+    "home": {
+      "title": "Viajes Patagonia Argentina — Bariloche, Ushuaia y El Calafate",
+      "description": "Armamos tu viaje a la Patagonia: auto, alojamiento y excursiones en Bariloche, Calafate, Ushuaia, Madryn y el Corredor de los Lagos. Escribinos por WhatsApp.",
+      "keywords": ["viajes patagonia", "patagonia argentina", "turismo patagonia", "vacaciones patagonia", "organizar viaje patagonia", "bariloche", "ushuaia", "el calafate"]
+    },
+    "destinos": {
+      "title": "Destinos en la Patagonia Argentina",
+      "description": "Descubrí los destinos más increíbles de la Patagonia. Alojamiento, excursiones y autos, con asesoramiento personalizado para que viajes sin preocupaciones.",
+      "keywords": ["destinos patagonia", "turismo patagonia argentina", "viajes bariloche", "viajes el calafate", "viajes ushuaia", "san martin de los andes", "puerto madryn", "el chalten"]
+    },
+    "alojamientos": {
+      "title": "Alojamientos en la Patagonia — hoteles, cabañas y departamentos",
+      "description": "Contamos con Hoteles de diferentes categorías, cabañas y departamentos, con un servicio de excelencia para que te sientas como en casa...pero en Patagonia!",
+      "keywords": ["alojamiento patagonia", "hoteles bariloche", "cabañas patagonia", "departamentos bariloche", "hostel patagonia"]
+    },
+    "excursiones": {
+      "title": "Excursiones en la Patagonia — trekking, navegación y fauna",
+      "description": "Perito Moreno, Laguna de los Tres, ballenas en Madryn, Canal Beagle y más. Consultá por WhatsApp según temporada y clima.",
+      "keywords": ["excursiones patagonia", "excursiones bariloche", "trekking el chalten", "glaciar perito moreno", "ballenas puerto madryn"]
+    },
+    "planner": {
+      "title": "Planear viaje Patagonia — consulta por WhatsApp",
+      "description": "Completá destino, fechas y cuántos son. Te armamos el mensaje para WhatsApp con alojamiento, auto y excursiones.",
+      "keywords": ["planear viaje patagonia", "itinerario patagonia", "viaje bariloche", "consulta viaje patagonia"]
+    },
+    "invierno": {
+      "title": "Indumentaria Boulder para el frío patagónico",
+      "description": "Indumentaria Boulder para el frío patagónico. 3, 6 y 9 cuotas sin interés, 15% off por transferencia y envíos gratis desde $130.000.",
+      "keywords": ["indumentaria patagonia", "ropa outdoor bariloche", "boulder patagonia", "camperas patagonia"]
+    },
+    "destination": {
+      "title": "{name} — alojamiento y excursiones",
+      "ogAlt": "Viajes a {name} — {site}",
+      "notFound": "Destino no encontrado"
+    },
+    "catalogItem": {
+      "title": "{name} en {destination} — {kind}",
+      "descriptionFallback": "{kind} en {destination}. Fotos y consulta por WhatsApp.",
+      "ogAlt": "{name} en {destination} — {site}",
+      "notFound": "Opción no encontrada",
+      "kindAccommodation": "alojamiento",
+      "kindExcursion": "excursión"
+    }
+  }
+}

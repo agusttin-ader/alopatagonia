@@ -1,6 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { AppImage } from "@/components/media/AppImage";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 import type { CatalogHubPillar } from "@/lib/catalog-hub/config";
 import { HUB_PILLAR_IMAGE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
@@ -10,6 +10,11 @@ import { cn } from "@/lib/utils";
 type CatalogHubPillarCardProps = {
   pillar: CatalogHubPillar;
   priority?: boolean;
+  labels: {
+    comingSoon: string;
+    explore: string;
+    preview: string;
+  };
 };
 
 const PILLAR_INDEX: Record<CatalogHubPillar["slug"], string> = {
@@ -21,7 +26,7 @@ const PILLAR_INDEX: Record<CatalogHubPillar["slug"], string> = {
 const linkBase =
   "group flex h-full flex-col focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2";
 
-function ComingSoonBadge({ className }: { className?: string }) {
+function ComingSoonBadge({ label, className }: { label: string; className?: string }) {
   return (
     <span
       className={cn(
@@ -29,15 +34,15 @@ function ComingSoonBadge({ className }: { className?: string }) {
         className,
       )}
     >
-      Próximamente
+      {label}
     </span>
   );
 }
 
-function CtaLabel({ isLive }: { isLive: boolean }) {
+function CtaLabel({ isLive, labels }: { isLive: boolean; labels: CatalogHubPillarCardProps["labels"] }) {
   return (
     <span className="inline-flex items-center gap-1.5 text-sm font-medium transition duration-300">
-      {isLive ? "Explorar" : "Ver avance"}
+      {isLive ? labels.explore : labels.preview}
       <ArrowUpRight
         className="size-4 transition duration-300 [@media(hover:hover)]:group-hover:translate-x-0.5 [@media(hover:hover)]:group-hover:-translate-y-0.5"
         aria-hidden
@@ -47,7 +52,7 @@ function CtaLabel({ isLive }: { isLive: boolean }) {
 }
 
 /** Mobile: marco + cabecera + póster con CTA pill. */
-function HubPillarMagazineMobileCard({ pillar, priority }: CatalogHubPillarCardProps) {
+function HubPillarMagazineMobileCard({ pillar, priority, labels }: CatalogHubPillarCardProps) {
   const isLive = pillar.status === "live";
 
   return (
@@ -86,14 +91,14 @@ function HubPillarMagazineMobileCard({ pillar, priority }: CatalogHubPillarCardP
           className={cn(HUB_PILLAR_IMAGE_HOVER_EXPAND, pillar.imagePosition)}
         />
         <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-black/90 via-black/40 to-black/5" />
-        {!isLive ? <ComingSoonBadge className="absolute right-3 top-3" /> : null}
+        {!isLive ? <ComingSoonBadge label={labels.comingSoon} className="absolute right-3 top-3" /> : null}
 
         <div className="absolute inset-x-0 bottom-0 z-[3] p-4">
           <p className="line-clamp-3 max-w-[95%] text-sm leading-relaxed text-white/88">
             {pillar.description}
           </p>
           <span className="mt-3 inline-flex h-10 items-center gap-1.5 rounded-full bg-white px-4 text-sm font-semibold text-foreground shadow-sm">
-            {isLive ? "Explorar" : "Ver avance"}
+            {isLive ? labels.explore : labels.preview}
             <ArrowUpRight className="size-4" aria-hidden />
           </span>
         </div>
@@ -103,7 +108,7 @@ function HubPillarMagazineMobileCard({ pillar, priority }: CatalogHubPillarCardP
 }
 
 /** Desktop: póster unificado — tipografía sobre imagen (estilo excursiones). */
-function HubPillarDesktopPosterCard({ pillar, priority }: CatalogHubPillarCardProps) {
+function HubPillarDesktopPosterCard({ pillar, priority, labels }: CatalogHubPillarCardProps) {
   const isLive = pillar.status === "live";
 
   return (
@@ -126,7 +131,7 @@ function HubPillarDesktopPosterCard({ pillar, priority }: CatalogHubPillarCardPr
           className={cn(HUB_PILLAR_IMAGE_HOVER_EXPAND, pillar.imagePosition)}
         />
         <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-black/88 via-black/35 to-black/10" />
-        {!isLive ? <ComingSoonBadge className="absolute right-4 top-4" /> : null}
+        {!isLive ? <ComingSoonBadge label={labels.comingSoon} className="absolute right-4 top-4" /> : null}
 
         <div className="absolute inset-x-0 bottom-0 z-[3] p-5 sm:p-6">
           <span className="mb-3 block h-px w-10 bg-white/55" aria-hidden />
@@ -140,7 +145,7 @@ function HubPillarDesktopPosterCard({ pillar, priority }: CatalogHubPillarCardPr
             {pillar.description}
           </p>
           <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-white">
-            <CtaLabel isLive={isLive} />
+            <CtaLabel isLive={isLive} labels={labels} />
           </span>
         </div>
 
@@ -155,14 +160,14 @@ function HubPillarDesktopPosterCard({ pillar, priority }: CatalogHubPillarCardPr
   );
 }
 
-export function CatalogHubPillarCard({ pillar, priority = false }: CatalogHubPillarCardProps) {
+export function CatalogHubPillarCard({ pillar, priority = false, labels }: CatalogHubPillarCardProps) {
   return (
     <>
       <div className="md:hidden">
-        <HubPillarMagazineMobileCard pillar={pillar} priority={priority} />
+        <HubPillarMagazineMobileCard pillar={pillar} priority={priority} labels={labels} />
       </div>
       <div className="hidden h-full md:block">
-        <HubPillarDesktopPosterCard pillar={pillar} priority={priority} />
+        <HubPillarDesktopPosterCard pillar={pillar} priority={priority} labels={labels} />
       </div>
     </>
   );

@@ -1,12 +1,16 @@
+import { getTranslations } from "next-intl/server";
+
 import { buttonVariants } from "@/components/ui/button";
 import { MagazinePillCta } from "@/components/ui/magazine-pill-cta";
-import { SECTION_IDS, WHATSAPP_MESSAGES, getWhatsAppUrl } from "@/lib/constants";
+import { SECTION_IDS, getWhatsAppUrl } from "@/lib/constants";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { cn } from "@/lib/utils";
 import { CtaTrailMapClient } from "@/components/cta/CtaTrailMapClient";
 
-export function CTA() {
-  const whatsappUrl = getWhatsAppUrl(WHATSAPP_MESSAGES.primary);
+export async function CTA() {
+  const t = await getTranslations("cta");
+  const tWa = await getTranslations("whatsapp");
+  const whatsappUrl = getWhatsAppUrl(tWa("primaryMessage"));
 
   return (
     <section
@@ -30,7 +34,7 @@ export function CTA() {
               MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground",
             )}
           >
-            ¿Alguna duda antes de escribirnos?
+            {t("heading")}
           </h2>
           <p
             className={cn(
@@ -38,7 +42,7 @@ export function CTA() {
               MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground/82",
             )}
           >
-            Mandanos destino y fechas por WhatsApp. Te contestamos con opciones concretas — no un catálogo genérico.
+            {t("body")}
           </p>
           {MOBILE_MAGAZINE_G_ENABLED ? (
             <MagazinePillCta
@@ -48,7 +52,7 @@ export function CTA() {
               rel="noopener noreferrer"
               className="mx-auto mt-8 max-w-md md:hidden"
             >
-              Escribir por WhatsApp
+              {t("button")}
             </MagazinePillCta>
           ) : null}
           <a
@@ -61,7 +65,7 @@ export function CTA() {
               MOBILE_MAGAZINE_G_ENABLED && "max-md:hidden",
             )}
           >
-            Escribir por WhatsApp
+            {t("button")}
           </a>
         </div>
       </div>

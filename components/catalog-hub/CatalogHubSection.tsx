@@ -1,14 +1,22 @@
-import { CLIENT_CATALOG_HUB_COPY } from "@/lib/client-protected-copy";
-import { CATALOG_HUB_PILLARS } from "@/lib/catalog-hub/config";
-import { SECTION_IDS } from "@/lib/constants";
-import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
-import { cn } from "@/lib/utils";
+import { getTranslations } from "next-intl/server";
 
 import { CatalogHubMobileChips } from "@/components/catalog-hub/CatalogHubMobileChips";
 import { CatalogHubPillarCard } from "@/components/catalog-hub/CatalogHubPillarCard";
+import { SECTION_IDS } from "@/lib/constants";
+import { localizeCatalogHubPillars } from "@/lib/i18n/localized-home";
+import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
+import { cn } from "@/lib/utils";
 
 /** Hub liviano en home: destinos, alojamientos y excursiones (server-only, sin JS). */
-export function CatalogHubSection() {
+export async function CatalogHubSection() {
+  const t = await getTranslations("catalogHub");
+  const pillars = localizeCatalogHubPillars(t);
+  const labels = {
+    comingSoon: t("comingSoon"),
+    explore: t("explore"),
+    preview: t("preview"),
+  };
+
   return (
     <section
       id={SECTION_IDS.catalogHub}
@@ -22,25 +30,25 @@ export function CatalogHubSection() {
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
         <div className="max-w-2xl">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/85 max-md:tracking-[0.14em]">
-            Catálogo
+            {t("eyebrow")}
           </p>
           <h2
             id="catalog-hub-heading"
             className="font-heading mt-3 text-3xl font-semibold tracking-tight text-foreground max-md:text-[1.65rem] max-md:leading-tight sm:text-4xl 2xl:text-[2.6rem]"
           >
-            {CLIENT_CATALOG_HUB_COPY.title}
+            {t("title")}
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground max-md:mt-3 max-md:text-base max-md:leading-relaxed">
-            {CLIENT_CATALOG_HUB_COPY.description}
+            {t("description")}
           </p>
         </div>
 
-        <CatalogHubMobileChips className="mt-6 max-md:mt-5" />
+        <CatalogHubMobileChips pillars={pillars} className="mt-6 max-md:mt-5" />
 
         <ul className="mt-10 grid list-none gap-6 max-md:mt-6 max-md:gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:items-start lg:gap-8">
-          {CATALOG_HUB_PILLARS.map((pillar, index) => (
+          {pillars.map((pillar, index) => (
             <li key={pillar.slug} id={`hub-card-${pillar.slug}`} className="min-h-0 scroll-mt-28">
-              <CatalogHubPillarCard pillar={pillar} priority={index === 0} />
+              <CatalogHubPillarCard pillar={pillar} priority={index === 0} labels={labels} />
             </li>
           ))}
         </ul>

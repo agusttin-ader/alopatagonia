@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
+import { getLocale, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { DestinationDetail } from "@/components/catalog/DestinationDetail";
 import { Footer } from "@/components/footer/Footer";
 import { JsonLdScript } from "@/components/seo/JsonLdScript";
 import { FloatingWhatsAppButton } from "@/components/whatsapp/FloatingWhatsAppButton";
+import type { AppLocale } from "@/i18n/routing";
 import {
   getDestinationBySlug,
   getDestinationSlugs,
 } from "@/lib/catalog/destinations";
+import { buildDestinationPageMetadata } from "@/lib/i18n/localized-seo-metadata";
+import { buildLocalizedPageMetadata } from "@/lib/seo-i18n";
 import { buildDestinationPageGraphJsonLd } from "@/lib/json-ld";
-import { buildPageMetadata, formatSiteTitle } from "@/lib/seo";
 import { getDestinationSeo } from "@/lib/seo-destinations";
 import { getSiteUrl } from "@/lib/site-url";
-import { SITE } from "@/lib/site";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -22,26 +24,22 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const locale = (await getLocale()) as AppLocale;
   const { slug } = await params;
   const destination = getDestinationBySlug(slug);
+
   if (!destination) {
-    return {
-      title: { absolute: formatSiteTitle("Destino no encontrado") },
-      robots: { index: false, follow: false },
-    };
+    const t = await getTranslations("seo");
+    return buildLocalizedPageMetadata({
+      locale,
+      path: `/destinos/${slug}`,
+      title: t("destination.notFound"),
+      description: t("destination.notFound"),
+      index: false,
+    });
   }
 
-  const seo = getDestinationSeo(slug);
-
-  return buildPageMetadata({
-    title: seo?.seoTitle ?? `${destination.name} — alojamiento y excursiones`,
-    description: seo?.seoDescription ?? destination.intro,
-    path: `/destinos/${slug}`,
-    ogImage: destination.heroImage,
-    ogImageAlt: `Viajes a ${destination.name} — ${SITE.name}`,
-    keywords: seo?.keywords,
-    titleOrder: "keyword-first",
-  });
+  return buildDestinationPageMetadata(locale, destination);
 }
 
 export default async function DestinationPage({ params }: PageProps) {
