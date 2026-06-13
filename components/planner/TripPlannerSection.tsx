@@ -514,7 +514,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
           : `somos ${people}`
         : "todavía no definí cuántos somos";
 
-    return `Hola! Soy ${personName}. Queremos ir a ${destinationText}, ${groupLine}, del ${from} al ${to}. ¿Nos ayudan a armarlo?`;
+    return `Soy ${personName}. Queremos ir a ${destinationText}, ${groupLine}, del ${from} al ${to}. ¿Nos ayudan a armarlo?`;
   }, [name, resolvedDestination, travelers, fromDate, toDate]);
 
   const completionCount = useMemo(() => {

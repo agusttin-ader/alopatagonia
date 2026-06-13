@@ -1,5 +1,10 @@
 import { SECTION_IDS } from "@/lib/constants";
 
+/** Anclas antiguas que siguen funcionando tras renombrar secciones. */
+const LEGACY_HOME_SECTION_HASH_ALIASES: Record<string, string> = {
+  "escapadas-express": SECTION_IDS.promosPatagonia,
+};
+
 /** Hashes de sección en home que deben conservarse al cargar (no borrarlos en el boot de intro). */
 export const HOME_SECTION_HASH_IDS = new Set<string>([
   "inicio",
@@ -13,6 +18,12 @@ export function getHomeSectionHref(sectionId: string, isHome: boolean): string {
 /** App Router puede fallar con `<Link href="/#…">`; usar `<a>` nativo. */
 export function isCrossPageHomeHashHref(href: string): boolean {
   return href.startsWith("/#");
+}
+
+export function resolveHomeSectionHashId(rawSectionId: string): string | null {
+  const sectionId = LEGACY_HOME_SECTION_HASH_ALIASES[rawSectionId] ?? rawSectionId;
+  if (!HOME_SECTION_HASH_IDS.has(sectionId)) return null;
+  return sectionId;
 }
 
 export function scrollToHomeSection(

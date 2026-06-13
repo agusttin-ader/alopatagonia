@@ -99,12 +99,17 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/escapadas-express",
-        destination: "/#escapadas-express",
+        destination: "/#promos-patagonia",
         permanent: true,
       },
       {
         source: "/paquetes",
-        destination: "/#escapadas-express",
+        destination: "/#promos-patagonia",
+        permanent: true,
+      },
+      {
+        source: "/promos-patagonia",
+        destination: "/#promos-patagonia",
         permanent: true,
       },
       {

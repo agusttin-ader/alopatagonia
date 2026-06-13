@@ -363,11 +363,11 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
 };
 
 export function buildCatalogWhatsAppMessage(itemName: string, destinationName: string) {
-  return `Hola! Me interesa ${itemName} en ${destinationName}. ¿Me ayudan?`;
+  return `Me interesa ${itemName} en ${destinationName}. ¿Me ayudan?`;
 }
 
 export function buildCarRentalWhatsAppMessage(destinationName: string) {
-  return `Hola! Quiero consultar por alquiler de auto en ${destinationName}. ¿Me ayudan?`;
+  return `Quiero consultar por alquiler de auto en ${destinationName}. ¿Me ayudan?`;
 }
 
 function toCatalogImage(src: string, alt: string): CatalogImage {

@@ -21,7 +21,7 @@ export const SECTION_IDS = {
   destinations: "destinos",
   winterShop: "tienda-invierno",
   aboutUs: "quienes-somos",
-  escapadasExpress: "escapadas-express",
+  promosPatagonia: "promos-patagonia",
   cta: "contacto",
 } as const;
 
@@ -115,27 +115,37 @@ export type InstagramStatItem = {
 };
 
 const DEFAULT_WHATSAPP_MESSAGE =
-  "Hola! Quiero planear un viaje a la Patagonia. ¿Me ayudan con alojamiento, auto y excursiones?";
+  "Quiero planear un viaje a la Patagonia. ¿Me ayudan con alojamiento, auto y excursiones?";
+
+/** Prefijo en todos los WhatsApp que salen de la web — la clienta identifica el origen. */
+export const WEB_WHATSAPP_LEAD_PREFIX = "Hola, vengo de la web de Alo Patagonia.";
+
+export function buildWebWhatsAppMessage(body: string): string {
+  const trimmed = body.trim();
+  if (trimmed.startsWith(WEB_WHATSAPP_LEAD_PREFIX)) return trimmed;
+  return `${WEB_WHATSAPP_LEAD_PREFIX} ${trimmed}`;
+}
 
 export const WHATSAPP_MESSAGES = {
   primary: DEFAULT_WHATSAPP_MESSAGE,
 } as const;
 
 export function getWhatsAppUrl(message = DEFAULT_WHATSAPP_MESSAGE): string {
+  const fullMessage = buildWebWhatsAppMessage(message);
   const preset = getTrustedHttpsUrl(
     process.env.NEXT_PUBLIC_WHATSAPP_URL?.trim(),
     ALLOWED_WHATSAPP_HOSTS,
   );
   if (preset) {
     const presetUrl = new URL(preset);
-    presetUrl.searchParams.set("text", message);
+    presetUrl.searchParams.set("text", fullMessage);
     return presetUrl.toString();
   }
 
   const raw = process.env.NEXT_PUBLIC_WHATSAPP_E164 ?? DEFAULT_WHATSAPP_E164;
   const digits = raw.replace(/\D/g, "");
   const safeDigits = /^\d{10,15}$/.test(digits) ? digits : DEFAULT_WHATSAPP_E164;
-  const text = encodeURIComponent(message);
+  const text = encodeURIComponent(fullMessage);
   return `https://wa.me/${safeDigits}?text=${text}`;
 }
 
@@ -310,30 +320,36 @@ export type Testimonial = {
   name: string;
   highlight: string;
   quote: string;
+  rating?: number;
+  timeAgo?: string;
 };
 
 export const TESTIMONIALS: Testimonial[] = [
   {
     name: "Florencia y Tomás, Buenos Aires",
     highlight: "8 días · Bariloche y Calafate",
+    timeAgo: "Hace 1 mes",
     quote:
       "En un chat nos cerraron auto, hotel y el día del Perito Moreno. Llegamos y solo disfrutamos — cero llamadas de último momento.",
   },
   {
     name: "Camila R., Córdoba",
     highlight: "4 días · Ushuaia",
+    timeAgo: "Hace 3 semanas",
     quote:
       "Nos respondieron el mismo día. Llovió el martes, movieron la navegación al miércoles y nos quedó mejor: más calma en el Canal Beagle.",
   },
   {
     name: "Familia Quiroga, Rosario",
     highlight: "10 días · con chicos",
+    timeAgo: "Hace 2 meses",
     quote:
       "Itinerario sin días corridos: hoteles cerca de todo, paradas para que los chicos descansen y excursiones que no eran maratones.",
   },
   {
     name: "Nicolás M., Mendoza",
     highlight: "Primera vez en el sur",
+    timeAgo: "Hace 5 semanas",
     quote:
       "En dos días teníamos fechas, auto y alojamiento. Durante el viaje les escribimos por WhatsApp dos veces y siempre contestaron al toque.",
   },

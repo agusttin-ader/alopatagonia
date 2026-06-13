@@ -86,10 +86,10 @@ export function Footer() {
               Planear mi viaje
             </Link>
             <a
-              href={getHomeSectionHref(SECTION_IDS.escapadasExpress, false)}
+              href={getHomeSectionHref(SECTION_IDS.promosPatagonia, false)}
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
-              Escapadas express
+              Promos Patagonia
             </a>
             <a
               href={getHomeSectionHref(SECTION_IDS.aboutUs, false)}

@@ -12,7 +12,7 @@ const ABOUT_OVERLAY = [
 
 export function AboutUsSection() {
   const whatsappUrl = getWhatsAppUrl(
-    "Hola Alo Patagonia, quiero planear mi próxima aventura en la Patagonia.",
+    "Quiero planear mi próxima aventura en la Patagonia.",
   );
 
   return (

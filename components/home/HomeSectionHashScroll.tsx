@@ -5,7 +5,7 @@ import { useReducedMotion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
 import {
-  HOME_SECTION_HASH_IDS,
+  resolveHomeSectionHashId,
   scrollToHomeSection,
 } from "@/lib/home-sections";
 import {
@@ -17,8 +17,8 @@ function scrollToHomeHash(reduceMotion: boolean | null) {
   const hash = window.location.hash;
   if (!hash) return;
 
-  const sectionId = decodeURIComponent(hash.slice(1));
-  if (!HOME_SECTION_HASH_IDS.has(sectionId)) return;
+  const sectionId = resolveHomeSectionHashId(decodeURIComponent(hash.slice(1)));
+  if (!sectionId) return;
 
   scrollToHomeSection(sectionId, {
     behavior: reduceMotion ? "auto" : "smooth",
