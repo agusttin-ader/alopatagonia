@@ -96,6 +96,16 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
+        url: "/favicon.ico",
+        type: "image/x-icon",
+        sizes: "48x48",
+      },
+      {
+        url: SITE.faviconBrand96,
+        type: "image/png",
+        sizes: "96x96",
+      },
+      {
         url: SITE.faviconLight96,
         type: "image/png",
         sizes: "96x96",
@@ -107,13 +117,8 @@ export const metadata: Metadata = {
         sizes: "96x96",
         media: "(prefers-color-scheme: dark)",
       },
-      {
-        url: SITE.faviconDark96,
-        type: "image/png",
-        sizes: "96x96",
-      },
     ],
-    shortcut: SITE.faviconDark96,
+    shortcut: "/favicon.ico",
     apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
   },
 };
@@ -138,6 +143,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: SITE_INTRO_CRITICAL_CSS }}
         />
         <link rel="preload" href={SITE_INTRO_LOGO} as="image" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="48x48" />
+        <link rel="icon" href={SITE.faviconBrand96} type="image/png" sizes="96x96" />
         <link
           rel="icon"
           href={SITE.faviconLight96}
@@ -152,7 +159,6 @@ export default function RootLayout({
           sizes="96x96"
           media="(prefers-color-scheme: dark)"
         />
-        <link rel="icon" href={SITE.faviconDark96} type="image/png" sizes="96x96" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
       </head>
       <body suppressHydrationWarning className="flex min-h-dvh flex-col">

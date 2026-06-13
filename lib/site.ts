@@ -9,6 +9,9 @@ export const SITE = {
   /** Cuadrados optimizados para pestañas (generados en prebuild). */
   faviconDark96: "/favicon-dark-96.png",
   faviconLight96: "/favicon-96.png",
+  /** Logo sobre verde de marca — ideal para Google y crawlers. */
+  faviconBrand96: "/favicon-brand-96.png",
+  faviconBrand48: "/favicon-brand-48.png",
   /** Imagen social por defecto (logo sobre fondo de marca). */
   ogImage: "/opengraph-image",
   ogImageWidth: 1200,

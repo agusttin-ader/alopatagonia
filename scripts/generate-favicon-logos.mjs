@@ -64,9 +64,36 @@ async function writeSquareIcon(input, output, size, logoScale = 0.88) {
   await sharp(buffer).png().toFile(output);
 }
 
-async function writeFaviconIco(input, output) {
+const BRAND_ICON_BG = { r: 26, g: 47, b: 38, alpha: 1 };
+
+async function writeBrandedSquareIconBuffer(input, size, logoScale = 0.78) {
+  const logoSize = Math.round(size * logoScale);
+  const logoBuffer = await sharp(input)
+    .resize(logoSize, logoSize, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .png()
+    .toBuffer();
+
+  return sharp({
+    create: {
+      width: size,
+      height: size,
+      channels: 4,
+      background: BRAND_ICON_BG,
+    },
+  })
+    .composite([{ input: logoBuffer, gravity: "centre" }])
+    .png()
+    .toBuffer();
+}
+
+async function writeBrandedSquareIcon(input, output, size, logoScale = 0.78) {
+  const buffer = await writeBrandedSquareIconBuffer(input, size, logoScale);
+  await sharp(buffer).png().toFile(output);
+}
+
+async function writeFaviconIcoFromBranded(input, output) {
   const sizes = [16, 32, 48];
-  const pngBuffers = await Promise.all(sizes.map((size) => writeSquareIconBuffer(input, size)));
+  const pngBuffers = await Promise.all(sizes.map((size) => writeBrandedSquareIconBuffer(input, size)));
   const ico = await toIco(pngBuffers);
   await writeFile(output, ico);
 }
@@ -92,11 +119,13 @@ await writeSquareIcon(lightFavicon, join(PUBLIC_DIR, "favicon.png"), 48);
 await writeSquareIcon(lightFavicon, join(PUBLIC_DIR, "favicon-96.png"), 96);
 await writeSquareIcon(darkFavicon, join(PUBLIC_DIR, "favicon-dark.png"), 48);
 await writeSquareIcon(darkFavicon, join(PUBLIC_DIR, "favicon-dark-96.png"), 96);
-await writeSquareIcon(lightFavicon, join(PUBLIC_DIR, "apple-touch-icon.png"), 180, 0.82);
+await writeBrandedSquareIcon(darkFavicon, join(PUBLIC_DIR, "favicon-brand-96.png"), 96);
+await writeBrandedSquareIcon(darkFavicon, join(PUBLIC_DIR, "favicon-brand-48.png"), 48);
+await writeBrandedSquareIcon(darkFavicon, join(PUBLIC_DIR, "apple-touch-icon.png"), 180, 0.82);
 // Default de Next (sin media): blanco para pestañas oscuras de Chrome aunque el SO esté en light.
 await writeSquareIcon(darkFavicon, join(APP_DIR, "icon.png"), 96);
-// Reemplaza el favicon.ico genérico de Next — Google lo usa en resultados de búsqueda.
-await writeFaviconIco(lightFavicon, join(APP_DIR, "favicon.ico"));
-await writeFaviconIco(lightFavicon, join(PUBLIC_DIR, "favicon.ico"));
+// Logo blanco sobre verde de marca — legible en Google (fondo claro) y en pestañas.
+await writeFaviconIcoFromBranded(darkFavicon, join(APP_DIR, "favicon.ico"));
+await writeFaviconIcoFromBranded(darkFavicon, join(PUBLIC_DIR, "favicon.ico"));
 
 console.log("Wrote favicon logo variants in public/images/logo/, app/favicon.ico and public/favicon*.png");
