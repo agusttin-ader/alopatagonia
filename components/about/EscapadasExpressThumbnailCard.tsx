@@ -43,7 +43,7 @@ export function EscapadasExpressThumbnailCard({
       whileHover={{ y: -3, scale: 1.03 }}
       whileTap={{ scale: 0.97 }}
       className={cn(
-        "group relative h-[6.25rem] w-[4rem] shrink-0 overflow-hidden bg-black text-left sm:h-[6.75rem] sm:w-[4.35rem] lg:h-[7.25rem] lg:w-[4.65rem]",
+        "group relative h-[8.5rem] w-[5.75rem] shrink-0 overflow-hidden bg-black text-left sm:h-[9.25rem] sm:w-[6.25rem] lg:h-[9.75rem] lg:w-[6.75rem]",
         "shadow-[0_10px_28px_-16px_rgba(0,0,0,0.7)] ring-1 ring-white/20",
         "hover:ring-white/40",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
@@ -59,7 +59,7 @@ export function EscapadasExpressThumbnailCard({
           media={promo.media}
           isActive={false}
           qualityPreset="card"
-          sizes="80px"
+          sizes="(max-width: 640px) 108px, 128px"
         />
       </motion.div>
 
@@ -68,12 +68,12 @@ export function EscapadasExpressThumbnailCard({
         aria-hidden
       />
 
-      <div className="absolute inset-x-0 bottom-0 z-[2] bg-gradient-to-t from-black/95 via-black/80 to-transparent px-2 pb-2 pt-6">
-        <span className="mb-1 block h-px w-5 bg-white/90" aria-hidden />
-        <p className="line-clamp-2 text-[0.58rem] font-medium leading-tight text-white/88">
+      <div className="absolute inset-x-0 bottom-0 z-[2] bg-gradient-to-t from-black/95 via-black/80 to-transparent px-3 pb-3 pt-8 sm:px-3.5 sm:pb-3.5 sm:pt-9">
+        <span className="mb-1.5 block h-px w-7 bg-white/90" aria-hidden />
+        <p className="line-clamp-2 text-[0.65rem] font-medium leading-snug text-white/88 sm:text-[0.72rem]">
           {promo.subtitle}
         </p>
-        <p className="font-heading mt-0.5 line-clamp-2 text-[0.62rem] font-semibold uppercase leading-tight tracking-[0.05em] text-white">
+        <p className="font-heading mt-1 line-clamp-3 text-[0.72rem] font-semibold uppercase leading-[1.12] tracking-[0.04em] text-white sm:text-[0.78rem]">
           {promo.title}
         </p>
         <span className="sr-only">

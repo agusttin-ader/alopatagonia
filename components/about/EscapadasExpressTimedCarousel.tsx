@@ -22,7 +22,7 @@ const LAYOUT_TWEEN = { duration: 0.65, ease: EASE } as const;
 
 /** Altura fija alineada a la sección Indumentaria — no crece al cambiar de promo. */
 const SECTION_SHELL =
-  "min-h-[38rem] lg:h-[36rem] lg:max-h-[36rem] lg:overflow-hidden";
+  "min-h-[40rem] lg:h-[37rem] lg:max-h-[37rem] lg:overflow-hidden";
 
 type EscapadasExpressTimedCarouselProps = {
   promos: EscapadaExpressPromo[];
@@ -153,7 +153,7 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
                 </div>
 
                 <div className="mt-5 flex min-h-0 flex-1 flex-col sm:mt-6 lg:mt-0 lg:justify-end">
-                  <div className="relative min-h-[11.5rem] overflow-hidden sm:min-h-[12rem] lg:min-h-[13rem]">
+                  <div className="min-h-[14.5rem] sm:min-h-[15rem] lg:min-h-[15.5rem]">
                     <AnimatePresence mode="wait" initial={false}>
                       <motion.div
                         key={activePromo.id}
@@ -161,23 +161,23 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
                         animate={{ opacity: 1, y: 0 }}
                         exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
                         transition={{ duration: reduceMotion ? 0 : TEXT_MS, ease: EASE }}
-                        className="absolute inset-0 flex flex-col"
+                        className="flex flex-col"
                       >
                         <p className="text-[0.72rem] font-medium uppercase tracking-[0.24em] text-white/72 sm:text-xs">
                           Promo {formatIndex(activeIndex + 1)} · Patagonia
                         </p>
-                        <h3 className="font-heading mt-2 line-clamp-2 text-[clamp(1.75rem,4vw,2.65rem)] font-semibold leading-tight tracking-tight text-white">
+                        <h3 className="font-heading mt-2 text-[clamp(1.75rem,4vw,2.65rem)] font-semibold leading-[1.08] tracking-tight text-white">
                           {activePromo.title}
                         </h3>
-                        <p className="mt-2 line-clamp-2 text-base leading-snug text-white/88 sm:text-lg">
+                        <p className="mt-2 text-base leading-snug text-white/88 sm:text-lg">
                           {activePromo.subtitle}
                         </p>
                         {activePromo.badge ? (
-                          <p className="mt-1.5 line-clamp-1 text-sm font-medium text-white/72">
+                          <p className="mt-1.5 text-sm font-medium text-white/72">
                             {activePromo.badge}
                           </p>
                         ) : null}
-                        <p className="mt-1.5 line-clamp-2 hidden text-sm leading-relaxed text-white/78 sm:block">
+                        <p className="mt-1.5 hidden text-sm leading-relaxed text-white/78 sm:block">
                           {activePromo.highlights.slice(0, 2).join(" · ")}
                         </p>
                         <MagazinePillCta
