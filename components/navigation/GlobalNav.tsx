@@ -231,9 +231,16 @@ export function GlobalNav() {
                 ? "onDark"
                 : "onLight"
             }
-            className="h-11 sm:h-12"
+            className="h-11 min-w-0 shrink sm:h-12"
           />
-          <Button
+          <div className="flex shrink-0 items-center gap-1.5">
+            <LocaleSwitcher
+              layout="mobile-bar"
+              variant={
+                MOBILE_MAGAZINE_G_ENABLED && mobileHeroHeader && !mobileOpen ? "onDark" : "onLight"
+              }
+            />
+            <Button
             ref={menuButtonRef}
             aria-label={mobileOpen ? t("closeMenu") : t("openMenu")}
             aria-controls={menuPanelId}
@@ -288,6 +295,7 @@ export function GlobalNav() {
               />
             </span>
           </Button>
+          </div>
         </div>
       </div>
 
@@ -351,15 +359,16 @@ export function GlobalNav() {
               transition={reduceMotion ? { duration: 0 } : DRAWER_TRANSITION}
             >
               <div className="flex h-full flex-col px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))]">
-                <div className="mb-7 flex items-center justify-between">
+                <div className="mb-6 flex items-center justify-between gap-3">
                   <Link
                     href="/"
                     onClick={() => setMobileOpen(false)}
-                    className="inline-flex shrink-0 items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2"
+                    className="inline-flex min-w-0 shrink items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2"
                     aria-label={SITE.name}
                   >
                     <SiteLogo linked={false} showWordmark homeLabel={t("home")} className="h-12" />
                   </Link>
+                  <LocaleSwitcher layout="mobile-bar" className="shrink-0" />
                   <Button
                     type="button"
                     variant="ghost"
@@ -421,9 +430,6 @@ export function GlobalNav() {
                     </motion.div>
                   ))}
                 </motion.div>
-                <div className="mt-6 border-t border-border/60 pt-5">
-                  <LocaleSwitcher layout="drawer" />
-                </div>
               </div>
             </motion.div>
           </div>

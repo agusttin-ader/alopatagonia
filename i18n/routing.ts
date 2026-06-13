@@ -8,6 +8,8 @@ export const routing = defineRouting({
   defaultLocale: "es",
   /** Español sin prefijo (/); EN y PT con /en y /pt. */
   localePrefix: "as-needed",
+  /** No redirigir por Accept-Language — español en / salvo elección explícita o URL /en /pt. */
+  localeDetection: false,
 });
 
 export const localeLabels: Record<AppLocale, string> = {

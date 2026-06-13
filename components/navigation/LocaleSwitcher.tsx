@@ -11,21 +11,26 @@ import { localeLabels, localeNames, routing, type AppLocale } from "@/i18n/routi
 import { navigateToLocale } from "@/lib/i18n/locale-switch";
 import { cn } from "@/lib/utils";
 
-type LocaleSwitcherLayout = "header" | "drawer";
+type LocaleSwitcherLayout = "header" | "mobile-bar";
 
 type LocaleSwitcherProps = {
   className?: string;
   layout?: LocaleSwitcherLayout;
+  /** Contraste sobre hero oscuro en mobile. */
+  variant?: "onLight" | "onDark";
 };
 
 const MOTION_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-export function LocaleSwitcher({ className, layout = "header" }: LocaleSwitcherProps) {
+export function LocaleSwitcher({
+  className,
+  layout = "header",
+  variant = "onLight",
+}: LocaleSwitcherProps) {
   const locale = useLocale() as AppLocale;
   const pathname = usePathname();
   const t = useTranslations("nav");
   const reduceMotion = useReducedMotion();
-  const isDrawer = layout === "drawer";
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const listboxId = useId();
@@ -60,44 +65,50 @@ export function LocaleSwitcher({ className, layout = "header" }: LocaleSwitcherP
     }
   };
 
-  if (isDrawer) {
+  if (layout === "mobile-bar") {
+    const onDark = variant === "onDark";
+
     return (
-      <div className={cn("w-full", className)}>
-        <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-          {t("language")}
-        </p>
-        <div
-          role="listbox"
-          aria-label={t("language")}
-          className="overflow-hidden rounded-2xl bg-secondary/35 p-1.5 ring-1 ring-border/55 shadow-[0_12px_32px_-24px_rgba(26,47,38,0.45)]"
-        >
-          {routing.locales.map((code) => {
-            const active = code === locale;
-            return (
-              <button
-                key={code}
-                type="button"
-                role="option"
-                aria-selected={active}
-                aria-label={localeNames[code]}
-                onClick={() => selectLocale(code)}
-                className={cn(
-                  "flex w-full items-center gap-2.5 rounded-xl px-3.5 py-3 text-left transition-colors",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                  active ? "bg-background shadow-sm" : "hover:bg-background/70",
-                )}
-              >
-                <LocaleFlagIcon locale={code} className="size-6" />
-                <span className="min-w-0 flex-1 text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-foreground">
-                  {localeLabels[code]}
-                </span>
-                {active ? (
-                  <Check className="size-4 shrink-0 text-footer-lake" aria-hidden />
-                ) : null}
-              </button>
-            );
-          })}
-        </div>
+      <div
+        role="listbox"
+        aria-label={t("language")}
+        className={cn(
+          "inline-flex shrink-0 items-center gap-0.5 rounded-full p-0.5",
+          onDark
+            ? "bg-white/12 ring-1 ring-white/25"
+            : "bg-secondary/40 ring-1 ring-border/55 shadow-[0_8px_22px_-18px_rgba(26,47,38,0.35)]",
+          className,
+        )}
+      >
+        {routing.locales.map((code) => {
+          const active = code === locale;
+
+          return (
+            <button
+              key={code}
+              type="button"
+              role="option"
+              aria-selected={active}
+              aria-label={localeNames[code]}
+              onClick={() => selectLocale(code)}
+              className={cn(
+                "inline-flex min-h-9 min-w-9 items-center justify-center rounded-full transition-colors",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake/45 focus-visible:ring-offset-2",
+                onDark ? "focus-visible:ring-offset-transparent" : "focus-visible:ring-offset-background",
+                active
+                  ? onDark
+                    ? "bg-white/22 shadow-sm"
+                    : "bg-background shadow-sm"
+                  : onDark
+                    ? "hover:bg-white/10"
+                    : "hover:bg-background/70",
+              )}
+            >
+              <LocaleFlagIcon locale={code} className="size-5" />
+              <span className="sr-only">{localeLabels[code]}</span>
+            </button>
+          );
+        })}
       </div>
     );
   }

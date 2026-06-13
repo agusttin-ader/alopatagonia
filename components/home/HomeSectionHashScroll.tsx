@@ -9,6 +9,7 @@ import {
   scrollToHomeSection,
 } from "@/lib/home-sections";
 import {
+  isSiteHomePath,
   SITE_INTRO_REVEAL_FALLBACK_MS,
   shouldPlaySiteIntro,
 } from "@/lib/site-intro-config";
@@ -31,7 +32,7 @@ export function HomeSectionHashScroll() {
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    if (pathname !== "/") return;
+    if (!isSiteHomePath(pathname)) return;
 
     const run = () => scrollToHomeHash(reduceMotion);
 
@@ -50,7 +51,7 @@ export function HomeSectionHashScroll() {
   }, [pathname, reduceMotion]);
 
   useEffect(() => {
-    if (pathname !== "/") return;
+    if (!isSiteHomePath(pathname)) return;
 
     const onHashChange = () => scrollToHomeHash(reduceMotion);
     window.addEventListener("hashchange", onHashChange);
