@@ -1,5 +1,10 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
 import { CatalogItemShowcase } from "@/components/catalog/CatalogItemShowcase";
-import { getCatalogItemBadge, type CatalogItemEntry } from "@/lib/catalog/catalog-items";
+import { getLocalizedCatalogItemBadge } from "@/lib/i18n/localized-catalog";
+import type { CatalogItemEntry } from "@/lib/catalog/catalog-items";
 import { EXCURSION_CATEGORY_LABELS } from "@/lib/catalog/excursion-categories";
 import { CATALOG_GRID_GAP } from "@/lib/layout-shell";
 import { cn } from "@/lib/utils";
@@ -21,6 +26,8 @@ export function CatalogItemGrid({
   compact = true,
   compactGap = false,
 }: CatalogItemGridProps) {
+  const t = useTranslations("catalog");
+
   return (
     <div
       className={cn(
@@ -36,7 +43,7 @@ export function CatalogItemGrid({
           key={`${entry.destination.slug}-${entry.item.id}`}
           item={entry.item}
           destinationSlug={entry.destination.slug}
-          badge={getCatalogItemBadge(entry)}
+          badge={getLocalizedCatalogItemBadge(t, entry)}
           compact={compact}
           categoryLabel={
             mode === "excursion" && entry.item.category

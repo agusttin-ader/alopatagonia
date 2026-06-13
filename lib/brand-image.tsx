@@ -51,6 +51,7 @@ export function renderBrandIconMarkup(logoSrc: string, logoSize: number) {
         background: "transparent",
       }}
     >
+      {/* eslint-disable-next-line @next/next/no-img-element -- OG/icon markup; data URLs, not static assets */}
       <img src={logoSrc} alt="" width={logoSize} height={logoSize} />
     </div>
   );

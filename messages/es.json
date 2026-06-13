@@ -9,7 +9,8 @@
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
     "mainNav": "Navegación principal",
-    "language": "Idioma"
+    "language": "Idioma",
+    "selectLanguage": "Elegir idioma"
   },
   "footer": {
     "about": "Te ayudamos con auto, alojamiento y excursiones en la Patagonia — todo desde un solo WhatsApp.",
@@ -220,7 +221,7 @@
   },
   "testimonials": {
     "eyebrow": "Opiniones",
-    "heading": "Quienes ya viajaron con nosotros",
+    "heading": "Quiénes ya viajaron con nosotros",
     "lead": "Nos escribieron por Instagram y cerraron todo por WhatsApp — sin mails de ida y vuelta.",
     "stats": "{count} opiniones · viajeros verificados",
     "ratingAria": "Promedio {rating} de 5 estrellas en {count} opiniones",
@@ -294,7 +295,8 @@
     "close": "Cerrar",
     "closeExpanded": "Cerrar vista ampliada",
     "prevImage": "Imagen anterior",
-    "nextImage": "Imagen siguiente"
+    "nextImage": "Imagen siguiente",
+    "lightboxExpanded": "Vista ampliada de imagen"
   },
   "notFound": {
     "metaTitle": "Página no encontrada",
@@ -360,6 +362,17 @@
       "hostel": { "title": "Hoteles", "subtitle": "Según categoría" }
     },
     "carRentalCta": "Consultar auto",
+    "badges": {
+      "excursion": "Excursión",
+      "cabana": "Cabaña",
+      "departamento": "Departamento",
+      "hotel": "Hotel"
+    },
+    "photoGallery": "Galería de fotos",
+    "viewPhotoExpanded": "Ver foto {n} ampliada",
+    "prevPhoto": "Foto anterior",
+    "nextPhoto": "Foto siguiente",
+    "goToPhoto": "Ir a foto {n}",
     "itemDetail": {
       "askTitle": "Preguntanos si hay lugar",
       "askBody": "Por WhatsApp te decimos fechas, capacidad y qué hay disponible en esa zona.",
@@ -406,7 +419,7 @@
       "name": "Nombre",
       "namePlaceholder": "Tu nombre",
       "destination": "Destino",
-      "travelers": "Cuantas personas viajan",
+      "travelers": "Cuántas personas viajan",
       "travelersPlaceholder": "Ej: 2",
       "from": "Desde",
       "to": "Hasta",

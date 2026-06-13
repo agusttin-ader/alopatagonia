@@ -24,7 +24,6 @@ import {
   SITE,
   type InstagramStatItem,
 } from "@/lib/constants";
-import { IMAGE_SIZES } from "@/lib/image-config";
 import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
 

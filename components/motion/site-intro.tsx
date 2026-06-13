@@ -7,6 +7,7 @@ import { useLayoutEffect, useState } from "react";
 import { SITE } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import {
+  isSiteHomePath,
   setSiteIntroExiting,
   setSiteIntroPending,
   setSiteIntroPlaceholderHidden,
@@ -56,7 +57,7 @@ export function SiteIntro() {
   const [phase, setPhase] = useState<IntroPhase>("letter");
 
   useLayoutEffect(() => {
-    const home = window.location.pathname === "/" || window.location.pathname === "";
+    const home = isSiteHomePath(window.location.pathname);
 
     if (!home) {
       setSiteIntroPending(false);

@@ -61,6 +61,7 @@ export function AppImage({
   priority,
   decoding = "async",
   src,
+  alt,
   className,
   onLoad,
   fill,
@@ -105,6 +106,7 @@ export function AppImage({
     <Image
       ref={handleRef}
       src={src}
+      alt={alt ?? ""}
       fill={fill}
       width={width}
       height={height}

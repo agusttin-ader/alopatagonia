@@ -1,9 +1,5 @@
-import {
-  buildNextImageUrl,
-  IMAGE_PRELOAD_WIDTH,
-  IMAGE_QUALITY_INTRO,
-} from "@/lib/image-config";
 import { HOME_SECTION_HASH_IDS } from "@/lib/home-sections";
+import { routing } from "@/i18n/routing";
 
 /** Keep in sync with runSiteIntroBoot() (instrumentation-client.ts) */
 export const SITE_INTRO_STORAGE_KEY = "alo-site-intro-seen-v2";
@@ -13,11 +9,6 @@ export const SITE_INTRO_LOGO = "/images/logo/logo-alo.png";
 /** Foto de fondo del splash de intro (con overlay oscuro encima). */
 export const SITE_INTRO_IMAGE = "/images/intro.jpg";
 
-export const SITE_INTRO_IMAGE_PRELOAD = buildNextImageUrl(SITE_INTRO_IMAGE, {
-  width: IMAGE_PRELOAD_WIDTH.introDesktop,
-  quality: IMAGE_QUALITY_INTRO,
-});
-
 export const SITE_INTRO_FALLBACK_BG = "#1a2f26";
 
 export const SITE_INTRO_OVERLAY_CSS =
@@ -26,6 +17,16 @@ export const SITE_INTRO_OVERLAY_CSS =
 /** En true: cada carga ejecuta intro. En false: una vez por sesión al ingresar. */
 export const SITE_INTRO_ALWAYS_SHOW = false;
 
+/** Home en ES (/), EN (/en) y PT (/pt). */
+export function isSiteHomePath(pathname: string): boolean {
+  const normalized = pathname.replace(/\/$/, "") || "/";
+  if (normalized === "/") return true;
+
+  return routing.locales.some(
+    (locale) => locale !== routing.defaultLocale && normalized === `/${locale}`,
+  );
+}
+
 function preloadIntroImage() {
   if (typeof document === "undefined") return;
   if (document.querySelector('link[data-alo-intro-preload]')) return;
@@ -33,7 +34,7 @@ function preloadIntroImage() {
   const link = document.createElement("link");
   link.rel = "preload";
   link.as = "image";
-  link.href = SITE_INTRO_IMAGE_PRELOAD;
+  link.href = SITE_INTRO_IMAGE;
   link.setAttribute("data-alo-intro-preload", "");
   link.fetchPriority = "high";
   document.head.appendChild(link);
@@ -53,8 +54,7 @@ export function runSiteIntroBoot(): void {
       window.history.scrollRestoration = "manual";
     }
 
-    const home =
-      window.location.pathname === "/" || window.location.pathname === "";
+    const home = isSiteHomePath(window.location.pathname);
 
     if (home && window.location.hash) {
       const hashId = decodeURIComponent(window.location.hash.slice(1));
@@ -143,8 +143,7 @@ export function setSiteIntroExiting(exiting: boolean) {
 
 export function initSiteIntroVisibility(): boolean {
   if (typeof window === "undefined") return false;
-  const home = window.location.pathname === "/" || window.location.pathname === "";
-  const play = home && shouldPlaySiteIntro();
+  const play = isSiteHomePath(window.location.pathname) && shouldPlaySiteIntro();
   if (play) setSiteIntroPending(true);
   return play;
 }

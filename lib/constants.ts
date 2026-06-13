@@ -1,14 +1,11 @@
 export { SITE } from "@/lib/site";
 
-import { CLIENT_HERO_COPY } from "@/lib/client-protected-copy";
 import {
   getHomeExperienceImagePath,
   getHomeHeroImagePath,
   getHomeImagePaths,
   getInstagramImagePaths,
 } from "@/lib/home-images";
-
-export const HERO_COPY = CLIENT_HERO_COPY;
 
 export const SECTION_IDS = {
   planner: "planear-viaje",
@@ -32,21 +29,6 @@ export const PLANNER_PATH = "/planear-mi-viaje" as const;
 export const PLANNER_BANNER = {
   src: BARILOCHE_HERO_IMAGE,
   alt: "Panorámica de lagos y montaña en Bariloche, Patagonia Argentina",
-} as const;
-
-export const PLANNER_PAGE_COPY = {
-  title: "Planear mi viaje",
-  description:
-    "Contanos destino, fechas y cuántos viajan. Te armamos el mensaje para WhatsApp o mail con todo en un solo texto.",
-  intro:
-    "En dos minutos cargás lo básico. Nosotros redactamos el mensaje; vos solo lo enviás y seguimos charlando por ahí.",
-} as const;
-
-export const PLANNER_TEASER_COPY = {
-  title: "¿Tenés fechas? Empecemos.",
-  description:
-    "Elegí destino, fechas y cuántos son. Te dejamos el mensaje listo para mandar por WhatsApp — sin formularios eternos.",
-  cta: "Armar mi consulta",
 } as const;
 
 /** URL fallback de tienda; priorizar `NEXT_PUBLIC_WINTER_STORE_URL` en producción. */
@@ -80,29 +62,6 @@ export function getWinterStoreUrl(): string {
   );
   return fromEnv || DEFAULT_WINTER_STORE_URL;
 }
-
-export const WINTER_STORE_COPY = {
-  metaDescription:
-    "Indumentaria Boulder para el frío patagónico. 3, 6 y 9 cuotas sin interés, 15% off por transferencia y envíos gratis desde $130.000.",
-  heroTitle: "Equipate para el frío patagónico",
-  heroSubtitle:
-    "Camperas, buzos y pantalones outdoor Boulder. 3, 6 y 9 cuotas sin interés, 15% off por transferencia y envíos gratis desde $130.000.",
-  ctaPrimary: "Ir a Boulder",
-  ctaSecondaryHome: "Volver al inicio",
-  homeEyebrow: "Indumentaria",
-  homeHeading:
-    "Porque el viaje comienza con la planificación, equipate fuerte para la montaña!!",
-  homeBodyParagraphs: [
-    "Todo lo que necesitás para tu próxima aventura… está acá.",
-    "Viajá cómodo y preparado para afrontar el clima patagónico. Conocé la calidad de la indumentaria Boulder y completá tu experiencia… entrá a la tienda online y aprovechá nuestro beneficio para llevarte todo!!",
-  ],
-  homeCta: "Ver indumentaria",
-  bullets: [
-    "3, 6 y 9 cuotas sin interés, sin monto mínimo",
-    "15% off pagando por transferencia en toda la web",
-    "Envíos gratis a partir de $130.000 · a todo el país",
-  ],
-} as const;
 
 /** Cifras del perfil @alo_patagonia (actualizar posts/seguidores si cambian en Instagram). */
 export type InstagramStatItem = {
@@ -164,92 +123,57 @@ export type PlannerDestinationValue = PlannerDestinationKey | "none";
 
 type PlannerDestinationConfig = {
   key: PlannerDestinationKey;
-  label: string;
   mapCenter: [number, number];
   mapZoom: number;
-  previewHook: string;
 };
 
 export const PLANNER_DESTINATIONS: PlannerDestinationConfig[] = [
   {
     key: "bariloche",
-    label: "Bariloche",
     mapCenter: [-41.1335, -71.3103],
     mapZoom: 12,
-    previewHook: "Circuito Chico, Catedral y el Nahuel Huapi en auto.",
   },
   {
     key: "san-martin",
-    label: "San Martín de los Andes",
     mapCenter: [-40.1579, -71.3534],
     mapZoom: 12.2,
-    previewHook: "Lácar, Lanín y la Ruta de los Siete Lagos.",
   },
   {
     key: "el-chalten",
-    label: "El Chaltén",
     mapCenter: [-49.3317, -72.8866],
     mapZoom: 12.4,
-    previewHook: "Laguna de los Tres y el Fitz Roy — el clima manda.",
   },
   {
     key: "esquel",
-    label: "Esquel / Trevelin",
     mapCenter: [-42.9115, -71.3195],
     mapZoom: 12.8,
-    previewHook: "Los Alerces, La Hoya y Trevelin gales.",
   },
   {
     key: "villa-la-angostura",
-    label: "Villa La Angostura",
     mapCenter: [-40.7617, -71.6463],
     mapZoom: 13,
-    previewHook: "Arrayanes, Cerro Bayo y el Nahuel Huapi sin apuro.",
   },
   {
     key: "puerto-madryn",
-    label: "Puerto Madryn",
     mapCenter: [-42.7692, -65.0385],
     mapZoom: 12.4,
-    previewHook: "Ballenas sep–dic, Península Valdés y pingüinos.",
   },
   {
     key: "el-calafate",
-    label: "El Calafate",
     mapCenter: [-50.3379, -72.2648],
     mapZoom: 12.2,
-    previewHook: "Perito Moreno y el azul del Lago Argentino.",
   },
   {
     key: "traful",
-    label: "Traful / Villa Traful",
     mapCenter: [-40.6583, -71.4597],
     mapZoom: 12.6,
-    previewHook: "Lago Traful turquesa y bosque sumergido.",
   },
   {
     key: "ushuaia",
-    label: "Ushuaia",
     mapCenter: [-54.8019, -68.303],
     mapZoom: 12.2,
-    previewHook: "Canal Beagle, Tierra del Fuego y viento del sur.",
   },
 ];
-
-export const PLANNER_DESTINATION_OPTIONS: Array<{
-  value: PlannerDestinationValue;
-  label: string;
-}> = [
-  { value: "none", label: "Sin destino definido" },
-  ...PLANNER_DESTINATIONS.map((destination) => ({
-    value: destination.key,
-    label: destination.label,
-  })),
-];
-
-const plannerDestinationLabels = {
-  none: "sin destino definido",
-} as Record<PlannerDestinationValue, string>;
 
 const plannerDestinationFocus = {} as Record<
   PlannerDestinationKey,
@@ -257,23 +181,13 @@ const plannerDestinationFocus = {} as Record<
 >;
 
 for (const destination of PLANNER_DESTINATIONS) {
-  plannerDestinationLabels[destination.key] = destination.label;
   plannerDestinationFocus[destination.key] = {
     center: destination.mapCenter,
     zoom: destination.mapZoom,
   };
 }
 
-export const PLANNER_DESTINATION_LABELS = plannerDestinationLabels;
 export const PLANNER_DESTINATION_FOCUS = plannerDestinationFocus;
-
-const plannerDestinationHooks = {} as Record<PlannerDestinationKey, string>;
-
-for (const destination of PLANNER_DESTINATIONS) {
-  plannerDestinationHooks[destination.key] = destination.previewHook;
-}
-
-export const PLANNER_DESTINATION_HOOKS = plannerDestinationHooks;
 
 /** Claves legacy del planner (antes del sync con `/destinos`). */
 export const LEGACY_PLANNER_DESTINATION_ALIASES = {

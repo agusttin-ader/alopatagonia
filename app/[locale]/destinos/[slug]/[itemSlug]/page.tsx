@@ -11,6 +11,8 @@ import {
   getAllCatalogItemParams,
   getCatalogItemEntry,
 } from "@/lib/catalog/catalog-items";
+import { localizeAccommodationItem } from "@/lib/i18n/localized-accommodations";
+import { localizeDestinationCatalog } from "@/lib/i18n/localized-destinations-page";
 import { buildCatalogItemPageMetadata } from "@/lib/i18n/localized-seo-metadata";
 import { buildLocalizedPageMetadata } from "@/lib/seo-i18n";
 import { buildCatalogItemGraphJsonLd } from "@/lib/json-ld";
@@ -46,7 +48,21 @@ export default async function CatalogItemPage({ params }: PageProps) {
   const entry = getCatalogItemEntry(slug, itemSlug);
   if (!entry) notFound();
 
-  const catalogItemJsonLd = buildCatalogItemGraphJsonLd(getSiteUrl(), entry);
+  const locale = await getLocale();
+  const tNav = await getTranslations("nav");
+  const tHome = await getTranslations("homeDestinations");
+  const tAcc = await getTranslations("accommodations");
+
+  const destination = localizeDestinationCatalog(tHome, entry.destination);
+  const item =
+    entry.kind === "accommodation"
+      ? localizeAccommodationItem(tAcc, locale, destination.slug, destination.name, entry.item)
+      : entry.item;
+  const localizedEntry = { ...entry, destination, item };
+
+  const catalogItemJsonLd = buildCatalogItemGraphJsonLd(getSiteUrl(), localizedEntry, {
+    breadcrumbs: { home: tNav("home"), destinations: tNav("destinations") },
+  });
 
   return (
     <>

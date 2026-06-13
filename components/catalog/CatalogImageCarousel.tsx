@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { AppImage } from "@/components/media/AppImage";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -19,6 +20,7 @@ export function CatalogImageCarousel({
   className,
   onImageClick,
 }: CatalogImageCarouselProps) {
+  const t = useTranslations("catalog");
   const scrollerRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -70,7 +72,7 @@ export function CatalogImageCarousel({
           ref={scrollerRef}
           className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
           aria-roledescription="carousel"
-          aria-label="Galería de fotos"
+          aria-label={t("photoGallery")}
         >
           {images.map((image, index) => {
             const slideClassName = cn(
@@ -100,7 +102,7 @@ export function CatalogImageCarousel({
                 }}
                 type="button"
                 onClick={() => onImageClick?.(index)}
-                aria-label={`Ver foto ${index + 1} ampliada`}
+                aria-label={t("viewPhotoExpanded", { n: index + 1 })}
                 aria-hidden={hasMultiple && index !== activeIndex}
                 className={slideClassName}
               >
@@ -131,7 +133,7 @@ export function CatalogImageCarousel({
             type="button"
             onClick={goPrev}
             disabled={activeIndex === 0}
-            aria-label="Foto anterior"
+            aria-label={t("prevPhoto")}
             className={cn(
               "absolute left-2 top-1/2 z-10 flex size-11 -translate-y-1/2 items-center justify-center rounded-full",
               "border border-white/30 bg-black/45 text-white shadow-sm backdrop-blur-sm",
@@ -144,7 +146,7 @@ export function CatalogImageCarousel({
             type="button"
             onClick={goNext}
             disabled={activeIndex === images.length - 1}
-            aria-label="Foto siguiente"
+            aria-label={t("nextPhoto")}
             className={cn(
               "absolute right-2 top-1/2 z-10 flex size-11 -translate-y-1/2 items-center justify-center rounded-full",
               "border border-white/30 bg-black/45 text-white shadow-sm backdrop-blur-sm",
@@ -159,7 +161,7 @@ export function CatalogImageCarousel({
               <button
                 key={`dot-${image.src}-${index}`}
                 type="button"
-                aria-label={`Ir a foto ${index + 1}`}
+                aria-label={t("goToPhoto", { n: index + 1 })}
                 aria-current={index === activeIndex ? "true" : undefined}
                 onClick={() => scrollTo(index)}
                 className={cn(

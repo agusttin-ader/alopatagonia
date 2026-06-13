@@ -15,3 +15,10 @@ export const localeLabels: Record<AppLocale, string> = {
   en: "EN",
   pt: "PT",
 };
+
+/** Nombre completo para accesibilidad y UI expandida. */
+export const localeNames: Record<AppLocale, string> = {
+  es: "Español",
+  en: "English",
+  pt: "Português",
+};

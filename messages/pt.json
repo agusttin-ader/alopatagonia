@@ -9,7 +9,8 @@
     "openMenu": "Abrir menu",
     "closeMenu": "Fechar menu",
     "mainNav": "Navegação principal",
-    "language": "Idioma"
+    "language": "Idioma",
+    "selectLanguage": "Escolher idioma"
   },
   "footer": {
     "about": "Ajudamos com carro, acomodação e excursões na Patagônia — tudo por um único WhatsApp.",
@@ -123,7 +124,7 @@
     "categoriesAria": "Categorias do catálogo",
     "comingSoon": "Em breve",
     "explore": "Explorar",
-    "preview": "Ver preview",
+    "preview": "Ver prévia",
     "pillars": {
       "destinos": {
         "title": "Destinos",
@@ -294,7 +295,8 @@
     "close": "Fechar",
     "closeExpanded": "Fechar vista ampliada",
     "prevImage": "Imagem anterior",
-    "nextImage": "Próxima imagem"
+    "nextImage": "Próxima imagem",
+    "lightboxExpanded": "Vista ampliada da imagem"
   },
   "notFound": {
     "metaTitle": "Página não encontrada",
@@ -360,6 +362,17 @@
       "hostel": { "title": "Hotéis", "subtitle": "Por categoria" }
     },
     "carRentalCta": "Consultar carro",
+    "badges": {
+      "excursion": "Excursão",
+      "cabana": "Cabana",
+      "departamento": "Apartamento",
+      "hotel": "Hotel"
+    },
+    "photoGallery": "Galeria de fotos",
+    "viewPhotoExpanded": "Ver foto {n} ampliada",
+    "prevPhoto": "Foto anterior",
+    "nextPhoto": "Próxima foto",
+    "goToPhoto": "Ir para foto {n}",
     "itemDetail": {
       "askTitle": "Pergunte se há disponibilidade",
       "askBody": "No WhatsApp informamos datas, capacidade e o que há disponível na região.",

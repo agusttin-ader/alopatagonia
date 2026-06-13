@@ -5,6 +5,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { HomeIntroGate } from "@/components/motion/home-intro-gate";
+import { LocaleTransitionProvider } from "@/components/i18n/LocaleTransitionProvider";
 import { MotionProvider } from "@/components/motion/motion-provider";
 import { NoZoomLock } from "@/components/mobile/no-zoom-lock";
 import { ScrollProgressGate } from "@/components/motion/scroll-progress-gate";
@@ -58,7 +59,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 
   setRequestLocale(locale);
   const messages = await getMessages();
-  const siteGraphJsonLd = buildSiteGraphJsonLd(siteUrl);
+  const siteGraphJsonLd = buildSiteGraphJsonLd(siteUrl, locale as AppLocale);
 
   return (
     <html
@@ -123,8 +124,10 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
             <ScrollProgressGate />
             <HomeIntroGate />
             <div id="site-app-shell" className="flex min-h-dvh flex-1 flex-col">
-              <GlobalNav />
-              {children}
+              <LocaleTransitionProvider>
+                <GlobalNav />
+                {children}
+              </LocaleTransitionProvider>
             </div>
           </MotionProvider>
         </NextIntlClientProvider>

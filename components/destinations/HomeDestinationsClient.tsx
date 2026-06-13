@@ -93,7 +93,6 @@ function DestinationName({
   className?: string;
   disableScale?: boolean;
 }) {
-  const t = useTranslations("homeDestinations");
   const reduceMotion = useReducedMotion();
 
   if (disableScale || reduceMotion) {
@@ -454,7 +453,6 @@ function DestinationMobileAccordion({
   onToggle: (slug: string) => void;
   onImageClick: (destination: HomeDestinationEditorial, index: number) => void;
 }) {
-  const t = useTranslations("homeDestinations");
   const reduceMotion = useReducedMotion();
 
   return (

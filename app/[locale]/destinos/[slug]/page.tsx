@@ -11,6 +11,10 @@ import {
   getDestinationBySlug,
   getDestinationSlugs,
 } from "@/lib/catalog/destinations";
+import {
+  getLocalizedDestinationSeoFaq,
+  localizeDestinationCatalog,
+} from "@/lib/i18n/localized-destinations-page";
 import { buildDestinationPageMetadata } from "@/lib/i18n/localized-seo-metadata";
 import { buildLocalizedPageMetadata } from "@/lib/seo-i18n";
 import { buildDestinationPageGraphJsonLd } from "@/lib/json-ld";
@@ -47,11 +51,26 @@ export default async function DestinationPage({ params }: PageProps) {
   const destination = getDestinationBySlug(slug);
   if (!destination) notFound();
 
+  const locale = await getLocale();
+  const tNav = await getTranslations("nav");
+  const tHome = await getTranslations("homeDestinations");
+  const tDest = await getTranslations("destinationsPage");
+
   const seo = getDestinationSeo(slug);
-  const destinationJsonLd = buildDestinationPageGraphJsonLd(getSiteUrl(), destination, {
-    seoDescription: seo?.seoDescription,
-    faq: seo?.faq,
-  });
+  const localizedDestination = localizeDestinationCatalog(tHome, destination);
+  const localizedFaq = seo
+    ? getLocalizedDestinationSeoFaq(tDest, locale, slug, seo.faq)
+    : undefined;
+
+  const destinationJsonLd = buildDestinationPageGraphJsonLd(
+    getSiteUrl(),
+    localizedDestination,
+    {
+      seoDescription: seo?.seoDescription,
+      faq: localizedFaq,
+      breadcrumbs: { home: tNav("home"), destinations: tNav("destinations") },
+    },
+  );
 
   return (
     <>

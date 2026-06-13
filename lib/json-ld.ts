@@ -1,5 +1,8 @@
 import type { CatalogItemEntry } from "@/lib/catalog/catalog-items";
 import { PLANNER_DESTINATION_FOCUS, resolvePlannerDestinationKey } from "@/lib/constants";
+import type { AppLocale } from "@/i18n/routing";
+import type { JsonLdBreadcrumbLabels } from "@/lib/i18n/json-ld-labels";
+import { localeToSchemaLanguage as resolveSchemaLanguage } from "@/lib/i18n/json-ld-labels";
 import type { DestinationCatalog } from "@/lib/catalog/types";
 import type { SeoFaqItem } from "@/lib/seo-destinations";
 import { SITE } from "@/lib/site";
@@ -66,24 +69,24 @@ export function buildTravelAgencyJsonLd(siteUrl: string) {
   };
 }
 
-export function buildWebSiteJsonLd(siteUrl: string) {
+export function buildWebSiteJsonLd(siteUrl: string, locale: AppLocale = "es") {
   return {
     "@type": "WebSite",
     "@id": `${siteUrl}#website`,
     name: SITE.name,
     url: siteUrl,
     description: SITE.about,
-    inLanguage: "es-AR",
+    inLanguage: resolveSchemaLanguage(locale),
     publisher: {
       "@id": `${siteUrl}#organization`,
     },
   };
 }
 
-export function buildSiteGraphJsonLd(siteUrl: string) {
+export function buildSiteGraphJsonLd(siteUrl: string, locale: AppLocale = "es") {
   return {
     "@context": "https://schema.org",
-    "@graph": [buildWebSiteJsonLd(siteUrl), buildTravelAgencyJsonLd(siteUrl)],
+    "@graph": [buildWebSiteJsonLd(siteUrl, locale), buildTravelAgencyJsonLd(siteUrl)],
   };
 }
 
@@ -156,13 +159,15 @@ export function buildDestinationPageGraphJsonLd(
   options?: {
     seoDescription?: string;
     faq?: SeoFaqItem[];
+    breadcrumbs?: JsonLdBreadcrumbLabels;
   },
 ) {
+  const labels = options?.breadcrumbs ?? { home: "Inicio", destinations: "Destinos" };
   const pagePath = `/destinos/${destination.slug}`;
   const graph: Record<string, unknown>[] = [
     buildBreadcrumbJsonLd(siteUrl, [
-      { name: "Inicio", path: "/" },
-      { name: "Destinos", path: "/destinos" },
+      { name: labels.home, path: "/" },
+      { name: labels.destinations, path: "/destinos" },
       { name: destination.name, path: pagePath },
     ]),
     buildTouristDestinationJsonLd(siteUrl, destination, options?.seoDescription),
@@ -178,8 +183,15 @@ export function buildDestinationPageGraphJsonLd(
   };
 }
 
-export function buildCatalogItemGraphJsonLd(siteUrl: string, entry: CatalogItemEntry) {
+export function buildCatalogItemGraphJsonLd(
+  siteUrl: string,
+  entry: CatalogItemEntry,
+  options?: {
+    breadcrumbs?: JsonLdBreadcrumbLabels;
+  },
+) {
   const { destination, item, kind } = entry;
+  const labels = options?.breadcrumbs ?? { home: "Inicio", destinations: "Destinos" };
   const pagePath = `/destinos/${destination.slug}/${item.itemSlug}`;
   const pageUrl = new URL(pagePath, siteUrl).toString();
   const imageUrl = new URL(item.images[0]?.src ?? destination.heroImage, siteUrl).toString();
@@ -220,8 +232,8 @@ export function buildCatalogItemGraphJsonLd(siteUrl: string, entry: CatalogItemE
     "@context": "https://schema.org",
     "@graph": [
       buildBreadcrumbJsonLd(siteUrl, [
-        { name: "Inicio", path: "/" },
-        { name: "Destinos", path: "/destinos" },
+        { name: labels.home, path: "/" },
+        { name: labels.destinations, path: "/destinos" },
         { name: destination.name, path: `/destinos/${destination.slug}` },
         { name: item.name, path: pagePath },
       ]),
@@ -234,13 +246,17 @@ export function buildDestinosHubGraphJsonLd(
   siteUrl: string,
   destinations: DestinationCatalog[],
   faq: SeoFaqItem[],
+  options?: {
+    breadcrumbs?: JsonLdBreadcrumbLabels;
+  },
 ) {
+  const labels = options?.breadcrumbs ?? { home: "Inicio", destinations: "Destinos" };
   return {
     "@context": "https://schema.org",
     "@graph": [
       buildBreadcrumbJsonLd(siteUrl, [
-        { name: "Inicio", path: "/" },
-        { name: "Destinos", path: "/destinos" },
+        { name: labels.home, path: "/" },
+        { name: labels.destinations, path: "/destinos" },
       ]),
       buildItemListJsonLd(
         siteUrl,

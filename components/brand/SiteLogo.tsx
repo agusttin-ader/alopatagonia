@@ -19,6 +19,8 @@ type SiteLogoProps = {
   priority?: boolean;
   /** Muestra el nombre del sitio al lado del isotipo. */
   showWordmark?: boolean;
+  /** Etiqueta de accesibilidad del enlace al inicio. */
+  homeLabel?: string;
 };
 
 export function SiteLogo({
@@ -27,6 +29,7 @@ export function SiteLogo({
   linked = true,
   priority,
   showWordmark = false,
+  homeLabel = "Inicio",
 }: SiteLogoProps) {
   const src = variant === "onDark" ? SITE.logo : SITE.logoOnLight;
 
@@ -78,7 +81,7 @@ export function SiteLogo({
           ? "focus-visible:ring-white/65 focus-visible:ring-offset-transparent"
           : "focus-visible:ring-primary/55",
       )}
-      aria-label={`${SITE.name} — Inicio`}
+      aria-label={`${SITE.name} — ${homeLabel}`}
     >
       {content}
     </Link>

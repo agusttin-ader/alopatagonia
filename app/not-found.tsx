@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function RootNotFound() {
   return (
     <main className="flex min-h-dvh flex-col items-center justify-center px-4 py-28 text-center">
@@ -8,12 +10,12 @@ export default function RootNotFound() {
       <p className="mt-4 max-w-md text-muted-foreground">
         Puede que el enlace esté desactualizado. Probá desde el inicio.
       </p>
-      <a
+      <Link
         href="/"
         className="mt-8 rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
       >
         Ir al inicio
-      </a>
+      </Link>
     </main>
   );
 }

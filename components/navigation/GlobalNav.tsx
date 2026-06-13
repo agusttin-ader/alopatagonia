@@ -225,6 +225,7 @@ export function GlobalNav() {
             linked
             priority
             showWordmark
+            homeLabel={t("home")}
             variant={
               MOBILE_MAGAZINE_G_ENABLED && mobileHeroHeader && !mobileOpen
                 ? "onDark"
@@ -298,7 +299,7 @@ export function GlobalNav() {
               "h-18 border-border/80 shadow-[0_10px_24px_-22px_rgba(0,0,0,0.5)]",
           )}
         >
-          <SiteLogo linked priority showWordmark className="shrink-0" />
+          <SiteLogo linked priority showWordmark homeLabel={t("home")} className="shrink-0" />
 
           <div className="ml-auto hidden min-w-0 items-center gap-2 md:flex lg:gap-3">
             {NAV_DESKTOP_LINKS.map((link) => (
@@ -357,7 +358,7 @@ export function GlobalNav() {
                     className="inline-flex shrink-0 items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2"
                     aria-label={SITE.name}
                   >
-                    <SiteLogo linked={false} showWordmark className="h-12" />
+                    <SiteLogo linked={false} showWordmark homeLabel={t("home")} className="h-12" />
                   </Link>
                   <Button
                     type="button"
@@ -421,7 +422,7 @@ export function GlobalNav() {
                   ))}
                 </motion.div>
                 <div className="mt-6 border-t border-border/60 pt-5">
-                  <LocaleSwitcher />
+                  <LocaleSwitcher layout="drawer" />
                 </div>
               </div>
             </motion.div>

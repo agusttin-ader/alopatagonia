@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 
 import { EscapadasExpressMedia } from "@/components/about/EscapadasExpressMedia";
 import type { EscapadaExpressPromo } from "@/lib/escapadas-express";
+import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
 const CARD_EASE = [0.22, 1, 0.36, 1] as const;
@@ -62,7 +63,7 @@ export function EscapadasExpressThumbnailCard({
           media={promo.media}
           isActive={false}
           qualityPreset="card"
-          sizes="(max-width: 640px) 108px, 128px"
+          sizes={IMAGE_SIZES.promoThumbnail}
         />
       </motion.div>
 

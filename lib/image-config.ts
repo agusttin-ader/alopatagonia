@@ -39,6 +39,9 @@ export const IMAGE_SIZES = {
   lightbox:
     "(min-width: 3840px) 1680px, (min-width: 2560px) 1480px, (min-width: 1920px) 1280px, (min-width: 1280px) 1200px, 92vw",
   aboutUsBackground: "100vw",
+  destinationHero: "100vw",
+  promoCover: "100vw",
+  promoThumbnail: "(max-width: 640px) 108px, 128px",
   logo: "160px",
   avatar: "36px",
 } as const;

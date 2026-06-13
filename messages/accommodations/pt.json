@@ -1,3 +1,397 @@
 {
-  "items": {}
+  "items": {
+    "bariloche": {
+      "arelauquen": {
+        "description": "Casa em Villa Arelauquen, dentro de condomínio fechado. Capacidade para até 5 hóspedes.",
+        "highlights": [
+          "Cozinha completa com forno a gás, geladeira com freezer, lavadora, cafeteira espresso e roupa de cama e banho",
+          "Smart TV em ambos os quartos e internet a fibra óptica",
+          "Aquecimento a caldeira inteligente e churrasqueira no deck",
+          "Estacionamento privativo, amplo jardim e fogueira",
+          "A 150 m do Lago Gutiérrez"
+        ]
+      },
+      "cab-2-pax": {
+        "description": "Chalé no km 7 da Av. Pioneros. Capacidade para 2 hóspedes.",
+        "highlights": [
+          "Cozinha completa com geladeira com freezer, lavadora, cafeteira e roupa de cama e banho",
+          "Smart TV e internet",
+          "Aquecimento a caldeira inteligente e churrasqueira no deck do chalé",
+          "Estacionamento, amplo jardim e fogueira"
+        ]
+      },
+      "cab-sauco-grande": {
+        "description": "Casa no km 7 da Av. Pioneros. Capacidade para até 9 hóspedes.",
+        "highlights": [
+          "Cozinha completa com forno a gás, geladeira com freezer, cafeteira, micro-ondas, torradeira e roupa de cama e banho",
+          "3 quartos, um em suíte com jacuzzi, 2 banheiros",
+          "Smart TV em ambos os quartos e na sala de estar, e internet",
+          "Aquecimento a gás e churrasqueira no deck do chalé",
+          "Estacionamento no nível superior e amplas áreas de jardim",
+          "Vista para a baía de Playa Bonita"
+        ]
+      },
+      "cabana-otto": {
+        "description": "Casa no km 5 da Av. Pioneros. Capacidade para até 5 hóspedes.",
+        "highlights": [
+          "Cozinha completa com forno a gás, geladeira com freezer, cafeteira, micro-ondas, torradeira, lavadora e roupa de cama e banho",
+          "2 quartos, 1 banheiro",
+          "TV no quarto e na sala de estar, e internet",
+          "Aquecimento a gás e churrasqueira",
+          "Estacionamento e amplas áreas de jardim"
+        ]
+      },
+      "cabanas-sauco": {
+        "description": "Casa no km 7 da Av. Pioneros. Capacidade para até 6 hóspedes.",
+        "highlights": [
+          "Cozinha completa com forno a gás, frigobar, cafeteira, micro-ondas, torradeira e roupa de cama e banho",
+          "2 quartos, 1 banheiro",
+          "TV no quarto e na sala de estar, e internet",
+          "Aquecimento a gás e churrasqueira estilo chulengo no deck do chalé",
+          "Estacionamento no nível superior e amplas áreas de jardim",
+          "Vista para a baía de Playa Bonita"
+        ]
+      },
+      "casa-calma": {
+        "description": "Casa no km 7 da Av. Pioneros. Capacidade para até 3 hóspedes.",
+        "highlights": [
+          "Cozinha completa com forno a gás, geladeira com freezer, cafeteira, micro-ondas, torradeira, lavadora e roupa de cama e banho",
+          "2 quartos, 2 banheiros",
+          "TV no quarto e na sala de estar, e internet",
+          "Aquecimento a gás e a lenha, churrasqueira no jardim",
+          "Estacionamento e amplas áreas externas"
+        ]
+      },
+      "dpto-1": {
+        "description": "Apartamento estúdio central com capacidade para 2 hóspedes.",
+        "highlights": [
+          "Cozinha completa, frigobar e roupa de cama e banho",
+          "Smart TV, internet e aquecimento central",
+          "Localização privilegiada em frente ao Centro Cívico com excelentes vistas ao lago"
+        ]
+      },
+      "dpto-2": {
+        "description": "Apartamento estúdio central com capacidade para 2 hóspedes.",
+        "highlights": [
+          "Cozinha completa, frigobar e roupa de cama e banho",
+          "Smart TV, internet e aquecimento central",
+          "Localização privilegiada em frente ao Centro Cívico com excelentes vistas ao lago"
+        ]
+      },
+      "dpto-3": {
+        "description": "Apartamento estúdio central com capacidade para 2 hóspedes.",
+        "highlights": [
+          "Cozinha completa, frigobar e roupa de cama e banho",
+          "Smart TV, internet e aquecimento central",
+          "Localização privilegiada em frente ao Centro Cívico com excelentes vistas ao lago"
+        ]
+      },
+      "dpto-4": {
+        "description": "Apartamento estúdio central com capacidade para 2 hóspedes.",
+        "highlights": [
+          "Cozinha completa, frigobar e roupa de cama e banho",
+          "Smart TV, internet e aquecimento central",
+          "Localização privilegiada em frente ao Centro Cívico com excelentes vistas ao lago"
+        ]
+      },
+      "dpto-5": {
+        "description": "Apartamento estúdio central com capacidade para 2 hóspedes.",
+        "highlights": [
+          "Cozinha completa, frigobar e roupa de cama e banho",
+          "Smart TV, internet e aquecimento central",
+          "Localização privilegiada em frente ao Centro Cívico com excelentes vistas ao lago"
+        ]
+      },
+      "dpto-6": {
+        "description": "Apartamento estúdio central com capacidade para 2 hóspedes.",
+        "highlights": [
+          "Cozinha completa, frigobar e roupa de cama e banho",
+          "Smart TV, internet e aquecimento central",
+          "Localização privilegiada em frente ao Centro Cívico com excelentes vistas ao lago"
+        ]
+      },
+      "dpto-4-pax": {
+        "description": "Apartamento estúdio central com capacidade para 2 a 4 hóspedes.",
+        "highlights": [
+          "Cozinha completa e roupa de cama e banho",
+          "Smart TV, internet e aquecimento central",
+          "Localização privilegiada em frente ao Centro Cívico com excelentes vistas"
+        ]
+      },
+      "dpto-cerros": {
+        "description": "Apartamento estúdio central com capacidade para 2 a 4 hóspedes.",
+        "highlights": [
+          "Cozinha completa e roupa de cama e banho",
+          "Smart TV, internet e aquecimento central",
+          "Localização privilegiada em frente ao Centro Cívico com excelentes vistas"
+        ]
+      },
+      "dpto-lago": {
+        "description": "Apartamento estúdio central com capacidade para 2 a 4 hóspedes.",
+        "highlights": [
+          "Cozinha completa e roupa de cama e banho",
+          "Smart TV, internet e aquecimento central",
+          "Localização privilegiada em frente ao Centro Cívico com excelentes vistas"
+        ]
+      },
+      "dpto-huapi": {
+        "description": "Apartamento estúdio central com capacidade para 2 a 4 hóspedes.",
+        "highlights": [
+          "Cozinha completa e roupa de cama e banho",
+          "Smart TV, internet e aquecimento central",
+          "Localização privilegiada em frente ao Centro Cívico com excelentes vistas"
+        ]
+      },
+      "dpto-luxury": {
+        "description": "Apartamento central com capacidade para 2 a 5 hóspedes.",
+        "highlights": [
+          "Cozinha completa com forno a gás, geladeira com freezer e roupa de cama e banho",
+          "Smart TV, internet e aquecimento central",
+          "Localização privilegiada em frente ao Centro Cívico com vistas panorâmicas de 360°",
+          "Acabamentos e detalhes de categoria 4 estrelas"
+        ]
+      },
+      "dpto-espana": {
+        "description": "Apartamento central com capacidade para até 4 hóspedes.",
+        "highlights": [
+          "Cozinha completa com forno a gás, geladeira com freezer, cafeteira, micro-ondas, torradeira e roupa de cama e banho",
+          "2 quartos, 2 banheiros",
+          "TV no quarto e na sala de estar, e internet",
+          "Aquecimento a gás",
+          "Varanda terraço com vista ao lago"
+        ]
+      },
+      "hotel-1": {
+        "description": "Hotel de localização central, a uma quadra do lago e três da zona comercial pedestre do centro de Bariloche.",
+        "highlights": [
+          "Quartos para 2 a 5 hóspedes com banheiro privativo",
+          "Café da manhã e acesso à piscina incluídos na tarifa"
+        ]
+      },
+      "hotel-4": {
+        "description": "Hotel 4 estrelas de localização central com praia e acesso ao lago, a 3 quadras da zona comercial pedestre do Centro Cívico de Bariloche.",
+        "highlights": [
+          "Quartos para 2 a 4 hóspedes com banheiro privativo e hidromassagem",
+          "Área coberta de jogos e entretenimento",
+          "Sala de leitura e cafeteria com vista ao lago",
+          "Café da manhã buffet e acesso à piscina incluídos na tarifa",
+          "Estacionamento"
+        ]
+      }
+    },
+    "san-martin": {
+      "apart-rotui": {
+        "description": "O Rotuí Apart Hotel convida você a desfrutar de uma estadia acolhedora a apenas 200 m da avenida principal da cidade. Uma localização estratégica onde o conforto e o suave murmúrio de 120 m de costa de arroio se unem para proporcionar um descanso único.",
+        "highlights": [
+          "Apartamentos para 2 hóspedes com serviço de limpeza e café da manhã"
+        ]
+      },
+      "viejo-esquiador": {
+        "description": "Conheça um dos hotéis mais icônicos e emblemáticos de San Martín de los Andes. El Viejo Esquiador é um hotel alpino situado no coração da cidade, em posição privilegiada sobre a avenida principal e a metros do centro cívico.",
+        "highlights": [
+          "Quartos para 2 a 4 hóspedes",
+          "Café da manhã incluído na tarifa"
+        ]
+      },
+      "hosteria-y-cabanas": {
+        "name": "La Fontaine Apart e Hotel",
+        "description": "Nosso hotel está localizado a 400 m da avenida principal de San Martín de los Andes — um lugar ideal, central e em contato com a natureza para uma estadia inesquecível.",
+        "highlights": [
+          "Amplo parque com costa de arroio e playground",
+          "Piscina aquecida e churrasqueira coberta com cozinha industrial",
+          "Quartos e apartamentos para 2 a 4 hóspedes"
+        ]
+      },
+      "rotui-luxury": {
+        "name": "Rotui Luxury Village",
+        "description": "Em San Martín de los Andes, bela aldeia de montanha, o Rotuí oferece glamorosas mansões dos sonhos, chalés e apartamentos exclusivos para visitantes que apreciam detalhes refinados na decoração, conforto, tranquilidade e privacidade.",
+        "highlights": [
+          "Chalés com equipamentos de excelência, capacidade para 2 a 12 hóspedes",
+          "Piscinas, saunas e cascatas",
+          "Parque e vistas únicas de San Martín de los Andes, a apenas 5 minutos do centro da cidade"
+        ]
+      },
+      "dptos-lago": {
+        "name": "Dptos. Lago",
+        "description": "Apartamentos com capacidade para 2 a 6 hóspedes.",
+        "highlights": [
+          "Cozinha completa com forno a gás, geladeira com freezer, 2 quartos e 2 banheiros",
+          "Roupa de cama e banho",
+          "Localização privilegiada em frente ao Lago Lácar"
+        ]
+      }
+    },
+    "villa-la-angostura": {
+      "cab-4-pax": {
+        "description": "Chalé com capacidade para 4 hóspedes.",
+        "highlights": [
+          "Cozinha completa com forno a gás, geladeira com freezer, lavadora e roupa de cama e banho",
+          "Smart TV, internet, 2 quartos e 1 banheiro",
+          "Aquecimento a gás, amplo jardim com solário, fogueira e estacionamento privativo",
+          "Localizado na área dos portos de Bahía Mansa e Brava"
+        ]
+      },
+      "cab-6-pax": {
+        "description": "Chalé com capacidade para 6 hóspedes.",
+        "highlights": [
+          "Cozinha completa com forno a gás, geladeira com freezer, lavadora e roupa de cama e banho",
+          "Smart TV, internet, 2 quartos, mezanino e 2 banheiros",
+          "Aquecimento a gás e lareira a lenha, amplo jardim com solário e fogueira",
+          "Churrasqueira, mesa e cadeiras externas, estacionamento privativo",
+          "Localizado na área dos portos de Bahía Mansa e Brava"
+        ]
+      }
+    },
+    "el-calafate": {
+      "casa-grande": {
+        "name": "Casa 6 pax",
+        "description": "Casa com capacidade para 6 hóspedes.",
+        "highlights": [
+          "Cozinha completa com forno a gás, geladeira com freezer e roupa de cama e banho",
+          "Smart TV, internet, 2 quartos e 2 banheiros",
+          "Aquecimento a gás, jardim com churrasqueira, mesa e cadeiras externas"
+        ]
+      },
+      "dpto-4-pax": {
+        "name": "Dpto 4 pax",
+        "description": "Apartamento com capacidade para até 4 hóspedes.",
+        "highlights": [
+          "Cozinha completa com forno a gás, geladeira com freezer, cafeteira, micro-ondas, torradeira e roupa de cama e banho",
+          "2 quartos, 1 banheiro, TV e internet",
+          "Aquecimento a gás"
+        ]
+      },
+      "hosteria": {
+        "name": "Pousada de Montanha",
+        "description": "Pousada e chalés de montanha em El Calafate.",
+        "highlights": [
+          "Quartos com vista ao lago e hidromassagem — Standard, Superiores ou Suítes",
+          "Chalés com capacidade para até 7 hóspedes, lareira, churrasqueira e equipamento completo",
+          "Serviço personalizado e de alta qualidade"
+        ]
+      },
+      "hotel-1": {
+        "name": "Hotel 1",
+        "description": "Hotel central com quartos para 2 a 4 hóspedes.",
+        "highlights": [
+          "Café da manhã incluído na tarifa",
+          "Excelente localização a metros da Av. del Libertador e na zona gastronômica de El Calafate"
+        ]
+      },
+      "hotel-4": {
+        "name": "Hotel 4",
+        "description": "Hotel 4 estrelas com quartos duplos, triplos e comunicantes.",
+        "highlights": [
+          "Área de Spa, restaurante gourmet, cafeteria e café da manhã buffet incluído",
+          "Localizado nas periferias de El Calafate, bicicletas disponíveis para explorar a região, aceita animais",
+          "Transfers gratuitos ao centro em diferentes horários",
+          "Vista incrível para o Lago Argentino"
+        ]
+      }
+    },
+    "puerto-madryn": {
+      "madryn-hotel-4": {
+        "name": "Hotel 4",
+        "description": "Hotel 4 estrelas com quartos duplos, triplos e comunicantes.",
+        "highlights": [
+          "Área de Spa, restaurante gourmet, cafeteria e piscina aquecida",
+          "Café da manhã buffet incluído na tarifa",
+          "Localizado à beira-mar, com vista incrível para o Mar Argentino"
+        ]
+      }
+    },
+    "el-chalten": {
+      "cabanas": {
+        "name": "Chalés",
+        "description": "Chalés para 2 a 6 hóspedes.",
+        "highlights": [
+          "Equipamento completo, cozinha equipada e roupa de cama e banho",
+          "TV e internet, aquecimento a caldeira",
+          "Excelente localização, a metros da Av. Principal e a 100 m do início da trilha para Laguna Torre"
+        ]
+      },
+      "complejo": {
+        "name": "Complexo de Chalés",
+        "description": "Chalés para 2 a 6 hóspedes.",
+        "highlights": [
+          "Equipamento completo, cozinha equipada e roupa de cama e banho",
+          "TV e internet, aquecimento a caldeira",
+          "Excelente localização, a metros da Av. Principal e a 200 m do início da trilha para Laguna Torre",
+          "Área de churrasco coberta, churrasqueira e jardim"
+        ]
+      }
+    },
+    "ushuaia": {
+      "dpto-3-amb": {
+        "name": "Dptos. 5 pax",
+        "description": "Apartamento com capacidade para 2 a 5 hóspedes.",
+        "highlights": [
+          "Cozinha completa com forno a gás, geladeira com freezer e lavadora",
+          "2 quartos, 1 banheiro, roupa de cama e banho",
+          "Localizado a poucos minutos do centro comercial de Ushuaia"
+        ]
+      },
+      "dpto-2-amb": {
+        "name": "Dptos. 2/3 pax",
+        "description": "Apartamento com capacidade para 2 a 3 hóspedes.",
+        "highlights": [
+          "Cozinha completa com forno a gás, geladeira com freezer e lavadora",
+          "1 quarto, 1 banheiro, roupa de cama e banho",
+          "Localizado a poucos minutos do centro comercial de Ushuaia"
+        ]
+      },
+      "hotel-3": {
+        "name": "Hotel 3",
+        "description": "Hotel 3 estrelas com quartos duplos, triplos e comunicantes.",
+        "highlights": [
+          "Área de Spa, restaurante gourmet, cafeteria e piscina aquecida",
+          "Café da manhã buffet incluído na tarifa",
+          "Localizado à beira-mar, com vista incrível para o Canal Beagle"
+        ]
+      },
+      "hotel-4": {
+        "name": "Hotel 4",
+        "description": "Hotel 4 estrelas com quartos duplos, triplos e comunicantes.",
+        "highlights": [
+          "Área de Spa, restaurante gourmet e cafeteria",
+          "Café da manhã buffet incluído na tarifa",
+          "Excelente localização central, com vista incrível para o Canal Beagle a partir da sala de café da manhã"
+        ]
+      }
+    },
+    "esquel": {
+      "hosteria-esquel": {
+        "name": "Pousada de Montanha Esquel",
+        "description": "Pousada com quartos para 2 a 5 hóspedes.",
+        "highlights": [
+          "Café da manhã artesanal e meia pensão incluídos na tarifa",
+          "Atividades como observação de fauna, trekking, cavalgadas e tirolesa",
+          "Localizada a 5 minutos da entrada Norte do Parque Nacional Los Alerces"
+        ]
+      },
+      "hosteria-trevelin": {
+        "name": "Pousada de Montanha Trevelin",
+        "description": "Pousada com quartos para 2 a 5 hóspedes.",
+        "highlights": [
+          "Café da manhã artesanal incluído na tarifa",
+          "Piscina coberta aquecida e jacuzzi",
+          "Amplo parque verde com área de leitura, descanso, churrasqueiras e mesas",
+          "Atividades como observação de fauna, trekking e cavalgadas",
+          "Localizada a 5 minutos do centro de Trevelin e da entrada Norte do Parque Nacional Los Alerces"
+        ]
+      }
+    },
+    "traful": {
+      "cab-costa": {
+        "name": "Chalés Costa",
+        "description": "Chalés com capacidade para 2 a 3 hóspedes.",
+        "highlights": [
+          "Cozinha completa com frigobar com freezer, fogão e micro-ondas; banheiro",
+          "Roupa de cama e banho; deck com solário",
+          "Situados à beira do lago, com praia, amplo parque e vista incrível para o Lago Traful",
+          "No local há restaurante e cafeteria com ampla carta"
+        ]
+      }
+    }
+  }
 }

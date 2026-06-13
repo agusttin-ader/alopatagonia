@@ -91,7 +91,7 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
                   priority
                   isActive
                   qualityPreset="hero"
-                  sizes={IMAGE_SIZES.viewport}
+                  sizes={IMAGE_SIZES.promoCover}
                 />
               </div>
             </motion.div>
@@ -111,7 +111,7 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
                     priority
                     isActive
                     qualityPreset="hero"
-                    sizes={IMAGE_SIZES.viewport}
+                    sizes={IMAGE_SIZES.promoCover}
                   />
                 </div>
               </motion.div>
@@ -246,10 +246,6 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
                             promo={promo}
                             index={index}
                             onSelect={() => goTo(index)}
-                            layoutId={
-                              useSharedLayout ? `promo-cover-${promo.id}` : undefined
-                            }
-                            layoutTransition={LAYOUT_TWEEN}
                           />
                         );
                       })}

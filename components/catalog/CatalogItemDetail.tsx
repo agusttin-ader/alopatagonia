@@ -5,7 +5,7 @@ import { CatalogDetailGallery } from "@/components/catalog/CatalogDetailGallery"
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import type { CatalogItemEntry } from "@/lib/catalog/catalog-items";
-import { getCatalogItemBadge } from "@/lib/catalog/catalog-items";
+import { getLocalizedCatalogItemBadge } from "@/lib/i18n/localized-catalog";
 import { buildCatalogWhatsAppMessage } from "@/lib/catalog/placeholders";
 import { getWhatsAppUrl } from "@/lib/constants";
 import { localizeAccommodationItem } from "@/lib/i18n/localized-accommodations";
@@ -44,7 +44,7 @@ export async function CatalogItemDetail({ entry: rawEntry }: CatalogItemDetailPr
       : rawEntry.item;
   const entry = { ...rawEntry, destination, item };
 
-  const badge = getCatalogItemBadge(entry);
+  const badge = getLocalizedCatalogItemBadge(t, entry);
   const whatsAppHref = getWhatsAppUrl(
     buildCatalogWhatsAppMessage(item.name, destination.name),
   );

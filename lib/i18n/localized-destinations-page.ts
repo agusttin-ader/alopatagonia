@@ -1,11 +1,13 @@
 import type { getTranslations } from "next-intl/server";
 
 import type { ClientDestinationPageCopy, ClientDestinationZoneCopy, ClientFaqItem } from "@/lib/client-protected-copy";
+import type { SeoFaqItem } from "@/lib/seo-destinations";
 import {
   CLIENT_DESTINATIONS_INDEX_FAQ_COPY,
   getClientDestinationPageCopy,
   getClientDestinationZoneCopy,
 } from "@/lib/client-protected-copy";
+import { getDestinationSeoFaqI18n } from "@/lib/i18n/destination-seo-faq-i18n";
 import type { DestinationCatalog } from "@/lib/catalog/types";
 import type { DestinationZoneGroup } from "@/lib/catalog/destination-zones";
 
@@ -53,6 +55,25 @@ export function getLocalizedDestinationsIndexFaq(
 
   const items = t.raw("faq") as ClientFaqItem[];
   return items;
+}
+
+export function getLocalizedDestinationSeoFaq(
+  t: Translator,
+  locale: string,
+  slug: string,
+  fallback: readonly SeoFaqItem[],
+): SeoFaqItem[] {
+  if (locale === "es") return [...fallback];
+
+  if (locale === "en" || locale === "pt") {
+    const i18nFaq = getDestinationSeoFaqI18n(locale, slug);
+    if (i18nFaq) return i18nFaq;
+  }
+
+  const key = `seoFaq.${slug}`;
+  if (!t.has(key)) return [...fallback];
+
+  return t.raw(key) as SeoFaqItem[];
 }
 
 export function localizeDestinationCatalog(

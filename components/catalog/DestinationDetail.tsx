@@ -13,9 +13,11 @@ import { localizeAccommodationItem } from "@/lib/i18n/localized-accommodations";
 import {
   catalogAccommodationCount,
   catalogExcursionCount,
+  localizeCarRental,
 } from "@/lib/i18n/localized-catalog";
 import {
   getLocalizedDestinationPageCopy,
+  getLocalizedDestinationSeoFaq,
   localizeDestinationCatalog,
 } from "@/lib/i18n/localized-destinations-page";
 import { IMAGE_SIZES } from "@/lib/image-config";
@@ -43,8 +45,12 @@ export async function DestinationDetail({
   const tAcc = await getTranslations("accommodations");
 
   const destination = localizeDestinationCatalog(tHome, rawDestination);
+  const carRental = localizeCarRental(tDest, destination, locale);
   const carWhatsApp = getWhatsAppUrl(buildCarRentalWhatsAppMessage(destination.name));
   const seo = getDestinationSeo(destination.slug);
+  const localizedFaq = seo
+    ? getLocalizedDestinationSeoFaq(tDest, locale, destination.slug, seo.faq)
+    : undefined;
   const clientPageCopy = getLocalizedDestinationPageCopy(tDest, locale, destination.slug);
   const showIntroSection = Boolean(clientPageCopy || seo);
 
@@ -65,7 +71,6 @@ export async function DestinationDetail({
         className={cn(
           "relative min-h-[40vh] overflow-hidden pb-10",
           SHELL_PAGE_PT,
-          SHELL_PX,
           "min-[1920px]:min-h-[44vh] min-[2560px]:min-h-[46vh]",
         )}
       >
@@ -76,10 +81,10 @@ export async function DestinationDetail({
           priority
           qualityPreset="hero"
           className="object-cover"
-          sizes={IMAGE_SIZES.viewport}
+          sizes={IMAGE_SIZES.destinationHero}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/50 to-black/30" />
-        <div className={cn("relative", SHELL_MAX)}>
+        <div className={cn("relative", SHELL_MAX, SHELL_PX)}>
           <nav className="mb-4 text-sm text-white/85 min-[1920px]:text-[0.9375rem]">
             <Link href="/" className="hover:text-white">
               {tNav("home")}
@@ -178,11 +183,11 @@ export async function DestinationDetail({
               <h2 id="auto-heading" className={cn("font-heading", SECTION_TITLE)}>
                 {tCatalog("sections.carRental")}
               </h2>
-              <p className="mt-3 text-muted-foreground">{destination.carRental.description}</p>
+              <p className="mt-3 text-muted-foreground">{carRental.description}</p>
               <p className="mt-2 text-sm font-medium">
                 {tCatalog("sections.operator")}{" "}
                 <span className="font-normal text-muted-foreground">
-                  {destination.carRental.operatorName}
+                  {carRental.operatorName}
                 </span>
               </p>
             </div>
@@ -197,9 +202,9 @@ export async function DestinationDetail({
           </div>
         </section>
 
-        {seo?.faq.length ? (
+        {localizedFaq?.length ? (
           <FaqSection
-            items={seo.faq}
+            items={localizedFaq}
             title={tCatalog("faqAbout", { destination: destination.name })}
             className="border-t border-border/70 pt-12 lg:pt-14"
           />

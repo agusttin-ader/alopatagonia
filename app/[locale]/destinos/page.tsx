@@ -10,7 +10,7 @@ import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { getAllDestinations } from "@/lib/catalog/destinations";
 import { buildDestinosHubGraphJsonLd } from "@/lib/json-ld";
-import { getLocalizedDestinationsIndexFaq } from "@/lib/i18n/localized-destinations-page";
+import { getLocalizedDestinationsIndexFaq, localizeDestinationCatalog } from "@/lib/i18n/localized-destinations-page";
 import { buildHubPageMetadata } from "@/lib/i18n/localized-seo-metadata";
 import { PAGE_TITLE, SHELL_PAGE_PT, siteShell } from "@/lib/layout-shell";
 import { getSiteUrl } from "@/lib/site-url";
@@ -25,11 +25,22 @@ export default async function DestinosPage() {
   const t = await getTranslations("destinationsPage");
   const tNav = await getTranslations("nav");
   const tCatalog = await getTranslations("catalog");
+  const tHome = await getTranslations("homeDestinations");
   const locale = await getLocale();
 
   const destinations = getAllDestinations();
   const faq = getLocalizedDestinationsIndexFaq(t, locale);
-  const destinosGraphJsonLd = buildDestinosHubGraphJsonLd(getSiteUrl(), destinations, faq);
+  const localizedDestinations = destinations.map((destination) =>
+    localizeDestinationCatalog(tHome, destination),
+  );
+  const destinosGraphJsonLd = buildDestinosHubGraphJsonLd(
+    getSiteUrl(),
+    localizedDestinations,
+    faq,
+    {
+      breadcrumbs: { home: tNav("home"), destinations: tNav("destinations") },
+    },
+  );
 
   return (
     <>

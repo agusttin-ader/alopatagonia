@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { AppImage } from "@/components/media/AppImage";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
@@ -48,9 +49,11 @@ export function ImageLightbox({
   activeIndex,
   onClose,
   onIndexChange,
-  ariaLabel = "Vista ampliada de imagen",
+  ariaLabel,
 }: ImageLightboxProps) {
+  const t = useTranslations("common");
   const reduceMotion = useReducedMotion();
+  const resolvedAriaLabel = ariaLabel ?? t("lightboxExpanded");
   const [direction, setDirection] = useState(0);
 
   const activeImage = activeIndex !== null ? images[activeIndex] : null;
@@ -104,7 +107,7 @@ export function ImageLightbox({
           className="fixed inset-0 z-[1450] flex items-center justify-center bg-black/88 p-3 min-[1920px]:p-5 min-[2560px]:p-6"
           role="dialog"
           aria-modal="true"
-          aria-label={ariaLabel}
+          aria-label={resolvedAriaLabel}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -114,7 +117,7 @@ export function ImageLightbox({
             type="button"
             className="absolute inset-0"
             onClick={onClose}
-            aria-label="Cerrar vista ampliada"
+            aria-label={t("closeExpanded")}
           />
 
           <button
@@ -124,7 +127,7 @@ export function ImageLightbox({
               "absolute right-[max(0.75rem,env(safe-area-inset-right))] top-[max(0.75rem,env(safe-area-inset-top))] z-[2] inline-flex items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black",
               LIGHTBOX_CONTROL_SIZE,
             )}
-            aria-label="Cerrar"
+            aria-label={t("close")}
           >
             <X className="size-5 min-[1920px]:size-6" />
           </button>
@@ -141,7 +144,7 @@ export function ImageLightbox({
                   "absolute left-[max(0.45rem,env(safe-area-inset-left))] top-1/2 z-[2] hidden -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black md:inline-flex sm:left-4",
                   LIGHTBOX_CONTROL_SIZE,
                 )}
-                aria-label="Imagen anterior"
+                aria-label={t("prevImage")}
               >
                 <ChevronLeft className="size-6" />
               </button>
@@ -155,7 +158,7 @@ export function ImageLightbox({
                   "absolute right-[max(0.45rem,env(safe-area-inset-right))] top-1/2 z-[2] hidden -translate-y-1/2 items-center justify-center rounded-full bg-white/12 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black md:inline-flex sm:right-4",
                   LIGHTBOX_CONTROL_SIZE,
                 )}
-                aria-label="Imagen siguiente"
+                aria-label={t("nextImage")}
               >
                 <ChevronRight className="size-6" />
               </button>

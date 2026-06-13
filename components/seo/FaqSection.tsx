@@ -8,10 +8,10 @@ type FaqSectionProps = {
 
 export function FaqSection({
   items,
-  title = "Preguntas frecuentes",
+  title,
   className,
 }: FaqSectionProps) {
-  if (items.length === 0) return null;
+  if (items.length === 0 || !title) return null;
 
   return (
     <section

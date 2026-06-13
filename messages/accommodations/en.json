@@ -1,3 +1,397 @@
 {
-  "items": {}
+  "items": {
+    "bariloche": {
+      "arelauquen": {
+        "description": "House in Villa Arelauquen, within a private gated community. Capacity for up to 5 guests.",
+        "highlights": [
+          "Fully equipped kitchen with gas oven, freezer fridge, washing machine, espresso maker, and bed & bath linens",
+          "Smart TV in both rooms and fiber optic internet",
+          "Smart boiler heating and BBQ grill on the deck",
+          "Private parking, spacious garden, and fire pit",
+          "150 m from Lago Gutiérrez"
+        ]
+      },
+      "cab-2-pax": {
+        "description": "Cabin at km 7 of Av. Pioneros. Capacity for 2 guests.",
+        "highlights": [
+          "Fully equipped kitchen with freezer fridge, washing machine, coffee maker, and bed & bath linens",
+          "Smart TV and high-speed internet",
+          "Smart boiler heating and BBQ grill on the cabin deck",
+          "Parking, spacious garden, and fire pit"
+        ]
+      },
+      "cab-sauco-grande": {
+        "description": "House at km 7 of Av. Pioneros. Capacity for up to 9 guests.",
+        "highlights": [
+          "Fully equipped kitchen with gas oven, freezer fridge, coffee maker, microwave, toaster, and bed & bath linens",
+          "3 bedrooms, one en suite with jacuzzi, 2 bathrooms",
+          "Smart TV in both bedrooms and living room, and internet",
+          "Gas heating and BBQ grill on the cabin deck",
+          "Upper-level parking and spacious garden areas",
+          "Views of Playa Bonita bay"
+        ]
+      },
+      "cabana-otto": {
+        "description": "House at km 5 of Av. Pioneros. Capacity for up to 5 guests.",
+        "highlights": [
+          "Fully equipped kitchen with gas oven, freezer fridge, coffee maker, microwave, toaster, washing machine, and bed & bath linens",
+          "2 bedrooms, 1 bathroom",
+          "TV in bedroom and living room, and internet",
+          "Gas heating and BBQ grill",
+          "Parking and spacious garden areas"
+        ]
+      },
+      "cabanas-sauco": {
+        "description": "House at km 7 of Av. Pioneros. Capacity for up to 6 guests.",
+        "highlights": [
+          "Fully equipped kitchen with gas oven, mini-fridge, coffee maker, microwave, toaster, and bed & bath linens",
+          "2 bedrooms, 1 bathroom",
+          "TV in bedroom and living room, and internet",
+          "Gas heating and chulengo-style BBQ grill on the cabin deck",
+          "Upper-level parking and spacious garden areas",
+          "Views of Playa Bonita bay"
+        ]
+      },
+      "casa-calma": {
+        "description": "House at km 7 of Av. Pioneros. Capacity for up to 3 guests.",
+        "highlights": [
+          "Fully equipped kitchen with gas oven, freezer fridge, coffee maker, microwave, toaster, washing machine, and bed & bath linens",
+          "2 bedrooms, 2 bathrooms",
+          "TV in bedroom and living room, and internet",
+          "Gas and wood-burning heating, BBQ grill in the garden",
+          "Parking and spacious outdoor areas"
+        ]
+      },
+      "dpto-1": {
+        "description": "Central studio apartment with capacity for 2 guests.",
+        "highlights": [
+          "Fully equipped kitchen, mini-fridge, and bed & bath linens",
+          "Smart TV, high-speed internet, and central heating",
+          "Prime location facing the Civic Center with excellent lake views"
+        ]
+      },
+      "dpto-2": {
+        "description": "Central studio apartment with capacity for 2 guests.",
+        "highlights": [
+          "Fully equipped kitchen, mini-fridge, and bed & bath linens",
+          "Smart TV, high-speed internet, and central heating",
+          "Prime location facing the Civic Center with excellent lake views"
+        ]
+      },
+      "dpto-3": {
+        "description": "Central studio apartment with capacity for 2 guests.",
+        "highlights": [
+          "Fully equipped kitchen, mini-fridge, and bed & bath linens",
+          "Smart TV, high-speed internet, and central heating",
+          "Prime location facing the Civic Center with excellent lake views"
+        ]
+      },
+      "dpto-4": {
+        "description": "Central studio apartment with capacity for 2 guests.",
+        "highlights": [
+          "Fully equipped kitchen, mini-fridge, and bed & bath linens",
+          "Smart TV, high-speed internet, and central heating",
+          "Prime location facing the Civic Center with excellent lake views"
+        ]
+      },
+      "dpto-5": {
+        "description": "Central studio apartment with capacity for 2 guests.",
+        "highlights": [
+          "Fully equipped kitchen, mini-fridge, and bed & bath linens",
+          "Smart TV, high-speed internet, and central heating",
+          "Prime location facing the Civic Center with excellent lake views"
+        ]
+      },
+      "dpto-6": {
+        "description": "Central studio apartment with capacity for 2 guests.",
+        "highlights": [
+          "Fully equipped kitchen, mini-fridge, and bed & bath linens",
+          "Smart TV, high-speed internet, and central heating",
+          "Prime location facing the Civic Center with excellent lake views"
+        ]
+      },
+      "dpto-4-pax": {
+        "description": "Central studio apartment with capacity for 2 to 4 guests.",
+        "highlights": [
+          "Fully equipped kitchen and bed & bath linens",
+          "Smart TV, internet, and central heating",
+          "Prime location facing the Civic Center with excellent views"
+        ]
+      },
+      "dpto-cerros": {
+        "description": "Central studio apartment with capacity for 2 to 4 guests.",
+        "highlights": [
+          "Fully equipped kitchen and bed & bath linens",
+          "Smart TV, internet, and central heating",
+          "Prime location facing the Civic Center with excellent views"
+        ]
+      },
+      "dpto-lago": {
+        "description": "Central studio apartment with capacity for 2 to 4 guests.",
+        "highlights": [
+          "Fully equipped kitchen and bed & bath linens",
+          "Smart TV, internet, and central heating",
+          "Prime location facing the Civic Center with excellent views"
+        ]
+      },
+      "dpto-huapi": {
+        "description": "Central studio apartment with capacity for 2 to 4 guests.",
+        "highlights": [
+          "Fully equipped kitchen and bed & bath linens",
+          "Smart TV, internet, and central heating",
+          "Prime location facing the Civic Center with excellent views"
+        ]
+      },
+      "dpto-luxury": {
+        "description": "Central apartment with capacity for 2 to 5 guests.",
+        "highlights": [
+          "Fully equipped kitchen with gas oven, freezer fridge, and bed & bath linens",
+          "Smart TV, high-speed internet, and central heating",
+          "Prime location facing the Civic Center with stunning 360° views",
+          "Four-star category finishes and details"
+        ]
+      },
+      "dpto-espana": {
+        "description": "Central apartment with capacity for up to 4 guests.",
+        "highlights": [
+          "Fully equipped kitchen with gas oven, freezer fridge, coffee maker, microwave, toaster, and bed & bath linens",
+          "2 bedrooms, 2 bathrooms",
+          "TV in bedroom and living room, and internet",
+          "Gas heating",
+          "Terrace balcony with lake views"
+        ]
+      },
+      "hotel-1": {
+        "description": "Centrally located hotel, one block from the lake and three from Bariloche's pedestrian shopping area.",
+        "highlights": [
+          "Rooms for 2 to 5 guests with private bathroom",
+          "Breakfast and pool access included"
+        ]
+      },
+      "hotel-4": {
+        "description": "4-star centrally located hotel with beach and lake access, 3 blocks from Bariloche's Civic Center pedestrian shopping area.",
+        "highlights": [
+          "Rooms for 2 to 4 guests with private bathroom and whirlpool",
+          "Indoor games and entertainment area",
+          "Reading room and café with lake views",
+          "Buffet breakfast and pool access included",
+          "Parking"
+        ]
+      }
+    },
+    "san-martin": {
+      "apart-rotui": {
+        "description": "Rotuí Apart Hotel invites you to enjoy a warm stay just 200 m from the city's main avenue. A prime location where comfort and the soothing sound of 120 m of stream frontage combine for a truly restful retreat.",
+        "highlights": [
+          "Apartments for 2 guests with cleaning service and breakfast"
+        ]
+      },
+      "viejo-esquiador": {
+        "description": "Discover one of San Martín de los Andes' most iconic hotels. El Viejo Esquiador is an alpine-style hotel in the heart of town, in a prime location on the main avenue just steps from the civic center.",
+        "highlights": [
+          "Rooms for 2 to 4 guests",
+          "Breakfast included"
+        ]
+      },
+      "hosteria-y-cabanas": {
+        "name": "La Fontaine Apart & Hotel",
+        "description": "Our hotel is located 400 m from the main avenue of San Martín de los Andes — an ideal, central spot in harmony with nature for an unforgettable stay.",
+        "highlights": [
+          "Spacious park with stream frontage and children's play area",
+          "Heated pool and covered BBQ area with professional kitchen",
+          "Rooms and apartments for 2 to 4 guests"
+        ]
+      },
+      "rotui-luxury": {
+        "name": "Rotui Luxury Village",
+        "description": "In the beautiful mountain village of San Martín de los Andes, Rotuí offers glamorous dream mansions, exclusive cabins, and apartments for guests who appreciate fine décor, comfort, privacy, and tranquility.",
+        "highlights": [
+          "Premium-equipped cabins, capacity for 2 to 12 guests",
+          "Swimming pools, saunas, and waterfalls",
+          "Private park and unique views of San Martín de los Andes, just 5 minutes from the city center"
+        ]
+      },
+      "dptos-lago": {
+        "name": "Lake Apartments",
+        "description": "Apartments with capacity for 2 to 6 guests.",
+        "highlights": [
+          "Fully equipped kitchen with gas oven, freezer fridge, 2 bedrooms, and 2 bathrooms",
+          "Bed & bath linens",
+          "Prime location overlooking Lago Lácar"
+        ]
+      }
+    },
+    "villa-la-angostura": {
+      "cab-4-pax": {
+        "description": "Cabin with capacity for 4 guests.",
+        "highlights": [
+          "Fully equipped kitchen with gas oven, freezer fridge, washing machine, and bed & bath linens",
+          "Smart TV, internet, 2 bedrooms, and 1 bathroom",
+          "Gas heating, spacious garden with sunbathing area, fire pit, and private parking",
+          "Located in the Bahía Mansa and Brava harbor area"
+        ]
+      },
+      "cab-6-pax": {
+        "description": "Cabin with capacity for 6 guests.",
+        "highlights": [
+          "Fully equipped kitchen with gas oven, freezer fridge, washing machine, and bed & bath linens",
+          "Smart TV, internet, 2 bedrooms, loft, and 2 bathrooms",
+          "Gas and wood-burning heating, spacious garden with sunbathing area and fire pit",
+          "BBQ grill, outdoor table and chairs, private parking",
+          "Located in the Bahía Mansa and Brava harbor area"
+        ]
+      }
+    },
+    "el-calafate": {
+      "casa-grande": {
+        "name": "6-Pax House",
+        "description": "House with capacity for 6 guests.",
+        "highlights": [
+          "Fully equipped kitchen with gas oven, freezer fridge, and bed & bath linens",
+          "Smart TV, internet, 2 bedrooms, and 2 bathrooms",
+          "Gas heating, garden with BBQ grill, outdoor table and chairs"
+        ]
+      },
+      "dpto-4-pax": {
+        "name": "4-Pax Apartment",
+        "description": "Apartment with capacity for up to 4 guests.",
+        "highlights": [
+          "Fully equipped kitchen with gas oven, freezer fridge, coffee maker, microwave, toaster, and bed & bath linens",
+          "2 bedrooms, 1 bathroom, TV, and internet",
+          "Gas heating"
+        ]
+      },
+      "hosteria": {
+        "name": "Mountain Guesthouse",
+        "description": "Mountain guesthouse and cabins in El Calafate.",
+        "highlights": [
+          "Rooms with lake views and whirlpool — Standard, Superior, or Suite",
+          "Cabins for up to 7 guests with fireplace, BBQ grill, and full equipment",
+          "Personalized, high-quality service"
+        ]
+      },
+      "hotel-1": {
+        "name": "Hotel 1",
+        "description": "Central hotel with rooms for 2 to 4 guests.",
+        "highlights": [
+          "Breakfast included",
+          "Excellent location steps from Av. del Libertador in El Calafate's restaurant district"
+        ]
+      },
+      "hotel-4": {
+        "name": "Hotel 4",
+        "description": "4-star hotel with double, triple, and connecting rooms.",
+        "highlights": [
+          "Spa area, gourmet restaurant, café, and buffet breakfast included",
+          "Located on the outskirts of El Calafate, bikes available to explore the area, pet friendly",
+          "Complimentary transfers to the city center at scheduled times",
+          "Breathtaking views of Lago Argentino"
+        ]
+      }
+    },
+    "puerto-madryn": {
+      "madryn-hotel-4": {
+        "name": "Hotel 4",
+        "description": "4-star hotel with double, triple, and connecting rooms.",
+        "highlights": [
+          "Spa area, gourmet restaurant, café, and heated pool",
+          "Buffet breakfast included",
+          "Oceanfront location with breathtaking views of the Argentine Sea"
+        ]
+      }
+    },
+    "el-chalten": {
+      "cabanas": {
+        "name": "Cabins",
+        "description": "Cabins for 2 to 6 guests.",
+        "highlights": [
+          "Full equipment, fully equipped kitchen, and bed & bath linens",
+          "TV and internet, boiler heating system",
+          "Excellent location, steps from the main avenue and 100 m from the trailhead to Laguna Torre"
+        ]
+      },
+      "complejo": {
+        "name": "Cabin Complex",
+        "description": "Cabins for 2 to 6 guests.",
+        "highlights": [
+          "Full equipment, fully equipped kitchen, and bed & bath linens",
+          "TV and internet, boiler heating system",
+          "Excellent location, steps from the main avenue and 200 m from the trailhead to Laguna Torre",
+          "Covered BBQ area, grill, and garden"
+        ]
+      }
+    },
+    "ushuaia": {
+      "dpto-3-amb": {
+        "name": "5-Pax Apartments",
+        "description": "Apartment with capacity for 2 to 5 guests.",
+        "highlights": [
+          "Fully equipped kitchen with gas oven, freezer fridge, and washing machine",
+          "2 bedrooms, 1 bathroom, bed & bath linens",
+          "Located minutes from Ushuaia's commercial center"
+        ]
+      },
+      "dpto-2-amb": {
+        "name": "2/3-Pax Apartments",
+        "description": "Apartment with capacity for 2 to 3 guests.",
+        "highlights": [
+          "Fully equipped kitchen with gas oven, freezer fridge, and washing machine",
+          "1 bedroom, 1 bathroom, bed & bath linens",
+          "Located minutes from Ushuaia's commercial center"
+        ]
+      },
+      "hotel-3": {
+        "name": "Hotel 3",
+        "description": "3-star hotel with double, triple, and connecting rooms.",
+        "highlights": [
+          "Spa area, gourmet restaurant, café, and heated pool",
+          "Buffet breakfast included",
+          "Oceanfront location with breathtaking views of the Beagle Channel"
+        ]
+      },
+      "hotel-4": {
+        "name": "Hotel 4",
+        "description": "4-star hotel with double, triple, and connecting rooms.",
+        "highlights": [
+          "Spa area, gourmet restaurant, and café",
+          "Buffet breakfast included",
+          "Prime central location with breathtaking views of the Beagle Channel from the breakfast room"
+        ]
+      }
+    },
+    "esquel": {
+      "hosteria-esquel": {
+        "name": "Mountain Guesthouse Esquel",
+        "description": "Guesthouse with rooms for 2 to 5 guests.",
+        "highlights": [
+          "Artisan breakfast and half board included",
+          "Activities including wildlife watching, trekking, horseback riding, and zip-line",
+          "Located 5 minutes from the North entrance of Los Alerces National Park"
+        ]
+      },
+      "hosteria-trevelin": {
+        "name": "Mountain Guesthouse Trevelin",
+        "description": "Guesthouse with rooms for 2 to 5 guests.",
+        "highlights": [
+          "Artisan breakfast included",
+          "Indoor heated pool and jacuzzi",
+          "Spacious green park with reading area, relaxation zone, BBQ grills, and tables",
+          "Activities including wildlife watching, trekking, and horseback riding",
+          "Located 5 minutes from Trevelin town center and the North entrance of Los Alerces National Park"
+        ]
+      }
+    },
+    "traful": {
+      "cab-costa": {
+        "name": "Costa Cabins",
+        "description": "Cabins with capacity for 2 to 3 guests.",
+        "highlights": [
+          "Fully equipped kitchen with mini-fridge with freezer, stovetop, and microwave; bathroom",
+          "Bed & bath linens; deck with sunbathing area",
+          "Lakefront setting with private beach, spacious park, and breathtaking views of Lago Traful",
+          "On-site restaurant and café with extensive menu"
+        ]
+      }
+    }
+  }
 }

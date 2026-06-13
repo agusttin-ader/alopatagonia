@@ -9,7 +9,8 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "mainNav": "Main navigation",
-    "language": "Language"
+    "language": "Language",
+    "selectLanguage": "Select language"
   },
   "footer": {
     "about": "We help with car rental, accommodation and excursions across Patagonia — all from a single WhatsApp.",
@@ -294,7 +295,8 @@
     "close": "Close",
     "closeExpanded": "Close enlarged view",
     "prevImage": "Previous image",
-    "nextImage": "Next image"
+    "nextImage": "Next image",
+    "lightboxExpanded": "Enlarged image view"
   },
   "notFound": {
     "metaTitle": "Page not found",
@@ -331,8 +333,8 @@
     "chooseCorridor": "Choose region",
     "chooseDestination": "Choose destination",
     "chooseAccommodationType": "Choose accommodation type",
-    "patagoniaArgentina": "Patagonian Argentina",
-    "heroAlt": "Trips to {destination} — Patagonian Argentina",
+    "patagoniaArgentina": "Argentine Patagonia",
+    "heroAlt": "Trips to {destination} — Argentine Patagonia",
     "planTripTo": "Plan a trip to {destination}",
     "tripsTo": "Trips to {destination}",
     "faqAbout": "Questions about travelling to {destination}",
@@ -360,6 +362,17 @@
       "hostel": { "title": "Hotels", "subtitle": "By category" }
     },
     "carRentalCta": "Ask about car rental",
+    "badges": {
+      "excursion": "Excursion",
+      "cabana": "Cabin",
+      "departamento": "Apartment",
+      "hotel": "Hotel"
+    },
+    "photoGallery": "Photo gallery",
+    "viewPhotoExpanded": "View photo {n} enlarged",
+    "prevPhoto": "Previous photo",
+    "nextPhoto": "Next photo",
+    "goToPhoto": "Go to photo {n}",
     "itemDetail": {
       "askTitle": "Ask us about availability",
       "askBody": "On WhatsApp we'll tell you dates, capacity and what's available in that area.",
@@ -376,10 +389,10 @@
       "title": "Plan my trip",
       "description": "Tell us destination, dates and how many are travelling. We'll draft the WhatsApp or email message with everything in one text.",
       "intro": "In two minutes you fill in the basics. We write the message; you just send it and we keep chatting from there.",
-      "regionLabel": "Patagonian Argentina"
+      "regionLabel": "Argentine Patagonia"
     },
     "breadcrumbHome": "Home",
-    "bannerAlt": "Panorama of lakes and mountains in Bariloche, Patagonian Argentina",
+    "bannerAlt": "Panorama of lakes and mountains in Bariloche, Argentine Patagonia",
     "phoneVideoLabel": "Patagonia video — Alo Patagonia",
     "mailSubject": "Patagonia trip enquiry",
     "progressAria": "Trip planner progress",
@@ -428,7 +441,7 @@
     },
     "message": {
       "noName": "no name",
-      "groupOne": "somos 1",
+      "groupOne": "there is 1 of us",
       "groupMany": "there are {count} of us",
       "groupUnknown": "group size not set yet",
       "body": "I'm {name}. We want to go to {destination}, {group}, from {from} to {to}. Can you help us plan it?"
@@ -488,7 +501,7 @@
     ]
   },
   "destinationsPage": {
-    "title": "Destinations in Patagonian Argentina",
+    "title": "Destinations in Argentine Patagonia",
     "intro": "Discover the most incredible destinations in Patagonia. Accommodation, excursions and car hire with personalised advice so you travel worry-free.",
     "zoneNavSubtitles": {
       "corredor-lagos": "Neuquén · Río Negro",
@@ -507,7 +520,7 @@
         "title": "Chubut: mountains and coast",
         "paragraphs": [
           "Two extremes of the province, 670 km apart.",
-          "Los Alerces National Park in Esquel with its mountains, lakes and ancient forests, and Planet Madryn with the world's most amazing marine wildlife!",
+          "Los Alerces National Park in Esquel with its mountains, lakes and ancient forests, and Puerto Madryn's coast with some of the world's most spectacular marine wildlife!",
           "Browse our accommodation and book activities and car hire in both towns!"
         ]
       },
@@ -628,7 +641,7 @@
       "keywords": ["patagonia trips", "argentine patagonia", "patagonia travel", "patagonia vacation", "plan patagonia trip", "bariloche", "ushuaia", "el calafate"]
     },
     "destinos": {
-      "title": "Destinations in Patagonian Argentina",
+      "title": "Destinations in Argentine Patagonia",
       "description": "Discover the most incredible destinations in Patagonia. Accommodation, excursions and car hire with personalised advice so you travel worry-free.",
       "keywords": ["patagonia destinations", "patagonia argentina tourism", "bariloche trips", "el calafate trips", "ushuaia trips", "san martin de los andes", "puerto madryn", "el chalten"]
     },
