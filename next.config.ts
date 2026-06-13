@@ -120,14 +120,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  async rewrites() {
-    return [
-      {
-        source: "/favicon.ico",
-        destination: "/favicon-dark.png",
-      },
-    ];
-  },
 };
 
 export default nextConfig;

@@ -34,9 +34,12 @@ export function WinterStoreLanding({ heroImage }: WinterStoreLandingProps) {
           priority
           sizes={IMAGE_SIZES.viewport}
           className="absolute inset-0"
-          shade={0.62}
+          shade={0.78}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/15" aria-hidden />
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/68 to-black/48"
+          aria-hidden
+        />
         <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center 2xl:max-w-4xl">
           <Reveal className="mb-6">
             <div className="flex items-center justify-center gap-5 sm:gap-6">
