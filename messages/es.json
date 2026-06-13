@@ -432,7 +432,10 @@
       "incompleteMany": "Completá {count} datos para enviar más completo",
       "sendWhatsApp": "Enviar por WhatsApp",
       "completeWhatsApp": "Completar para WhatsApp",
-      "sendMail": "Consultar por mail"
+      "sendMail": "Consultar por mail",
+      "userNote": "¿Algo más que quieras contarnos?",
+      "userNotePlaceholder": "Ej: viajamos con un bebé, preferimos cabaña, queremos trekking…",
+      "optional": "opcional"
     },
     "calendar": {
       "prevMonth": "Mes anterior",
@@ -441,10 +444,15 @@
     },
     "message": {
       "noName": "sin nombre",
-      "groupOne": "somos 1",
+      "groupOne": "viajo solo",
       "groupMany": "somos {count}",
       "groupUnknown": "todavía no definí cuántos somos",
-      "body": "Soy {name}. Queremos ir a {destination}, {group}, del {from} al {to}. ¿Nos ayudan a armarlo?"
+      "body": "Soy {name}. Queremos ir a {destination}, {group}, del {from} al {to}. ¿{help}?",
+      "bodySingular": "Soy {name}. Quiero ir a {destination}, {group}, del {from} al {to}. ¿{help}?",
+      "bodyWithNote": "Soy {name}. Queremos ir a {destination}, {group}, del {from} al {to}, además: {note}. ¿{help}?",
+      "bodyWithNoteSingular": "Soy {name}. Quiero ir a {destination}, {group}, del {from} al {to}, además: {note}. ¿{help}?",
+      "helpSingular": "Me ayudan a armarlo",
+      "helpPlural": "Nos ayudan a armarlo"
     },
     "destinations": {
       "none": "Sin destino definido",

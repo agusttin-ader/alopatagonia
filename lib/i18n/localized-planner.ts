@@ -42,23 +42,39 @@ export function buildLocalizedPlannerMessage(
     fromDate: string;
     toDate: string;
     formatDate: (value: string) => string;
+    userNote?: string;
   },
 ) {
   const destinationText = getLocalizedPlannerDestinationLabel(t, params.destination);
   const people = params.travelers.trim();
   const peopleCount = Number(people);
+  const isSingleTraveler =
+    people.length > 0 && !Number.isNaN(peopleCount) && peopleCount === 1;
   const groupLine =
     people && !Number.isNaN(peopleCount)
-      ? peopleCount === 1
+      ? isSingleTraveler
         ? t("message.groupOne")
         : t("message.groupMany", { count: people })
       : t("message.groupUnknown");
 
-  return t("message.body", {
+  const help = isSingleTraveler ? t("message.helpSingular") : t("message.helpPlural");
+  const messageParams = {
     name: params.name,
     destination: destinationText,
     group: groupLine,
     from: params.formatDate(params.fromDate),
     to: params.formatDate(params.toDate),
-  });
+    help,
+  };
+
+  const note = params.userNote?.trim();
+  const templateKey = note
+    ? isSingleTraveler
+      ? "message.bodyWithNoteSingular"
+      : "message.bodyWithNote"
+    : isSingleTraveler
+      ? "message.bodySingular"
+      : "message.body";
+
+  return t(templateKey, note ? { ...messageParams, note } : messageParams);
 }

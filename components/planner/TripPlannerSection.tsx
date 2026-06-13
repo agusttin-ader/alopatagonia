@@ -32,8 +32,12 @@ const PhoneVideoMockup = dynamic(
 const fieldClassName =
   "h-12 w-full rounded-xl border border-[#d9d2c5]/80 bg-[linear-gradient(160deg,rgba(248,242,232,0.97),rgba(241,234,220,0.93))] px-3.5 text-base sm:text-[0.98rem] text-foreground shadow-[inset_0_1px_0_rgba(252,246,236,0.9),0_12px_26px_-24px_rgba(48,40,28,0.32)] outline-none transition duration-200 placeholder:text-muted-foreground/75 hover:border-[#cabfae] hover:bg-[linear-gradient(160deg,rgba(250,244,234,0.99),rgba(244,237,224,0.96))] focus-visible:border-primary/40 focus-visible:ring-4 focus-visible:ring-primary/14";
 
+const textareaClassName =
+  "min-h-[6.5rem] w-full resize-y rounded-xl border border-[#d9d2c5]/80 bg-[linear-gradient(160deg,rgba(248,242,232,0.97),rgba(241,234,220,0.93))] px-3.5 py-3 text-base sm:text-[0.98rem] text-foreground shadow-[inset_0_1px_0_rgba(252,246,236,0.9),0_12px_26px_-24px_rgba(48,40,28,0.32)] outline-none transition duration-200 placeholder:text-muted-foreground/75 hover:border-[#cabfae] hover:bg-[linear-gradient(160deg,rgba(250,244,234,0.99),rgba(244,237,224,0.96))] focus-visible:border-primary/40 focus-visible:ring-4 focus-visible:ring-primary/14";
+
 const MAX_NAME_LENGTH = 70;
 const MAX_TRAVELERS_LENGTH = 2;
+const MAX_USER_NOTE_LENGTH = 280;
 
 const PLANNER_CTA =
   "inline-flex min-h-11 w-full items-center justify-center gap-2.5 rounded-full px-5 text-[0.8125rem] font-semibold leading-none transition-colors focus-visible:outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-55";
@@ -499,6 +503,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
   const [website, setWebsite] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
+  const [userNote, setUserNote] = useState("");
   const [destinationOpen, setDestinationOpen] = useState(false);
   const destinationButtonId = useId();
   const destinationPanelId = useId();
@@ -516,9 +521,10 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
       travelers,
       fromDate,
       toDate,
+      userNote,
       formatDate: (value) => formatDate(value, locale, t("form.noDate")),
     });
-  }, [name, resolvedDestination, travelers, fromDate, toDate, t, locale]);
+  }, [name, resolvedDestination, travelers, fromDate, toDate, userNote, t, locale]);
 
   const completionCount = useMemo(() => {
     const checks = [
@@ -731,6 +737,21 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                 <DateField label={t("form.from")} value={fromDate} onChange={setFromDate} locale={locale} t={t} />
                 <DateField label={t("form.to")} value={toDate} onChange={setToDate} locale={locale} t={t} />
               </div>
+
+              <label className="block space-y-1.5">
+                <span className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                  <span className="text-sm font-semibold text-foreground">{t("form.userNote")}</span>
+                  <span className="text-xs font-medium text-muted-foreground">{t("form.optional")}</span>
+                </span>
+                <textarea
+                  value={userNote}
+                  onChange={(e) => setUserNote(e.target.value.slice(0, MAX_USER_NOTE_LENGTH))}
+                  placeholder={t("form.userNotePlaceholder")}
+                  maxLength={MAX_USER_NOTE_LENGTH}
+                  rows={3}
+                  className={textareaClassName}
+                />
+              </label>
 
               <label className="hidden" aria-hidden>
                 Sitio web

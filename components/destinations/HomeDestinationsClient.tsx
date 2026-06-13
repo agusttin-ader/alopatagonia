@@ -340,8 +340,13 @@ function DestinationMobileAccordionItem({
 }) {
   const itemRef = useRef<HTMLElement>(null);
 
+  const wasOpenRef = useRef(isOpen);
+
   useEffect(() => {
-    if (!isOpen || !itemRef.current) return;
+    const opening = isOpen && !wasOpenRef.current;
+    wasOpenRef.current = isOpen;
+    if (!opening || !itemRef.current) return;
+
     const frameId = window.requestAnimationFrame(() => {
       itemRef.current?.scrollIntoView({
         behavior: reduceMotion ? "auto" : "smooth",
@@ -580,9 +585,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
   const t = useTranslations("homeDestinations");
   const tCommon = useTranslations("common");
   const [activeSlug, setActiveSlug] = useState(destinations[0]?.slug ?? "");
-  const [mobileOpenSlug, setMobileOpenSlug] = useState<string | null>(
-    destinations[0]?.slug ?? null,
-  );
+  const [mobileOpenSlug, setMobileOpenSlug] = useState<string | null>(null);
   const [lightbox, setLightbox] = useState<{ slug: string; index: number } | null>(null);
 
   const activeDestination = useMemo(

@@ -432,7 +432,10 @@
       "incompleteMany": "Fill in {count} more fields to send a complete message",
       "sendWhatsApp": "Send via WhatsApp",
       "completeWhatsApp": "Complete to use WhatsApp",
-      "sendMail": "Enquire by email"
+      "sendMail": "Enquire by email",
+      "userNote": "Anything else you'd like to tell us?",
+      "userNotePlaceholder": "E.g. travelling with a baby, prefer a cabin, interested in trekking…",
+      "optional": "optional"
     },
     "calendar": {
       "prevMonth": "Previous month",
@@ -441,10 +444,15 @@
     },
     "message": {
       "noName": "no name",
-      "groupOne": "there is 1 of us",
+      "groupOne": "I'm travelling alone",
       "groupMany": "there are {count} of us",
       "groupUnknown": "group size not set yet",
-      "body": "I'm {name}. We want to go to {destination}, {group}, from {from} to {to}. Can you help us plan it?"
+      "body": "I'm {name}. We want to go to {destination}, {group}, from {from} to {to}. {help}?",
+      "bodySingular": "I'm {name}. I want to go to {destination}, {group}, from {from} to {to}. {help}?",
+      "bodyWithNote": "I'm {name}. We want to go to {destination}, {group}, from {from} to {to}, also: {note}. {help}?",
+      "bodyWithNoteSingular": "I'm {name}. I want to go to {destination}, {group}, from {from} to {to}, also: {note}. {help}?",
+      "helpSingular": "Can you help me plan it",
+      "helpPlural": "Can you help us plan it"
     },
     "destinations": {
       "none": "No destination yet",
