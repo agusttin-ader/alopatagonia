@@ -85,10 +85,6 @@ export function buildWebWhatsAppMessage(body: string): string {
   return `${WEB_WHATSAPP_LEAD_PREFIX} ${trimmed}`;
 }
 
-export const WHATSAPP_MESSAGES = {
-  primary: DEFAULT_WHATSAPP_MESSAGE,
-} as const;
-
 export function getWhatsAppUrl(message = DEFAULT_WHATSAPP_MESSAGE): string {
   const fullMessage = buildWebWhatsAppMessage(message);
   const preset = getTrustedHttpsUrl(

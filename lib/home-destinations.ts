@@ -92,7 +92,6 @@ const DESTINATION_META = [
 
 /** Fotos en la sección Destinos del home. Más adelante: carpeta `naturaleza` por destino. */
 export const HOME_DESTINATION_GALLERY_DESKTOP_COUNT = 4;
-export const HOME_DESTINATION_GALLERY_MOBILE_COUNT = 2;
 
 function buildGalleryImages(
   folder: string,

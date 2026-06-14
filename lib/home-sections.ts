@@ -15,11 +15,6 @@ export function getHomeSectionHref(sectionId: string, isHome: boolean): string {
   return isHome ? `#${sectionId}` : `/#${sectionId}`;
 }
 
-/** App Router puede fallar con `<Link href="/#…">`; usar `<a>` nativo. */
-export function isCrossPageHomeHashHref(href: string): boolean {
-  return href.startsWith("/#");
-}
-
 export function resolveHomeSectionHashId(rawSectionId: string): string | null {
   const sectionId = LEGACY_HOME_SECTION_HASH_ALIASES[rawSectionId] ?? rawSectionId;
   if (!HOME_SECTION_HASH_IDS.has(sectionId)) return null;

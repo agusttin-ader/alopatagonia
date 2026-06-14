@@ -2,7 +2,6 @@ import { ABOUT_US_COPY } from "@/lib/about-pages";
 import {
   IMAGE_PRELOAD_WIDTH,
   IMAGE_QUALITY_HERO,
-  buildNextImageUrl,
   preloadOptimizedImage,
   preloadOptimizedImagesIdle,
 } from "@/lib/image-config";
@@ -13,10 +12,6 @@ const ABOUT_US_PRELOAD = {
   width: IMAGE_PRELOAD_WIDTH.heroDesktop,
   quality: IMAGE_QUALITY_HERO,
 } as const;
-
-export function getAboutUsImageUrl(src: string): string {
-  return buildNextImageUrl(src, ABOUT_US_PRELOAD);
-}
 
 export function peekAboutImageIndex(total = ABOUT_US_COPY.images.length): number {
   if (typeof window === "undefined") return 0;

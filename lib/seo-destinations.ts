@@ -1,7 +1,6 @@
 import {
   CLIENT_ALOJAMIENTOS_HUB_COPY,
   CLIENT_DESTINATIONS_INDEX_COPY,
-  CLIENT_DESTINATIONS_INDEX_FAQ_COPY,
   CLIENT_DESTINATION_PAGES_COPY,
   mergeClientDestinationFaq,
 } from "@/lib/client-protected-copy";
@@ -86,8 +85,6 @@ export const SITE_SEO = {
     ],
   },
 } as const;
-
-export const SITE_FAQ: SeoFaqItem[] = [...CLIENT_DESTINATIONS_INDEX_FAQ_COPY];
 
 /** Destinos destacados para enlazado interno (footer, hubs). */
 export const SEO_POPULAR_DESTINATIONS = [

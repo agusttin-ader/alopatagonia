@@ -123,7 +123,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
             <NoZoomLock />
             <ScrollProgressGate />
             <HomeIntroGate />
-            <div id="site-app-shell" className="flex min-h-dvh flex-1 flex-col">
+            <div id="site-app-shell" className="relative flex min-h-dvh flex-1 flex-col">
               <LocaleTransitionProvider>
                 <GlobalNav />
                 {children}

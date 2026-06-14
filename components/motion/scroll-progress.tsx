@@ -1,20 +1,17 @@
 "use client";
 
 import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
+import { useLayoutEffect, useState } from "react";
 
 import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 
-export function ScrollProgress() {
-  const reducedMotion = useReducedMotion();
-  const isCoarseMobile = useCoarseMobile();
+function ScrollProgressBar() {
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, {
     stiffness: 140,
     damping: 24,
     mass: 0.18,
   });
-
-  if (reducedMotion || isCoarseMobile) return null;
 
   return (
     <motion.div
@@ -23,4 +20,18 @@ export function ScrollProgress() {
       style={{ scaleX: progress }}
     />
   );
+}
+
+export function ScrollProgress() {
+  const reducedMotion = useReducedMotion();
+  const isCoarseMobile = useCoarseMobile();
+  const [mounted, setMounted] = useState(false);
+
+  useLayoutEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || reducedMotion || isCoarseMobile) return null;
+
+  return <ScrollProgressBar />;
 }

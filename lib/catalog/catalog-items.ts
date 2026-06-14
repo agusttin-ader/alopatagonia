@@ -81,13 +81,6 @@ export function groupEntriesByDestination(
   return grouped;
 }
 
-export function getCatalogItemBadge(entry: CatalogItemEntry): string {
-  if (entry.kind === "excursion") return "Excursión";
-  if (entry.item.type === "cabana") return "Cabaña";
-  if (entry.item.type === "departamento") return "Departamento";
-  return "Hotel";
-}
-
 export function getCatalogItemPath(destinationSlug: string, itemSlug: string): string {
   return `/destinos/${destinationSlug}/${itemSlug}`;
 }

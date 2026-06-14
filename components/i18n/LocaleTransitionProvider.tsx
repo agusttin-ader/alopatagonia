@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { useEffect, useState, type PropsWithChildren } from "react";
+import { useLayoutEffect, useState, type PropsWithChildren } from "react";
 
 import { shouldFadeInAfterLocaleSwitch } from "@/lib/i18n/locale-switch";
 
@@ -11,17 +11,15 @@ const MOTION_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 /** Fade-in al cargar tras un cambio de idioma con navegación completa. */
 export function LocaleTransitionProvider({ children }: PropsWithChildren) {
   const reduceMotion = useReducedMotion();
-  const [opacity, setOpacity] = useState(() => {
-    if (typeof window === "undefined") return 1;
-    return shouldFadeInAfterLocaleSwitch() ? 0 : 1;
-  });
+  const [opacity, setOpacity] = useState(1);
 
-  useEffect(() => {
-    if (reduceMotion || opacity === 1) return;
+  useLayoutEffect(() => {
+    if (!shouldFadeInAfterLocaleSwitch() || reduceMotion) return;
 
+    setOpacity(0);
     const frame = requestAnimationFrame(() => setOpacity(1));
     return () => cancelAnimationFrame(frame);
-  }, [reduceMotion, opacity]);
+  }, [reduceMotion]);
 
   return (
     <motion.div

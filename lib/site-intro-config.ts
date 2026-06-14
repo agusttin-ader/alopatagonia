@@ -140,10 +140,3 @@ export function setSiteIntroPlaceholderHidden(hidden: boolean) {
 export function setSiteIntroExiting(exiting: boolean) {
   getSiteIntroRoot()?.classList.toggle("site-intro-exiting", exiting);
 }
-
-export function initSiteIntroVisibility(): boolean {
-  if (typeof window === "undefined") return false;
-  const play = isSiteHomePath(window.location.pathname) && shouldPlaySiteIntro();
-  if (play) setSiteIntroPending(true);
-  return play;
-}

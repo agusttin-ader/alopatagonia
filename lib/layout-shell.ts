@@ -123,12 +123,6 @@ export const SECTION_TITLE = cn(
   "min-[3840px]:text-[2.75rem]",
 );
 
-export const SUBSECTION_TITLE = cn(
-  "text-xl font-medium tracking-tight sm:text-2xl",
-  "min-[1920px]:text-[1.65rem]",
-  "min-[2560px]:text-3xl",
-);
-
 export const DETAIL_STICKY_TOP = cn(
   "lg:top-28",
   "min-[1920px]:top-32 min-[2560px]:top-36",

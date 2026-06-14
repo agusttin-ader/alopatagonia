@@ -109,6 +109,20 @@ function toWebPath(absolutePath) {
     .join("/");
 }
 
+/** `main.jpg` (o `Main.jpg`) en cada carpeta de alojamiento = foto principal. */
+function isMainImagePath(webPath) {
+  const base = path.posix.basename(webPath);
+  const stem = base.replace(/\.(jpe?g|png|webp)$/i, "");
+  return stem.toLowerCase() === "main";
+}
+
+function prioritizeMainImage(paths) {
+  const unique = [...new Set(paths)];
+  const main = unique.filter(isMainImagePath);
+  const rest = unique.filter((entry) => !isMainImagePath(entry));
+  return [...main, ...rest];
+}
+
 async function convertHeicWithSips(absolutePath, jpegPath) {
   if (process.platform !== "darwin") return false;
 
@@ -178,7 +192,7 @@ async function listWebImagesInDirectory(directory) {
   };
 
   await walk(directory);
-  return results.sort((a, b) => a.localeCompare(b, "es"));
+  return prioritizeMainImage(results.sort((a, b) => a.localeCompare(b, "es")));
 }
 
 async function listWebImages(relativeFolder) {

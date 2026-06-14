@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 /** Touch-first / narrow viewport — lighter motion profile */
-export const COARSE_MOBILE_MQ = "(max-width: 767px)";
+const COARSE_MOBILE_MQ = "(max-width: 767px)";
 
 export function useCoarseMobile() {
   const [isCoarseMobile, setIsCoarseMobile] = useState(false);

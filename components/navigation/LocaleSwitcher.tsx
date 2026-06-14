@@ -11,13 +11,11 @@ import { localeLabels, localeNames, routing, type AppLocale } from "@/i18n/routi
 import { navigateToLocale } from "@/lib/i18n/locale-switch";
 import { cn } from "@/lib/utils";
 
-type LocaleSwitcherLayout = "header" | "mobile-bar";
+type LocaleSwitcherLayout = "header" | "drawer";
 
 type LocaleSwitcherProps = {
   className?: string;
   layout?: LocaleSwitcherLayout;
-  /** Contraste sobre hero oscuro en mobile. */
-  variant?: "onLight" | "onDark";
 };
 
 const MOTION_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -25,7 +23,6 @@ const MOTION_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 export function LocaleSwitcher({
   className,
   layout = "header",
-  variant = "onLight",
 }: LocaleSwitcherProps) {
   const locale = useLocale() as AppLocale;
   const pathname = usePathname();
@@ -65,50 +62,44 @@ export function LocaleSwitcher({
     }
   };
 
-  if (layout === "mobile-bar") {
-    const onDark = variant === "onDark";
-
+  if (layout === "drawer") {
     return (
-      <div
-        role="listbox"
-        aria-label={t("language")}
-        className={cn(
-          "inline-flex shrink-0 items-center gap-0.5 rounded-full p-0.5",
-          onDark
-            ? "bg-white/12 ring-1 ring-white/25"
-            : "bg-secondary/40 ring-1 ring-border/55 shadow-[0_8px_22px_-18px_rgba(26,47,38,0.35)]",
-          className,
-        )}
-      >
-        {routing.locales.map((code) => {
-          const active = code === locale;
+      <div className="w-full">
+        <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          {t("language")}
+        </p>
+        <div
+          role="listbox"
+          aria-label={t("language")}
+          className={cn(
+            "mx-auto inline-flex shrink-0 items-center gap-0.5 rounded-full bg-secondary/40 p-0.5",
+            "ring-1 ring-border/55 shadow-[0_8px_22px_-18px_rgba(26,47,38,0.35)]",
+            className,
+          )}
+        >
+          {routing.locales.map((code) => {
+            const active = code === locale;
 
-          return (
-            <button
-              key={code}
-              type="button"
-              role="option"
-              aria-selected={active}
-              aria-label={localeNames[code]}
-              onClick={() => selectLocale(code)}
-              className={cn(
-                "inline-flex min-h-9 min-w-9 items-center justify-center rounded-full transition-colors",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake/45 focus-visible:ring-offset-2",
-                onDark ? "focus-visible:ring-offset-transparent" : "focus-visible:ring-offset-background",
-                active
-                  ? onDark
-                    ? "bg-white/22 shadow-sm"
-                    : "bg-background shadow-sm"
-                  : onDark
-                    ? "hover:bg-white/10"
-                    : "hover:bg-background/70",
-              )}
-            >
-              <LocaleFlagIcon locale={code} className="size-5" />
-              <span className="sr-only">{localeLabels[code]}</span>
-            </button>
-          );
-        })}
+            return (
+              <button
+                key={code}
+                type="button"
+                role="option"
+                aria-selected={active}
+                aria-label={localeNames[code]}
+                onClick={() => selectLocale(code)}
+                className={cn(
+                  "inline-flex min-h-9 min-w-9 cursor-pointer items-center justify-center rounded-full transition-colors",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                  active ? "bg-background shadow-sm" : "hover:bg-background/70",
+                )}
+              >
+                <LocaleFlagIcon locale={code} className="size-5" />
+                <span className="sr-only">{localeLabels[code]}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
     );
   }
@@ -122,7 +113,7 @@ export function LocaleSwitcher({
         aria-controls={listboxId}
         onClick={() => setOpen((value) => !value)}
         className={cn(
-          "inline-flex min-h-10 items-center gap-2 rounded-full bg-secondary/40 pl-2 pr-2",
+          "inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-full bg-secondary/40 pl-2 pr-2",
           "ring-1 ring-border/55 shadow-[0_10px_28px_-22px_rgba(26,47,38,0.35)]",
           "transition hover:bg-secondary/55",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
@@ -169,7 +160,7 @@ export function LocaleSwitcher({
                   aria-label={localeNames[code]}
                   onClick={() => selectLocale(code)}
                   className={cn(
-                    "flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2.5 text-left transition-colors",
+                    "flex w-full cursor-pointer items-center gap-2.5 rounded-xl px-2.5 py-2.5 text-left transition-colors",
                     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake/45 focus-visible:ring-inset",
                     active ? "bg-secondary/70" : "hover:bg-secondary/45",
                   )}
