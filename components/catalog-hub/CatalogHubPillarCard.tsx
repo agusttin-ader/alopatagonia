@@ -51,73 +51,81 @@ function CtaLabel({ isLive, labels }: { isLive: boolean; labels: CatalogHubPilla
   );
 }
 
-/** Mobile: marco + cabecera + póster con CTA pill. */
-function HubPillarMagazineMobileCard({ pillar, priority, labels }: CatalogHubPillarCardProps) {
-  const isLive = pillar.status === "live";
+type HubPillarPosterOverlayProps = {
+  pillar: CatalogHubPillar;
+  labels: CatalogHubPillarCardProps["labels"];
+  isLive: boolean;
+  density: "mobile" | "desktop";
+};
+
+/** Overlay inferior con altura fija: línea, tipografía y CTA alineados entre cards. */
+function HubPillarPosterOverlay({
+  pillar,
+  labels,
+  isLive,
+  density,
+}: HubPillarPosterOverlayProps) {
+  const isMobile = density === "mobile";
 
   return (
-    <Link
-      href={pillar.href}
+    <div
       className={cn(
-        "group flex h-full flex-col overflow-hidden rounded-[1.35rem] bg-card p-2.5 shadow-[0_18px_44px_-28px_rgba(0,0,0,0.22)] ring-1 ring-black/10",
-        "transition duration-500 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2",
+        "absolute inset-x-0 bottom-0 z-[3] flex flex-col",
+        isMobile
+          ? "h-[56%] min-h-[12.75rem] max-h-[17.5rem] p-4"
+          : "h-[58%] min-h-[14.5rem] max-h-[20rem] p-5 sm:min-h-[15.5rem] sm:p-6",
       )}
     >
-      <div className="mb-2.5 flex items-end justify-between gap-3 px-0.5">
-        <div className="min-w-0">
-          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-            {pillar.eyebrow}
-          </p>
-          <h3 className="font-heading mt-0.5 truncate text-xl font-semibold tracking-tight text-foreground">
-            {pillar.title}
-          </h3>
-        </div>
-        <span
-          className="font-heading shrink-0 text-2xl font-light leading-none text-foreground/20"
-          aria-hidden
-        >
-          {PILLAR_INDEX[pillar.slug]}
-        </span>
-      </div>
-
-      <div className="relative aspect-[5/6] overflow-hidden rounded-[1rem] bg-muted/40">
-        <AppImage
-          src={pillar.image}
-          alt={pillar.imageAlt}
-          fill
-          priority={priority}
-          qualityPreset="card"
-          sizes={IMAGE_SIZES.catalogHubCard}
-          className={cn(HUB_PILLAR_IMAGE_HOVER_EXPAND, pillar.imagePosition)}
-        />
-        <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-black/90 via-black/40 to-black/5" />
-        {!isLive ? <ComingSoonBadge label={labels.comingSoon} className="absolute right-3 top-3" /> : null}
-
-        <div className="absolute inset-x-0 bottom-0 z-[3] p-4">
-          <p className="line-clamp-3 max-w-[95%] text-sm leading-relaxed text-white/88">
-            {pillar.description}
-          </p>
-          <span className="mt-3 inline-flex h-10 items-center gap-1.5 rounded-full bg-white px-4 text-sm font-semibold text-foreground shadow-sm">
-            {isLive ? labels.explore : labels.preview}
-            <ArrowUpRight className="size-4" aria-hidden />
-          </span>
-        </div>
-      </div>
-    </Link>
+      <span className="mb-3 block h-px w-10 shrink-0 bg-white/55" aria-hidden />
+      <p
+        className={cn(
+          "shrink-0 font-semibold uppercase tracking-[0.12em] text-white/75",
+          isMobile ? "text-[0.68rem] tracking-[0.1em]" : "text-xs",
+        )}
+      >
+        {pillar.eyebrow}
+      </p>
+      <h3
+        className={cn(
+          "font-heading mt-2 shrink-0 font-medium leading-[1.05] tracking-tight text-white",
+          isMobile ? "text-[1.55rem]" : "text-[1.85rem] sm:text-[2rem]",
+        )}
+      >
+        {pillar.title}
+      </h3>
+      <p
+        className={cn(
+          "mt-3 min-h-0 flex-1 leading-relaxed text-white/88 line-clamp-4",
+          isMobile ? "text-[0.875rem] leading-[1.55]" : "text-sm sm:text-[0.95rem]",
+        )}
+      >
+        {pillar.description}
+      </p>
+      <span className="mt-auto inline-flex w-fit shrink-0 items-center gap-1.5 self-start pt-4 text-sm font-medium text-white">
+        <CtaLabel isLive={isLive} labels={labels} />
+      </span>
+    </div>
   );
 }
 
-/** Desktop: póster unificado — tipografía sobre imagen (estilo excursiones). */
-function HubPillarDesktopPosterCard({ pillar, priority, labels }: CatalogHubPillarCardProps) {
+function HubPillarPosterCard({
+  pillar,
+  priority,
+  labels,
+  density,
+}: CatalogHubPillarCardProps & { density: "mobile" | "desktop" }) {
   const isLive = pillar.status === "live";
+  const isMobile = density === "mobile";
 
   return (
     <Link
       href={pillar.href}
       className={cn(
         linkBase,
-        "overflow-hidden rounded-3xl shadow-sm ring-1 ring-black/6 transition duration-500",
-        "[@media(hover:hover)]:hover:-translate-y-0.5 [@media(hover:hover)]:hover:shadow-lg",
+        "overflow-hidden shadow-sm ring-1 ring-black/6 transition duration-500",
+        isMobile
+          ? "rounded-[1.35rem] active:scale-[0.99]"
+          : "rounded-3xl [@media(hover:hover)]:hover:-translate-y-0.5 [@media(hover:hover)]:hover:shadow-lg",
       )}
     >
       <div className="relative aspect-[3/4] overflow-hidden">
@@ -131,26 +139,25 @@ function HubPillarDesktopPosterCard({ pillar, priority, labels }: CatalogHubPill
           className={cn(HUB_PILLAR_IMAGE_HOVER_EXPAND, pillar.imagePosition)}
         />
         <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-black/88 via-black/35 to-black/10" />
-        {!isLive ? <ComingSoonBadge label={labels.comingSoon} className="absolute right-4 top-4" /> : null}
+        {!isLive ? (
+          <ComingSoonBadge
+            label={labels.comingSoon}
+            className={isMobile ? "absolute right-3 top-3" : "absolute right-4 top-4"}
+          />
+        ) : null}
 
-        <div className="absolute inset-x-0 bottom-0 z-[3] p-5 sm:p-6">
-          <span className="mb-3 block h-px w-10 bg-white/55" aria-hidden />
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-white/75">
-            {pillar.eyebrow}
-          </p>
-          <h3 className="font-heading mt-2 text-[1.85rem] font-medium leading-[1.05] tracking-tight text-white sm:text-[2rem]">
-            {pillar.title}
-          </h3>
-          <p className="mt-3 max-w-[95%] text-sm leading-relaxed text-white/88 sm:text-[0.95rem]">
-            {pillar.description}
-          </p>
-          <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-white">
-            <CtaLabel isLive={isLive} labels={labels} />
-          </span>
-        </div>
+        <HubPillarPosterOverlay
+          pillar={pillar}
+          labels={labels}
+          isLive={isLive}
+          density={density}
+        />
 
         <span
-          className="pointer-events-none absolute right-4 top-4 z-[3] font-heading text-5xl font-light leading-none text-white/15 sm:text-6xl"
+          className={cn(
+            "pointer-events-none absolute right-4 top-4 z-[3] font-heading font-light leading-none text-white/15",
+            isMobile ? "text-4xl" : "text-5xl sm:text-6xl",
+          )}
           aria-hidden
         >
           {PILLAR_INDEX[pillar.slug]}
@@ -164,10 +171,10 @@ export function CatalogHubPillarCard({ pillar, priority = false, labels }: Catal
   return (
     <>
       <div className="md:hidden">
-        <HubPillarMagazineMobileCard pillar={pillar} priority={priority} labels={labels} />
+        <HubPillarPosterCard pillar={pillar} priority={priority} labels={labels} density="mobile" />
       </div>
       <div className="hidden h-full md:block">
-        <HubPillarDesktopPosterCard pillar={pillar} priority={priority} labels={labels} />
+        <HubPillarPosterCard pillar={pillar} priority={priority} labels={labels} density="desktop" />
       </div>
     </>
   );

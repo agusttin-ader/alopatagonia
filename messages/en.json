@@ -32,6 +32,13 @@
     "sublineMobile": "Accommodation, transfers, cars and excursions in one place.",
     "cta": "Plan my trip"
   },
+  "trustBar": {
+    "ariaLabel": "Alo Patagonia trust signals",
+    "rating": "{rating} out of 5 · {count} reviews",
+    "destinations": "{count} destinations in Patagonia",
+    "whatsapp": "WhatsApp reply the same day",
+    "region": "Patagonia, Argentina"
+  },
   "signature": {
     "imageAlt": "Lake and mountain route in Patagonia",
     "caption": "Patagonia Argentina — one contact for your entire trip",
@@ -61,6 +68,9 @@
     "cta": "Any questions? Message us on WhatsApp.",
     "viewCatalog": "View catalog",
     "viewAll": "View all destinations",
+    "reinforcementTitle": "Already picked a destination?",
+    "reinforcementLead": "We'll arrange car, accommodation and excursions in one contact.",
+    "reinforcementCta": "Plan my trip",
     "photoAlt": "{destination} — photo {n}",
     "expandPhoto": "Enlarge photo of {destination}",
     "photosOf": "Photos of {destination}",
@@ -165,6 +175,8 @@
     "title": "Got dates? Let's start.",
     "description": "Pick destination, dates and group size. We'll prepare the WhatsApp message for you — no endless forms.",
     "cta": "Start my inquiry",
+    "proofLabel": "Recent review",
+    "ctaLead": "In minutes you'll have the message ready to send on WhatsApp.",
     "steps": {
       "destination": {
         "title": "Destination",

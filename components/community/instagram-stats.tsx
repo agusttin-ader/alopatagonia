@@ -288,11 +288,11 @@ export function InstagramStats() {
     <section
       ref={sectionRef}
       id={SECTION_IDS.community}
-      className="scroll-mt-24 py-12 sm:py-16"
+      className="scroll-mt-24 pt-12 sm:pt-16"
       aria-labelledby="comunidad-heading"
     >
       <Reveal>
-        <div className="w-full overflow-hidden bg-footer-lake text-white">
+        <div className="relative w-full overflow-hidden bg-footer-lake text-white">
           <div className="grid lg:grid-cols-2 lg:items-stretch">
             <div className="flex flex-col justify-center px-6 py-8 sm:px-10 sm:py-10 lg:px-14 lg:py-12 2xl:px-20 2xl:py-14">
               <div className="flex items-center gap-5 sm:gap-6">
@@ -354,6 +354,10 @@ export function InstagramStats() {
               <InstagramFeedPreview />
             </div>
           </div>
+          <div
+            className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-12 bg-gradient-to-b from-transparent to-[#121508]/55 sm:h-16"
+            aria-hidden
+          />
         </div>
       </Reveal>
     </section>

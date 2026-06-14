@@ -32,6 +32,13 @@
     "sublineMobile": "Acomodações, transfers, carros e excursões em um só lugar.",
     "cta": "Planejar minha viagem"
   },
+  "trustBar": {
+    "ariaLabel": "Sinais de confiança da Alo Patagonia",
+    "rating": "{rating} de 5 · {count} opiniões",
+    "destinations": "{count} destinos na Patagônia",
+    "whatsapp": "Resposta por WhatsApp no mesmo dia",
+    "region": "Patagônia Argentina"
+  },
   "signature": {
     "imageAlt": "Rota de lago e montanha na Patagônia",
     "caption": "Patagônia Argentina — um único contato para toda a viagem",
@@ -61,6 +68,9 @@
     "cta": "Se tiver alguma dúvida… fale conosco no WhatsApp.",
     "viewCatalog": "Ver catálogo",
     "viewAll": "Ver todos os destinos",
+    "reinforcementTitle": "Já escolheu seu destino?",
+    "reinforcementLead": "Montamos carro, acomodação e excursões em um único contato.",
+    "reinforcementCta": "Planejar minha viagem",
     "photoAlt": "{destination} — foto {n}",
     "expandPhoto": "Ampliar foto de {destination}",
     "photosOf": "Fotos de {destination}",
@@ -165,6 +175,8 @@
     "title": "Tem datas? Vamos começar.",
     "description": "Escolha destino, datas e quantos são. Deixamos a mensagem pronta para enviar no WhatsApp — sem formulários intermináveis.",
     "cta": "Montar minha consulta",
+    "proofLabel": "Opinião recente",
+    "ctaLead": "Em minutos você tem a mensagem pronta para enviar no WhatsApp.",
     "steps": {
       "destination": {
         "title": "Destino",

@@ -61,8 +61,8 @@ export async function AboutUsSection() {
           target="_blank"
           rel="noopener noreferrer"
           className={cn(
-            buttonVariants({ variant: "secondary", size: "lg" }),
-            "mt-10 inline-flex h-12 rounded-full px-8 text-base font-semibold shadow-lg sm:mt-12 2xl:h-14 2xl:px-10 2xl:text-lg",
+            buttonVariants({ variant: "marketing", size: "lg" }),
+            "motion-cta mt-10 inline-flex h-12 rounded-full px-8 text-base font-semibold sm:mt-12 2xl:h-14 2xl:px-10 2xl:text-lg",
           )}
         >
           {t("cta")}

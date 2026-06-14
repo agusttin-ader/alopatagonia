@@ -8,6 +8,8 @@ import { EscapadasExpressSection } from "@/components/about/EscapadasExpressSect
 import { CTA } from "@/components/cta/CTA";
 import { CatalogHubSection } from "@/components/catalog-hub/CatalogHubSection";
 import { HomeDestinations } from "@/components/destinations/HomeDestinations";
+import { HomeDestinationsReinforcement } from "@/components/destinations/HomeDestinationsReinforcement";
+import { HomeTrustBar } from "@/components/trust/HomeTrustBar";
 import { Footer } from "@/components/footer/Footer";
 import { HomeGallerySection } from "@/components/gallery/HomeGallerySection";
 import { Hero } from "@/components/hero/Hero";
@@ -46,17 +48,19 @@ export default async function Home({
       <HomeSectionHashScroll />
       <AboutUsImagePreload />
       <Hero />
+      <HomeTrustBar />
       <main className="min-w-0 flex-1 pb-20 sm:pb-0">
         <SignatureSection />
+        <HowItWorks />
         <HomeGallerySection />
         <HomeDestinations />
+        <HomeDestinationsReinforcement />
         <CatalogHubSection />
         <WinterStorePromoSection />
         <TripPlannerTeaser />
         <EscapadasExpressSection />
         <Testimonials />
         <InstagramStats />
-        <HowItWorks />
         <AboutUsSection />
         <CTA />
       </main>
