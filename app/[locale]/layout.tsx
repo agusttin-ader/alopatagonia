@@ -92,7 +92,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
         />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
       </head>
-      <body suppressHydrationWarning className="flex min-h-dvh flex-col">
+      <body suppressHydrationWarning className="flex min-h-dvh w-full max-w-full flex-col overflow-x-clip overscroll-x-none">
         <div
           id="site-intro-placeholder"
           suppressHydrationWarning
@@ -123,7 +123,7 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
             <NoZoomLock />
             <ScrollProgressGate />
             <HomeIntroGate />
-            <div id="site-app-shell" className="relative flex min-h-dvh flex-1 flex-col">
+            <div id="site-app-shell" className="relative flex min-h-dvh w-full min-w-0 max-w-full flex-1 flex-col overflow-x-clip overscroll-x-none">
               <LocaleTransitionProvider>
                 <GlobalNav />
                 {children}

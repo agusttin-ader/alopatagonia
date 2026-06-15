@@ -116,13 +116,43 @@
     overflow-x: clip;
     text-rendering: optimizeLegibility;
     -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
     color-scheme: light;
-    touch-action: pan-x pan-y;
+    touch-action: manipulation;
   }
   body {
     @apply bg-background text-foreground font-medium;
     overflow-x: clip;
-    touch-action: pan-x pan-y;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overscroll-behavior-x: none;
+    touch-action: pan-y;
+  }
+  #site-app-shell {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+  }
+  main {
+    min-width: 0;
+    overflow-x: clip;
+  }
+  @media (max-width: 767px) {
+    input,
+    textarea,
+    select {
+      font-size: 16px;
+    }
+    @media (hover: none) {
+      .motion-cta:hover,
+      .motion-cta:focus-visible {
+        transform: none;
+        box-shadow: none;
+      }
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     html {
@@ -185,7 +215,7 @@
 
   .motion-link-underline {
     @apply relative inline-flex bg-[length:0%_2px] bg-[position:left_calc(100%-2px)] bg-no-repeat transition-[color,background-size,transform] hover:bg-[length:100%_2px];
-    background-image: linear-gradient(var(--color-footer-lake), var(--color-footer-lake));
+    background-image: linear-gradient(var(--color-cta), var(--color-cta));
     transition-duration: var(--motion-duration-base);
     transition-timing-function: var(--motion-ease-emphasis);
   }

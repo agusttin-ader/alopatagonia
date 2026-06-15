@@ -30,8 +30,9 @@ export function BoulderHeroBackdrop({
         qualityPreset="hero"
         className="object-cover"
       />
+      {/* z-[2]: AppImage con fill usa z-[1] por el pulse — sin esto el shade queda detrás. */}
       <div
-        className="absolute inset-0 bg-black"
+        className="pointer-events-none absolute inset-0 z-[2] bg-black"
         style={{ opacity: shade }}
         aria-hidden
       />

@@ -1,6 +1,7 @@
 import { Share2 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
+import { FooterDesignerCredit } from "@/components/footer/FooterDesignerCredit";
 import { SiteLogo } from "@/components/brand/SiteLogo";
 import { Link } from "@/i18n/navigation";
 import { PLANNER_PATH, SECTION_IDS } from "@/lib/constants";
@@ -35,6 +36,12 @@ export async function Footer() {
               {t("about")}
             </p>
             <p className="text-[0.9rem] text-white/78">{t("location")}</p>
+            <div className="hidden border-t border-white/10 pt-5 md:block">
+              <FooterDesignerCredit
+                label={t("designedBy")}
+                ariaLabel={t("designedByAria", { name: SITE.designer.name })}
+              />
+            </div>
           </div>
 
           <div className="space-y-2.5 text-[0.92rem] text-white/88">
@@ -125,8 +132,19 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className="mx-auto mt-7 max-w-7xl border-t border-white/14 pt-4 text-[0.72rem] text-white/62 2xl:max-w-[90rem]">
-          {t("copyright", { year: new Date().getFullYear() })}
+        <div className="mx-auto mt-7 max-w-7xl border-t border-white/14 pt-5 pr-16 md:pr-0 2xl:max-w-[90rem]">
+          <div className="flex flex-col items-center gap-4 md:items-start md:gap-0">
+            <p className="text-center text-[0.72rem] leading-relaxed text-white/62 md:text-left">
+              {t("copyright", { year: new Date().getFullYear() })}
+            </p>
+            <div className="md:hidden">
+              <FooterDesignerCredit
+                label={t("designedBy")}
+                ariaLabel={t("designedByAria", { name: SITE.designer.name })}
+                align="center"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </footer>

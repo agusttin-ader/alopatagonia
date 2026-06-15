@@ -17,13 +17,13 @@ export function Hero() {
     <header
       id="inicio"
       className={cn(
-        "relative isolate min-h-[100dvh] overflow-hidden bg-[#222601]",
+        "relative isolate min-h-[100dvh] overflow-x-clip overflow-y-hidden bg-[#222601]",
         MOBILE_MAGAZINE_G_ENABLED && "max-md:min-h-0 max-md:bg-background",
       )}
     >
       <div
         className={cn(
-          "relative isolate min-h-[100dvh] overflow-hidden bg-[#222601]",
+          "relative isolate min-h-[100dvh] overflow-x-clip overflow-y-hidden bg-[#222601]",
           MOBILE_MAGAZINE_G_ENABLED && "max-md:min-h-[88dvh]",
         )}
       >

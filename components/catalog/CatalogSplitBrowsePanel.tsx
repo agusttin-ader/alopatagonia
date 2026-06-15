@@ -100,13 +100,10 @@ function CatalogSplitTabs({
   navAriaLabel: string;
 }) {
   return (
-    <div className="max-w-full overflow-hidden">
+    <div className="max-w-full overflow-hidden md:hidden">
       <nav
         aria-label={navAriaLabel}
-        className={cn(
-          horizontalScrollRailClass,
-          "mb-8 gap-5 border-b border-border/45 pb-0",
-        )}
+        className={cn(horizontalScrollRailClass, "mb-6 gap-2 pb-0.5")}
       >
         {groups.map((group) => {
           const isActive = activeId === group.id;
@@ -118,16 +115,14 @@ function CatalogSplitTabs({
               onClick={() => onSelect(group.id)}
               aria-current={isActive ? "true" : undefined}
               className={cn(
-                "inline-flex min-h-11 shrink-0 flex-col items-start border-b-2 px-0.5 pb-3 pt-1 text-left transition",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-4",
+                "inline-flex min-h-11 shrink-0 items-center rounded-full px-4 py-2.5 text-sm font-semibold transition-colors duration-300",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2",
                 isActive
-                  ? "-mb-px border-primary text-foreground"
-                  : "border-transparent text-muted-foreground/70 hover:text-foreground/85",
+                  ? "bg-foreground text-background shadow-[0_10px_24px_-16px_rgba(0,0,0,0.35)]"
+                  : "bg-card/90 text-foreground ring-1 ring-border/70 hover:text-cta hover:ring-cta/35",
               )}
             >
-              <span className="font-heading text-sm font-medium tracking-tight sm:text-[0.9375rem]">
-                {group.title}
-              </span>
+              {group.title}
             </button>
           );
         })}
@@ -172,7 +167,7 @@ function CatalogSplitPanel({
           {action ? (
             <Link
               href={action.href}
-              className="inline-flex min-h-11 shrink-0 items-center rounded-full px-3 py-2 text-sm font-medium text-primary underline-offset-4 transition hover:bg-primary/8 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2"
+              className="inline-flex min-h-11 shrink-0 items-center rounded-full px-3 py-2 text-sm font-medium text-primary underline-offset-4 transition hover:bg-primary/8 hover:text-cta hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2"
             >
               {action.label}
             </Link>
@@ -182,7 +177,7 @@ function CatalogSplitPanel({
         <CatalogItemGrid
           entries={group.entries}
           mode={mode}
-          gridClassName="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+          gridClassName="grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
           compactGap
         />
       </motion.section>

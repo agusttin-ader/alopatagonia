@@ -23,7 +23,9 @@
     "promosPatagonia": "Promos Patagônia",
     "aboutUs": "Quem somos",
     "popularDestinations": "Destinos populares",
-    "copyright": "© {year} Alo Patagonia. Todos os direitos reservados."
+    "copyright": "© {year} Alo Patagonia. Todos os direitos reservados.",
+    "designedBy": "Site desenvolvido por",
+    "designedByAria": "Site desenvolvido por {name}"
   },
   "hero": {
     "headline": "Organize conosco sua viagem à Patagônia sem complicações",
@@ -345,6 +347,10 @@
     "chooseCorridor": "Escolher corredor",
     "chooseDestination": "Escolher destino",
     "chooseAccommodationType": "Escolher tipo de acomodação",
+    "chooseExcursionType": "Escolher tipo de excursão",
+    "exploreItem": "Explorar",
+    "photoCountOne": "1 foto",
+    "photoCountMany": "{count} fotos",
     "patagoniaArgentina": "Patagônia Argentina",
     "heroAlt": "Viagens a {destination} — Patagônia Argentina",
     "planTripTo": "Planejar viagem a {destination}",

@@ -30,10 +30,10 @@ const PhoneVideoMockup = dynamic(
 );
 
 const fieldClassName =
-  "h-12 w-full rounded-xl border border-[#d9d2c5]/80 bg-[linear-gradient(160deg,rgba(248,242,232,0.97),rgba(241,234,220,0.93))] px-3.5 text-base sm:text-[0.98rem] text-foreground shadow-[inset_0_1px_0_rgba(252,246,236,0.9),0_12px_26px_-24px_rgba(48,40,28,0.32)] outline-none transition duration-200 placeholder:text-muted-foreground/75 hover:border-[#cabfae] hover:bg-[linear-gradient(160deg,rgba(250,244,234,0.99),rgba(244,237,224,0.96))] focus-visible:border-primary/40 focus-visible:ring-4 focus-visible:ring-primary/14";
+  "h-12 w-full min-w-0 rounded-xl border border-[#d9d2c5]/80 bg-[linear-gradient(160deg,rgba(248,242,232,0.97),rgba(241,234,220,0.93))] px-3.5 text-base text-foreground shadow-[inset_0_1px_0_rgba(252,246,236,0.9),0_12px_26px_-24px_rgba(48,40,28,0.32)] outline-none transition duration-200 placeholder:text-muted-foreground/75 hover:border-[#cabfae] hover:bg-[linear-gradient(160deg,rgba(250,244,234,0.99),rgba(244,237,224,0.96))] focus-visible:border-primary/40 focus-visible:ring-4 focus-visible:ring-primary/14 md:text-[0.98rem]";
 
 const textareaClassName =
-  "min-h-[6.5rem] w-full resize-y rounded-xl border border-[#d9d2c5]/80 bg-[linear-gradient(160deg,rgba(248,242,232,0.97),rgba(241,234,220,0.93))] px-3.5 py-3 text-base sm:text-[0.98rem] text-foreground shadow-[inset_0_1px_0_rgba(252,246,236,0.9),0_12px_26px_-24px_rgba(48,40,28,0.32)] outline-none transition duration-200 placeholder:text-muted-foreground/75 hover:border-[#cabfae] hover:bg-[linear-gradient(160deg,rgba(250,244,234,0.99),rgba(244,237,224,0.96))] focus-visible:border-primary/40 focus-visible:ring-4 focus-visible:ring-primary/14";
+  "min-h-[6.5rem] w-full min-w-0 resize-y rounded-xl border border-[#d9d2c5]/80 bg-[linear-gradient(160deg,rgba(248,242,232,0.97),rgba(241,234,220,0.93))] px-3.5 py-3 text-base text-foreground shadow-[inset_0_1px_0_rgba(252,246,236,0.9),0_12px_26px_-24px_rgba(48,40,28,0.32)] outline-none transition duration-200 placeholder:text-muted-foreground/75 hover:border-[#cabfae] hover:bg-[linear-gradient(160deg,rgba(250,244,234,0.99),rgba(244,237,224,0.96))] focus-visible:border-primary/40 focus-visible:ring-4 focus-visible:ring-primary/14 md:text-[0.98rem]";
 
 const MAX_NAME_LENGTH = 70;
 const MAX_TRAVELERS_LENGTH = 2;

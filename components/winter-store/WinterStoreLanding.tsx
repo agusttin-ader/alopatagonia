@@ -32,11 +32,11 @@ export function WinterStoreLanding({ heroImage }: WinterStoreLandingProps) {
           image={heroImage}
           priority
           sizes={IMAGE_SIZES.viewport}
-          className="absolute inset-0"
-          shade={0.78}
+          className="absolute inset-0 z-0"
+          shade={0.26}
         />
         <div
-          className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/68 to-black/48"
+          className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-black/45 via-black/36 to-black/50"
           aria-hidden
         />
         <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center 2xl:max-w-4xl">

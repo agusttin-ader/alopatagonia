@@ -58,7 +58,7 @@ export async function CatalogItemDetail({ entry: rawEntry }: CatalogItemDetailPr
     <div className={cn("pb-24 sm:pb-28 min-[1920px]:pb-32 min-[2560px]:pb-36", SHELL_PAGE_PT)}>
       <div className={siteShell()}>
         <nav className="mb-4 text-sm text-muted-foreground md:mb-5 min-[1920px]:text-[0.9375rem]">
-          <Link href="/destinos" className="inline-flex items-center gap-1.5 hover:text-foreground">
+          <Link href="/destinos" className="inline-flex items-center gap-1.5 hover:text-cta">
             <ArrowLeft className="size-3.5 min-[1920px]:size-4" aria-hidden />
             {destination.name}
           </Link>
@@ -137,13 +137,13 @@ export async function CatalogItemDetail({ entry: rawEntry }: CatalogItemDetailPr
                 {t("itemDetail.askCta")}
               </a>
               <div className="mt-6 space-y-2 border-t border-border/70 pt-5 text-sm min-[1920px]:mt-8 min-[1920px]:text-base">
-                <Link href={backHref} className="block text-muted-foreground hover:text-foreground">
+                <Link href={backHref} className="block text-muted-foreground hover:text-cta">
                   {t("itemDetail.backTo", {
                     section: t(`itemDetail.sections.${sectionKey}`),
                     destination: destination.name,
                   })}
                 </Link>
-                <Link href="/destinos" className="block text-muted-foreground hover:text-foreground">
+                <Link href="/destinos" className="block text-muted-foreground hover:text-cta">
                   {t("viewAllDestinations")}
                 </Link>
               </div>

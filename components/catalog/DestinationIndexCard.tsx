@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import type { DestinationCatalog } from "@/lib/catalog/types";
 import { CARD_IMAGE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
+import { EDITORIAL_CARD_ARROW_HOVER, EDITORIAL_CARD_TITLE_HOVER } from "@/lib/interactive-hover";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
@@ -54,7 +55,8 @@ export function DestinationIndexCard({ destination, compact = false }: Destinati
             </p>
             <h2
               className={cn(
-                "font-heading mt-1.5 font-medium tracking-tight text-foreground transition-[color] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-primary/90",
+                "font-heading mt-1.5 font-medium tracking-tight text-foreground",
+                EDITORIAL_CARD_TITLE_HOVER,
                 compact ? "text-lg leading-snug sm:text-xl" : "mt-2 text-xl sm:text-2xl",
               )}
             >
@@ -71,8 +73,8 @@ export function DestinationIndexCard({ destination, compact = false }: Destinati
           </div>
           <span
             className={cn(
-              "inline-flex shrink-0 items-center justify-center rounded-full border border-border/80",
-              "text-foreground/70 transition-[color,border-color,background-color] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:border-foreground/25 group-hover:bg-foreground/5 group-hover:text-foreground",
+              "inline-flex shrink-0 items-center justify-center rounded-full border border-border/80 text-foreground/70",
+              EDITORIAL_CARD_ARROW_HOVER,
               compact ? "mt-0.5 size-10" : "mt-1 size-11",
             )}
             aria-hidden

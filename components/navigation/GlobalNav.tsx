@@ -23,7 +23,7 @@ const HOME_SECTION_IDS = {
 } as const;
 
 const DESKTOP_LINK_CLASS =
-  "motion-link-underline motion-cta relative inline-flex min-h-11 cursor-pointer select-none items-center justify-center rounded-md px-2.5 py-2 text-[0.92rem] font-medium whitespace-nowrap text-foreground/72 hover:text-footer-lake focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake/45 focus-visible:ring-offset-0 lg:px-3 lg:text-[0.94rem]";
+  "motion-link-underline motion-cta relative inline-flex min-h-11 cursor-pointer select-none items-center justify-center rounded-md px-2.5 py-2 text-[0.92rem] font-medium whitespace-nowrap text-foreground/72 hover:text-cta focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cta/45 focus-visible:ring-offset-0 lg:px-3 lg:text-[0.94rem]";
 
 const MOTION_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const HEADER_TRANSITION = { duration: 0.34, ease: MOTION_EASE };
@@ -414,7 +414,7 @@ export function GlobalNav() {
                             setMobileOpen(false);
                           }
                         }}
-                        className="motion-cta block rounded-xl px-4 py-4 text-[1.32rem] font-semibold leading-tight text-foreground hover:bg-secondary/65 hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-2"
+                        className="motion-cta block rounded-xl px-4 py-4 text-[1.32rem] font-semibold leading-tight text-foreground hover:bg-secondary/65 hover:text-cta hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-2"
                       >
                         {t(link.labelKey)}
                       </Link>

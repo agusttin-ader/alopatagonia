@@ -32,7 +32,7 @@ export function EditorialSplitNavItem({
           "font-heading block text-[1.0625rem] leading-tight tracking-tight transition-colors duration-300 min-[1920px]:text-lg",
           isActive
             ? "text-foreground"
-            : "text-foreground/38 group-hover:text-foreground/68",
+            : "text-foreground/38 [@media(hover:hover)]:group-hover:text-cta",
         )}
       >
         {title}

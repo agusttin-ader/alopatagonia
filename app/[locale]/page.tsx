@@ -49,7 +49,7 @@ export default async function Home({
       <AboutUsImagePreload />
       <Hero />
       <HomeTrustBar />
-      <main className="min-w-0 flex-1 pb-20 sm:pb-0">
+      <main className="min-w-0 flex-1 overflow-x-clip pb-20 sm:pb-0">
         <SignatureSection />
         <HowItWorks />
         <HomeGallerySection />

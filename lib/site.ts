@@ -24,4 +24,12 @@ export const SITE = {
   location: "Patagonia, Argentina",
   about:
     "Te ayudamos con auto, alojamiento y excursiones en la Patagonia — todo desde un solo WhatsApp.",
+  designer: {
+    name: "Agustín Ader",
+    /** Lockup completo con fondo transparente. */
+    logo: "/images/logo/logo-marca-agus.png",
+    /** Lockup recortado para footer (sin márgenes). */
+    logoLockup: "/images/logo/logo-marca-agus-lockup.png",
+    url: "https://github.com/agusttin-ader",
+  },
 } as const;

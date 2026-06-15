@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import type { CatalogHubPillar } from "@/lib/catalog-hub/config";
 import { HUB_PILLAR_IMAGE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
 import { IMAGE_SIZES } from "@/lib/image-config";
+import { POSTER_LINK_CTA_HOVER } from "@/lib/interactive-hover";
 import { cn } from "@/lib/utils";
 
 type CatalogHubPillarCardProps = {
@@ -41,7 +42,7 @@ function ComingSoonBadge({ label, className }: { label: string; className?: stri
 
 function CtaLabel({ isLive, labels }: { isLive: boolean; labels: CatalogHubPillarCardProps["labels"] }) {
   return (
-    <span className="inline-flex items-center gap-1.5 text-sm font-medium transition duration-300">
+    <span className={cn("inline-flex items-center gap-1.5 text-sm font-medium", POSTER_LINK_CTA_HOVER)}>
       {isLive ? labels.explore : labels.preview}
       <ArrowUpRight
         className="size-4 transition duration-300 [@media(hover:hover)]:group-hover:translate-x-0.5 [@media(hover:hover)]:group-hover:-translate-y-0.5"
@@ -124,7 +125,7 @@ function HubPillarPosterCard({
         linkBase,
         "overflow-hidden shadow-sm ring-1 ring-black/6 transition duration-500",
         isMobile
-          ? "rounded-[1.35rem] active:scale-[0.99]"
+          ? "rounded-[1.35rem]"
           : "rounded-3xl [@media(hover:hover)]:hover:-translate-y-0.5 [@media(hover:hover)]:hover:shadow-lg",
       )}
     >

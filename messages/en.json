@@ -23,7 +23,9 @@
     "promosPatagonia": "Patagonia deals",
     "aboutUs": "About us",
     "popularDestinations": "Popular destinations",
-    "copyright": "© {year} Alo Patagonia. All rights reserved."
+    "copyright": "© {year} Alo Patagonia. All rights reserved.",
+    "designedBy": "Website designed by",
+    "designedByAria": "Website designed by {name}"
   },
   "hero": {
     "headline": "Plan your Patagonia trip with us — hassle-free",
@@ -345,6 +347,10 @@
     "chooseCorridor": "Choose region",
     "chooseDestination": "Choose destination",
     "chooseAccommodationType": "Choose accommodation type",
+    "chooseExcursionType": "Choose excursion type",
+    "exploreItem": "Explore",
+    "photoCountOne": "1 photo",
+    "photoCountMany": "{count} photos",
     "patagoniaArgentina": "Argentine Patagonia",
     "heroAlt": "Trips to {destination} — Argentine Patagonia",
     "planTripTo": "Plan a trip to {destination}",

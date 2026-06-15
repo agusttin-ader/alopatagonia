@@ -110,7 +110,7 @@ function DestinationZoneTabs({
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-4",
               isActive
                 ? "-mb-px border-primary text-foreground"
-                : "border-transparent text-muted-foreground/70 hover:text-foreground/85",
+                : "border-transparent text-muted-foreground/70 hover:text-cta",
             )}
           >
             <span className="font-heading text-sm font-medium tracking-tight sm:text-[0.9375rem]">

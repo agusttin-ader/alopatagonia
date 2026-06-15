@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { CatalogSplitBrowsePanel } from "@/components/catalog/CatalogSplitBrowsePanel";
 import { groupExcursionEntriesByCategory } from "@/lib/catalog/excursion-categories";
 import type { CatalogItemEntry } from "@/lib/catalog/catalog-items";
@@ -14,6 +16,8 @@ export function DestinationExcursionBrowse({
   destination,
   entries,
 }: DestinationExcursionBrowseProps) {
+  const t = useTranslations("catalog");
+
   const groups = groupExcursionEntriesByCategory(entries).map((group) => ({
     ...group,
     panelSubtitle: `${destination.region} · ${group.meta}`,
@@ -23,9 +27,9 @@ export function DestinationExcursionBrowse({
     <CatalogSplitBrowsePanel
       groups={groups}
       mode="excursion"
-      navAriaLabel="Elegir tipo de excursión"
+      navAriaLabel={t("chooseExcursionType")}
       panelAction={() => ({
-        label: "Ver catálogo",
+        label: t("viewCatalog"),
         href: "/excursiones",
       })}
     />

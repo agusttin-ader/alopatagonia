@@ -19,6 +19,10 @@ type CatalogItemGridProps = {
   compactGap?: boolean;
 };
 
+function photoCountLabel(t: ReturnType<typeof useTranslations>, count: number) {
+  return count === 1 ? t("photoCountOne") : t("photoCountMany", { count });
+}
+
 export function CatalogItemGrid({
   entries,
   mode,
@@ -31,11 +35,11 @@ export function CatalogItemGrid({
   return (
     <div
       className={cn(
-        "grid",
+        "grid min-w-0",
         compactGap
-          ? "gap-x-4 gap-y-8 sm:gap-x-5 sm:gap-y-9 lg:gap-x-6 lg:gap-y-10"
+          ? "gap-x-4 gap-y-8 md:gap-x-5 md:gap-y-9 lg:gap-x-6 lg:gap-y-10"
           : CATALOG_GRID_GAP,
-        gridClassName ?? "grid-cols-2 lg:grid-cols-3",
+        gridClassName ?? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
       )}
     >
       {entries.map((entry) => (
@@ -44,6 +48,8 @@ export function CatalogItemGrid({
           item={entry.item}
           destinationSlug={entry.destination.slug}
           badge={getLocalizedCatalogItemBadge(t, entry)}
+          exploreLabel={t("exploreItem")}
+          photoCountLabel={photoCountLabel(t, entry.item.images.length)}
           compact={compact}
           categoryLabel={
             mode === "excursion" && entry.item.category

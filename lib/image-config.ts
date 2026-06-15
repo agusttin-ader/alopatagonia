@@ -29,9 +29,9 @@ export const IMAGE_SIZES = {
   homeGalleryTile:
     "(max-width: 640px) 26vw, (max-width: 1024px) 25vw, (max-width: 1919px) 22vw, (max-width: 2559px) 450px, (max-width: 3839px) 550px, 650px",
   catalogHubCard:
-    "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
+    "(max-width: 767px) 92vw, (max-width: 1024px) 50vw, 33vw",
   catalogCard:
-    "(max-width: 640px) 94vw, (max-width: 1024px) 52vw, (max-width: 1280px) 36vw, 560px",
+    "(max-width: 767px) 92vw, (max-width: 1024px) 52vw, (max-width: 1280px) 36vw, 560px",
   catalogItemGallery:
     "(max-width: 1024px) 100vw, (min-width: 3840px) 1200px, (min-width: 2560px) 1000px, (min-width: 1920px) 900px, (min-width: 1024px) 70vw, 900px",
   catalogItemThumb:
