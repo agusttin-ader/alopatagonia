@@ -30,6 +30,6 @@ export const SITE = {
     logo: "/images/logo/logo-marca-agus.png",
     /** Lockup recortado para footer (sin márgenes). */
     logoLockup: "/images/logo/logo-marca-agus-lockup.png",
-    url: "https://github.com/agusttin-ader",
+    url: "https://www.agustinaderdev.com/",
   },
 } as const;

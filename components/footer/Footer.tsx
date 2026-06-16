@@ -132,12 +132,12 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className="mx-auto mt-7 max-w-7xl border-t border-white/14 pt-5 pr-16 md:pr-0 2xl:max-w-[90rem]">
-          <div className="flex flex-col items-center gap-4 md:items-start md:gap-0">
-            <p className="text-center text-[0.72rem] leading-relaxed text-white/62 md:text-left">
+        <div className="mx-auto mt-7 w-full max-w-7xl border-t border-white/14 pt-5 2xl:max-w-[90rem]">
+          <div className="flex w-full flex-col items-center gap-3.5 text-center md:items-start md:gap-0 md:text-left">
+            <p className="max-w-[min(100%,18rem)] text-[0.72rem] leading-relaxed text-white/62 md:max-w-none">
               {t("copyright", { year: new Date().getFullYear() })}
             </p>
-            <div className="md:hidden">
+            <div className="flex w-full justify-center md:hidden">
               <FooterDesignerCredit
                 label={t("designedBy")}
                 ariaLabel={t("designedByAria", { name: SITE.designer.name })}

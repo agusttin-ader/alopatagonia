@@ -379,7 +379,8 @@
       "departamento": { "title": "Apartments", "subtitle": "Neighbourhoods and capacity" },
       "hostel": { "title": "Hotels", "subtitle": "By category" }
     },
-    "carRentalCta": "Ask about car rental",
+    "carRentalCta": "Get your quote",
+    "carRentalWhatsAppMessage": "I'd like a quote for a car rental in {destination}. Can you help?",
     "badges": {
       "excursion": "Excursion",
       "cabana": "Cabin",

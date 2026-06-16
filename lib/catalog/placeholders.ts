@@ -366,10 +366,6 @@ export function buildCatalogWhatsAppMessage(itemName: string, destinationName: s
   return `Me interesa ${itemName} en ${destinationName}. ¿Me ayudan?`;
 }
 
-export function buildCarRentalWhatsAppMessage(destinationName: string) {
-  return `Quiero consultar por alquiler de auto en ${destinationName}. ¿Me ayudan?`;
-}
-
 function toCatalogImage(src: string, alt: string): CatalogImage {
   return { src, alt };
 }

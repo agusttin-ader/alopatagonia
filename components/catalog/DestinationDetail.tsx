@@ -6,7 +6,6 @@ import { DestinationExcursionBrowse } from "@/components/catalog/DestinationExcu
 import { FaqSection } from "@/components/seo/FaqSection";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
-import { buildCarRentalWhatsAppMessage } from "@/lib/catalog/placeholders";
 import type { DestinationCatalog } from "@/lib/catalog/types";
 import { PLANNER_PATH, getWhatsAppUrl } from "@/lib/constants";
 import { localizeAccommodationItem } from "@/lib/i18n/localized-accommodations";
@@ -46,7 +45,9 @@ export async function DestinationDetail({
 
   const destination = localizeDestinationCatalog(tHome, rawDestination);
   const carRental = localizeCarRental(tDest, destination, locale);
-  const carWhatsApp = getWhatsAppUrl(buildCarRentalWhatsAppMessage(destination.name));
+  const carWhatsApp = getWhatsAppUrl(
+    tCatalog("carRentalWhatsAppMessage", { destination: destination.name }),
+  );
   const seo = getDestinationSeo(destination.slug);
   const localizedFaq = seo
     ? getLocalizedDestinationSeoFaq(tDest, locale, destination.slug, seo.faq)

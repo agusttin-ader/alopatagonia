@@ -29,12 +29,12 @@ export function FooterDesignerCredit({
       rel="noopener noreferrer"
       aria-label={ariaLabel}
       className={cn(
-        "group inline-flex max-w-full flex-col gap-2.5 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--footer-lake)]",
-        isCentered ? "items-center" : "items-start",
+        "group inline-flex max-w-full flex-col gap-2 rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--footer-lake)]",
+        isCentered ? "items-center text-center" : "items-start",
         className,
       )}
     >
-      <span className="shrink-0 text-[0.62rem] font-medium uppercase tracking-[0.18em] text-white/45 transition-colors duration-300 group-hover:text-white/68">
+      <span className="shrink-0 text-[0.58rem] font-medium uppercase tracking-[0.18em] text-white/45 transition-colors duration-300 group-hover:text-white/68">
         {label}
       </span>
       <AppImage
@@ -46,9 +46,9 @@ export function FooterDesignerCredit({
         withBlur={false}
         loadingPulse={false}
         unoptimized
-        sizes="(max-width: 640px) 200px, 240px"
+        sizes="(max-width: 640px) 160px, 180px"
         className={cn(
-          "h-10 w-auto max-w-[14.5rem] object-contain opacity-92 transition-opacity duration-300 group-hover:opacity-100 sm:h-11 sm:max-w-[16rem]",
+          "h-7 w-auto max-w-[10.5rem] object-contain opacity-92 transition-opacity duration-300 group-hover:opacity-100 md:h-8 md:max-w-[11.5rem]",
           isCentered ? "object-center" : "object-left",
         )}
       />

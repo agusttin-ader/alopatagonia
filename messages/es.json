@@ -379,7 +379,8 @@
       "departamento": { "title": "Departamentos", "subtitle": "Barrios y capacidades" },
       "hostel": { "title": "Hoteles", "subtitle": "Según categoría" }
     },
-    "carRentalCta": "Consultar auto",
+    "carRentalCta": "Cotizá tu reserva",
+    "carRentalWhatsAppMessage": "Quiero cotizar mi reserva de alquiler de auto en {destination}. ¿Me ayudan?",
     "badges": {
       "excursion": "Excursión",
       "cabana": "Cabaña",
