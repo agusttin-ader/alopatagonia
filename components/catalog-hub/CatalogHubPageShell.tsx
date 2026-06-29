@@ -6,6 +6,7 @@ import { localizeCatalogHubPillars } from "@/lib/i18n/localized-home";
 import { Link as LocaleLink } from "@/i18n/navigation";
 import { PAGE_TITLE, SHELL_PAGE_PT, siteShell } from "@/lib/layout-shell";
 import { SECTION_IDS } from "@/lib/constants";
+import { getLocalizedHomeSectionHref } from "@/lib/i18n/internal-href";
 import { cn } from "@/lib/utils";
 
 type CatalogHubPageShellProps = {
@@ -28,9 +29,9 @@ export async function CatalogHubPageShell({ pillar, children }: CatalogHubPageSh
             {tNav("home")}
           </LocaleLink>
           <span className="mx-2">/</span>
-          <a href={`/#${SECTION_IDS.catalogHub}`} className="hover:text-foreground">
+          <LocaleLink href={getLocalizedHomeSectionHref(SECTION_IDS.catalogHub)} className="hover:text-foreground">
             {t("breadcrumbCatalog")}
-          </a>
+          </LocaleLink>
           <span className="mx-2">/</span>
           <span className="text-foreground">{localizedPillar.title}</span>
         </nav>

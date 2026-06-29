@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { AppImage } from "@/components/media/AppImage";
+import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "lucide-react";
 
 import { getCatalogItemPath } from "@/lib/catalog/catalog-items";

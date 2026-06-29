@@ -5,7 +5,7 @@ import { FooterDesignerCredit } from "@/components/footer/FooterDesignerCredit";
 import { SiteLogo } from "@/components/brand/SiteLogo";
 import { Link } from "@/i18n/navigation";
 import { PLANNER_PATH, SECTION_IDS } from "@/lib/constants";
-import { getHomeSectionHref } from "@/lib/home-sections";
+import { getLocalizedHomeSectionHref } from "@/lib/i18n/internal-href";
 import { SEO_POPULAR_DESTINATIONS } from "@/lib/seo-destinations";
 import { SITE } from "@/lib/site";
 
@@ -96,18 +96,18 @@ export async function Footer() {
             >
               {tNav("planTrip")}
             </Link>
-            <a
-              href={getHomeSectionHref(SECTION_IDS.promosPatagonia, false)}
+            <Link
+              href={getLocalizedHomeSectionHref(SECTION_IDS.promosPatagonia)}
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
               {t("promosPatagonia")}
-            </a>
-            <a
-              href={getHomeSectionHref(SECTION_IDS.aboutUs, false)}
+            </Link>
+            <Link
+              href={getLocalizedHomeSectionHref(SECTION_IDS.aboutUs)}
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
               {t("aboutUs")}
-            </a>
+            </Link>
             <Link
               href="/invierno"
               className="block hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/65 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"

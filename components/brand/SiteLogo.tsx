@@ -1,5 +1,5 @@
 import { AppImage } from "@/components/media/AppImage";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 import { SITE } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";

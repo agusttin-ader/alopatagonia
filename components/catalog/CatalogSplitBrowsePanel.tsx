@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { Link } from "@/i18n/navigation";
 import { useMemo, useState } from "react";
 
 import { CatalogItemGrid } from "@/components/catalog/CatalogItemGrid";

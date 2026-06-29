@@ -1,7 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { AppImage } from "@/components/media/AppImage";
-import Link from "next/link";
-
+import { Link } from "@/i18n/navigation";
 import type { DestinationCatalog } from "@/lib/catalog/types";
 import { CARD_IMAGE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
 import { EDITORIAL_CARD_ARROW_HOVER, EDITORIAL_CARD_TITLE_HOVER } from "@/lib/interactive-hover";

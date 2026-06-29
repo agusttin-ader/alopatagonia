@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
 import { EscapadasExpressPromoDeck } from "@/components/about/EscapadasExpressPromoDeck";
 import { buttonVariants } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import { PLANNER_PATH, SECTION_IDS } from "@/lib/constants";
 import { getPublishedEscapadasExpressPromos } from "@/lib/escapadas-express";
 import { localizeEscapadasPromos } from "@/lib/i18n/localized-home";

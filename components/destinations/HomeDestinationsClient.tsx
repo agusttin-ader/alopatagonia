@@ -11,7 +11,8 @@ import { Reveal } from "@/components/motion/reveal";
 import { SECTION_IDS } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import type { HomeDestinationEditorial } from "@/lib/home-destinations-types";
-import { getHomeSectionHref, scrollToHomeSection } from "@/lib/home-sections";
+import { getLocalizedHomeSectionHref } from "@/lib/i18n/internal-href";
+import { scrollToHomeSection } from "@/lib/home-sections";
 import { SPREAD_TILE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { cn } from "@/lib/utils";
@@ -34,7 +35,9 @@ function CatalogLink({
   const pathname = usePathname();
   const reduceMotion = useReducedMotion();
   const isHome = pathname === "/";
-  const href = getHomeSectionHref(SECTION_IDS.catalogHub, isHome);
+  const href = isHome
+    ? `#${SECTION_IDS.catalogHub}`
+    : getLocalizedHomeSectionHref(SECTION_IDS.catalogHub);
 
   const onClick = (event: MouseEvent<HTMLAnchorElement>) => {
     if (!isHome) return;
@@ -47,7 +50,7 @@ function CatalogLink({
   };
 
   return (
-    <a
+    <Link
       href={href}
       onClick={onClick}
       className={cn(
@@ -69,7 +72,7 @@ function CatalogLink({
       {t("viewCatalog")}
       <ChevronDown className="size-4 shrink-0 lg:hidden" aria-hidden />
       <ArrowUpRight className="hidden size-4 shrink-0 lg:inline" aria-hidden />
-    </a>
+    </Link>
   );
 }
 
