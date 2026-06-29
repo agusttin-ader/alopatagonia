@@ -33,9 +33,6 @@ export const CATALOG_ACCOMMODATION_FOLDERS = [
 export const CATALOG_EXCURSION_FOLDERS = [
   "excursiones",
   "excurisiones",
-  "excursion-1",
-  "excursion-2",
-  "excursion-3",
 ] as const;
 
 export const CATALOG_NATURE_FOLDERS = ["naturaleza"] as const;

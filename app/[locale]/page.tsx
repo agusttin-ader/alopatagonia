@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import { getLocale, setRequestLocale } from "next-intl/server";
 
-import { AboutUsImagePreload } from "@/components/about/AboutUsImagePreload";
 import { AboutUsSection } from "@/components/about/AboutUsSection";
 import { EscapadasExpressSection } from "@/components/about/EscapadasExpressSection";
 import { CTA } from "@/components/cta/CTA";
@@ -21,13 +19,9 @@ import { SignatureSection } from "@/components/signature/SignatureSection";
 import { Testimonials } from "@/components/testimonials/Testimonials";
 import { WinterStorePromoSection } from "@/components/winter-store/WinterStorePromoSection";
 import { FloatingWhatsAppButton } from "@/components/whatsapp/FloatingWhatsAppButton";
+import { InstagramStats } from "@/components/community/instagram-stats";
 import type { AppLocale } from "@/i18n/routing";
 import { buildHubPageMetadata } from "@/lib/i18n/localized-seo-metadata";
-
-const InstagramStats = dynamic(
-  () => import("@/components/community/instagram-stats").then((mod) => mod.InstagramStats),
-  { loading: () => <div className="min-h-[320px]" aria-hidden /> },
-);
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = (await getLocale()) as AppLocale;
@@ -46,7 +40,6 @@ export default async function Home({
     <>
       <PlannerLegacyHashRedirect />
       <HomeSectionHashScroll />
-      <AboutUsImagePreload />
       <Hero />
       <HomeTrustBar />
       <main className="min-w-0 flex-1 overflow-x-clip pb-20 sm:pb-0">

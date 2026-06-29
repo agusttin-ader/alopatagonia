@@ -1,0 +1,5 @@
+Excursión: Navegación al Bosque de Arrayanes
+Carpeta: bosque-arrayanes
+
+Colocá acá una sola imagen (ideal: main.jpg).
+Formatos: .jpg, .jpeg, .png, .webp

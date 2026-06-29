@@ -381,6 +381,8 @@
     },
     "carRentalCta": "Get your quote",
     "carRentalWhatsAppMessage": "I'd like a quote for a car rental in {destination}. Can you help?",
+    "excursionWhatsAppCta": "Ask on WhatsApp",
+    "excursionWhatsAppMessage": "I'm interested in the \"{excursion}\" excursion in {destination}. Can you help?",
     "badges": {
       "excursion": "Excursion",
       "cabana": "Cabin",

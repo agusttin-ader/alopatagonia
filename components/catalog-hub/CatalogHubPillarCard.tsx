@@ -135,6 +135,7 @@ function HubPillarPosterCard({
           alt={pillar.imageAlt}
           fill
           priority={priority}
+          loading={priority ? undefined : "lazy"}
           qualityPreset="card"
           sizes={IMAGE_SIZES.catalogHubCard}
           className={cn(HUB_PILLAR_IMAGE_HOVER_EXPAND, pillar.imagePosition)}
@@ -175,7 +176,7 @@ export function CatalogHubPillarCard({ pillar, priority = false, labels }: Catal
         <HubPillarPosterCard pillar={pillar} priority={priority} labels={labels} density="mobile" />
       </div>
       <div className="hidden h-full md:block">
-        <HubPillarPosterCard pillar={pillar} priority={priority} labels={labels} density="desktop" />
+        <HubPillarPosterCard pillar={pillar} labels={labels} density="desktop" />
       </div>
     </>
   );

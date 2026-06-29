@@ -1,0 +1,49 @@
+Dónde poner las fotos de excursiones — Alo Patagonia
+
+Una imagen por excursión, dentro de la carpeta con el nombre de la excursión.
+Nombre sugerido del archivo: main.jpg (también sirve .jpeg, .png o .webp).
+Después de subir fotos: npm run catalog:manifest
+
+── bariloche ──
+  excursiones/circuito-chico/ → Circuito Chico y miradores del Llao Llao
+  excursiones/isla-victoria-arrayanes/ → Navegación Isla Victoria y Bosque de Arrayanes
+  excursiones/refugio-frey/ → Trekking al Refugio Frey
+
+── san-martin ──
+  excursiones/huechulafquen-lanin/ → Lago Huechulafquen, Paimún y Volcán Lanín
+  excursiones/lacar-quila-quina/ → Navegación por el Lácar a Quila Quina
+
+── chalten ──
+  excursiones/laguna-de-los-tres/ → Laguna de los Tres
+  excursiones/condores-aguilas/ → Miradores Cóndores y Águilas
+  excursiones/lago-del-desierto/ → Lago del Desierto y Glaciar Huemul
+
+── esquel-trevelin  ──
+  excursiones/los-alerces/ → Parque Nacional Los Alerces
+  excursiones/lago-futalaufquen/ → Navegación Lago Futalaufquen
+  excursiones/trevelin/ → Valle 16 de Octubre y Trevelin
+
+── la-angostura ──
+  excursiones/kayak/ → Kayak en Villa La Angostura
+  excursiones/alquiler-bicicletas/ → Alquiler de bicicletas
+  excursiones/bosque-arrayanes/ → Navegación al Bosque de Arrayanes
+
+── madryn ──
+  excursiones/peninsula-valdes/ → Península Valdés
+  excursiones/ballenas-embarcacion/ → Avistaje de ballenas en embarcación
+  excursiones/punta-loma/ → Punta Loma y reservas costeras
+
+── calafate ──
+  excursiones/perito-moreno/ → Glaciar Perito Moreno
+  excursiones/todo-glaciares/ → Navegación Todo Glaciares
+  excursiones/laguna-nimez/ → Reserva Laguna Nimez
+
+── traful ──
+  excursiones/bosque-sumergido/ → Navegación al Bosque Sumergido
+  excursiones/cabalgata/ → Cabalgata en Traful
+
+── ushuaia ──
+  excursiones/tierra-del-fuego/ → Parque Nacional Tierra del Fuego
+  excursiones/canal-beagle/ → Navegación Canal Beagle
+  excursiones/laguna-esmeralda/ → Trekking Laguna Esmeralda
+

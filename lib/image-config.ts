@@ -73,7 +73,7 @@ export const IMAGE_QUALITY_BY_PRESET: Record<ImageQualityPreset, number> = {
   intro: IMAGE_QUALITY_INTRO,
 };
 
-/** URL del optimizador de Next — usar la misma en `<Image />` y en preload. */
+/** @deprecated Evitar — cada URL `/_next/image` cuenta como transformación en Vercel. */
 export function buildNextImageUrl(
   src: string,
   options: { width: number; quality?: number } = { width: IMAGE_PRELOAD_WIDTH.heroDesktop },
@@ -87,51 +87,3 @@ export function buildNextImageUrl(
   return `/_next/image?${params.toString()}`;
 }
 
-/** Precarga una imagen optimizada (misma URL que Next Image). */
-export function preloadOptimizedImage(
-  src: string,
-  options: { width: number; quality?: number; highPriority?: boolean } = {
-    width: IMAGE_PRELOAD_WIDTH.heroDesktop,
-  },
-): void {
-  if (typeof window === "undefined") return;
-
-  const href = buildNextImageUrl(src, options);
-
-  if (!document.querySelector(`link[rel="preload"][href="${href}"]`)) {
-    const link = document.createElement("link");
-    link.rel = "preload";
-    link.as = "image";
-    link.href = href;
-    if (options.highPriority) {
-      link.setAttribute("fetchpriority", "high");
-    }
-    document.head.appendChild(link);
-  }
-
-  const img = new Image();
-  if (options.highPriority && "fetchPriority" in img) {
-    (img as HTMLImageElement & { fetchPriority: string }).fetchPriority = "high";
-  }
-  img.src = href;
-}
-
-/** Precarga el resto en idle para no competir con LCP. */
-export function preloadOptimizedImagesIdle(
-  sources: string[],
-  options: { width: number; quality?: number },
-): void {
-  if (typeof window === "undefined") return;
-
-  const run = () => {
-    for (const src of sources) {
-      preloadOptimizedImage(src, options);
-    }
-  };
-
-  if ("requestIdleCallback" in window) {
-    window.requestIdleCallback(run, { timeout: 4000 });
-  } else {
-    setTimeout(run, 1200);
-  }
-}

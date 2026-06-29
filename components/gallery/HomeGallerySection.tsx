@@ -364,7 +364,7 @@ export function HomeGallerySection() {
                           image={image}
                           className={slotConfig.layout}
                           hero={"hero" in slotConfig && slotConfig.hero}
-                          priority={setIndex === 0 && slot === 0}
+                          priority={setIndex === 0 && "hero" in slotConfig && slotConfig.hero}
                           onClick={() => setLightboxIndex(pickedIndices[slot])}
                           slotLabel={t("viewPhoto", { n: slot + 1 })}
                         />
@@ -422,7 +422,7 @@ export function HomeGallerySection() {
                           image={image}
                           className={slotConfig.layout}
                           hero={"hero" in slotConfig && slotConfig.hero}
-                          priority={setIndex === 0 && slot === 0}
+                          priority={setIndex === 0 && "hero" in slotConfig && slotConfig.hero}
                           onClick={() => setLightboxIndex(pickedIndices[slot])}
                           slotLabel={t("viewPhoto", { n: slot + 1 })}
                         />

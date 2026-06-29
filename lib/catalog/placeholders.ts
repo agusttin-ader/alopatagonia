@@ -8,6 +8,7 @@ import type {
 import { buildDestinationAccommodationItems } from "@/lib/catalog/accommodation-items";
 import { BARILOCHE_HERO_IMAGE } from "@/lib/catalog/bariloche-curated";
 import { getDestinationImagePaths } from "@/lib/catalog/destination-images";
+import { getExcursionImageFoldersForSlug } from "@/lib/catalog/excursion-image-folders";
 import {
   CATALOG_ACCOMMODATION_FOLDERS,
   CATALOG_EXCURSION_FOLDERS,
@@ -20,6 +21,7 @@ import {
 export const CATALOG_LIMITS = {
   itemsPerAccommodationType: 1,
   imagesPerCatalogItem: 6,
+  imagesPerExcursion: 1,
   maxExcursions: 3,
 } as const;
 
@@ -82,36 +84,29 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
   ],
   "san-martin": [
     {
-      name: "Ruta de los Siete Lagos",
+      name: "Lago Huechulafquen, Paimún y Volcán Lanín",
       category: "aventura",
       description:
-        "Tramo escénico entre San Martín y Villa La Angostura (Ruta 40 / 234): Correntoso, Espejo, Lácar y otros lagos con playas de arena volcánica y bosque andino.",
+        "Salida 09:00 desde San Martín de los Andes. Recorrés Junín de los Andes y la iglesia de Laura Vicuña, la boca del Río Chimehuín y el Lago Huechulafquen con el Volcán Lanín de fondo en todo el trayecto. Bordeando el lago entrás al bosque andino-patagónico, almorzás en un restaurante de campo atendido por la comunidad mapuche y seguís por la Ruta 61 hasta el Lago Paimún, la capilla del lago y un bosque de araucarias milenarias al pie del Lanín. Regreso a las 18:00.",
       highlights: [
-        "Día completo con paradas en miradores y pueblos",
-        "Mejor con auto; también hay salidas organizadas",
-        "En invierno puede haber nieve en tramos altos — consultá antes",
+        "Día completo · salida 09:00 y regreso 18:00",
+        "Junín de los Andes, Río Chimehuín y Lago Huechulafquen",
+        "Almuerzo en restaurante mapuche de la zona",
+        "Lago Paimún, capilla y araucarias milenarias",
+        "No incluye entrada al Parque Nacional Lanín",
       ],
     },
     {
-      name: "Navegación Lago Lácar",
+      name: "Navegación por el Lácar a Quila Quina",
       category: "navegacion",
       description:
-        "Paseo lacustre desde el muelle de San Martín con vistas al Volcán Lanín y la costa boscosa. Algunas temporadas extienden hasta Quila Quina.",
+        "Excursión de medio día desde San Martín bordeando el Lago Lácar, con vistas al Volcán Colorado y al Cerro Sabana. Te internás en tierras de la Comunidad Mapuche Curruhuinca y volvés al lago con una panorámica distinta hacia Villa Quila Quina: un valle entre el agua y la cordillera, con asentamientos de la comunidad, casas de veraneo, confitería, muelle de navegación y playas para almorzar, tomar mate o disfrutar el marco del cerro Abanico.",
       highlights: [
-        "Aguas más calmas que en el Nahuel Huapi",
-        "Apto para familias y adultos mayores",
-        "Horarios según viento y nivel del lago",
-      ],
-    },
-    {
-      name: "Cascada Chachín y playas del Lácar",
-      category: "trekking",
-      description:
-        "Caminata corta hasta la cascada Chachín (acceso desde ruta hacia Hua Hum) o paseo por playas como Yuco y Catritre, a minutos del centro.",
-      highlights: [
-        "Opciones de 1 h a medio día según el sendero",
-        "Bosque nativo y sonido del río Bonito",
-        "Buen plan si no querés una jornada exigente",
+        "Medio día desde San Martín de los Andes",
+        "Comunidad Mapuche Curruhuinca y Villa Quila Quina",
+        "Vistas al Volcán Colorado y al Cerro Sabana",
+        "Muelle, playas y confitería frente al cerro Abanico",
+        "No incluye entrada al Parque Nacional Lanín",
       ],
     },
   ],
@@ -187,36 +182,39 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
   ],
   "villa-la-angostura": [
     {
-      name: "Bosque de Arrayanes",
-      category: "trekking",
-      description:
-        "Arrayanes naranjas sobre el agua en la península de Quetrihué. Se llega en lancha desde Bahía Brava o por sendero desde el Parque Nacional (según apertura).",
-      highlights: [
-        "Pasarelas sobre el lago entre árboles centenarios",
-        "Combinable con playa Bahía Mansa o centro del pueblo",
-        "En invierno el acceso puede variar — preguntanos fechas",
-      ],
-    },
-    {
-      name: "Navegación Brazo Machete",
-      category: "navegacion",
-      description:
-        "Salida corta por aguas más protegidas del Nahuel Huapi, con bahías poco concurridas y vista al Volcán Batea Mahuida.",
-      highlights: [
-        "Ideal con chicos o si es tu primer día en la zona",
-        "Posibilidad de ver aves lacustres y bosque costero",
-        "Mejor en mañanas de poco viento",
-      ],
-    },
-    {
-      name: "Cerro Bayo y miradores invernales",
+      name: "Kayak en Villa La Angostura",
       category: "aventura",
       description:
-        "Centro de ski a 15 km del pueblo; en verano hay chairlift panorámico y rutas de mountain bike. Vistas al Nahuel Huapi y al Corredor de los Lagos.",
+        "Navegá en kayak por rincones del Nahuel Huapi, Correntoso, Espejo y otros lagos del circuito de los Siete Lagos. Salidas con guías que conocen la zona y te llevan a lugares a los que solo se llega con equipo adecuado y experiencia local. Una forma activa de desconectarte e inmersión total en el paisaje.",
       highlights: [
-        "Nieve de junio a octubre; pistas para varios niveles",
-        "En verano, cumbre accesible sin trekking largo",
-        "Atardeceres muy lindos desde la confitería de la cima",
+        "Lagos Nahuel Huapi, Correntoso, Espejo y más",
+        "Salidas guiadas con profesionales de la zona",
+        "Equipos adecuados para cada tramo lacustre",
+        "Ideal para quienes buscan aventura a su ritmo",
+      ],
+    },
+    {
+      name: "Alquiler de bicicletas",
+      category: "aventura",
+      description:
+        "Bicicletas de montaña para recorrer los principales circuitos y paisajes naturales de Villa La Angostura. Opciones por hora o por día, con accesorios de seguridad. Una forma activa y sustentable de conocer la Patagonia a tu ritmo.",
+      highlights: [
+        "Mountain bike para circuitos y senderos de la zona",
+        "Alquiler por hora o por día",
+        "Casco y accesorios de seguridad incluidos",
+        "Ideal para combinar con playas y miradores",
+      ],
+    },
+    {
+      name: "Navegación al Bosque de Arrayanes",
+      category: "navegacion",
+      description:
+        "Paseo en lancha por el lago hasta el Bosque de Arrayanes, único en el mundo. Senderos entre arrayanes centenarios, paisaje de tonos cobrizos sobre el agua, merienda incluida y regreso al puerto.",
+      highlights: [
+        "Navegación lacustre con guía local",
+        "Bosque de arrayanes en la península de Quetrihué",
+        "Senderos y pasarelas entre árboles centenarios",
+        "Merienda incluida · regreso al puerto",
       ],
     },
   ],
@@ -292,36 +290,27 @@ const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
   ],
   traful: [
     {
-      name: "Miradores del Lago Traful",
-      category: "trekking",
-      description:
-        "Senderos cortos desde Villa Traful y la Villa Índica con vistas al lago turquesa y al bosque de lengas. Poco tránsito comparado con Bariloche.",
-      highlights: [
-        "Mirador del Traful y playas de piedra",
-        "Caminatas de 1 a 3 h según el circuito",
-        "Mejor con calzado cómodo y abrigo por el viento",
-      ],
-    },
-    {
       name: "Navegación al Bosque Sumergido",
       category: "navegacion",
       description:
-        "Restos de un bosque sumergido por una erupción volcánica en los años 60. Snorkel o vista desde el barco según operador y condiciones del lago.",
+        "Una experiencia única para explorar un antiguo bosque sumergido bajo las aguas del Lago Traful, con paisajes naturales y agua cristalina. Ideal para quienes buscan aventura, naturaleza y vistas que no se repiten en otro lugar de la Patagonia.",
       highlights: [
-        "Agua muy clara en días de calma",
+        "Bosque sumergido visible desde el barco o con snorkel",
+        "Aguas cristalinas en días de calma",
         "Guías locales explican la geología del valle",
-        "Sujeta a clima; en invierno hay menos frecuencia",
+        "Sujeta a clima y temporada",
       ],
     },
     {
-      name: "Valle Encantado y Ruta 65",
+      name: "Cabalgata en Traful",
       category: "aventura",
       description:
-        "Formaciones rocosas erosionadas por el viento en la Ruta 65, camino a Confluencia. Paisaje lunar a minutos del pueblo.",
+        "Recorré senderos de montaña y bosques patagónicos a caballo, con paisajes únicos, aire puro y vistas inolvidables del entorno natural de Villa Traful y el Lago Traful.",
       highlights: [
-        "Paradas cortas en auto; no hace falta 4x4",
-        "Muy fotogénico al atardecer",
-        "Combinable con almuerzo en Villa Traful",
+        "Salidas guiadas por senderos de montaña",
+        "Bosque patagónico y miradores del lago",
+        "Apto para distintos niveles de experiencia",
+        "Consultá horarios y cupos según temporada",
       ],
     },
   ],
@@ -433,16 +422,23 @@ function buildExcursions(
   destinationName: string,
 ): CatalogItem[] {
   const excursionContent = EXCURSION_CONTENT_BY_DESTINATION[slug] ?? [];
+  const itemCount =
+    excursionContent.length > 0
+      ? Math.min(CATALOG_LIMITS.maxExcursions, excursionContent.length)
+      : CATALOG_LIMITS.maxExcursions;
 
-  return pools.slice(0, CATALOG_LIMITS.maxExcursions).map((pool, index) => {
+  return pools.slice(0, itemCount).map((pool, index) => {
     const num = index + 1;
-    const group = withFallbackImages(pool).slice(0, CATALOG_LIMITS.imagesPerCatalogItem);
+    const group = withFallbackImages(pool).slice(0, CATALOG_LIMITS.imagesPerExcursion);
     const content = excursionContent[index];
+    const folderConfig = getExcursionImageFoldersForSlug(slug)[index];
     const name = content?.name ?? `Excursión en ${destinationName}`;
+    const cover = group[0]!;
+    const itemSlug = folderConfig?.folderSlug ?? `excursion-${num}`;
 
     return {
-      id: `${slug}-excursion-${num}`,
-      itemSlug: `excursion-${num}`,
+      id: `${slug}-${itemSlug}`,
+      itemSlug,
       name,
       category: content?.category,
       description:
@@ -454,7 +450,7 @@ function buildExcursions(
         "Te pasamos qué llevar y cómo vestirte",
         "Reservá con tiempo en enero, febrero y julio",
       ],
-      images: group.map((src, i) => toCatalogImage(src, `${name} — foto ${i + 1}`)),
+      images: [toCatalogImage(cover, `${name} — foto principal`)],
     };
   });
 }
@@ -491,16 +487,26 @@ function splitAccommodationPools(imagePaths: string[]) {
   };
 }
 
-function buildExcursionImageGroups(imagePaths: string[]) {
-  const per = CATALOG_LIMITS.imagesPerCatalogItem;
-  const namedGroups = [
-    pathsInSubfolder(imagePaths, "excursion-1"),
-    pathsInSubfolder(imagePaths, "excursion-2"),
-    pathsInSubfolder(imagePaths, "excursion-3"),
-  ];
+function buildExcursionImageGroups(slug: string, imagePaths: string[]) {
+  const per = CATALOG_LIMITS.imagesPerExcursion;
+  const folderConfigs = getExcursionImageFoldersForSlug(slug);
 
-  if (namedGroups.some((group) => group.length > 0)) {
-    return namedGroups;
+  if (folderConfigs.length > 0) {
+    const namedGroups = folderConfigs.map(({ folderSlug, legacyFolders = [] }) => {
+      const primary = pathsInSubfolder(imagePaths, folderSlug);
+      if (primary.length > 0) return primary;
+
+      for (const legacyFolder of legacyFolders) {
+        const legacy = pathsInSubfolder(imagePaths, legacyFolder);
+        if (legacy.length > 0) return legacy;
+      }
+
+      return [];
+    });
+
+    if (namedGroups.some((group) => group.length > 0)) {
+      return namedGroups;
+    }
   }
 
   const pool = pathsInAnyFolder(imagePaths, CATALOG_EXCURSION_FOLDERS);
@@ -572,7 +578,7 @@ export function buildFlatCatalog(config: {
     ),
     excursions: buildExcursions(
       config.slug,
-      buildExcursionImageGroups(config.imagePaths),
+      buildExcursionImageGroups(config.slug, config.imagePaths),
       config.name,
     ),
     carRental: {
@@ -607,7 +613,7 @@ export function buildStructuredCatalog(config: {
     ),
     excursions: buildExcursions(
       config.slug,
-      buildExcursionImageGroups(config.imagePaths),
+      buildExcursionImageGroups(config.slug, config.imagePaths),
       config.name,
     ),
     carRental: {
@@ -621,8 +627,6 @@ export function buildStructuredCatalog(config: {
 
 export function buildBarilocheCatalog(): DestinationCatalog {
   const all = getDestinationImagePaths("bariloche");
-  const per = CATALOG_LIMITS.imagesPerCatalogItem;
-  const excursionPool = pathsInAnyFolder(all, CATALOG_EXCURSION_FOLDERS);
 
   return {
     slug: "bariloche",
@@ -634,11 +638,7 @@ export function buildBarilocheCatalog(): DestinationCatalog {
     accommodations: buildDestinationAccommodations("bariloche", "Bariloche", all),
     excursions: buildExcursions(
       "bariloche",
-      [
-        excursionPool.slice(0, per),
-        excursionPool.slice(per, per * 2),
-        excursionPool.slice(per * 2, per * 3),
-      ],
+      buildExcursionImageGroups("bariloche", all),
       "Bariloche",
     ),
     carRental: {

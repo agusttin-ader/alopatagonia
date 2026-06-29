@@ -1,0 +1,5 @@
+Excursión: Circuito Chico y miradores del Llao Llao
+Carpeta: circuito-chico
+
+Colocá acá una sola imagen (ideal: main.jpg).
+Formatos: .jpg, .jpeg, .png, .webp

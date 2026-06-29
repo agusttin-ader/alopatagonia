@@ -1,17 +1,6 @@
 import { ABOUT_US_COPY } from "@/lib/about-pages";
-import {
-  IMAGE_PRELOAD_WIDTH,
-  IMAGE_QUALITY_HERO,
-  preloadOptimizedImage,
-  preloadOptimizedImagesIdle,
-} from "@/lib/image-config";
 
 const ROTATION_STORAGE_KEY = "alo-about-image-rotation";
-
-const ABOUT_US_PRELOAD = {
-  width: IMAGE_PRELOAD_WIDTH.heroDesktop,
-  quality: IMAGE_QUALITY_HERO,
-} as const;
 
 export function peekAboutImageIndex(total = ABOUT_US_COPY.images.length): number {
   if (typeof window === "undefined") return 0;
@@ -37,16 +26,4 @@ export function commitAboutImageIndex(index: number): void {
 export function getAboutUsFallbackImage() {
   const index = peekAboutImageIndex();
   return ABOUT_US_COPY.images[index] ?? ABOUT_US_COPY.images[0];
-}
-
-/** Precarga la foto activa ya; el resto en idle. */
-export function preloadAboutUsImages(): void {
-  if (typeof window === "undefined") return;
-
-  const nextIndex = peekAboutImageIndex();
-  const active = ABOUT_US_COPY.images[nextIndex];
-  const rest = ABOUT_US_COPY.images.filter((_, index) => index !== nextIndex).map((img) => img.src);
-
-  preloadOptimizedImage(active.src, { ...ABOUT_US_PRELOAD, highPriority: true });
-  preloadOptimizedImagesIdle(rest, ABOUT_US_PRELOAD);
 }

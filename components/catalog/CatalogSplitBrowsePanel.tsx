@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 
 import { CatalogItemGrid } from "@/components/catalog/CatalogItemGrid";
 import type { CatalogGridMode } from "@/components/catalog/CatalogItemGrid";
+import { ExcursionEditorialList } from "@/components/catalog/ExcursionEditorialList";
 import { EditorialSplitNavItem } from "@/components/catalog/EditorialSplitNavItem";
 import type { CatalogSplitGroup } from "@/lib/catalog/accommodation-types";
 import { CATALOG_SPLIT_SIDEBAR_STICKY } from "@/lib/layout-shell";
@@ -174,12 +175,16 @@ function CatalogSplitPanel({
           ) : null}
         </div>
 
-        <CatalogItemGrid
-          entries={group.entries}
-          mode={mode}
-          gridClassName="grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-          compactGap
-        />
+        {mode === "excursion" ? (
+          <ExcursionEditorialList entries={group.entries} />
+        ) : (
+          <CatalogItemGrid
+            entries={group.entries}
+            mode={mode}
+            gridClassName="grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+            compactGap
+          />
+        )}
       </motion.section>
     </AnimatePresence>
   );

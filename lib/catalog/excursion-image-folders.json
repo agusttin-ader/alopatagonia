@@ -1,0 +1,157 @@
+[
+  {
+    "folder": "bariloche",
+    "slug": "bariloche",
+    "excursions": [
+      {
+        "folderSlug": "circuito-chico",
+        "legacyFolders": ["cirucuito-chico"],
+        "name": "Circuito Chico y miradores del Llao Llao"
+      },
+      {
+        "folderSlug": "isla-victoria-arrayanes",
+        "name": "Navegación Isla Victoria y Bosque de Arrayanes"
+      },
+      {
+        "folderSlug": "refugio-frey",
+        "name": "Trekking al Refugio Frey"
+      }
+    ]
+  },
+  {
+    "folder": "san-martin",
+    "slug": "san-martin",
+    "excursions": [
+      {
+        "folderSlug": "huechulafquen-lanin",
+        "name": "Lago Huechulafquen, Paimún y Volcán Lanín"
+      },
+      {
+        "folderSlug": "lacar-quila-quina",
+        "name": "Navegación por el Lácar a Quila Quina"
+      }
+    ]
+  },
+  {
+    "folder": "chalten",
+    "slug": "el-chalten",
+    "excursions": [
+      {
+        "folderSlug": "laguna-de-los-tres",
+        "name": "Laguna de los Tres"
+      },
+      {
+        "folderSlug": "condores-aguilas",
+        "name": "Miradores Cóndores y Águilas"
+      },
+      {
+        "folderSlug": "lago-del-desierto",
+        "name": "Lago del Desierto y Glaciar Huemul"
+      }
+    ]
+  },
+  {
+    "folder": "esquel-trevelin ",
+    "slug": "esquel",
+    "excursions": [
+      {
+        "folderSlug": "los-alerces",
+        "name": "Parque Nacional Los Alerces"
+      },
+      {
+        "folderSlug": "lago-futalaufquen",
+        "name": "Navegación Lago Futalaufquen"
+      },
+      {
+        "folderSlug": "trevelin",
+        "name": "Valle 16 de Octubre y Trevelin"
+      }
+    ]
+  },
+  {
+    "folder": "la-angostura",
+    "slug": "villa-la-angostura",
+    "excursions": [
+      {
+        "folderSlug": "kayak",
+        "name": "Kayak en Villa La Angostura"
+      },
+      {
+        "folderSlug": "alquiler-bicicletas",
+        "name": "Alquiler de bicicletas"
+      },
+      {
+        "folderSlug": "bosque-arrayanes",
+        "name": "Navegación al Bosque de Arrayanes"
+      }
+    ]
+  },
+  {
+    "folder": "madryn",
+    "slug": "puerto-madryn",
+    "excursions": [
+      {
+        "folderSlug": "peninsula-valdes",
+        "name": "Península Valdés"
+      },
+      {
+        "folderSlug": "ballenas-embarcacion",
+        "name": "Avistaje de ballenas en embarcación"
+      },
+      {
+        "folderSlug": "punta-loma",
+        "name": "Punta Loma y reservas costeras"
+      }
+    ]
+  },
+  {
+    "folder": "calafate",
+    "slug": "el-calafate",
+    "excursions": [
+      {
+        "folderSlug": "perito-moreno",
+        "name": "Glaciar Perito Moreno"
+      },
+      {
+        "folderSlug": "todo-glaciares",
+        "name": "Navegación Todo Glaciares"
+      },
+      {
+        "folderSlug": "laguna-nimez",
+        "name": "Reserva Laguna Nimez"
+      }
+    ]
+  },
+  {
+    "folder": "traful",
+    "slug": "traful",
+    "excursions": [
+      {
+        "folderSlug": "bosque-sumergido",
+        "name": "Navegación al Bosque Sumergido"
+      },
+      {
+        "folderSlug": "cabalgata",
+        "name": "Cabalgata en Traful"
+      }
+    ]
+  },
+  {
+    "folder": "ushuaia",
+    "slug": "ushuaia",
+    "excursions": [
+      {
+        "folderSlug": "tierra-del-fuego",
+        "name": "Parque Nacional Tierra del Fuego"
+      },
+      {
+        "folderSlug": "canal-beagle",
+        "name": "Navegación Canal Beagle"
+      },
+      {
+        "folderSlug": "laguna-esmeralda",
+        "name": "Trekking Laguna Esmeralda"
+      }
+    ]
+  }
+]

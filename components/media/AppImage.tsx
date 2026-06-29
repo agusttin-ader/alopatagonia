@@ -72,7 +72,7 @@ export function AppImage({
   const [loaded, setLoaded] = useState(false);
   const [mounted, setMounted] = useState(false);
   const useBlur = shouldUseBlur(src, withBlur);
-  const usePulse = shouldUseLoadingPulse(src, loadingPulse);
+  const usePulse = priority ? false : shouldUseLoadingPulse(src, loadingPulse);
   const resolvedPlaceholder =
     placeholder ?? (useBlur && !usePulse ? "blur" : "empty");
 

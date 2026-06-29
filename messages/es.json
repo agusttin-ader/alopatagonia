@@ -381,6 +381,8 @@
     },
     "carRentalCta": "Cotizá tu reserva",
     "carRentalWhatsAppMessage": "Quiero cotizar mi reserva de alquiler de auto en {destination}. ¿Me ayudan?",
+    "excursionWhatsAppCta": "Consultar por WhatsApp",
+    "excursionWhatsAppMessage": "Me interesa la excursión \"{excursion}\" en {destination}. ¿Me ayudan?",
     "badges": {
       "excursion": "Excursión",
       "cabana": "Cabaña",

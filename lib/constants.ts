@@ -284,9 +284,6 @@ export {
   IMAGE_QUALITY_LIGHTBOX,
   IMAGE_PRELOAD_WIDTH,
   IMAGE_SIZES,
-  buildNextImageUrl,
-  preloadOptimizedImage,
-  preloadOptimizedImagesIdle,
 } from "@/lib/image-config";
 
 function galleryFromPaths(paths: string[], altPrefix: string): GalleryImage[] {
