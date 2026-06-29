@@ -9,7 +9,7 @@ export function ExcursionEditorialList({ entries }: ExcursionEditorialListProps)
   if (entries.length === 0) return null;
 
   return (
-    <div className="flex flex-col gap-8 lg:gap-10">
+    <div className="flex flex-col gap-8 max-md:gap-6 lg:gap-10">
       {entries.map((entry, index) => (
         <ExcursionEditorialCard
           key={entry.item.id}

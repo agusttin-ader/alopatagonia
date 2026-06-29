@@ -18,8 +18,10 @@ import {
 import { buildDestinationPageMetadata } from "@/lib/i18n/localized-seo-metadata";
 import { buildLocalizedPageMetadata } from "@/lib/seo-i18n";
 import { buildDestinationPageGraphJsonLd } from "@/lib/json-ld";
+import { MOBILE_FAB_CLEARANCE } from "@/lib/layout-shell";
 import { getDestinationSeo } from "@/lib/seo-destinations";
 import { getSiteUrl } from "@/lib/site-url";
+import { cn } from "@/lib/utils";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
@@ -75,7 +77,7 @@ export default async function DestinationPage({ params }: PageProps) {
   return (
     <>
       <JsonLdScript id="alo-destination-graph-jsonld" data={destinationJsonLd} />
-      <main className="min-w-0 flex-1">
+      <main className={cn("min-w-0 flex-1", MOBILE_FAB_CLEARANCE)}>
         <DestinationDetail destination={destination} />
       </main>
       <FloatingWhatsAppButton />

@@ -44,7 +44,7 @@ function CatalogItemMobilePoster({
       href={detailHref}
       className={cn(
         CARD_LINK_MOTION,
-        "block w-full min-w-0 overflow-hidden rounded-[1.35rem] ring-1 ring-black/8 shadow-[0_14px_36px_-24px_rgba(16,24,40,0.35)] md:hidden",
+        "block w-full min-w-0 overflow-hidden rounded-[1.35rem] ring-1 ring-black/8 shadow-[0_14px_36px_-24px_rgba(16,24,40,0.35)] max-md:rounded-[1.25rem] md:hidden",
       )}
     >
       <div className="relative aspect-[3/4] overflow-hidden bg-muted/40">
@@ -58,7 +58,7 @@ function CatalogItemMobilePoster({
         />
         <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-black/90 via-black/38 to-black/10" />
 
-        <div className="absolute inset-x-0 bottom-0 z-[2] flex h-[56%] min-h-[12.5rem] max-h-[17rem] flex-col p-4">
+        <div className="absolute inset-x-0 bottom-0 z-[2] flex h-[56%] min-h-[12.5rem] max-h-[17rem] flex-col p-4 max-md:min-h-[11.5rem] max-md:max-h-[16rem] max-md:p-3.5">
           <span className="mb-3 block h-px w-10 shrink-0 bg-white/55" aria-hidden />
           <p className="shrink-0 text-[0.68rem] font-semibold uppercase tracking-[0.1em] text-white/75">
             {badge}

@@ -12,7 +12,7 @@ import { getAllDestinations } from "@/lib/catalog/destinations";
 import { buildDestinosHubGraphJsonLd } from "@/lib/json-ld";
 import { getLocalizedDestinationsIndexFaq, localizeDestinationCatalog } from "@/lib/i18n/localized-destinations-page";
 import { buildHubPageMetadata } from "@/lib/i18n/localized-seo-metadata";
-import { PAGE_TITLE, SHELL_PAGE_PT, siteShell } from "@/lib/layout-shell";
+import { PAGE_TITLE, SHELL_PAGE_PT, MOBILE_FAB_CLEARANCE, siteShell } from "@/lib/layout-shell";
 import { getSiteUrl } from "@/lib/site-url";
 import { cn } from "@/lib/utils";
 
@@ -45,7 +45,7 @@ export default async function DestinosPage() {
   return (
     <>
       <JsonLdScript id="alo-destinos-graph-jsonld" data={destinosGraphJsonLd} />
-      <main className={cn("min-w-0 flex-1 bg-background pb-14", SHELL_PAGE_PT)}>
+      <main className={cn("min-w-0 flex-1 bg-background pb-14", MOBILE_FAB_CLEARANCE, SHELL_PAGE_PT)}>
         <div className={siteShell()}>
           <nav className="text-sm text-muted-foreground">
             <Link href="/" className="hover:text-foreground">
@@ -65,7 +65,7 @@ export default async function DestinosPage() {
           <FaqSection
             items={faq}
             title={tCatalog("faqPatagonia")}
-            className="mt-16 border-t border-border/70 pt-12"
+            className="mt-16 border-t border-border/70 pt-12 max-md:mt-10 max-md:pt-8"
           />
         </div>
       </main>

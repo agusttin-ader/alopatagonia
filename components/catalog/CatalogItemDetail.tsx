@@ -55,7 +55,7 @@ export async function CatalogItemDetail({ entry: rawEntry }: CatalogItemDetailPr
     entry.kind === "excursion" ? "excursions" : ("accommodations" as const);
 
   return (
-    <div className={cn("pb-24 sm:pb-28 min-[1920px]:pb-32 min-[2560px]:pb-36", SHELL_PAGE_PT)}>
+    <div className={cn("pb-24 sm:pb-28 min-[1920px]:pb-32 min-[2560px]:pb-36 max-md:pb-28", SHELL_PAGE_PT)}>
       <div className={siteShell()}>
         <nav className="mb-4 text-sm text-muted-foreground md:mb-5 min-[1920px]:text-[0.9375rem]">
           <Link href="/destinos" className="inline-flex items-center gap-1.5 hover:text-cta">
@@ -78,15 +78,16 @@ export async function CatalogItemDetail({ entry: rawEntry }: CatalogItemDetailPr
       <div
         className={cn(
           siteShell("mt-12 sm:mt-14 lg:mt-16 min-[1920px]:mt-20 min-[2560px]:mt-24"),
+          "max-md:mt-8",
         )}
       >
-        <div className={cn("grid gap-10 lg:items-start lg:gap-14", DETAIL_SIDEBAR_GRID)}>
-          <div className="min-w-0 space-y-5 min-[1920px]:space-y-6">
+        <div className={cn("grid gap-10 max-md:gap-8 lg:items-start lg:gap-14", DETAIL_SIDEBAR_GRID)}>
+          <div className="min-w-0 space-y-5 max-md:space-y-4 min-[1920px]:space-y-6">
             <div>
               <span className="inline-flex rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary min-[1920px]:px-3 min-[1920px]:py-1.5 min-[1920px]:text-[0.8125rem]">
                 {badge}
               </span>
-              <h1 className={cn("font-heading mt-4", DETAIL_TITLE)}>{item.name}</h1>
+              <h1 className={cn("font-heading mt-4 max-md:mt-3 max-md:text-2xl max-md:leading-tight", DETAIL_TITLE)}>{item.name}</h1>
               <p className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground sm:text-base min-[1920px]:text-lg">
                 <MapPin className="size-4 shrink-0 min-[1920px]:size-[1.125rem]" aria-hidden />
                 {destination.name} · {destination.region}
@@ -94,13 +95,13 @@ export async function CatalogItemDetail({ entry: rawEntry }: CatalogItemDetailPr
             </div>
 
             {item.description ? (
-              <p className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg min-[1920px]:max-w-3xl min-[1920px]:text-xl min-[2560px]:max-w-4xl">
+              <p className="max-w-2xl text-base leading-relaxed text-muted-foreground max-md:text-[0.9375rem] sm:text-lg min-[1920px]:max-w-3xl min-[1920px]:text-xl min-[2560px]:max-w-4xl">
                 {item.description}
               </p>
             ) : null}
 
             {item.highlights && item.highlights.length > 0 ? (
-              <ul className="grid gap-2.5 border-t border-border/60 pt-6 sm:grid-cols-2 min-[1920px]:gap-3 min-[1920px]:pt-8">
+              <ul className="grid gap-2.5 border-t border-border/60 pt-6 max-md:pt-5 sm:grid-cols-2 min-[1920px]:gap-3 min-[1920px]:pt-8">
                 {item.highlights.map((line) => (
                   <li
                     key={line}
@@ -118,7 +119,7 @@ export async function CatalogItemDetail({ entry: rawEntry }: CatalogItemDetailPr
           </div>
 
           <aside className={cn("lg:sticky", DETAIL_STICKY_TOP)}>
-            <div className="rounded-2xl border border-border/80 bg-card p-6 shadow-sm sm:p-7 min-[1920px]:rounded-3xl min-[1920px]:p-8 min-[2560px]:p-9">
+            <div className="rounded-2xl border border-border/80 bg-card p-6 shadow-sm max-md:p-5 sm:p-7 min-[1920px]:rounded-3xl min-[1920px]:p-8 min-[2560px]:p-9">
               <p className="font-heading text-lg font-medium tracking-tight min-[1920px]:text-xl">
                 {t("itemDetail.askTitle")}
               </p>
@@ -131,7 +132,7 @@ export async function CatalogItemDetail({ entry: rawEntry }: CatalogItemDetailPr
                 rel="noopener noreferrer"
                 className={cn(
                   buttonVariants({ variant: "marketing", size: "lg" }),
-                  "mt-5 w-full min-[1920px]:mt-6 min-[1920px]:h-12 min-[1920px]:text-base",
+                  "mt-5 w-full min-h-11 min-[1920px]:mt-6 min-[1920px]:h-12 min-[1920px]:text-base",
                 )}
               >
                 {t("itemDetail.askCta")}

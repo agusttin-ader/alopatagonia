@@ -66,7 +66,7 @@ export function CatalogHubMobileChips({ pillars, className }: CatalogHubMobileCh
                 aria-selected={isActive}
                 onClick={() => scrollToPillar(pillar.slug, index)}
                 className={cn(
-                  "shrink-0 rounded-full px-4 py-2.5 text-sm font-semibold transition-colors duration-300",
+                  "shrink-0 rounded-full px-4 py-2.5 text-sm font-semibold transition-colors duration-300 min-h-11",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2",
                   isActive
                     ? "bg-foreground text-background shadow-[0_10px_24px_-16px_rgba(0,0,0,0.35)]"

@@ -3,9 +3,14 @@ import { AppImage } from "@/components/media/AppImage";
 import { Link } from "@/i18n/navigation";
 import type { DestinationCatalog } from "@/lib/catalog/types";
 import { CARD_IMAGE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
-import { EDITORIAL_CARD_ARROW_HOVER, EDITORIAL_CARD_TITLE_HOVER } from "@/lib/interactive-hover";
+import { EDITORIAL_CARD_ARROW_HOVER, EDITORIAL_CARD_TITLE_HOVER, POSTER_LINK_CTA_HOVER } from "@/lib/interactive-hover";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
+
+const CARD_LINK_MOTION = cn(
+  "group block transition-[color,border-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2",
+);
 
 type DestinationIndexCardProps = {
   destination: DestinationCatalog;
@@ -13,14 +18,70 @@ type DestinationIndexCardProps = {
   compact?: boolean;
 };
 
+function DestinationMobilePoster({
+  destination,
+  compact,
+}: {
+  destination: DestinationCatalog;
+  compact: boolean;
+}) {
+  return (
+    <Link
+      href={`/destinos/${destination.slug}`}
+      className={cn(
+        CARD_LINK_MOTION,
+        "w-full min-w-0 overflow-hidden rounded-[1.35rem] ring-1 ring-black/8 shadow-[0_14px_36px_-24px_rgba(16,24,40,0.35)] md:hidden",
+      )}
+    >
+      <div className={cn("relative overflow-hidden bg-muted/40", compact ? "aspect-[4/5]" : "aspect-[3/4]")}>
+        <AppImage
+          src={destination.heroImage}
+          alt={destination.name}
+          fill
+          qualityPreset="card"
+          className={CARD_IMAGE_HOVER_EXPAND}
+          sizes={IMAGE_SIZES.catalogCard}
+        />
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-black/90 via-black/38 to-black/10" />
+
+        <div className="absolute inset-x-0 bottom-0 z-[2] flex h-[58%] min-h-[12.5rem] max-h-[17rem] flex-col p-4">
+          <span className="mb-3 block h-px w-10 shrink-0 bg-white/55" aria-hidden />
+          <p className="shrink-0 text-[0.68rem] font-semibold uppercase tracking-[0.1em] text-white/75">
+            {destination.region}
+          </p>
+          <h2 className="font-heading mt-2 shrink-0 text-[1.35rem] font-medium leading-[1.08] tracking-tight text-white">
+            {destination.name}
+          </h2>
+          <p className="mt-2 min-h-0 flex-1 text-[0.875rem] leading-[1.55] text-white/88 line-clamp-3">
+            {destination.intro}
+          </p>
+          <div className="mt-auto flex shrink-0 items-end justify-end pt-3">
+            <span
+              className={cn(
+                "inline-flex shrink-0 items-center gap-1 text-sm font-medium text-white",
+                POSTER_LINK_CTA_HOVER,
+              )}
+              aria-hidden
+            >
+              <ArrowUpRight className="size-4" />
+            </span>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 export function DestinationIndexCard({ destination, compact = false }: DestinationIndexCardProps) {
   return (
-    <article>
+    <article className="min-w-0">
+      <DestinationMobilePoster destination={destination} compact={compact} />
+
       <Link
         href={`/destinos/${destination.slug}`}
         className={cn(
-          "group block transition-[color,border-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
-          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2",
+          CARD_LINK_MOTION,
+          "hidden md:block",
           !compact && "active:scale-[0.99]",
         )}
       >

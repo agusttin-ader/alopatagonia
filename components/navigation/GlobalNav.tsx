@@ -344,7 +344,7 @@ export function GlobalNav() {
               role="dialog"
               aria-modal="true"
               aria-label={t("mainNav")}
-              className="fixed inset-0 h-dvh w-screen bg-[color-mix(in_oklch,var(--background)_98%,white)] shadow-[0_22px_60px_-36px_rgba(34,39,14,0.55)]"
+              className="fixed inset-0 h-dvh w-full max-w-[100dvw] bg-[color-mix(in_oklch,var(--background)_98%,white)] shadow-[0_22px_60px_-36px_rgba(34,39,14,0.55)]"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}

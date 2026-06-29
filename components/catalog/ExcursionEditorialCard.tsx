@@ -26,12 +26,12 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
   );
 
   return (
-    <article className="overflow-hidden rounded-2xl border border-border/70 bg-card/40 shadow-[0_18px_40px_-28px_rgba(16,24,40,0.35)]">
+    <article className="overflow-hidden rounded-2xl border border-border/70 bg-card/40 shadow-[0_18px_40px_-28px_rgba(16,24,40,0.35)] max-md:rounded-xl">
       <div className="grid md:grid-cols-2 md:items-stretch">
         {cover ? (
           <div
             className={cn(
-              "relative aspect-[4/3] min-h-[14rem] bg-muted/40 md:aspect-auto md:min-h-[18rem]",
+              "relative aspect-[4/3] min-h-[14rem] bg-muted/40 max-md:aspect-[5/4] max-md:min-h-[12rem] md:aspect-auto md:min-h-[18rem]",
               reverse && "md:order-2",
             )}
           >
@@ -48,7 +48,7 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
 
         <div
           className={cn(
-            "flex flex-col justify-center p-5 sm:p-6 lg:p-8",
+            "flex flex-col justify-center p-5 sm:p-6 max-md:p-4 lg:p-8",
             reverse && "md:order-1",
           )}
         >
@@ -57,14 +57,14 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
               {categoryLabel}
             </p>
           ) : null}
-          <h3 className="font-heading mt-2 text-2xl font-medium tracking-tight sm:text-[1.65rem]">
+          <h3 className="font-heading mt-2 text-2xl font-medium tracking-tight max-md:text-xl max-md:leading-snug md:text-[1.65rem]">
             {item.name}
           </h3>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-base">
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground max-md:mt-2.5 max-md:text-[0.9375rem] sm:text-base">
             {item.description}
           </p>
           {highlights.length > 0 ? (
-            <ul className="mt-4 space-y-2 text-sm leading-relaxed text-foreground/88">
+            <ul className="mt-4 space-y-2 text-sm leading-relaxed text-foreground/88 max-md:mt-3 max-md:space-y-1.5">
               {highlights.map((highlight) => (
                 <li key={highlight} className="flex gap-2">
                   <span aria-hidden className="mt-2 size-1 shrink-0 rounded-full bg-cta" />
@@ -77,7 +77,10 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
             href={whatsAppHref}
             target="_blank"
             rel="noopener noreferrer"
-            className={cn(buttonVariants({ variant: "marketing", size: "lg" }), "mt-6 inline-flex w-fit")}
+            className={cn(
+              buttonVariants({ variant: "marketing", size: "lg" }),
+              "mt-6 inline-flex w-fit max-md:mt-5 max-md:min-h-11 max-md:w-full max-md:justify-center",
+            )}
           >
             {t("excursionWhatsAppCta")}
           </a>

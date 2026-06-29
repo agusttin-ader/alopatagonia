@@ -67,7 +67,7 @@ export function CatalogImageCarousel({
 
   return (
     <div className={cn("relative", className)}>
-      <div className="overflow-hidden rounded-2xl">
+      <div className="overflow-hidden rounded-2xl max-md:rounded-xl">
         <div
           ref={scrollerRef}
           className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -76,7 +76,7 @@ export function CatalogImageCarousel({
         >
           {images.map((image, index) => {
             const slideClassName = cn(
-              "relative aspect-[4/5] w-full shrink-0 snap-start snap-always overflow-hidden bg-muted/40",
+              "relative aspect-[4/5] w-full shrink-0 snap-start snap-always overflow-hidden bg-muted/40 max-md:aspect-[3/4]",
               isInteractive &&
                 "cursor-zoom-in transition active:scale-[0.995] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2",
             );
@@ -156,7 +156,7 @@ export function CatalogImageCarousel({
             <ChevronRight className="size-5.5" aria-hidden />
           </button>
 
-          <div className="mt-3 flex items-center justify-center gap-2">
+          <div className="mt-3 flex items-center justify-center gap-1.5 max-md:mt-2 max-md:gap-1">
             {images.map((image, index) => (
               <button
                 key={`dot-${image.src}-${index}`}
@@ -165,7 +165,7 @@ export function CatalogImageCarousel({
                 aria-current={index === activeIndex ? "true" : undefined}
                 onClick={() => scrollTo(index)}
                 className={cn(
-                  "inline-flex min-h-11 min-w-11 items-center justify-center rounded-full transition",
+                  "inline-flex min-h-11 min-w-11 items-center justify-center rounded-full transition max-md:min-h-9 max-md:min-w-9",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2",
                 )}
               >

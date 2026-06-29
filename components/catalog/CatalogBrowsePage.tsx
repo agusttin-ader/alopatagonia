@@ -50,7 +50,7 @@ export function CatalogBrowsePage({ mode, entries }: CatalogBrowsePageProps) {
   );
 
   return (
-    <section className="mt-10">
+    <section className="mt-10 max-md:mt-6">
       <CatalogSplitBrowsePanel
         groups={groups}
         mode={mode}

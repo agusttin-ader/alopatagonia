@@ -35,7 +35,7 @@ export function CatalogSplitBrowsePanel({
   const showMobileTabs = stableGroups.length > 1;
 
   return (
-    <div className="min-h-[420px]">
+    <div className="max-md:min-h-0 md:min-h-[420px]">
       <div className="lg:hidden">
         {showMobileTabs ? (
           <CatalogSplitTabs
@@ -104,7 +104,7 @@ function CatalogSplitTabs({
     <div className="max-w-full overflow-hidden md:hidden">
       <nav
         aria-label={navAriaLabel}
-        className={cn(horizontalScrollRailClass, "mb-6 gap-2 pb-0.5")}
+        className={cn(horizontalScrollRailClass, "mb-6 gap-2 pb-0.5 max-md:mb-4")}
       >
         {groups.map((group) => {
           const isActive = activeId === group.id;
@@ -153,11 +153,11 @@ function CatalogSplitPanel({
         exit={reduceMotion ? undefined : { opacity: 0, y: -4 }}
         transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="mb-6 flex flex-col gap-3 border-b border-border/70 pb-5 sm:flex-row sm:items-end sm:justify-between min-[1920px]:mb-8 min-[1920px]:pb-6">
+        <div className="mb-6 flex flex-col gap-3 border-b border-border/70 pb-5 sm:flex-row sm:items-end sm:justify-between max-md:mb-4 max-md:gap-2 max-md:pb-4 min-[1920px]:mb-8 min-[1920px]:pb-6">
           <div className="min-w-0">
             <h2
               id={`${group.id}-panel-heading`}
-              className="font-heading text-2xl font-medium tracking-tight sm:text-3xl min-[1920px]:text-4xl"
+              className="font-heading text-2xl font-medium tracking-tight max-md:text-xl max-md:leading-snug md:text-3xl min-[1920px]:text-4xl"
             >
               {group.title}
             </h2>

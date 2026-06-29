@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import type { CatalogHubPillar } from "@/lib/catalog-hub/config";
 import { localizeCatalogHubPillars } from "@/lib/i18n/localized-home";
 import { Link as LocaleLink } from "@/i18n/navigation";
-import { PAGE_TITLE, SHELL_PAGE_PT, siteShell } from "@/lib/layout-shell";
+import { PAGE_TITLE, SHELL_PAGE_PT, MOBILE_FAB_CLEARANCE, siteShell } from "@/lib/layout-shell";
 import { SECTION_IDS } from "@/lib/constants";
 import { getLocalizedHomeSectionHref } from "@/lib/i18n/internal-href";
 import { cn } from "@/lib/utils";
@@ -22,7 +22,7 @@ export async function CatalogHubPageShell({ pillar, children }: CatalogHubPageSh
     localizedPillars.find((item) => item.slug === pillar.slug) ?? pillar;
 
   return (
-    <main className={cn("min-w-0 flex-1 bg-background pb-14", SHELL_PAGE_PT)}>
+    <main className={cn("min-w-0 flex-1 bg-background pb-14", MOBILE_FAB_CLEARANCE, SHELL_PAGE_PT)}>
       <div className={siteShell()}>
         <nav className="text-sm text-muted-foreground">
           <LocaleLink href="/" className="hover:text-foreground">

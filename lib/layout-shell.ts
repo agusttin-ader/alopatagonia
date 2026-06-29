@@ -150,6 +150,10 @@ export const LIGHTBOX_CONTROL_SIZE = cn(
 
 export const CATALOG_GRID_GAP = cn(
   "gap-x-6 gap-y-10 lg:gap-x-8 lg:gap-y-12",
+  "max-md:gap-y-8",
   "min-[1920px]:gap-x-10 min-[1920px]:gap-y-14",
   "min-[2560px]:gap-x-12 min-[2560px]:gap-y-16",
 );
+
+/** Espacio inferior en mobile para no tapar contenido con el FAB de WhatsApp. */
+export const MOBILE_FAB_CLEARANCE = "max-md:pb-20";
