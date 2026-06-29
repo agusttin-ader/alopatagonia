@@ -389,6 +389,12 @@
       "departamento": "Departamento",
       "hotel": "Hotel"
     },
+    "excursionCategories": {
+      "trekking": "Trekking",
+      "navegacion": "Navegación",
+      "fauna": "Fauna",
+      "aventura": "Aventura"
+    },
     "photoGallery": "Galería de fotos",
     "viewPhotoExpanded": "Ver foto {n} ampliada",
     "prevPhoto": "Foto anterior",
@@ -568,6 +574,17 @@
           "Disponibilidad según temporada"
         ]
       }
+    }
+  },
+  "excursions": {
+    "photoAlt": "{name} — foto {n}",
+    "fallback": {
+      "description": "Excursión en {destination}. Fechas y salidas según temporada.",
+      "highlights": [
+        "Consultanos fechas y salidas según temporada",
+        "Grupos reducidos o privado según el servicio",
+        "Coordinamos reserva por WhatsApp"
+      ]
     }
   },
   "seo": {

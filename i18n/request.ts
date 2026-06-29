@@ -7,21 +7,41 @@ async function loadMessages(locale: AppLocale) {
 
   if (locale === "es") return base;
 
+  let messages = { ...base };
+
   try {
     const accommodationItems = (await import(`../messages/accommodations/${locale}.json`)).default;
-    return {
-      ...base,
+    messages = {
+      ...messages,
       accommodations: {
-        ...base.accommodations,
+        ...messages.accommodations,
         items: {
-          ...(base.accommodations?.items ?? {}),
+          ...(messages.accommodations?.items ?? {}),
           ...(accommodationItems.items ?? {}),
         },
       },
     };
   } catch {
-    return base;
+    // locale-specific accommodation copy optional
   }
+
+  try {
+    const excursionItems = (await import(`../messages/excursions/${locale}.json`)).default;
+    messages = {
+      ...messages,
+      excursions: {
+        ...messages.excursions,
+        items: {
+          ...(messages.excursions?.items ?? {}),
+          ...(excursionItems.items ?? {}),
+        },
+      },
+    };
+  } catch {
+    // locale-specific excursion copy optional
+  }
+
+  return messages;
 }
 
 export default getRequestConfig(async ({ requestLocale }) => {

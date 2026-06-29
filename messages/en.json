@@ -389,6 +389,12 @@
       "departamento": "Apartment",
       "hotel": "Hotel"
     },
+    "excursionCategories": {
+      "trekking": "Trekking",
+      "navegacion": "Boat trips",
+      "fauna": "Wildlife",
+      "aventura": "Adventure"
+    },
     "photoGallery": "Photo gallery",
     "viewPhotoExpanded": "View photo {n} enlarged",
     "prevPhoto": "Previous photo",
@@ -661,6 +667,17 @@
           "Availability depending on season"
         ]
       }
+    }
+  },
+  "excursions": {
+    "photoAlt": "{name} — photo {n}",
+    "fallback": {
+      "description": "Excursion in {destination}. Dates and departures depend on the season.",
+      "highlights": [
+        "Ask us about dates and departures for the season",
+        "Small groups or private service depending on the trip",
+        "We coordinate booking via WhatsApp"
+      ]
     }
   },
   "seo": {

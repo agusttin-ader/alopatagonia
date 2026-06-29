@@ -12,6 +12,7 @@ import {
   getCatalogItemEntry,
 } from "@/lib/catalog/catalog-items";
 import { localizeAccommodationItem } from "@/lib/i18n/localized-accommodations";
+import { localizeExcursionItem } from "@/lib/i18n/localized-excursions";
 import { localizeDestinationCatalog } from "@/lib/i18n/localized-destinations-page";
 import { buildCatalogItemPageMetadata } from "@/lib/i18n/localized-seo-metadata";
 import { buildLocalizedPageMetadata } from "@/lib/seo-i18n";
@@ -40,7 +41,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     });
   }
 
-  return buildCatalogItemPageMetadata(locale, entry);
+  const tHome = await getTranslations("homeDestinations");
+  const tAcc = await getTranslations("accommodations");
+  const tExc = await getTranslations("excursions");
+  const destination = localizeDestinationCatalog(tHome, entry.destination);
+  const item =
+    entry.kind === "accommodation"
+      ? localizeAccommodationItem(tAcc, locale, destination.slug, destination.name, entry.item)
+      : localizeExcursionItem(tExc, locale, destination.slug, destination.name, entry.item);
+
+  return buildCatalogItemPageMetadata(locale, { ...entry, destination, item });
 }
 
 export default async function CatalogItemPage({ params }: PageProps) {
@@ -52,12 +62,13 @@ export default async function CatalogItemPage({ params }: PageProps) {
   const tNav = await getTranslations("nav");
   const tHome = await getTranslations("homeDestinations");
   const tAcc = await getTranslations("accommodations");
+  const tExc = await getTranslations("excursions");
 
   const destination = localizeDestinationCatalog(tHome, entry.destination);
   const item =
     entry.kind === "accommodation"
       ? localizeAccommodationItem(tAcc, locale, destination.slug, destination.name, entry.item)
-      : entry.item;
+      : localizeExcursionItem(tExc, locale, destination.slug, destination.name, entry.item);
   const localizedEntry = { ...entry, destination, item };
 
   const catalogItemJsonLd = buildCatalogItemGraphJsonLd(getSiteUrl(), localizedEntry, {

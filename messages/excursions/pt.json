@@ -1,0 +1,256 @@
+{
+  "items": {
+    "bariloche": {
+      "circuito-chico": {
+        "name": "Circuito Chico e mirantes do Llao Llao",
+        "description": "Cerca de 60 km pela costa oeste do Nahuel Huapi: floresta de coihues, Bahía López e o clássico mirante do Llao Llao. Ideal para o primeiro dia, de carro próprio ou com guia.",
+        "highlights": [
+          "Paradas no Punto Panorâmico e na Colonia Suiza",
+          "Vistas do Lago Moreno e do Cerro López",
+          "Meio período; combina bem com uma tarde livre no centro"
+        ]
+      },
+      "isla-victoria-arrayanes": {
+        "name": "Navegação Ilha Victoria e Bosque de Arrayanes",
+        "description": "Saída do Porto Pañuelo em direção ao Parque Nacional Nahuel Huapi. Caminhada entre arrayanes centenários na península de Quetrihué (acesso conforme o nível do lago).",
+        "highlights": [
+          "Bosque único de arrayanes na margem do lago",
+          "Ilha Victoria com trilhas curtas entre ciprestes",
+          "Opera na alta temporada; recomenda-se reservar com antecedência"
+        ]
+      },
+      "refugio-frey": {
+        "name": "Trekking ao Refúgio Frey",
+        "description": "Subida pelo Cerro Catedral até o refúgio às margens da laguna Toncek, com vista direta das agulhas do maciço. Um dos trekkings mais procurados de Bariloche.",
+        "highlights": [
+          "Cerca de 10 km de ida (4–5 h) desde a base do Catedral",
+          "Dificuldade média; leve agasalho mesmo no verão",
+          "Pode ser feito por conta própria ou com guia de montanha"
+        ]
+      }
+    },
+    "san-martin": {
+      "huechulafquen-lanin": {
+        "name": "Lago Huechulafquen, Paimún e Vulcão Lanín",
+        "description": "Saída às 9h de San Martín de los Andes. Você percorre Junín de los Andes e a igreja de Laura Vicuña, a foz do Rio Chimehuín e o Lago Huechulafquen com o Vulcão Lanín ao fundo em todo o trajeto. Contornando o lago, entra na floresta andino-patagônica, almoça em um restaurante de campo atendido pela comunidade mapuche e segue pela Rota 61 até o Lago Paimún, a capela do lago e uma floresta de araucárias milenares ao pé do Lanín. Retorno às 18h.",
+        "highlights": [
+          "Dia inteiro · saída às 9h e retorno às 18h",
+          "Junín de los Andes, Rio Chimehuín e Lago Huechulafquen",
+          "Almoço em restaurante mapuche da região",
+          "Lago Paimún, capela e araucárias milenares",
+          "Não inclui entrada no Parque Nacional Lanín"
+        ]
+      },
+      "lacar-quila-quina": {
+        "name": "Navegação pelo Lácar até Quila Quina",
+        "description": "Excursão de meio período saindo de San Martín ao longo do Lago Lácar, com vistas ao Vulcão Colorado e ao Cerro Sabana. Você se aprofunda em terras da Comunidade Mapuche Curruhuinca e retorna ao lago com um panorama diferente em direção a Villa Quila Quina: um vale entre a água e a cordilheira, com assentamentos da comunidade, casas de veraneio, confeitaria, cais de navegação e praias para almoçar, tomar mate ou aproveitar o cenário do cerro Abanico.",
+        "highlights": [
+          "Meio período a partir de San Martín de los Andes",
+          "Comunidade Mapuche Curruhuinca e Villa Quila Quina",
+          "Vistas ao Vulcão Colorado e ao Cerro Sabana",
+          "Cais, praias e confeitaria de frente para o cerro Abanico",
+          "Não inclui entrada no Parque Nacional Lanín"
+        ]
+      }
+    },
+    "el-chalten": {
+      "laguna-de-los-tres": {
+        "name": "Laguna de los Tres",
+        "description": "O trekking emblemático da vila: subida ao mirante de frente para o Fitz Roy. O trecho final tem inclinação forte; a recompensa é a vista da geleira e das agulhas.",
+        "highlights": [
+          "Dia inteiro (8–10 h ida e volta a partir da vila)",
+          "Saia cedo; leve comida, água e camadas de agasalho",
+          "Se houver vento forte na laguna, é melhor remarcar"
+        ]
+      },
+      "condores-aguilas": {
+        "name": "Mirantes Cóndores e Águilas",
+        "description": "Trilhas curtas acima da vila com vista ao Fitz Roy, ao Cerro Torre e ao vale do Rio de las Vueltas. Condores costumam ser vistos ao entardecer.",
+        "highlights": [
+          "Menos de 2 h ida e volta; dificuldade baixa",
+          "Perfeito no dia de chegada para aclimatação",
+          "Pôr do sol muito fotogênico em Águilas"
+        ]
+      },
+      "lago-del-desierto": {
+        "name": "Lago del Desierto e Glaciar Huemul",
+        "description": "Excursão ao norte do vale, perto da fronteira com o Chile. Lago turquesa, geleira suspensa e floresta úmida; exige mais tempo do que as trilhas clássicas da vila.",
+        "highlights": [
+          "Meio ou dia inteiro conforme a travessia de barco",
+          "Paisagem distinta do circuito clássico do Fitz Roy",
+          "Consulte o estado da estrada conforme a época"
+        ]
+      }
+    },
+    "esquel": {
+      "los-alerces": {
+        "name": "Parque Nacional Los Alerces",
+        "description": "Patrimônio da UNESCO: lagos verde-esmeralda e alerces com mais de 2.600 anos na floresta temperada chuvosa. Entrada por Villa Futalaufquen ou Lago Verde.",
+        "highlights": [
+          "Lago Menéndez e mirante do Glaciar Torrecillas",
+          "Caminhadas guiadas de meio período ou dia inteiro",
+          "Reserve com antecedência na temporada (vagas limitadas)"
+        ]
+      },
+      "lago-futalaufquen": {
+        "name": "Navegação Lago Futalaufquen",
+        "description": "Passeio pelo braço principal do lago dentro do parque, com guias que explicam a formação glacial e a flora da floresta.",
+        "highlights": [
+          "Água turquesa entre montanhas",
+          "Indicado para quem prefere pouco esforço físico",
+          "Sujeito ao vento; espetacular em dias calmos"
+        ]
+      },
+      "trevelin": {
+        "name": "Valle 16 de Octubre e Trevelin",
+        "description": "Rota pela colônia galesa de Trevelin: moinhos, chá caseiro, cachoeiras e estepa patagônica. Muito comum combinar com um dia em Los Alerces.",
+        "highlights": [
+          "Cultura galesa viva (padarias, museus)",
+          "Cachoeira Nant y Fall e mirantes da cordilheira",
+          "Feito de carro com paradas; também há tours de dia"
+        ]
+      }
+    },
+    "villa-la-angostura": {
+      "kayak": {
+        "name": "Caiaque em Villa La Angostura",
+        "description": "Navegue de caiaque por cantos do Nahuel Huapi, Correntoso, Espejo e outros lagos do circuito dos Sete Lagos. Saídas com guias que conhecem a região e levam você a lugares acessíveis apenas com equipamento adequado e experiência local. Uma forma ativa de desconectar e mergulhar de corpo e alma na paisagem.",
+        "highlights": [
+          "Lagos Nahuel Huapi, Correntoso, Espejo e outros",
+          "Saídas guiadas com profissionais da região",
+          "Equipamentos adequados para cada trecho lacustre",
+          "Ideal para quem busca aventura no próprio ritmo"
+        ]
+      },
+      "alquiler-bicicletas": {
+        "name": "Aluguel de bicicletas",
+        "description": "Mountain bikes para percorrer os principais circuitos e paisagens naturais de Villa La Angostura. Opções por hora ou por dia, com acessórios de segurança. Uma forma ativa e sustentável de conhecer a Patagônia no seu ritmo.",
+        "highlights": [
+          "Mountain bike para circuitos e trilhas da região",
+          "Aluguel por hora ou por dia",
+          "Capacete e acessórios de segurança incluídos",
+          "Ideal para combinar com praias e mirantes"
+        ]
+      },
+      "bosque-arrayanes": {
+        "name": "Navegação ao Bosque de Arrayanes",
+        "description": "Passeio de lancha pelo lago até o Bosque de Arrayanes, único no mundo. Trilhas entre arrayanes centenários, paisagem em tons cobre sobre a água, merenda incluída e retorno ao porto.",
+        "highlights": [
+          "Navegação lacustre com guia local",
+          "Bosque de arrayanes na península de Quetrihué",
+          "Trilhas e passarelas entre árvores centenárias",
+          "Merenda incluída · retorno ao porto"
+        ]
+      }
+    },
+    "puerto-madryn": {
+      "peninsula-valdes": {
+        "name": "Península Valdés",
+        "description": "Reserva da UNESCO: elefantes-marinhos em Punta Delgada, pinguins-de-magalhães em Punta Tombo (temporada) e baleias no golfo a partir do penhasco.",
+        "highlights": [
+          "Dia inteiro de veículo com paradas interpretativas",
+          "Orcas em Caleta Valdés (fev–abr, conforme a maré)",
+          "Leve binóculos e agasalho — vento o ano todo"
+        ]
+      },
+      "ballenas-embarcacion": {
+        "name": "Avistagem de baleias embarcada",
+        "description": "Saídas de Puerto Pirámides (Península Valdés) para ver baleias-francas-austrais a poucos metros do barco. Temporada principal: setembro a dezembro.",
+        "highlights": [
+          "Regulamentação rigorosa para não incomodar os animais",
+          "Reserve com semanas de antecedência na alta temporada",
+          "Se o mar estiver agitado, a saída é remarcada"
+        ]
+      },
+      "punta-loma": {
+        "name": "Punta Loma e reservas costeiras",
+        "description": "Lobo-marinho-de-um-pelo na reserva de Punta Loma, a 17 km de Madryn. Complemento ideal se você não tiver um dia inteiro para a península.",
+        "highlights": [
+          "Meio período a partir do centro de Madryn",
+          "Mirante sobre o Golfo Nuevo",
+          "Combina bem com city tour ou tarde livre"
+        ]
+      }
+    },
+    "el-calafate": {
+      "perito-moreno": {
+        "name": "Glaciar Perito Moreno",
+        "description": "Passarelas de frente para uma parede de gelo de quase 80 m sobre o Brazo Rico. Desprendimentos e tons azuis que mudam com a luz do dia.",
+        "highlights": [
+          "Acesso o ano todo ao Parque Nacional Los Glaciares",
+          "Tempo livre nos mirantes + opção de navegação na face sul",
+          "Convém chegar cedo em janeiro e fevereiro"
+        ]
+      },
+      "todo-glaciares": {
+        "name": "Navegação Todo Glaciares",
+        "description": "Dia inteiro pelo Braço Norte do Lago Argentino: Upsala, Spegazzini e icebergs gigantes. Uma das navegações mais completas do sul.",
+        "highlights": [
+          "Barco até a frente de geleiras pouco visitadas",
+          "Inclui traslado desde Calafate e tempo no convés",
+          "Reserve com antecedência no verão austral"
+        ]
+      },
+      "laguna-nimez": {
+        "name": "Reserva Laguna Nimez",
+        "description": "Trilha interpretativa junto ao Lago Argentino, a poucos minutos do centro. Flamingos, cisnes-de-pescoço-preto e aves migratórias conforme a estação.",
+        "highlights": [
+          "1–2 h de caminhada fácil; ótimo na chegada ou na despedida",
+          "Pôr do sol com vista ao Lago Argentino",
+          "Entrada separada do parque das geleiras"
+        ]
+      }
+    },
+    "traful": {
+      "bosque-sumergido": {
+        "name": "Navegação ao Bosque Submerso",
+        "description": "Uma experiência única para explorar uma antiga floresta submersa sob as águas do Lago Traful, com paisagens naturais e água cristalina. Ideal para quem busca aventura, natureza e vistas que não se repetem em outro lugar da Patagônia.",
+        "highlights": [
+          "Bosque submerso visível do barco ou com snorkel",
+          "Águas cristalinas em dias calmos",
+          "Guias locais explicam a geologia do vale",
+          "Sujeito ao clima e à temporada"
+        ]
+      },
+      "cabalgata": {
+        "name": "Cavalgada em Traful",
+        "description": "Percorra trilhas de montanha e florestas patagônicas a cavalo, com paisagens únicas, ar puro e vistas inesquecíveis de Villa Traful e do Lago Traful.",
+        "highlights": [
+          "Saídas guiadas por trilhas de montanha",
+          "Floresta patagônica e mirantes do lago",
+          "Adequado para diferentes níveis de experiência",
+          "Consulte horários e vagas conforme a temporada"
+        ]
+      }
+    },
+    "ushuaia": {
+      "tierra-del-fuego": {
+        "name": "Parque Nacional Tierra del Fuego",
+        "description": "Floresta fueguina, turfeiras e costa do Canal Beagle. Clássicos: Senda Costera, Lapataia (fim da Rota 3) e trem do fim do mundo (opcional).",
+        "highlights": [
+          "Meio período ou dia inteiro conforme as trilhas",
+          "Vistas às montanhas chilenas a partir da costa",
+          "Vento forte frequente — capa impermeável obrigatória"
+        ]
+      },
+      "canal-beagle": {
+        "name": "Navegação Canal Beagle",
+        "description": "Passeio pelo canal que separa Argentina e Chile: Farol Les Éclaireurs, Ilha dos Pássaros e lobos-marinhos na Ilha dos Lobos.",
+        "highlights": [
+          "Saídas de 4–6 h do porto de Ushuaia",
+          "Possibilidade de visitar a Estancia Harberton (conforme o tour)",
+          "Faz frio no convés mesmo no verão"
+        ]
+      },
+      "laguna-esmeralda": {
+        "name": "Trekking Laguna Esmeralda",
+        "description": "Floresta de lengas e turfeiras até uma laguna glacial cor esmeralda, com vista ao Vale de Tierra Mayor. Um dos trekkings mais populares da cidade.",
+        "highlights": [
+          "Cerca de 4–5 h ida e volta; lama nos trechos finais",
+          "Botas impermeáveis quase obrigatórias",
+          "No inverno pode exigir raquetes ou crampons"
+        ]
+      }
+    }
+  }
+}

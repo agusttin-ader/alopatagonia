@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { CatalogItemShowcase } from "@/components/catalog/CatalogItemShowcase";
 import { getLocalizedCatalogItemBadge } from "@/lib/i18n/localized-catalog";
 import type { CatalogItemEntry } from "@/lib/catalog/catalog-items";
-import { EXCURSION_CATEGORY_LABELS } from "@/lib/catalog/excursion-categories";
+import type { ExcursionCategory } from "@/lib/catalog/types";
 import { CATALOG_GRID_GAP } from "@/lib/layout-shell";
 import { cn } from "@/lib/utils";
 
@@ -53,7 +53,7 @@ export function CatalogItemGrid({
           compact={compact}
           categoryLabel={
             mode === "excursion" && entry.item.category
-              ? EXCURSION_CATEGORY_LABELS[entry.item.category]
+              ? t(`excursionCategories.${entry.item.category as ExcursionCategory}`)
               : undefined
           }
         />

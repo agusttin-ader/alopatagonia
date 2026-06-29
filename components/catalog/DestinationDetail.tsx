@@ -9,6 +9,7 @@ import { Link } from "@/i18n/navigation";
 import type { DestinationCatalog } from "@/lib/catalog/types";
 import { PLANNER_PATH, getWhatsAppUrl } from "@/lib/constants";
 import { localizeAccommodationItem } from "@/lib/i18n/localized-accommodations";
+import { localizeExcursionItem } from "@/lib/i18n/localized-excursions";
 import {
   catalogAccommodationCount,
   catalogExcursionCount,
@@ -42,6 +43,7 @@ export async function DestinationDetail({
   const tHome = await getTranslations("homeDestinations");
   const tDest = await getTranslations("destinationsPage");
   const tAcc = await getTranslations("accommodations");
+  const tExc = await getTranslations("excursions");
 
   const destination = localizeDestinationCatalog(tHome, rawDestination);
   const carRental = localizeCarRental(tDest, destination, locale);
@@ -62,7 +64,7 @@ export async function DestinationDetail({
   }));
   const excursionEntries = destination.excursions.map((item) => ({
     destination,
-    item,
+    item: localizeExcursionItem(tExc, locale, destination.slug, destination.name, item),
     kind: "excursion" as const,
   }));
 

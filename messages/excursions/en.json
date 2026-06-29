@@ -1,0 +1,256 @@
+{
+  "items": {
+    "bariloche": {
+      "circuito-chico": {
+        "name": "Circuito Chico and Llao Llao Viewpoints",
+        "description": "About 60 km along the western shore of Nahuel Huapi: coihue forest, Bahía López, and the classic Llao Llao viewpoint. Ideal for a first day, by private car or with a guide.",
+        "highlights": [
+          "Stops at Punto Panorámico and Colonia Suiza",
+          "Views of Lake Moreno and Cerro López",
+          "Half day; pairs well with a free afternoon downtown"
+        ]
+      },
+      "isla-victoria-arrayanes": {
+        "name": "Victoria Island and Arrayán Forest Navigation",
+        "description": "Departure from Puerto Pañuelo to Nahuel Huapi National Park. Walk among centuries-old arrayán trees on the Quetrihué peninsula (access depends on lake level).",
+        "highlights": [
+          "Unique arrayán forest on the lakeshore",
+          "Victoria Island with short trails among cypresses",
+          "Operates in high season; advance booking recommended"
+        ]
+      },
+      "refugio-frey": {
+        "name": "Trek to Refugio Frey",
+        "description": "Ascent on Cerro Catedral to the refuge on the shores of Laguna Toncek, with direct views of the massif's spires. One of Bariloche's most popular treks.",
+        "highlights": [
+          "About 10 km one way (4–5 h) from the Catedral base",
+          "Moderate difficulty; bring warm layers even in summer",
+          "Can be done independently or with a mountain guide"
+        ]
+      }
+    },
+    "san-martin": {
+      "huechulafquen-lanin": {
+        "name": "Huechulafquen Lake, Paimún and Lanín Volcano",
+        "description": "Departure at 9:00 a.m. from San Martín de los Andes. You visit Junín de los Andes and the Laura Vicuña church, the mouth of the Chimehuín River, and Lake Huechulafquen with Lanín Volcano in the background throughout. Along the lakeshore you enter the Andean-Patagonian forest, lunch at a countryside restaurant run by the Mapuche community, and continue on Route 61 to Lake Paimún, the lakeside chapel, and a forest of thousand-year-old araucarias at the foot of Lanín. Return at 6:00 p.m.",
+        "highlights": [
+          "Full day · departure 9:00 a.m. and return 6:00 p.m.",
+          "Junín de los Andes, Chimehuín River and Lake Huechulafquen",
+          "Lunch at a local Mapuche restaurant",
+          "Lake Paimún, chapel and thousand-year-old araucarias",
+          "Lanín National Park entrance fee not included"
+        ]
+      },
+      "lacar-quila-quina": {
+        "name": "Lácar Lake Navigation to Quila Quina",
+        "description": "Half-day excursion from San Martín along Lake Lácar, with views of Volcán Colorado and Cerro Sabana. You venture into lands of the Curruhuinca Mapuche Community and return to the lake with a different panorama toward Villa Quila Quina: a valley between water and mountains, with community settlements, summer homes, a café, a boat dock, and beaches to have lunch, share mate, or enjoy the backdrop of Cerro Abanico.",
+        "highlights": [
+          "Half day from San Martín de los Andes",
+          "Curruhuinca Mapuche Community and Villa Quila Quina",
+          "Views of Volcán Colorado and Cerro Sabana",
+          "Dock, beaches and café facing Cerro Abanico",
+          "Lanín National Park entrance fee not included"
+        ]
+      }
+    },
+    "el-chalten": {
+      "laguna-de-los-tres": {
+        "name": "Laguna de los Tres",
+        "description": "The town's signature trek: ascent to the viewpoint facing Fitz Roy. The final stretch is steep; the reward is the view of the glacier and the spires.",
+        "highlights": [
+          "Full day (8–10 h round trip from town)",
+          "Start early; bring food, water and warm layers",
+          "If winds are strong at the lagoon, rescheduling is advisable"
+        ]
+      },
+      "condores-aguilas": {
+        "name": "Cóndores and Águilas Viewpoints",
+        "description": "Short trails above town with views of Fitz Roy, Cerro Torre, and the Río de las Vueltas valley. Condors are often seen at sunset.",
+        "highlights": [
+          "Under 2 h round trip; low difficulty",
+          "Perfect on arrival day for acclimatization",
+          "Very photogenic sunsets at Águilas"
+        ]
+      },
+      "lago-del-desierto": {
+        "name": "Lago del Desierto and Huemul Glacier",
+        "description": "Excursion to the northern end of the valley, near the Chilean border. Turquoise lake, hanging glacier, and humid forest; requires more time than the town's classic trails.",
+        "highlights": [
+          "Half or full day depending on whether you cross by boat",
+          "Landscape distinct from the classic Fitz Roy circuit",
+          "Check road conditions according to the season"
+        ]
+      }
+    },
+    "esquel": {
+      "los-alerces": {
+        "name": "Los Alerces National Park",
+        "description": "UNESCO World Heritage site: emerald-green lakes and alerce trees over 2,600 years old in the temperate rainforest. Access via Villa Futalaufquen or Lago Verde.",
+        "highlights": [
+          "Lake Menéndez and Glaciar Torrecillas viewpoint",
+          "Guided half-day or full-day hikes",
+          "Book well in advance in season (limited capacity)"
+        ]
+      },
+      "lago-futalaufquen": {
+        "name": "Futalaufquen Lake Navigation",
+        "description": "Tour along the lake's main arm within the park, with guides explaining glacial formation and forest flora.",
+        "highlights": [
+          "Turquoise water between mountains",
+          "Suitable for those who prefer minimal physical effort",
+          "Subject to wind; spectacular on calm days"
+        ]
+      },
+      "trevelin": {
+        "name": "Valle 16 de Octubre and Trevelin",
+        "description": "Route through the Welsh colony of Trevelin: windmills, homemade tea, waterfalls, and Patagonian steppe. Often combined with a day at Los Alerces.",
+        "highlights": [
+          "Living Welsh culture (bakeries, museums)",
+          "Nant y Fall waterfall and mountain viewpoints",
+          "Done by car with stops; day tours also available"
+        ]
+      }
+    },
+    "villa-la-angostura": {
+      "kayak": {
+        "name": "Kayaking in Villa La Angostura",
+        "description": "Paddle a kayak through corners of Nahuel Huapi, Correntoso, Espejo, and other lakes on the Seven Lakes circuit. Guided departures with local experts who take you to places reachable only with proper equipment and local knowledge. An active way to disconnect and fully immerse yourself in the landscape.",
+        "highlights": [
+          "Nahuel Huapi, Correntoso, Espejo lakes and more",
+          "Guided departures with local professionals",
+          "Proper equipment for each lake section",
+          "Ideal for those seeking adventure at their own pace"
+        ]
+      },
+      "alquiler-bicicletas": {
+        "name": "Bicycle Rental",
+        "description": "Mountain bikes to explore the main circuits and natural landscapes of Villa La Angostura. Hourly or daily options with safety accessories. An active, sustainable way to discover Patagonia at your own pace.",
+        "highlights": [
+          "Mountain bikes for local circuits and trails",
+          "Hourly or daily rental",
+          "Helmet and safety accessories included",
+          "Ideal to combine with beaches and viewpoints"
+        ]
+      },
+      "bosque-arrayanes": {
+        "name": "Navigation to the Arrayán Forest",
+        "description": "Boat ride across the lake to the Arrayán Forest, unique in the world. Trails among centuries-old arrayán trees, copper-toned landscape over the water, afternoon tea included, and return to the dock.",
+        "highlights": [
+          "Lake navigation with a local guide",
+          "Arrayán forest on the Quetrihué peninsula",
+          "Trails and boardwalks among ancient trees",
+          "Afternoon tea included · return to the dock"
+        ]
+      }
+    },
+    "puerto-madryn": {
+      "peninsula-valdes": {
+        "name": "Península Valdés",
+        "description": "UNESCO reserve: elephant seals at Punta Delgada, Magellanic penguins at Punta Tombo (seasonal), and whales in the gulf from the cliff.",
+        "highlights": [
+          "Full day by vehicle with interpretive stops",
+          "Orcas at Caleta Valdés (Feb–Apr, tide dependent)",
+          "Bring binoculars and warm clothing — windy year-round"
+        ]
+      },
+      "ballenas-embarcacion": {
+        "name": "Whale Watching by Boat",
+        "description": "Departures from Puerto Pirámides (Península Valdés) to see southern right whales just meters from the boat. Main season: September to December.",
+        "highlights": [
+          "Strict regulations to avoid disturbing the animals",
+          "Book weeks in advance during high season",
+          "Departures rescheduled if seas are rough"
+        ]
+      },
+      "punta-loma": {
+        "name": "Punta Loma and Coastal Reserves",
+        "description": "South American fur seals at Punta Loma reserve, 17 km from Madryn. An ideal complement if you don't have a full day for the peninsula.",
+        "highlights": [
+          "Half day from downtown Madryn",
+          "Viewpoint over Golfo Nuevo",
+          "Pairs well with a city tour or free afternoon"
+        ]
+      }
+    },
+    "el-calafate": {
+      "perito-moreno": {
+        "name": "Perito Moreno Glacier",
+        "description": "Walkways facing an ice wall nearly 80 m high above Brazo Rico. Calving events and blue hues that shift with the daylight.",
+        "highlights": [
+          "Year-round access to Los Glaciares National Park",
+          "Free time at viewpoints + optional south-face navigation",
+          "Arrive early in January and February"
+        ]
+      },
+      "todo-glaciares": {
+        "name": "Todo Glaciares Navigation",
+        "description": "Full day on the northern arm of Lake Argentino: Upsala, Spegazzini, and giant icebergs. One of the most comprehensive navigations in the south.",
+        "highlights": [
+          "Boat to the front of rarely visited glaciers",
+          "Includes transfer from Calafate and deck time",
+          "Book in advance during the austral summer"
+        ]
+      },
+      "laguna-nimez": {
+        "name": "Laguna Nimez Reserve",
+        "description": "Interpretive trail beside Lake Argentino, minutes from downtown. Flamingos, black-necked swans, and migratory birds depending on the season.",
+        "highlights": [
+          "1–2 h easy walk; great on arrival or farewell day",
+          "Sunset over Lake Argentino",
+          "Separate entrance from the glacier park"
+        ]
+      }
+    },
+    "traful": {
+      "bosque-sumergido": {
+        "name": "Navigation to the Submerged Forest",
+        "description": "A unique experience to explore an ancient forest submerged beneath the waters of Lake Traful, with natural scenery and crystal-clear water. Ideal for those seeking adventure, nature, and views found nowhere else in Patagonia.",
+        "highlights": [
+          "Submerged forest visible from the boat or by snorkeling",
+          "Crystal-clear water on calm days",
+          "Local guides explain the valley's geology",
+          "Subject to weather and season"
+        ]
+      },
+      "cabalgata": {
+        "name": "Horseback Riding in Traful",
+        "description": "Ride mountain trails and Patagonian forests on horseback, with unique landscapes, pure air, and unforgettable views of Villa Traful and Lake Traful.",
+        "highlights": [
+          "Guided departures on mountain trails",
+          "Patagonian forest and lake viewpoints",
+          "Suitable for different experience levels",
+          "Check schedules and availability by season"
+        ]
+      }
+    },
+    "ushuaia": {
+      "tierra-del-fuego": {
+        "name": "Tierra del Fuego National Park",
+        "description": "Fuegian forest, peat bogs, and Beagle Channel coastline. Classics: Coastal Trail, Lapataia (end of Route 3), and the End of the World train (optional).",
+        "highlights": [
+          "Half day or full day depending on trails chosen",
+          "Views of Chilean mountains from the coast",
+          "Strong winds common — waterproof layer essential"
+        ]
+      },
+      "canal-beagle": {
+        "name": "Beagle Channel Navigation",
+        "description": "Tour along the channel separating Argentina and Chile: Les Éclaireurs Lighthouse, Bird Island, and sea lions on Sea Lion Island.",
+        "highlights": [
+          "4–6 h departures from Ushuaia port",
+          "Option to visit Estancia Harberton (depending on tour)",
+          "Cold on deck even in summer"
+        ]
+      },
+      "laguna-esmeralda": {
+        "name": "Laguna Esmeralda Trek",
+        "description": "Lenga forest and peat bogs to an emerald-colored glacial lagoon, with views over Valle de Tierra Mayor. One of the city's most popular treks.",
+        "highlights": [
+          "About 4–5 h round trip; muddy final sections",
+          "Waterproof boots almost essential",
+          "In winter may require snowshoes or crampons"
+        ]
+      }
+    }
+  }
+}

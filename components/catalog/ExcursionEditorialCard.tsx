@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { AppImage } from "@/components/media/AppImage";
 import { buttonVariants } from "@/components/ui/button";
 import type { CatalogItemEntry } from "@/lib/catalog/catalog-items";
-import { EXCURSION_CATEGORY_LABELS } from "@/lib/catalog/excursion-categories";
+import type { ExcursionCategory } from "@/lib/catalog/types";
 import { getWhatsAppUrl } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
@@ -19,7 +19,9 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
   const t = useTranslations("catalog");
   const { destination, item } = entry;
   const cover = item.images[0];
-  const categoryLabel = item.category ? EXCURSION_CATEGORY_LABELS[item.category] : undefined;
+  const categoryLabel = item.category
+    ? t(`excursionCategories.${item.category as ExcursionCategory}`)
+    : undefined;
   const highlights = item.highlights ?? [];
   const whatsAppHref = getWhatsAppUrl(
     t("excursionWhatsAppMessage", { excursion: item.name, destination: destination.name }),

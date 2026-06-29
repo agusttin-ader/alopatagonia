@@ -9,6 +9,7 @@ import { getLocalizedCatalogItemBadge } from "@/lib/i18n/localized-catalog";
 import { buildCatalogWhatsAppMessage } from "@/lib/catalog/placeholders";
 import { getWhatsAppUrl } from "@/lib/constants";
 import { localizeAccommodationItem } from "@/lib/i18n/localized-accommodations";
+import { localizeExcursionItem } from "@/lib/i18n/localized-excursions";
 import { localizeDestinationCatalog } from "@/lib/i18n/localized-destinations-page";
 import {
   DETAIL_SIDEBAR_GRID,
@@ -30,6 +31,7 @@ export async function CatalogItemDetail({ entry: rawEntry }: CatalogItemDetailPr
   const t = await getTranslations("catalog");
   const tHome = await getTranslations("homeDestinations");
   const tAcc = await getTranslations("accommodations");
+  const tExc = await getTranslations("excursions");
 
   const destination = localizeDestinationCatalog(tHome, rawEntry.destination);
   const item =
@@ -41,7 +43,13 @@ export async function CatalogItemDetail({ entry: rawEntry }: CatalogItemDetailPr
           destination.name,
           rawEntry.item,
         )
-      : rawEntry.item;
+      : localizeExcursionItem(
+          tExc,
+          locale,
+          destination.slug,
+          destination.name,
+          rawEntry.item,
+        );
   const entry = { ...rawEntry, destination, item };
 
   const badge = getLocalizedCatalogItemBadge(t, entry);
