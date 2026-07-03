@@ -21,6 +21,9 @@ import { getSiteUrl } from "@/lib/site-url";
 
 type PageProps = { params: Promise<{ slug: string; itemSlug: string }> };
 
+/** Solo ítems del catálogo; el resto responde 404 (evita 500 en runtime con next-intl). */
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getAllCatalogItemParams();
 }

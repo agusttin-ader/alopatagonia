@@ -25,6 +25,9 @@ import { cn } from "@/lib/utils";
 
 type PageProps = { params: Promise<{ slug: string }> };
 
+/** Solo slugs del catálogo; el resto responde 404 (evita 500 en runtime con next-intl). */
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getDestinationSlugs().map((slug) => ({ slug }));
 }
