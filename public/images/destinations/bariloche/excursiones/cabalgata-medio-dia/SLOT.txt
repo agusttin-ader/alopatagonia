@@ -1,0 +1,5 @@
+Excursión: Cabalgata de medio día
+Carpeta: cabalgata-medio-dia
+
+Colocá acá una sola imagen (ideal: main.jpg).
+Formatos: .jpg, .jpeg, .png, .webp

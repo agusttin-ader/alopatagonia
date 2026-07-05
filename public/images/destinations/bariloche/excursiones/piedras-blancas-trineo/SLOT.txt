@@ -1,0 +1,5 @@
+Excursión: Parque Invernal Piedras Blancas — Culipatín y trineo
+Carpeta: piedras-blancas-trineo
+
+Colocá acá una sola imagen (ideal: main.jpg).
+Formatos: .jpg, .jpeg, .png, .webp

@@ -7,7 +7,7 @@ import { PLANNER_PATH } from "@/lib/constants";
 import { localizedSitemapEntries } from "@/lib/seo-i18n";
 
 /** Actualizar al publicar cambios editoriales relevantes para Google. */
-const SITE_LAST_MODIFIED = new Date("2026-06-13");
+const SITE_LAST_MODIFIED = new Date("2026-07-05");
 
 const catalogHubPaths = CATALOG_HUB_PILLARS.filter((pillar) => pillar.status === "live").map(
   (pillar) => ({

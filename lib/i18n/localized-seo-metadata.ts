@@ -118,6 +118,14 @@ export async function buildCatalogItemPageMetadata(
       ? t("catalogItem.kindAccommodation")
       : t("catalogItem.kindExcursion");
   const heroImage = item.images[0]?.src ?? destination.heroImage;
+  const itemKeywords = [
+    item.name.toLowerCase(),
+    `${kindLabel} ${destName.toLowerCase()}`,
+    ...(entry.kind === "excursion" && item.category
+      ? [`${item.category} ${destName.toLowerCase()}`]
+      : []),
+    ...getDestinationSeoKeywords(slug),
+  ];
 
   return buildLocalizedPageMetadata({
     locale,
@@ -132,11 +140,7 @@ export async function buildCatalogItemPageMetadata(
       }),
     ogImage: heroImage,
     ogImageAlt: t("catalogItem.ogAlt", { name: item.name, destination: destName, site: SITE.name }),
-    keywords: [
-      item.name.toLowerCase(),
-      `${kindLabel} ${destName.toLowerCase()}`,
-      ...getDestinationSeoKeywords(slug),
-    ],
+    keywords: itemKeywords,
     titleOrder: "keyword-first",
   });
 }

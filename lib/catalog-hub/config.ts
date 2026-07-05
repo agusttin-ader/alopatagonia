@@ -39,7 +39,7 @@ export const CATALOG_HUB_PILLARS: CatalogHubPillar[] = [
     slug: "excursiones",
     title: "Excursiones",
     eyebrow: "Por temporada",
-    description: "Trekking, glaciares, navegación y fauna — según la temporada en cada zona.",
+    description: "Más de 25 salidas en Bariloche — lagos, montaña y nieve — y excursiones en Chaltén, Calafate, Madryn y Ushuaia. Mirá fotos, detalles e inclusiones y consultá por WhatsApp.",
     href: "/excursiones",
     image: "/images/imagenes-home/20260212_125159.jpg",
     imageAlt: "Navegación frente al glaciar — excursión en Patagonia",

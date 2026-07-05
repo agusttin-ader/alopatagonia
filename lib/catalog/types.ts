@@ -5,6 +5,13 @@ export type CatalogImage = { src: string; alt: string };
 export type CatalogItemKind = "accommodation" | "excursion";
 export type ExcursionCategory = "trekking" | "navegacion" | "fauna" | "aventura";
 
+export type ExcursionContent = {
+  name: string;
+  category: ExcursionCategory;
+  description: string;
+  highlights: string[];
+};
+
 export type CatalogItem = {
   id: string;
   /** Segmento de URL dentro de `/destinos/[slug]/`. */

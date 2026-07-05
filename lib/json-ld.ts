@@ -269,3 +269,32 @@ export function buildDestinosHubGraphJsonLd(
     ],
   };
 }
+
+export function buildExcursionesHubGraphJsonLd(
+  siteUrl: string,
+  entries: CatalogItemEntry[],
+  faq: SeoFaqItem[],
+  options?: {
+    breadcrumbs?: JsonLdBreadcrumbLabels;
+  },
+) {
+  const labels = options?.breadcrumbs ?? { home: "Inicio", destinations: "Destinos" };
+  const hubLabel = labels.excursions ?? "Excursiones";
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      buildBreadcrumbJsonLd(siteUrl, [
+        { name: labels.home, path: "/" },
+        { name: hubLabel, path: "/excursiones" },
+      ]),
+      buildItemListJsonLd(
+        siteUrl,
+        entries.map((entry) => ({
+          name: entry.item.name,
+          path: `/destinos/${entry.destination.slug}/${entry.item.itemSlug}`,
+        })),
+      ),
+      buildFAQPageJsonLd(siteUrl, faq, "/excursiones"),
+    ],
+  };
+}

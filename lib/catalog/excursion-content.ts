@@ -1,49 +1,11 @@
+import { BARILOCHE_EXCURSIONS } from "@/lib/catalog/bariloche-excursions";
 import { getExcursionImageFoldersForSlug } from "@/lib/catalog/excursion-image-folders";
-import type { ExcursionCategory } from "@/lib/catalog/types";
+import type { ExcursionContent } from "@/lib/catalog/types";
 
-export type ExcursionContent = {
-  name: string;
-  category: ExcursionCategory;
-  description: string;
-  highlights: string[];
-};
+export type { ExcursionContent } from "@/lib/catalog/types";
 
 export const EXCURSION_CONTENT_BY_DESTINATION: Record<string, ExcursionContent[]> = {
-  bariloche: [
-    {
-      name: "Circuito Chico y miradores del Llao Llao",
-      category: "aventura",
-      description:
-        "Unos 60 km por la costa oeste del Nahuel Huapi: bosque de coihues, Bahía López y el clásico mirador del Llao Llao. Ideal para el primer día, en auto propio o con guía.",
-      highlights: [
-        "Paradas en Punto Panorámico y Colonia Suiza",
-        "Vistas al Lago Moreno y al Cerro López",
-        "Medio día; se combina bien con una tarde libre en el centro",
-      ],
-    },
-    {
-      name: "Navegación Isla Victoria y Bosque de Arrayanes",
-      category: "navegacion",
-      description:
-        "Salida desde Puerto Pañuelo hacia el Parque Nacional Nahuel Huapi. Caminata entre arrayanes centenarios en la península de Quetrihué (acceso según nivel del lago).",
-      highlights: [
-        "Bosque único de arrayanes en la costa del lago",
-        "Isla Victoria con senderos cortos entre cipreses",
-        "Opera en temporada alta; conviene reservar con anticipación",
-      ],
-    },
-    {
-      name: "Trekking al Refugio Frey",
-      category: "trekking",
-      description:
-        "Subida por el Cerro Catedral hasta el refugio a orillas de la laguna Toncek, con vista directa a las agujas del macizo. Uno de los trekkings más elegidos de Bariloche.",
-      highlights: [
-        "Unos 10 km ida (4–5 h) desde la base del Catedral",
-        "Dificultad media; llevar abrigo aunque sea verano",
-        "Se puede hacer por cuenta propia o con guía de montaña",
-      ],
-    },
-  ],
+  bariloche: BARILOCHE_EXCURSIONS,
   "san-martin": [
     {
       name: "Lago Huechulafquen, Paimún y Volcán Lanín",

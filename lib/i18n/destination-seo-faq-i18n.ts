@@ -7,12 +7,17 @@ const DESTINATION_SEO_FAQ_EN: Record<string, SeoFaqItem[]> = {
     {
       question: "How many days should I spend in Bariloche?",
       answer:
-        "For a first visit, 4 to 7 days is ideal: enough for Circuito Chico, a boat trip, Cerro Catedral and a free day. If you want to add San Martín de los Andes or Villa La Angostura by car, plan at least 8–10 days total.",
+        "For a first visit, 4 to 7 days is ideal: enough for Circuito Chico, a lake excursion, Cerro Tronador or Catedral, and a free day. With more time you can add the Seven Lakes route, El Bolsón or winter activities depending on the season.",
     },
     {
-      question: "What does an organised Bariloche trip include?",
+      question: "What excursions are available in Bariloche?",
       answer:
-        "Accommodation, car hire (or airport transfer) and excursions based on your dates. We'll sort it out on WhatsApp: in January and February it's worth booking boat trips and mountain refuges well in advance.",
+        "More than 25 organised outings: land, lake, adventure and snow. From Victoria Island and Puerto Blest to skiing, snowshoeing, kayaking and 4x4 steppe tours. Each listing shows duration, schedule and what's included.",
+    },
+    {
+      question: "Should I book excursions in advance?",
+      answer:
+        "In January, February and winter holidays it's worth booking boat trips, ski and snow outings ahead. Message us on WhatsApp with your dates and we'll arrange accommodation, transfers and excursions in one contact.",
     },
   ],
   "san-martin": [
@@ -119,12 +124,17 @@ const DESTINATION_SEO_FAQ_PT: Record<string, SeoFaqItem[]> = {
     {
       question: "Quantos dias vale a pena ficar em Bariloche?",
       answer:
-        "Para uma primeira visita, entre 4 e 7 dias é o ideal: tempo suficiente para o Circuito Chico, um passeio de barco, o Cerro Catedral e um dia livre. Se quiser acrescentar San Martín de los Andes ou Villa La Angostura de carro, planeje ao menos 8–10 dias no total.",
+        "Para uma primeira visita, entre 4 e 7 dias é o ideal: tempo para o Circuito Chico, um passeio lacustre, Cerro Tronador ou Catedral e um dia livre. Com mais tempo dá para somar Rota dos Sete Lagos, El Bolsón ou atividades de inverno conforme a época.",
     },
     {
-      question: "O que inclui uma viagem organizada a Bariloche?",
+      question: "Quais excursões há em Bariloche?",
       answer:
-        "Hospedagem, aluguel de carro (ou transfer do aeroporto) e excursões de acordo com suas datas. Resolvemos tudo pelo WhatsApp: em janeiro e fevereiro convém reservar os passeios de barco e os refúgios de montanha com antecedência.",
+        "Mais de 25 saídas organizadas: terrestres, lacustres, aventura e neve. Da Ilha Victoria e Puerto Blest ao ski, raquetas, caiaque e 4x4 na estepa. Cada ficha indica duração, horário e o que está incluído.",
+    },
+    {
+      question: "Conviém reservar as excursões com antecedência?",
+      answer:
+        "Em janeiro, fevereiro e férias de inverno vale reservar navegações, ski e saídas de neve com antecedência. Fale conosco no WhatsApp com suas datas e montamos hospedagem, transfers e excursões em um só contato.",
     },
   ],
   "san-martin": [

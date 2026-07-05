@@ -62,15 +62,24 @@ export const SITE_SEO = {
     ],
   },
   excursiones: {
-    title: "Excursiones en la Patagonia — trekking, navegación y fauna",
+    title: "Excursiones en Bariloche y Patagonia — lagos, montaña y nieve",
     description:
-      "Perito Moreno, Laguna de los Tres, ballenas en Madryn, Canal Beagle y más. Consultá por WhatsApp según temporada y clima.",
+      "Más de 25 salidas en Bariloche: Circuito Chico, Isla Victoria, Puerto Blest, Cerro Tronador, ski, raquetas y navegación. Más trekking en El Chaltén, glaciares en Calafate y ballenas en Madryn. Consultá por WhatsApp según temporada.",
     keywords: [
       "excursiones patagonia",
       "excursiones bariloche",
+      "circuito chico bariloche",
+      "isla victoria arrayanes",
+      "puerto blest bariloche",
+      "cerro tronador ventisquero negro",
+      "cerro catedral ski",
+      "raquetas bariloche",
+      "excursiones nieve bariloche",
+      "ruta siete lagos",
       "trekking el chalten",
       "glaciar perito moreno",
       "ballenas puerto madryn",
+      "canal beagle ushuaia",
     ],
   },
   planner: {
@@ -85,6 +94,25 @@ export const SITE_SEO = {
     ],
   },
 } as const;
+
+/** FAQ del hub /excursiones (contenido indexable + JSON-LD). */
+export const EXCURSIONES_HUB_FAQ: SeoFaqItem[] = [
+  {
+    question: "¿Cómo reservo una excursión con Alo Patagonia?",
+    answer:
+      "Elegí la actividad en el catálogo, mirá fotos y qué incluye cada salida, y escribinos por WhatsApp con fechas y cantidad de personas. Coordinamos traslado, horario y reserva según temporada.",
+  },
+  {
+    question: "¿Qué excursiones hay en Bariloche?",
+    answer:
+      "Terrestres (Circuito Chico, Cerro Tronador, Siete Lagos, El Bolsón), lacustres (Isla Victoria y Arrayanes, Puerto Blest, Lago Frías), aventura (kayak, cabalgata, 4x4 en estepa) y nieve (ski, raquetas, Snowcat, Piedras Blancas, Noche Nórdica y más). Cada ficha detalla duración e inclusiones.",
+  },
+  {
+    question: "¿Hay excursiones de invierno y de verano?",
+    answer:
+      "Sí. En verano predominan las terrestres y lacustres; en invierno sumamos ski, raquetas, trineo y experiencias en Cerro Catedral, Otto y Perito Moreno. No todas operan todo el año — consultanos con tus fechas.",
+  },
+];
 
 /** Destinos destacados para enlazado interno (footer, hubs). */
 export const SEO_POPULAR_DESTINATIONS = [
@@ -101,7 +129,7 @@ export const SEO_POPULAR_DESTINATIONS = [
 
 const DESTINATION_SEO: Record<string, DestinationSeoConfig> = {
   bariloche: {
-    seoTitle: "Viajes a Bariloche — alojamiento, excursiones y auto",
+    seoTitle: "Viajes a Bariloche — excursiones, alojamiento y auto",
     seoDescription: CLIENT_DESTINATION_PAGES_COPY.bariloche.paragraphs.join(" "),
     seoIntro: CLIENT_DESTINATION_PAGES_COPY.bariloche.paragraphs.join(" "),
     keywords: [
@@ -110,6 +138,12 @@ const DESTINATION_SEO: Record<string, DestinationSeoConfig> = {
       "turismo bariloche",
       "alojamiento bariloche",
       "excursiones bariloche",
+      "circuito chico bariloche",
+      "isla victoria arrayanes",
+      "puerto blest",
+      "cerro tronador",
+      "cerro catedral",
+      "excursiones nieve bariloche",
       "vacaciones bariloche",
       "auto bariloche",
     ],
@@ -117,12 +151,17 @@ const DESTINATION_SEO: Record<string, DestinationSeoConfig> = {
       {
         question: "¿Cuántos días conviene estar en Bariloche?",
         answer:
-          "Para una primera visita, entre 4 y 7 días: alcanza para Circuito Chico, una navegación, Cerro Catedral y un día libre. Si querés sumar San Martín o Villa La Angostura en auto, planificá al menos 8–10 días en total.",
+          "Para una primera visita, entre 4 y 7 días: alcanza para Circuito Chico, una navegación lacustre, Cerro Tronador o Catedral y un día libre. Con más tiempo podés sumar Siete Lagos, El Bolsón o actividades de invierno según la época.",
       },
       {
-        question: "¿Qué incluye un viaje organizado a Bariloche?",
+        question: "¿Qué excursiones ofrecen en Bariloche?",
         answer:
-          "Alojamiento, auto (o transfer desde el aeropuerto) y excursiones según tus fechas. Lo charlamos por WhatsApp: en enero/febrero conviene reservar navegaciones y refugios con anticipación.",
+          "Más de 25 salidas organizadas: terrestres, lacustres, aventura y nieve. Desde Isla Victoria y Puerto Blest hasta ski, raquetas, kayak y 4x4 en estepa. Cada actividad en el catálogo indica duración, horario y qué incluye.",
+      },
+      {
+        question: "¿Conviene reservar las excursiones con anticipación?",
+        answer:
+          "En enero, febrero y vacaciones de invierno conviene reservar navegaciones, ski y salidas de nieve con anticipación. Escribinos por WhatsApp con tus fechas y armamos alojamiento, traslados y excursiones en un solo contacto.",
       },
     ],
   },

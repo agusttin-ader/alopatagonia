@@ -23,7 +23,7 @@ const ACCOMMODATIONS_FILE = path.join(
 
 const WEB_IMAGE_PATTERN = /\.(jpe?g|png|webp)$/i;
 const HEIC_PATTERN = /\.heic$/i;
-const MAX_PATHS_PER_FOLDER = 64;
+const MAX_PATHS_PER_FOLDER = 128;
 const MIN_PATHS_PER_SUBFOLDER = 12;
 const MAX_IMAGES_PER_PROPERTY = 32;
 
@@ -213,6 +213,17 @@ async function listWebImages(relativeFolder) {
   const results = [];
   for (const subfolder of subfolders) {
     const subfolderPath = path.join(absoluteFolder, subfolder.name);
+
+    // Una imagen por carpeta de excursión (p. ej. 26 en Bariloche).
+    if (subfolder.name === "excursiones") {
+      for (const excursionFolder of listSubdirectories(subfolderPath)) {
+        const excursionPath = path.join(subfolderPath, excursionFolder.name);
+        const images = (await listWebImagesInDirectory(excursionPath)).slice(0, 1);
+        results.push(...images);
+      }
+      continue;
+    }
+
     results.push(
       ...(await listWebImagesInDirectory(subfolderPath)).slice(0, perSubfolder),
     );

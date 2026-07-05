@@ -1,0 +1,5 @@
+Excursión: Ski Nórdico en Cerro Otto
+Carpeta: ski-nordico-cerro-otto
+
+Colocá acá una sola imagen (ideal: main.jpg).
+Formatos: .jpg, .jpeg, .png, .webp

@@ -153,7 +153,7 @@
       "excursiones": {
         "title": "Excursiones",
         "eyebrow": "Por temporada",
-        "description": "Trekking, glaciares, navegación y fauna — según la temporada en cada zona.",
+        "description": "Más de 25 salidas en Bariloche — lagos, montaña y nieve — y excursiones en Chaltén, Calafate, Madryn y Ushuaia. Mirá fotos, detalles e inclusiones y consultá por WhatsApp.",
         "imageAlt": "Navegación frente al glaciar — excursión en Patagonia"
       }
     }
@@ -357,6 +357,7 @@
     "tripsTo": "Viajes a {destination}",
     "faqAbout": "Preguntas sobre viajar a {destination}",
     "faqPatagonia": "Preguntas sobre viajes a la Patagonia",
+    "faqExcursions": "Preguntas sobre excursiones en la Patagonia",
     "photoAlt": "{name} — foto {n}",
     "lightboxAlt": "Vista ampliada — {name}",
     "lightboxAccommodation": "Vista ampliada de alojamiento",
@@ -604,9 +605,9 @@
       "keywords": ["alojamiento patagonia", "hoteles bariloche", "cabañas patagonia", "departamentos bariloche", "hostel patagonia"]
     },
     "excursiones": {
-      "title": "Excursiones en la Patagonia — trekking, navegación y fauna",
-      "description": "Perito Moreno, Laguna de los Tres, ballenas en Madryn, Canal Beagle y más. Consultá por WhatsApp según temporada y clima.",
-      "keywords": ["excursiones patagonia", "excursiones bariloche", "trekking el chalten", "glaciar perito moreno", "ballenas puerto madryn"]
+      "title": "Excursiones en Bariloche y Patagonia — lagos, montaña y nieve",
+      "description": "Más de 25 salidas en Bariloche: Circuito Chico, Isla Victoria, Puerto Blest, Cerro Tronador, ski, raquetas y navegación. Más trekking en El Chaltén, glaciares en Calafate y ballenas en Madryn. Consultá por WhatsApp según temporada.",
+      "keywords": ["excursiones patagonia", "excursiones bariloche", "circuito chico bariloche", "isla victoria arrayanes", "puerto blest bariloche", "cerro tronador ventisquero negro", "cerro catedral ski", "raquetas bariloche", "excursiones nieve bariloche", "ruta siete lagos", "trekking el chalten", "glaciar perito moreno", "ballenas puerto madryn", "canal beagle ushuaia"]
     },
     "planner": {
       "title": "Planear viaje Patagonia — consulta por WhatsApp",

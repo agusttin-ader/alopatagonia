@@ -1,5 +1,5 @@
-Excursión: Trekking al Refugio Frey
-Carpeta: refugio-frey
+Excursión: Cerro Tronador y Ventisquero Negro
+Carpeta: cerro-tronador-ventisquero
 
 Colocá acá una sola imagen (ideal: main.jpg).
 Formatos: .jpg, .jpeg, .png, .webp

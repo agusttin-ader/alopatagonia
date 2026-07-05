@@ -6,16 +6,33 @@
       {
         "folderSlug": "circuito-chico",
         "legacyFolders": ["cirucuito-chico"],
-        "name": "Circuito Chico y miradores del Llao Llao"
+        "name": "Circuito Chico Bariloche"
       },
-      {
-        "folderSlug": "isla-victoria-arrayanes",
-        "name": "Navegación Isla Victoria y Bosque de Arrayanes"
-      },
-      {
-        "folderSlug": "refugio-frey",
-        "name": "Trekking al Refugio Frey"
-      }
+      { "folderSlug": "cerro-catedral", "name": "Cerro Catedral Bariloche" },
+      { "folderSlug": "cerro-tronador-ventisquero", "name": "Cerro Tronador y Ventisquero Negro" },
+      { "folderSlug": "siete-lagos-san-martin", "name": "San Martín de los Andes por los 7 Lagos" },
+      { "folderSlug": "bolson-lago-puelo", "name": "El Bolsón y Lago Puelo" },
+      { "folderSlug": "isla-victoria-arrayanes", "name": "Isla Victoria y Bosque de Arrayanes" },
+      { "folderSlug": "puerto-blest-cantaros", "name": "Puerto Blest y Cascada de los Cántaros" },
+      { "folderSlug": "extension-lago-frias", "name": "Extensión Lago Frías" },
+      { "folderSlug": "traslado-puerto-panuelo", "name": "Traslado Puerto Pañuelo" },
+      { "folderSlug": "cabalgata-medio-dia", "name": "Cabalgata de medio día" },
+      { "folderSlug": "kayaks-lago-gutierrez", "name": "Kayaks en Lago Gutiérrez" },
+      { "folderSlug": "travesia-4x4-estepa", "name": "Travesía 4x4 Estepa con almuerzo" },
+      { "folderSlug": "promo-aventura-fondue", "name": "Promo Aventura — Cabalgata + Raquetas + Fondue" },
+      { "folderSlug": "raquetas-roca-negra", "name": "Raquetas en Cerro López Roca Negra" },
+      { "folderSlug": "traslado-ski-catedral", "name": "Traslado Ski Cerro Catedral" },
+      { "folderSlug": "villa-angostura-cerro-bayo", "name": "Villa La Angostura y Cerro Bayo" },
+      { "folderSlug": "laguna-congelada-neumeyer", "name": "Caminata Laguna Congelada — Refugio Neumeyer" },
+      { "folderSlug": "ski-nordico-cerro-otto", "name": "Ski Nórdico en Cerro Otto" },
+      { "folderSlug": "extremo-encantado", "name": "Extremo Encantado" },
+      { "folderSlug": "cerro-perito-moreno-nieve", "name": "Cerro Perito Moreno — Deportes de nieve" },
+      { "folderSlug": "noche-nordica-cerro-otto", "name": "Noche Nórdica Cerro Otto" },
+      { "folderSlug": "ski-fun-day-perito-moreno", "name": "Ski Fun Day — Cerro Perito Moreno" },
+      { "folderSlug": "refugio-arelauquen", "name": "El Refugio de Arelauquen" },
+      { "folderSlug": "piedras-blancas-trineo", "name": "Parque Invernal Piedras Blancas — Culipatín y trineo" },
+      { "folderSlug": "snowcat-perito-moreno", "name": "Snowcat — Cerro Perito Moreno" },
+      { "folderSlug": "nieve-frontera-chile", "name": "Nieve al Límite — Frontera Argentina-Chile" }
     ]
   },
   {

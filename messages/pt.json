@@ -153,7 +153,7 @@
       "excursiones": {
         "title": "Excursões",
         "eyebrow": "Por temporada",
-        "description": "Trekking, geleiras, navegação e fauna — conforme a temporada em cada zona.",
+        "description": "Mais de 25 saídas em Bariloche — lagos, montanha e neve — e excursões em Chaltén, Calafate, Madryn e Ushuaia. Veja fotos, detalhes e inclusões e consulte no WhatsApp.",
         "imageAlt": "Navegação frente à geleira — excursão na Patagônia"
       }
     }
@@ -357,6 +357,7 @@
     "tripsTo": "Viagens a {destination}",
     "faqAbout": "Perguntas sobre viajar a {destination}",
     "faqPatagonia": "Perguntas sobre viagens à Patagônia",
+    "faqExcursions": "Perguntas sobre excursões na Patagônia",
     "photoAlt": "{name} — foto {n}",
     "lightboxAlt": "Vista ampliada — {name}",
     "lightboxAccommodation": "Vista ampliada de acomodação",
@@ -680,6 +681,22 @@
       ]
     }
   },
+  "excursionsHub": {
+    "faq": [
+      {
+        "question": "Como reservo uma excursão com a Alo Patagonia?",
+        "answer": "Escolha a atividade no catálogo, veja fotos e o que está incluído, e fale conosco no WhatsApp com datas e quantidade de pessoas. Coordenamos traslado, horário e reserva conforme a temporada."
+      },
+      {
+        "question": "Quais excursões há em Bariloche?",
+        "answer": "Terrestres (Circuito Chico, Cerro Tronador, Sete Lagos, El Bolsón), lacustres (Ilha Victoria e Arrayanes, Puerto Blest, Lago Frías), aventura (caiaque, cavalgada, 4x4 na estepa) e neve (ski, raquetas, Snowcat, Piedras Blancas, Noite Nórdica e mais). Cada ficha indica duração e inclusões."
+      },
+      {
+        "question": "Há excursões de inverno e de verão?",
+        "answer": "Sim. No verão predominam as terrestres e lacustres; no inverno somamos ski, raquetas, trenó e experiências no Cerro Catedral, Otto e Perito Moreno. Nem todas operam o ano todo — consulte-nos com suas datas."
+      }
+    ]
+  },
   "seo": {
     "home": {
       "title": "Viagens Patagônia Argentina — Bariloche, Ushuaia e El Calafate",
@@ -697,9 +714,9 @@
       "keywords": ["acomodação patagonia", "hotéis bariloche", "cabanas patagonia", "apartamentos bariloche", "hostel patagonia"]
     },
     "excursiones": {
-      "title": "Excursões na Patagônia — trekking, navegação e fauna",
-      "description": "Perito Moreno, Laguna de los Tres, baleias em Madryn, Canal Beagle e mais. Consulte no WhatsApp conforme temporada e clima.",
-      "keywords": ["excursões patagonia", "excursões bariloche", "trekking el chalten", "glaciar perito moreno", "baleias puerto madryn"]
+      "title": "Excursões em Bariloche e Patagônia — lagos, montanha e neve",
+      "description": "Mais de 25 saídas em Bariloche: Circuito Chico, Ilha Victoria, Puerto Blest, Cerro Tronador, ski, raquetas e navegação. Mais trekking em El Chaltén, geleiras em Calafate e baleias em Madryn. Consulte no WhatsApp conforme a temporada.",
+      "keywords": ["excursões patagonia", "excursões bariloche", "circuito chico bariloche", "ilha victoria arrayanes", "puerto blest bariloche", "cerro tronador ventisquero negro", "cerro catedral ski", "raquetas bariloche", "excursões neve bariloche", "rota sete lagos", "trekking el chalten", "glaciar perito moreno", "baleias puerto madryn", "canal beagle ushuaia"]
     },
     "planner": {
       "title": "Planejar viagem Patagônia — consulta por WhatsApp",

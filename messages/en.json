@@ -153,7 +153,7 @@
       "excursiones": {
         "title": "Excursions",
         "eyebrow": "By season",
-        "description": "Trekking, glaciers, boat trips and wildlife — depending on the season in each area.",
+        "description": "More than 25 outings in Bariloche — lakes, mountains and snow — plus excursions in Chaltén, Calafate, Madryn and Ushuaia. See photos, details and inclusions and ask on WhatsApp.",
         "imageAlt": "Boat trip in front of a glacier — Patagonia excursion"
       }
     }
@@ -357,6 +357,7 @@
     "tripsTo": "Trips to {destination}",
     "faqAbout": "Questions about travelling to {destination}",
     "faqPatagonia": "Questions about Patagonia trips",
+    "faqExcursions": "Questions about excursions in Patagonia",
     "photoAlt": "{name} — photo {n}",
     "lightboxAlt": "Enlarged view — {name}",
     "lightboxAccommodation": "Enlarged accommodation view",
@@ -680,6 +681,22 @@
       ]
     }
   },
+  "excursionsHub": {
+    "faq": [
+      {
+        "question": "How do I book an excursion with Alo Patagonia?",
+        "answer": "Choose the activity in the catalogue, see photos and what's included, and message us on WhatsApp with dates and group size. We'll coordinate transfer, schedule and booking according to season."
+      },
+      {
+        "question": "What excursions are available in Bariloche?",
+        "answer": "Land tours (Circuito Chico, Cerro Tronador, Seven Lakes, El Bolsón), lake trips (Victoria Island and Arrayanes, Puerto Blest, Lake Frías), adventure (kayak, horseback riding, 4x4 steppe) and snow (ski, snowshoes, Snowcat, Piedras Blancas, Nordic Night and more). Each listing shows duration and inclusions."
+      },
+      {
+        "question": "Are there winter and summer excursions?",
+        "answer": "Yes. In summer land and lake tours predominate; in winter we add ski, snowshoes, sledding and experiences on Cerro Catedral, Otto and Perito Moreno. Not all operate year-round — ask us with your dates."
+      }
+    ]
+  },
   "seo": {
     "home": {
       "title": "Patagonia Argentina trips — Bariloche, Ushuaia and El Calafate",
@@ -697,9 +714,9 @@
       "keywords": ["patagonia accommodation", "bariloche hotels", "patagonia cabins", "bariloche apartments", "patagonia hostels"]
     },
     "excursiones": {
-      "title": "Patagonia excursions — trekking, boat trips and wildlife",
-      "description": "Perito Moreno, Laguna de los Tres, whales in Madryn, Beagle Channel and more. Ask on WhatsApp according to season and weather.",
-      "keywords": ["patagonia excursions", "bariloche excursions", "el chalten trekking", "perito moreno glacier", "puerto madryn whales"]
+      "title": "Bariloche and Patagonia excursions — lakes, mountains and snow",
+      "description": "More than 25 outings in Bariloche: Circuito Chico, Victoria Island, Puerto Blest, Cerro Tronador, skiing, snowshoes and boat trips. Plus trekking in El Chaltén, glaciers in Calafate and whales in Madryn. Ask on WhatsApp according to season.",
+      "keywords": ["patagonia excursions", "bariloche excursions", "circuito chico bariloche", "victoria island arrayanes", "puerto blest bariloche", "cerro tronador ventisquero negro", "cerro catedral ski", "snowshoes bariloche", "bariloche winter excursions", "seven lakes route", "el chalten trekking", "perito moreno glacier", "puerto madryn whales", "beagle channel ushuaia"]
     },
     "planner": {
       "title": "Plan your Patagonia trip — WhatsApp enquiry",

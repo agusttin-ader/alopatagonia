@@ -1,0 +1,261 @@
+{
+  "circuito-chico": {
+    "name": "Circuito Chico Bariloche",
+    "description": "O Circuito Chico é ideal para começar a conhecer Bariloche. Meio dia pela margem do lago Nahuel Huapi, com paradas no Cerro Campanario, Punto Panorâmico e no Hotel Llao Llao. A excursão mais popular da cidade.",
+    "highlights": [
+      "Meio período · aprox. 4 horas",
+      "Saída 14:00 hs · retirada na sua hospedagem",
+      "Transporte em van ou micro-ônibus",
+      "Guia bilíngue e paradas para fotos"
+    ]
+  },
+  "cerro-catedral": {
+    "name": "Cerro Catedral Bariloche",
+    "description": "Principal centro de esportes de inverno da América do Sul, a 25 km de Bariloche. No inverno é o grande centro de ski da região; no verão, trilhas e vistas da cordilheira e do lago Nahuel Huapi. Traslado desde sua hospedagem.",
+    "highlights": [
+      "Duração variável conforme temporada e atividade",
+      "Saída 09:00 hs · retirada na sua hospedagem",
+      "Transporte incluído",
+      "Guia opcional — consulte ao reservar"
+    ]
+  },
+  "cerro-tronador-ventisquero": {
+    "name": "Cerro Tronador e Ventisquero Negro",
+    "description": "Lagos Gutiérrez e Mascardi, Pampa Linda e o imponente Ventisquero Negro do Cerro Tronador (3.554 m). Paisagem única da Patagônia: o vulcão ativo mais alto da região.",
+    "highlights": [
+      "Dia inteiro · aprox. 10 horas",
+      "Saída 08:00 hs · retirada na sua hospedagem",
+      "Transporte especializado e guia de montanha",
+      "Entrada ao Parque Nacional incluída"
+    ]
+  },
+  "siete-lagos-san-martin": {
+    "name": "San Martín de los Andes pelos 7 Lagos",
+    "description": "Excursão de dia inteiro pela lendária rota dos sete lagos: Villa La Angostura, mirantes e chegada a San Martín de los Andes. Uma das estradas mais belas da Patagônia. Opera segundas, quartas e sextas.",
+    "highlights": [
+      "Dia inteiro · aprox. 10 horas",
+      "Saída 08:00 hs · seg, qua e sex",
+      "Transporte em van e guia bilíngue",
+      "Tempo livre em San Martín de los Andes"
+    ]
+  },
+  "bolson-lago-puelo": {
+    "name": "El Bolsón e Lago Puelo",
+    "description": "El Bolsón e Lago Puelo: feira artesanal regional, praias de seixos e o charme do vale do rio Azul. A capital da artesanía e da ecologia da Patagônia. Saídas quintas e sábados.",
+    "highlights": [
+      "Dia inteiro · aprox. 10 horas",
+      "Saída 08:00 hs · quintas e sábados",
+      "Transporte em van e guia",
+      "Entrada ao Parque Nacional incluída"
+    ]
+  },
+  "isla-victoria-arrayanes": {
+    "name": "Ilha Victoria e Bosque de Arrayanes",
+    "description": "Navegação de cerca de 30 minutos pelo Nahuel Huapi até a Ilha Victoria: viveiro de coníferas, mirantes e praia vulcânica. Depois, o Bosque de Arrayanes na península de Quetrihué — o único acessível ao público no mundo.",
+    "highlights": [
+      "Dia inteiro · aprox. 8 horas",
+      "Saída 10:00 hs do Porto Pañuelo (km 25,5 Av. Bustillo)",
+      "Navegação, guia bilíngue e entradas incluídas",
+      "Ilha Victoria e Bosque de Arrayanes"
+    ]
+  },
+  "puerto-blest-cantaros": {
+    "name": "Puerto Blest e Cascata de los Cántaros",
+    "description": "Navegação pelo braço Blest do Nahuel Huapi, o canto mais exuberante e chuvoso do lago. Visita à Cascata de los Cántaros e Puerto Blest. Opcional: extensão ao Lago Frías (contrata-se à parte).",
+    "highlights": [
+      "Dia inteiro · aprox. 9 horas",
+      "Saída 09:00 hs do Porto Pañuelo",
+      "Navegação ida e volta e guia",
+      "Caminhada até a Cascata de los Cántaros"
+    ]
+  },
+  "extension-lago-frias": {
+    "name": "Extensão Lago Frías",
+    "description": "Extensão dentro da excursão a Puerto Blest: traslado interno entre portos, navegação pelas águas verdes do Lago Frías — produto do sedimento vulcânico da geleira Frías — e caminhada curta por selva valdiviana no Porto Frías. Retorno a Puerto Blest.",
+    "highlights": [
+      "Dia inteiro · aprox. 8 horas",
+      "Contrata-se como add-on a Puerto Blest",
+      "Traslado interno entre portos e navegação",
+      "Guia bilíngue e caminhada no Porto Frías"
+    ]
+  },
+  "traslado-puerto-panuelo": {
+    "name": "Traslado Porto Pañuelo",
+    "description": "Transfer ida e volta ao Porto Pañuelo, ponto de partida das principais excursões lacustres de Bariloche. Para chegar a tempo ao seu barco sem se preocupar com estacionamento.",
+    "highlights": [
+      "Aprox. 30 minutos cada trecho",
+      "Saída 09:00 hs · retirada na sua hospedagem",
+      "Transporte porta a cais",
+      "Coordenado com as saídas dos catamarãs"
+    ]
+  },
+  "cabalgata-medio-dia": {
+    "name": "Cavalgada de meio período",
+    "description": "Cavalgada de meio dia por florestas e paisagens da Patagônia andina, com guias gaúchos experientes. Apto para todos os níveis. Turno manhã (09:30–15:30) ou tarde (12:00–18:00).",
+    "highlights": [
+      "Meio período · aprox. 6 horas",
+      "Turno manhã 09:30 hs ou tarde 12:00 hs",
+      "Cavalo, equipamento e guia gaúcho",
+      "Café da manhã ou almoço incluído conforme o turno"
+    ]
+  },
+  "kayaks-lago-gutierrez": {
+    "name": "Caiaques no Lago Gutiérrez",
+    "description": "Traslado ao Lago Gutiérrez e duas horas de caiaque com guias certificados em águas cristalinas cercadas de montanhas. Inclui instrução; apto para iniciantes.",
+    "highlights": [
+      "Meio período · aprox. 3 horas",
+      "Saída 10:00 hs · Camping Lago Gutiérrez",
+      "Caiaque, remo, colete salva-vidas e guia",
+      "Instrução incluída para iniciantes"
+    ]
+  },
+  "travesia-4x4-estepa": {
+    "name": "Travessia 4x4 Estepa com almoço",
+    "description": "Passeio off-road em veículos 4x4 pela estepa patagônica: Cañón de la Luna, fauna autóctone e paisagens abertas muito distintas do circuito dos lagos. Almoço típico incluído. Retorno aprox. 18:00 hs.",
+    "highlights": [
+      "Dia inteiro · aprox. 9 horas",
+      "Saída 09:00 hs · retirada na sua hospedagem",
+      "Veículo 4x4 e guia especializado",
+      "Almoço típico incluído"
+    ]
+  },
+  "promo-aventura-fondue": {
+    "name": "Promo Aventura — Cavalgada + Raquetas + Fondue",
+    "description": "Pacote combinado: cavalgada de meio dia com churrasco, caminhada com raquetas em Roca Negra e fondue de queijo e chocolate. Aventura e gastronomia patagônica em uma única reserva.",
+    "highlights": [
+      "Pacote combinado · consulte o itinerário ao reservar",
+      "Saída 09:00 hs · ponto de encontro em Bariloche",
+      "Cavalgada com churrasco e raquetas na neve",
+      "Fondue de queijo e chocolate · traslados incluídos"
+    ]
+  },
+  "raquetas-roca-negra": {
+    "name": "Raquetas no Cerro López Roca Negra",
+    "description": "Traslado até a base do Cerro López e caminhada com raquetas de neve até o refúgio Roca Negra, com vistas únicas da Patagônia andina nevada. Pizza e bebidas quentes incluídas na chegada.",
+    "highlights": [
+      "Dia inteiro · aprox. 8 horas",
+      "Saída 09:00 hs · ponto de encontro em Bariloche",
+      "Raquetas, bastões e guia de montanha",
+      "Pizza e bebidas quentes em Roca Negra"
+    ]
+  },
+  "traslado-ski-catedral": {
+    "name": "Traslado Ski Cerro Catedral",
+    "description": "Traslado ida e volta ao Cerro Catedral, principal centro de ski da América do Sul, a 25 km de Bariloche. Transfer direto desde sua hospedagem. Vários horários disponíveis.",
+    "highlights": [
+      "Aprox. 30 minutos cada trecho",
+      "Saída 08:30 hs · retirada na sua hospedagem",
+      "Transfer ida e volta",
+      "Horários flexíveis conforme a temporada"
+    ]
+  },
+  "villa-angostura-cerro-bayo": {
+    "name": "Villa La Angostura e Cerro Bayo",
+    "description": "Excursão de dia inteiro ao centro de ski Cerro Bayo em Villa La Angostura, com vistas ao lago Correntoso. Ambiente mais íntimo e familiar que o Catedral.",
+    "highlights": [
+      "Dia inteiro · aprox. 10 horas",
+      "Saída 08:30 hs · retirada em hospedagem zona central",
+      "Transporte, guia e entrada ao Cerro Bayo"
+    ]
+  },
+  "laguna-congelada-neumeyer": {
+    "name": "Caminhada Laguna Congelada — Refúgio Neumeyer",
+    "description": "Caminhada invernal até a laguna congelada do Refúgio Neumeyer. Paisagem de montanha em estado puro, com neve e natureza patagônica. Sopa e chocolate no refúgio.",
+    "highlights": [
+      "Dia inteiro · aprox. 8 horas",
+      "Saída 09:00 hs · retirada na sua hospedagem",
+      "Guia de montanha e bastões de trekking",
+      "Sopa e chocolate no refúgio"
+    ]
+  },
+  "ski-nordico-cerro-otto": {
+    "name": "Ski Nórdico no Cerro Otto",
+    "description": "Traslado ao centro de ski nórdico no Cerro Otto. Atividade guiada de esqui de fundo em um ambiente natural espetacular, com instrução completa para iniciantes.",
+    "highlights": [
+      "Meio período · aprox. 4 horas",
+      "Saída 09:30 hs · retirada na sua hospedagem",
+      "Esquis nórdicos, bastões e instrutor",
+      "Bebidas quentes incluídas"
+    ]
+  },
+  "extremo-encantado": {
+    "name": "Extremo Encantado",
+    "description": "Experiência de neve nos cantos mais mágicos da Patagônia nevada, com guias especializados em alta montanha. Cachoeiras congeladas e formações de gelo.",
+    "highlights": [
+      "Meio período · aprox. 5 horas",
+      "Saída 09:00 hs · retirada na sua hospedagem",
+      "Guia experto e equipamento de neve",
+      "Lanches incluídos"
+    ]
+  },
+  "cerro-perito-moreno-nieve": {
+    "name": "Cerro Perito Moreno — Esportes de neve",
+    "description": "Excursão ao Cerro Perito Moreno, centro de esportes de inverno de grande beleza cênica. Inclui traslado ida e volta. Apto para toda a família.",
+    "highlights": [
+      "Dia inteiro · aprox. 10 horas",
+      "Saída 09:00 hs · retirada na sua hospedagem",
+      "Traslado ida e volta",
+      "Guia de montanha"
+    ]
+  },
+  "noche-nordica-cerro-otto": {
+    "name": "Noite Nórdica Cerro Otto",
+    "description": "Experiência noturna: traslado ao Cerro Otto, jantar à luz de velas no restaurante giratório com vista panorâmica noturna de Bariloche. Um plano romântico e único no inverno.",
+    "highlights": [
+      "Noite · aprox. 4 horas",
+      "Saída 18:30 hs · retirada na sua hospedagem",
+      "Jantar no refúgio, bebidas e guia noturno",
+      "Esquis e bastões incluídos"
+    ]
+  },
+  "ski-fun-day-perito-moreno": {
+    "name": "Ski Fun Day — Cerro Perito Moreno",
+    "description": "Dia inteiro de ski e atividades na neve no Cerro Perito Moreno. Ideal para toda a família. Inclui traslado ida e volta e guia especializado.",
+    "highlights": [
+      "Dia inteiro · aprox. 10 horas",
+      "Saída 09:00 hs · retirada na sua hospedagem",
+      "Traslado ida e volta e guia",
+      "Dia inteiro de atividades na neve"
+    ]
+  },
+  "refugio-arelauquen": {
+    "name": "O Refúgio de Arelauquen",
+    "description": "Passeio pelos lagos Gutiérrez e Mascardi, cruzando a ponte do rio Manso até o refúgio privado de Arelauquen na floresta nevada. Experiência íntima e exclusiva.",
+    "highlights": [
+      "Dia inteiro · aprox. 10 horas",
+      "Saída 09:00 hs · retirada na sua hospedagem",
+      "Traslado e guia especializado",
+      "Bebidas quentes incluídas"
+    ]
+  },
+  "piedras-blancas-trineo": {
+    "name": "Parque Invernal Piedras Blancas — Culipatín e trenó",
+    "description": "Complexo invernal nas encostas do Cerro Otto: 5 pistas de trenó-culipatín, teleférico panorâmico, snowtubing e tirolesa. Inclui traslado, entrada e 6 subidas de teleférico. Ideal para toda a família.",
+    "highlights": [
+      "Meio período · aprox. 4 horas",
+      "Saída 08:30 hs ou 10:00 hs · ponto de encontro em Bariloche",
+      "Traslado, entrada e 6 subidas de teleférico",
+      "Snowtubing e tirolesa incluídos"
+    ]
+  },
+  "snowcat-perito-moreno": {
+    "name": "Snowcat — Cerro Perito Moreno",
+    "description": "Viagem ao Cerro Perito Moreno pela Rota 40. Subida de teleférico a 1.800 m e percurso em Snowcat — veículo lagarta — pelo planalto nevado. Visita a um iglu e bebida quente incluída.",
+    "highlights": [
+      "Dia inteiro · aprox. 12 horas",
+      "Saída 08:00 hs · ponto de encontro em Bariloche",
+      "Traslado, teleférico e Snowcat",
+      "Visita ao iglu e bebida quente"
+    ]
+  },
+  "nieve-frontera-chile": {
+    "name": "Neve ao Limite — Fronteira Argentina-Chile",
+    "description": "Excursão até o marco no Paso Cardenal Antonio Samoré, na fronteira com o Chile. Florestas nevadas, mini trekking, skibunda, empanadas e bebida quente. Levar documento de identidade válido.",
+    "highlights": [
+      "Dia inteiro · aprox. 8 horas",
+      "Saída 10:00 hs · ponto de encontro em Bariloche",
+      "Traslado, mini trekking e skibunda",
+      "Empanadas e bebida quente · documento válido obrigatório"
+    ]
+  }
+}

@@ -5,9 +5,32 @@ Nombre sugerido del archivo: main.jpg (también sirve .jpeg, .png o .webp).
 Después de subir fotos: npm run catalog:manifest
 
 ── bariloche ──
-  excursiones/circuito-chico/ → Circuito Chico y miradores del Llao Llao
-  excursiones/isla-victoria-arrayanes/ → Navegación Isla Victoria y Bosque de Arrayanes
-  excursiones/refugio-frey/ → Trekking al Refugio Frey
+  excursiones/circuito-chico/ → Circuito Chico Bariloche
+  excursiones/cerro-catedral/ → Cerro Catedral Bariloche
+  excursiones/cerro-tronador-ventisquero/ → Cerro Tronador y Ventisquero Negro
+  excursiones/siete-lagos-san-martin/ → San Martín de los Andes por los 7 Lagos
+  excursiones/bolson-lago-puelo/ → El Bolsón y Lago Puelo
+  excursiones/isla-victoria-arrayanes/ → Isla Victoria y Bosque de Arrayanes
+  excursiones/puerto-blest-cantaros/ → Puerto Blest y Cascada de los Cántaros
+  excursiones/extension-lago-frias/ → Extensión Lago Frías
+  excursiones/traslado-puerto-panuelo/ → Traslado Puerto Pañuelo
+  excursiones/cabalgata-medio-dia/ → Cabalgata de medio día
+  excursiones/kayaks-lago-gutierrez/ → Kayaks en Lago Gutiérrez
+  excursiones/travesia-4x4-estepa/ → Travesía 4x4 Estepa con almuerzo
+  excursiones/promo-aventura-fondue/ → Promo Aventura — Cabalgata + Raquetas + Fondue
+  excursiones/raquetas-roca-negra/ → Raquetas en Cerro López Roca Negra
+  excursiones/traslado-ski-catedral/ → Traslado Ski Cerro Catedral
+  excursiones/villa-angostura-cerro-bayo/ → Villa La Angostura y Cerro Bayo
+  excursiones/laguna-congelada-neumeyer/ → Caminata Laguna Congelada — Refugio Neumeyer
+  excursiones/ski-nordico-cerro-otto/ → Ski Nórdico en Cerro Otto
+  excursiones/extremo-encantado/ → Extremo Encantado
+  excursiones/cerro-perito-moreno-nieve/ → Cerro Perito Moreno — Deportes de nieve
+  excursiones/noche-nordica-cerro-otto/ → Noche Nórdica Cerro Otto
+  excursiones/ski-fun-day-perito-moreno/ → Ski Fun Day — Cerro Perito Moreno
+  excursiones/refugio-arelauquen/ → El Refugio de Arelauquen
+  excursiones/piedras-blancas-trineo/ → Parque Invernal Piedras Blancas — Culipatín y trineo
+  excursiones/snowcat-perito-moreno/ → Snowcat — Cerro Perito Moreno
+  excursiones/nieve-frontera-chile/ → Nieve al Límite — Frontera Argentina-Chile
 
 ── san-martin ──
   excursiones/huechulafquen-lanin/ → Lago Huechulafquen, Paimún y Volcán Lanín

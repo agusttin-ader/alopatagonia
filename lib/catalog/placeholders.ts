@@ -113,9 +113,7 @@ function buildExcursions(
 ): CatalogItem[] {
   const excursionContent = EXCURSION_CONTENT_BY_DESTINATION[slug] ?? [];
   const itemCount =
-    excursionContent.length > 0
-      ? Math.min(CATALOG_LIMITS.maxExcursions, excursionContent.length)
-      : CATALOG_LIMITS.maxExcursions;
+    excursionContent.length > 0 ? excursionContent.length : CATALOG_LIMITS.maxExcursions;
 
   return pools.slice(0, itemCount).map((pool, index) => {
     const num = index + 1;
