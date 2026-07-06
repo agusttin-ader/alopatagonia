@@ -30,8 +30,8 @@ export function getNextCarouselIndex(index: number): number {
   return (index + 1) % HERO_CAROUSEL_CANDIDATES.length;
 }
 
-/** Crossfade entre clips del carrusel (ms). */
-export const HERO_VIDEO_CROSSFADE_MS = 1400;
+/** Crossfade solapado entre clips (ms). */
+export const HERO_VIDEO_CROSSFADE_MS = 1200;
 
 /** Velocidad de reproducción del carrusel (1 = normal). */
 export const HERO_VIDEO_PLAYBACK_RATE = 1 as const;
