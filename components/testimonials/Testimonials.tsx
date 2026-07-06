@@ -38,7 +38,7 @@ export async function Testimonials() {
             </p>
 
             <div
-              className="mt-8 inline-flex flex-col gap-2 rounded-none border border-black/8 bg-white/55 px-5 py-4 sm:mt-10"
+              className="mt-8 inline-flex flex-col gap-2 rounded-2xl border border-black/8 bg-white/55 px-5 py-4 sm:mt-10"
               aria-label={t("ratingAria", {
                 rating: averageRating,
                 count: items.length,
@@ -60,7 +60,7 @@ export async function Testimonials() {
           </Reveal>
 
           <Reveal delay={0.08}>
-            <div className="border-y border-black/8 bg-white/45 lg:border lg:bg-white/55">
+            <div className="overflow-hidden border-y border-black/8 bg-white/45 lg:rounded-2xl lg:border lg:bg-white/55">
               <ul className="divide-y divide-black/8">
                 {items.map((testimonial) => (
                   <li key={testimonial.name}>

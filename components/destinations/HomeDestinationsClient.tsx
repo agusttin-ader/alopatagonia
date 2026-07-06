@@ -5,7 +5,7 @@ import { ArrowUpRight, ChevronDown, ChevronLeft, ChevronRight, X } from "lucide-
 import { AppImage } from "@/components/media/AppImage";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useRef, useState, type MouseEvent, type TouchEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { SECTION_IDS } from "@/lib/constants";
@@ -218,112 +218,105 @@ function DestinationMobileImageCarousel({
   onImageClick: (index: number) => void;
 }) {
   const t = useTranslations("homeDestinations");
-  const reduceMotion = useReducedMotion();
   const images = useMemo(() => uniqueGalleryImages(destination), [destination]);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef(0);
   const [activeIndex, setActiveIndex] = useState(0);
-  const touchStart = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     setActiveIndex(0);
+    if (scrollerRef.current) scrollerRef.current.scrollLeft = 0;
   }, [destination.slug]);
+
+  useEffect(() => () => window.cancelAnimationFrame(rafRef.current), []);
 
   if (images.length === 0) return null;
 
   const resolveIndex = (image: { src: string; alt: string }) =>
     destination.galleryImages.findIndex((item) => item.src === image.src);
 
-  const shiftSlide = (direction: 1 | -1) => {
-    setActiveIndex((current) => (current + direction + images.length) % images.length);
-  };
-
-  const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
-    const touch = event.touches[0];
-    if (!touch) return;
-    touchStart.current = { x: touch.clientX, y: touch.clientY };
-  };
-
-  const handleTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
-    if (images.length <= 1 || !touchStart.current) return;
-
-    const touch = event.changedTouches[0];
-    if (!touch) return;
-
-    const deltaX = touch.clientX - touchStart.current.x;
-    const deltaY = touch.clientY - touchStart.current.y;
-    touchStart.current = null;
-
-    if (Math.abs(deltaX) < 40 || Math.abs(deltaX) < Math.abs(deltaY)) return;
-
-    if (deltaX < 0) shiftSlide(1);
-    else shiftSlide(-1);
-  };
-
-  const handleSlideClick = (index: number, image: { src: string; alt: string }) => {
-    if (index !== activeIndex) {
-      setActiveIndex(index);
-      return;
-    }
-    const galleryIndex = resolveIndex(image);
-    onImageClick(galleryIndex >= 0 ? galleryIndex : index);
-  };
-
   const hasMultiple = images.length > 1;
-  const transitionClass = reduceMotion
-    ? ""
-    : "transition-transform duration-[420ms] ease-[cubic-bezier(0.16,1,0.3,1)]";
+
+  const slideStride = () => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return 1;
+    return scroller.scrollWidth / images.length;
+  };
+
+  const handleScroll = () => {
+    if (rafRef.current) return;
+    rafRef.current = window.requestAnimationFrame(() => {
+      rafRef.current = 0;
+      const scroller = scrollerRef.current;
+      if (!scroller) return;
+      const index = Math.round(scroller.scrollLeft / slideStride());
+      setActiveIndex(Math.max(0, Math.min(images.length - 1, index)));
+    });
+  };
+
+  const scrollToIndex = (index: number) => {
+    scrollerRef.current?.scrollTo({ left: slideStride() * index, behavior: "smooth" });
+  };
 
   return (
-    <div
-      className="overflow-hidden touch-pan-y"
-      aria-label={t("photosOf", { destination: destination.name })}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-    >
+    <div>
       <div
-        className={cn("flex gap-2 will-change-transform", transitionClass)}
-        style={
-          hasMultiple
-            ? {
-                transform: `translateX(calc((100% - 78%) / 2 - ${activeIndex} * (78% + 0.5rem)))`,
-              }
-            : undefined
-        }
+        ref={scrollerRef}
+        onScroll={handleScroll}
+        aria-label={t("photosOf", { destination: destination.name })}
+        className={cn(
+          "flex gap-3 overflow-x-auto scroll-smooth pb-1",
+          "snap-x snap-mandatory touch-pan-x overscroll-x-contain",
+          "[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        )}
       >
-        {images.map((image, index) => {
-          const isActive = index === activeIndex;
-
-          return (
-            <button
-              key={image.src}
-              type="button"
-              onClick={() => handleSlideClick(index, image)}
-              aria-label={
-                isActive
-                  ? t("expandPhotoN", { n: index + 1, destination: destination.name })
-                  : t("viewPhotoN", { n: index + 1, destination: destination.name })
-              }
-              aria-current={isActive ? "true" : undefined}
-              className={cn(
-                "relative shrink-0 overflow-hidden",
-                "aspect-[3/4] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake-foreground/55 focus-visible:ring-offset-2 focus-visible:ring-offset-footer-lake",
-                "transition-opacity duration-[420ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
-                hasMultiple ? "w-[78%]" : "mx-auto w-[min(100%,20rem)]",
-                isActive ? "opacity-100" : "opacity-55",
-              )}
-            >
-              <AppImage
-                src={image.src}
-                alt={image.alt}
-                fill
-                qualityPreset="gallery"
-                className="object-cover"
-                sizes="(max-width: 767px) 78vw, 300px"
-                priority={index === 0}
-              />
-            </button>
-          );
-        })}
+        {images.map((image, index) => (
+          <button
+            key={image.src}
+            type="button"
+            onClick={() => {
+              const galleryIndex = resolveIndex(image);
+              onImageClick(galleryIndex >= 0 ? galleryIndex : index);
+            }}
+            aria-label={t("expandPhotoN", { n: index + 1, destination: destination.name })}
+            className={cn(
+              "relative shrink-0 snap-start overflow-hidden rounded-2xl",
+              "aspect-[4/5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake-foreground/55 focus-visible:ring-offset-2 focus-visible:ring-offset-footer-lake",
+              hasMultiple ? "w-[85%]" : "w-full",
+            )}
+          >
+            <AppImage
+              src={image.src}
+              alt={image.alt}
+              fill
+              qualityPreset="gallery"
+              className="object-cover"
+              sizes="(max-width: 767px) 85vw, 300px"
+              priority={index === 0}
+            />
+          </button>
+        ))}
       </div>
+
+      {hasMultiple ? (
+        <div className="mt-3 flex items-center justify-center gap-1.5">
+          {images.map((image, index) => (
+            <button
+              key={`dot-${image.src}`}
+              type="button"
+              tabIndex={-1}
+              aria-hidden
+              onClick={() => scrollToIndex(index)}
+              className={cn(
+                "h-1.5 rounded-full transition-all duration-300",
+                index === activeIndex
+                  ? "w-5 bg-footer-lake-foreground"
+                  : "w-1.5 bg-footer-lake-foreground/30",
+              )}
+            />
+          ))}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -342,6 +335,7 @@ function DestinationMobileAccordionItem({
   reduceMotion: boolean | null;
 }) {
   const itemRef = useRef<HTMLElement>(null);
+  const thumb = useMemo(() => uniqueGalleryImages(destination)[0], [destination]);
 
   const wasOpenRef = useRef(isOpen);
 
@@ -366,28 +360,55 @@ function DestinationMobileAccordionItem({
         aria-expanded={isOpen}
         onClick={onToggle}
         className={cn(
-          "group flex w-full items-start justify-between gap-3 py-3.5 text-left",
+          "group flex w-full items-center gap-3.5 py-3 text-left",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake-foreground/45 focus-visible:ring-offset-2 focus-visible:ring-offset-footer-lake",
         )}
       >
-        <span className="min-w-0 flex-1">
-          <DestinationName
-            name={destination.name}
-            isActive={isOpen}
-            disableScale={Boolean(reduceMotion)}
-            className={cn(
-              "font-heading block font-semibold uppercase leading-[0.94] tracking-[-0.02em] transition-colors duration-300",
-              isOpen
-                ? "text-[clamp(1.35rem,5.8vw,1.72rem)] text-footer-lake-foreground"
-                : "text-[clamp(1.15rem,4.8vw,1.45rem)] text-footer-lake-foreground/36 group-hover:text-footer-lake-foreground/56",
-            )}
-          />
+        {thumb ? (
           <span
             className={cn(
-              "mt-1.5 block text-[10px] font-medium uppercase tracking-[0.12em] transition-colors duration-300",
+              "relative shrink-0 overflow-hidden rounded-xl transition-all duration-300",
+              isOpen
+                ? "size-14 ring-2 ring-footer-lake-foreground/45"
+                : "size-12 ring-1 ring-white/12",
+            )}
+            aria-hidden
+          >
+            <AppImage
+              src={thumb.src}
+              alt=""
+              fill
+              qualityPreset="gallery"
+              className="object-cover"
+              sizes="56px"
+            />
+            <span
+              className={cn(
+                "absolute inset-0 transition-opacity duration-300",
+                isOpen ? "opacity-0" : "bg-footer-lake/45 opacity-100",
+              )}
+              aria-hidden
+            />
+          </span>
+        ) : null}
+
+        <span className="min-w-0 flex-1">
+          <span
+            className={cn(
+              "font-heading block truncate font-semibold uppercase leading-[1.05] tracking-[-0.01em] transition-colors duration-300",
+              isOpen
+                ? "text-[1.4rem] text-footer-lake-foreground"
+                : "text-[1.15rem] text-footer-lake-foreground/72 group-hover:text-footer-lake-foreground",
+            )}
+          >
+            {destination.name}
+          </span>
+          <span
+            className={cn(
+              "mt-0.5 block truncate text-[10px] font-medium uppercase tracking-[0.12em] transition-colors duration-300",
               isOpen
                 ? "text-footer-lake-foreground/58"
-                : "text-footer-lake-foreground/32 group-hover:text-footer-lake-foreground/46",
+                : "text-footer-lake-foreground/42 group-hover:text-footer-lake-foreground/58",
             )}
           >
             {destination.region}
@@ -397,7 +418,7 @@ function DestinationMobileAccordionItem({
         <motion.span
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.32, ease: MOBILE_MOTION_EASE }}
-          className="mt-1 shrink-0 text-footer-lake-foreground/45"
+          className="shrink-0 text-footer-lake-foreground/45"
           aria-hidden
         >
           <ChevronDown className={cn("size-5", isOpen && "text-footer-lake-foreground/72")} />
@@ -732,15 +753,15 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
                         className={cn(
                           "font-heading block text-[clamp(2rem,6.2vw,5.2rem)] font-semibold uppercase leading-[0.88] tracking-[-0.02em] transition-colors",
                           isActive
-                            ? "text-black"
-                            : "text-black/32 group-hover:text-black/60",
+                            ? "text-primary"
+                            : "text-black/28 group-hover:text-black/60",
                         )}
                       />
                       <span
                         className={cn(
                           "mt-1 block text-xs font-medium text-muted-foreground transition-colors",
                           isActive
-                            ? "text-black/70"
+                            ? "text-primary/75"
                             : "text-black/35 group-hover:text-black/55",
                         )}
                       >

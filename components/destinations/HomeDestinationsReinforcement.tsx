@@ -13,14 +13,14 @@ export async function HomeDestinationsReinforcement() {
 
   return (
     <section
-      className="border-y border-brand-forest/10 bg-card/35 px-4 py-10 sm:px-8 sm:py-12 lg:px-14 2xl:px-20"
+      className="border-y border-brand-forest/10 bg-card/35 px-4 py-12 sm:px-8 sm:py-14 lg:px-14 lg:py-16 2xl:px-20"
       aria-labelledby="destinos-reinforcement-heading"
     >
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center 2xl:max-w-4xl">
         <Reveal>
           <h2
             id="destinos-reinforcement-heading"
-            className="font-heading text-2xl font-semibold tracking-tight text-foreground sm:text-3xl"
+            className="font-heading text-2xl font-semibold tracking-tight text-foreground sm:text-3xl 2xl:text-4xl"
           >
             {t("reinforcementTitle")}
           </h2>

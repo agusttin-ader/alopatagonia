@@ -3,7 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useLayoutEffect, useMemo, useReducer, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from "react";
 
 import { AppImage } from "@/components/media/AppImage";
 import { ImageLightbox } from "@/components/media/ImageLightbox";
@@ -22,8 +22,10 @@ import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { cn } from "@/lib/utils";
 
 const DESKTOP_DISPLAY_COUNT = 7;
-const MOBILE_DISPLAY_COUNT = 3;
 const DISPLAY_COUNT = DESKTOP_DISPLAY_COUNT;
+
+/** Fotos que muestra el carrusel mobile (el lightbox navega todas). */
+const MOBILE_GALLERY_COUNT = 14;
 
 /**
  * Mosaico editorial: hero 50% + 6 tiles en espejo (col central grande arriba,
@@ -251,6 +253,87 @@ function GalleryNavButton({
   );
 }
 
+function MobileGalleryCarousel({
+  images,
+  onOpen,
+  labelFor,
+}: {
+  images: { src: string; alt: string }[];
+  onOpen: (index: number) => void;
+  labelFor: (n: number) => string;
+}) {
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef(0);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => () => window.cancelAnimationFrame(rafRef.current), []);
+
+  const count = images.length;
+
+  const handleScroll = () => {
+    if (rafRef.current) return;
+    rafRef.current = window.requestAnimationFrame(() => {
+      rafRef.current = 0;
+      const scroller = scrollerRef.current;
+      if (!scroller) return;
+      const stride = scroller.scrollWidth / count;
+      setActive(Math.max(0, Math.min(count - 1, Math.round(scroller.scrollLeft / stride))));
+    });
+  };
+
+  if (count === 0) return null;
+
+  return (
+    <div>
+      <div
+        ref={scrollerRef}
+        onScroll={handleScroll}
+        className={cn(
+          "flex gap-3 overflow-x-auto scroll-smooth pb-1",
+          "snap-x snap-mandatory touch-pan-x overscroll-x-contain",
+          "[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        )}
+      >
+        {images.map((image, index) => (
+          <button
+            key={image.src}
+            type="button"
+            onClick={() => onOpen(index)}
+            aria-label={labelFor(index + 1)}
+            className={cn(
+              "relative aspect-[4/5] w-[80%] shrink-0 snap-start overflow-hidden rounded-[1.35rem] bg-muted",
+              "cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+            )}
+          >
+            <AppImage
+              src={image.src}
+              alt={image.alt}
+              fill
+              qualityPreset="gallery"
+              withBlur={false}
+              sizes="80vw"
+              priority={index === 0}
+              className="object-cover"
+            />
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-3 flex items-center justify-center gap-1.5" aria-hidden>
+        {images.map((image, index) => (
+          <span
+            key={`dot-${image.src}`}
+            className={cn(
+              "h-1.5 rounded-full transition-all duration-300",
+              index === active ? "w-5 bg-foreground/70" : "w-1.5 bg-foreground/20",
+            )}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function HomeGallerySection() {
   const t = useTranslations("gallery");
   const images = useMemo(
@@ -288,7 +371,10 @@ export function HomeGallerySection() {
   const visibleCount = Math.min(DISPLAY_COUNT, total);
   const pickedIndices = selectionSets[setIndex] ?? null;
 
-  const mobileSlotCount = Math.min(MOBILE_DISPLAY_COUNT, visibleCount);
+  const mobileImages = useMemo(
+    () => images.slice(0, Math.min(MOBILE_GALLERY_COUNT, total)),
+    [images, total],
+  );
 
   const navLabels = useMemo(
     () => ({ prev: t("prevSelection"), next: t("nextSelection") }),
@@ -305,7 +391,7 @@ export function HomeGallerySection() {
     <section
       id={SECTION_IDS.gallery}
       className={cn(
-        "scroll-mt-24 bg-background py-10 sm:py-12 lg:py-16",
+        "scroll-mt-24 bg-background py-10 sm:py-16 lg:py-20",
         MOBILE_MAGAZINE_G_ENABLED && "max-md:py-12",
       )}
       aria-labelledby="home-gallery-heading"
@@ -317,7 +403,7 @@ export function HomeGallerySection() {
           </p>
           <h2
             id="home-gallery-heading"
-            className="font-heading mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-[2.6rem]"
+            className="font-heading mt-3 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl"
           >
             {t("heading")}
           </h2>
@@ -333,67 +419,15 @@ export function HomeGallerySection() {
       >
         <div className="mx-auto w-full">
           <div className="sm:hidden">
-            <div
-              className={cn(
-                "relative isolate",
-                MOBILE_GRID_HEIGHT,
-                MOBILE_MAGAZINE_G_ENABLED && "max-md:overflow-hidden max-md:rounded-[1.5rem]",
-              )}
-              aria-live="polite"
-            >
-              {!isReady ? (
-                <GallerySkeleton mobile />
-              ) : (
-                <AnimatePresence initial={false}>
-                  <motion.div
-                    key={setIndex}
-                    className={cn(MOBILE_GRID_FRAME, "absolute inset-0 will-change-[opacity]")}
-                    initial={reduceMotion ? false : { opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={reduceMotion ? undefined : { opacity: 0 }}
-                    transition={reduceMotion ? { duration: 0 } : GRID_FADE}
-                  >
-                    {Array.from({ length: mobileSlotCount }, (_, slot) => {
-                      const image = images[pickedIndices[slot]];
-                      const slotConfig = MOBILE_SLOTS[slot];
-                      if (!image || !slotConfig) return null;
-
-                      return (
-                        <GalleryCell
-                          key={`${setIndex}-mobile-${slot}-${image.src}`}
-                          image={image}
-                          className={slotConfig.layout}
-                          hero={"hero" in slotConfig && slotConfig.hero}
-                          priority={setIndex === 0 && "hero" in slotConfig && slotConfig.hero}
-                          onClick={() => setLightboxIndex(pickedIndices[slot])}
-                          slotLabel={t("viewPhoto", { n: slot + 1 })}
-                        />
-                      );
-                    })}
-                  </motion.div>
-                </AnimatePresence>
-              )}
-            </div>
-
-            {canNavigate && MOBILE_MAGAZINE_G_ENABLED ? (
-              <div className="mt-3 flex items-center justify-center gap-3">
-                <GalleryNavButton direction="prev" onClick={goPrev} disabled={!canGoPrev} labels={navLabels} />
-                <span className="min-w-[3.25rem] text-center text-xs font-semibold tabular-nums text-muted-foreground">
-                  {setIndex + 1} / {selectionSets.length}
-                </span>
-                <GalleryNavButton direction="next" onClick={goNext} labels={navLabels} />
-              </div>
-            ) : null}
-
-            {canNavigate && !MOBILE_MAGAZINE_G_ENABLED ? (
-              <div className="mt-3 flex items-center justify-center gap-3">
-                <GalleryNavButton direction="prev" onClick={goPrev} disabled={!canGoPrev} labels={navLabels} />
-                <GalleryNavButton direction="next" onClick={goNext} labels={navLabels} />
-              </div>
-            ) : null}
+            <MobileGalleryCarousel
+              images={mobileImages}
+              onOpen={setLightboxIndex}
+              labelFor={(n) => t("viewPhoto", { n })}
+            />
           </div>
 
-          <div className="hidden sm:flex sm:items-center sm:justify-center sm:gap-3 md:gap-4">
+          <div className="hidden sm:block">
+            <div className="flex items-center justify-center gap-3 md:gap-4">
             {canNavigate ? (
               <GalleryNavButton direction="prev" onClick={goPrev} disabled={!canGoPrev} labels={navLabels} />
             ) : null}
@@ -435,6 +469,15 @@ export function HomeGallerySection() {
 
             {canNavigate ? (
               <GalleryNavButton direction="next" onClick={goNext} labels={navLabels} />
+            ) : null}
+            </div>
+
+            {canNavigate ? (
+              <div className="mt-5 flex items-center justify-center">
+                <span className="text-xs font-semibold tabular-nums tracking-[0.12em] text-muted-foreground">
+                  {setIndex + 1} / {selectionSets.length}
+                </span>
+              </div>
             ) : null}
           </div>
         </div>

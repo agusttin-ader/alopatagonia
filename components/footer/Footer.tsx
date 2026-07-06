@@ -14,7 +14,7 @@ export async function Footer() {
   const tNav = await getTranslations("nav");
 
   return (
-    <footer className="relative z-30 -mt-12 sm:-mt-20">
+    <footer className="relative z-30 -mt-6 sm:-mt-12 lg:-mt-20">
       <div className="h-22 w-full overflow-hidden sm:h-24" aria-hidden>
         <svg
           className="h-full w-full"
@@ -28,7 +28,7 @@ export async function Footer() {
           />
         </svg>
       </div>
-      <div className="bg-[var(--footer-lake)] px-4 pb-9 pt-8 sm:px-8 lg:px-14 2xl:px-20">
+      <div className="bg-[var(--footer-lake)] px-4 pb-[max(6rem,calc(env(safe-area-inset-bottom)+5rem))] pt-8 sm:px-8 sm:pb-9 lg:px-14 2xl:px-20">
         <div className="mx-auto grid max-w-7xl gap-8 text-[var(--footer-lake-foreground)] md:grid-cols-2 lg:grid-cols-4 2xl:max-w-[90rem]">
           <div className="space-y-4">
             <SiteLogo variant="onDark" showWordmark className="h-11 sm:h-12" />

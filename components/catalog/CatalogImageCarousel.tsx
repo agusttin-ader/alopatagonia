@@ -165,7 +165,7 @@ export function CatalogImageCarousel({
                 aria-current={index === activeIndex ? "true" : undefined}
                 onClick={() => scrollTo(index)}
                 className={cn(
-                  "inline-flex min-h-11 min-w-11 items-center justify-center rounded-full transition max-md:min-h-9 max-md:min-w-9",
+                  "inline-flex min-h-11 min-w-11 items-center justify-center rounded-full transition",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/45 focus-visible:ring-offset-2",
                 )}
               >

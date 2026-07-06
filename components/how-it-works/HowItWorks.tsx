@@ -13,7 +13,7 @@ export async function HowItWorks() {
   return (
     <section
       id={SECTION_IDS.howItWorks}
-      className="scroll-mt-24 bg-background px-4 py-12 sm:px-8 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 bg-background px-4 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-20 2xl:px-20"
       aria-labelledby="como-funciona-heading"
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
@@ -26,7 +26,7 @@ export async function HowItWorks() {
           </h2>
         </Reveal>
 
-        <ol className="mt-8 grid list-none gap-6 py-2 sm:mt-16 md:mt-20 md:grid-cols-3 md:items-stretch md:gap-6 lg:gap-8 2xl:gap-10">
+        <ol className="mt-8 grid list-none gap-6 py-2 sm:mt-12 md:mt-14 md:grid-cols-3 md:items-stretch md:gap-6 lg:gap-8 2xl:gap-10">
           {steps.map((step, index) => {
             const Icon = STEP_ICONS[index] ?? MessageCircle;
             return (

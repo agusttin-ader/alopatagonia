@@ -29,7 +29,7 @@ export async function WinterStorePromoSection() {
       aria-labelledby="winter-promo-heading"
     >
       <div className="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-12 2xl:max-w-[90rem] 2xl:gap-16">
-        <div className="max-w-xl lg:max-w-none">
+        <div className="max-w-xl lg:max-w-lg">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/75">
             {t("eyebrow")}
           </p>
@@ -62,7 +62,7 @@ export async function WinterStorePromoSection() {
           href="/invierno"
           className="group relative isolate block overflow-hidden rounded-3xl shadow-lg ring-1 ring-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-winter-promo"
         >
-          <div className="relative aspect-[5/6] sm:aspect-[16/11] lg:aspect-[5/6] xl:aspect-[16/10]">
+          <div className="relative aspect-[5/6] sm:aspect-[16/11] lg:aspect-[4/3] xl:aspect-[16/10]">
             <BoulderIndumentariaShowcase
               images={carouselImages}
               sizes={IMAGE_SIZES.winterSection}

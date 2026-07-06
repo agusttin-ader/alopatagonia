@@ -137,7 +137,7 @@ export async function DestinationDetail({
               href={PLANNER_PATH}
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
-                "mt-6 inline-flex",
+                "mt-6 inline-flex max-md:w-full max-md:justify-center max-md:whitespace-normal max-md:text-center",
               )}
             >
               {tCatalog("planTripTo", { destination: destination.name })}

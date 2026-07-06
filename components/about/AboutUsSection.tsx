@@ -29,7 +29,7 @@ export async function AboutUsSection() {
         aria-hidden
       />
 
-      <div className="relative z-[2] mx-auto flex min-h-[min(86vh,880px)] w-full max-w-3xl flex-col items-center justify-center px-4 py-24 text-center sm:px-8 sm:py-28 lg:max-w-4xl lg:px-12 lg:py-32">
+      <div className="relative z-[2] mx-auto flex min-h-[min(72vh,720px)] w-full max-w-3xl flex-col items-center justify-center px-4 py-16 text-center sm:min-h-[min(80vh,820px)] sm:px-8 sm:py-24 lg:max-w-4xl lg:px-12 lg:py-28">
         <SiteLogo
           linked={false}
           variant="onDark"
@@ -52,7 +52,7 @@ export async function AboutUsSection() {
           ))}
         </div>
 
-        <p className="mt-8 max-w-xl text-lg font-medium text-white sm:mt-10 [text-shadow:0_1px_8px_rgba(0,0,0,0.42)]">
+        <p className="font-heading mt-8 max-w-xl text-xl font-medium text-white sm:mt-10 sm:text-2xl [text-shadow:0_1px_8px_rgba(0,0,0,0.42)]">
           {t("closing")}
         </p>
 

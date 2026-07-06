@@ -126,7 +126,7 @@ function FeedPostCarousel({
             type="button"
             aria-label={prevLabel}
             onClick={() => goTo(activeIndex - 1)}
-            className="absolute left-2 top-1/2 z-10 flex size-7 -translate-y-1/2 items-center justify-center rounded-full bg-black/55 text-white opacity-90 ring-1 ring-white/20 backdrop-blur-sm transition hover:bg-black/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/60 sm:opacity-0 sm:group-hover/post:opacity-100"
+            className="absolute left-2 top-1/2 z-10 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/55 text-white opacity-90 ring-1 ring-white/20 backdrop-blur-sm transition hover:bg-black/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/60 sm:size-7 sm:opacity-0 sm:group-hover/post:opacity-100"
           >
             <ChevronLeft className="size-4" aria-hidden />
           </button>
@@ -134,7 +134,7 @@ function FeedPostCarousel({
             type="button"
             aria-label={nextLabel}
             onClick={() => goTo(activeIndex + 1)}
-            className="absolute right-2 top-1/2 z-10 flex size-7 -translate-y-1/2 items-center justify-center rounded-full bg-black/55 text-white opacity-90 ring-1 ring-white/20 backdrop-blur-sm transition hover:bg-black/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/60 sm:opacity-0 sm:group-hover/post:opacity-100"
+            className="absolute right-2 top-1/2 z-10 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/55 text-white opacity-90 ring-1 ring-white/20 backdrop-blur-sm transition hover:bg-black/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white/60 sm:size-7 sm:opacity-0 sm:group-hover/post:opacity-100"
           >
             <ChevronRight className="size-4" aria-hidden />
           </button>
@@ -161,7 +161,7 @@ function InstagramFeedPreview({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "w-full max-w-[22rem] overflow-hidden rounded-2xl bg-[#0c0c0c] text-[#f5f5f5] shadow-[0_24px_60px_-20px_rgba(0,0,0,0.65)] ring-1 ring-white/10 sm:max-w-[24rem] lg:max-w-[26rem]",
+        "w-full max-w-[22rem] overflow-hidden rounded-2xl bg-[#0c0c0c] text-[#f5f5f5] shadow-[0_24px_60px_-20px_rgba(0,0,0,0.65)] ring-1 ring-white/10 sm:max-w-[24rem] lg:max-w-[26rem] 2xl:max-w-[29rem]",
         className,
       )}
     >
@@ -310,7 +310,7 @@ export function InstagramStats() {
 
               <h2
                 id="comunidad-heading"
-                className="font-heading mt-7 text-3xl font-semibold tracking-tight text-white sm:text-4xl 2xl:text-[2.6rem]"
+                className="font-heading mt-7 text-3xl font-semibold tracking-tight text-white sm:text-4xl 2xl:text-5xl"
               >
                 {t("heading")}
               </h2>

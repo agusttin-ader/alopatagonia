@@ -662,7 +662,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                     aria-expanded={destinationOpen}
                     aria-controls={destinationPanelId}
                   >
-                    <span>
+                    <span className="min-w-0 truncate pr-2 text-left">
                       {
                         destinationOptions.find((option) => option.value === destination)
                           ?.label
@@ -698,7 +698,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                                 selectDestination(option.value);
                               }}
                               className={cn(
-                                "w-full rounded-xl px-3 py-2.5 text-left text-sm transition",
+                                "flex min-h-11 w-full items-center rounded-xl px-3 py-2.5 text-left text-sm transition",
                                 destination === option.value
                                   ? "bg-primary text-primary-foreground"
                                   : "text-foreground hover:bg-[#f2ede3]",

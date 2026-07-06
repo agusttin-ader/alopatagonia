@@ -185,8 +185,8 @@ export function GlobalNav() {
     };
   }, [isHome]);
 
-  const mobileHeroHeader =
-    MOBILE_MAGAZINE_G_ENABLED && isHome && !scrolled && !mobileOpen;
+  const heroHeaderTop = isHome && !scrolled && !mobileOpen;
+  const mobileHeroHeader = MOBILE_MAGAZINE_G_ENABLED && heroHeaderTop;
 
   return (
     <motion.nav
@@ -294,19 +294,33 @@ export function GlobalNav() {
       <motion.div className="hidden md:block" transition={headerTransition}>
         <motion.div
           className={cn(
-            "relative flex h-20 items-center gap-6 border-b border-border/75 bg-background px-4 transition-[height,box-shadow,border-color] duration-300 ease-out sm:px-8 lg:px-14 2xl:px-20",
+            "relative flex h-20 items-center gap-6 border-b px-4 transition-[height,box-shadow,border-color,background-color] duration-300 ease-out sm:px-8 lg:px-14 2xl:px-20",
+            heroHeaderTop
+              ? "border-transparent bg-transparent shadow-none"
+              : "border-border/75 bg-background",
             scrolled &&
               "h-18 border-border/80 shadow-[0_10px_24px_-22px_rgba(0,0,0,0.5)]",
           )}
         >
-          <SiteLogo linked priority showWordmark homeLabel={t("home")} className="shrink-0" />
+          <SiteLogo
+            linked
+            priority
+            showWordmark
+            homeLabel={t("home")}
+            variant={heroHeaderTop ? "onDark" : "onLight"}
+            className="shrink-0"
+          />
 
           <div className="ml-auto hidden min-w-0 items-center gap-2 md:flex lg:gap-3">
             {NAV_DESKTOP_LINKS.map((link) => (
               <Link
                 key={link.id}
                 href={link.href}
-                className={DESKTOP_LINK_CLASS}
+                className={cn(
+                  DESKTOP_LINK_CLASS,
+                  heroHeaderTop &&
+                    "text-white/82 hover:text-white [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]",
+                )}
               >
                 {t(link.labelKey)}
               </Link>
@@ -320,7 +334,12 @@ export function GlobalNav() {
             >
               {t(NAV_PLANNER_LINK.labelKey)}
             </Link>
-            <LocaleSwitcher className="ml-1 shrink-0" />
+            <LocaleSwitcher
+              className="ml-1 shrink-0"
+              triggerClassName={
+                heroHeaderTop ? "text-white/82 hover:text-white" : undefined
+              }
+            />
           </div>
         </motion.div>
       </motion.div>

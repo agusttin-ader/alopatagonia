@@ -28,7 +28,7 @@ export function DestinationsIndexClient({ zones }: DestinationsIndexClientProps)
   }
 
   return (
-    <div className="mt-10 min-h-[420px]">
+    <div className="mt-10 md:min-h-[420px]">
       <div className="lg:hidden">
         <DestinationZoneTabs
           zones={zones}

@@ -3,7 +3,6 @@ import type {
   CatalogImage,
   CatalogItem,
   DestinationCatalog,
-  ExcursionCategory,
 } from "@/lib/catalog/types";
 import { buildDestinationAccommodationItems } from "@/lib/catalog/accommodation-items";
 import { BARILOCHE_HERO_IMAGE } from "@/lib/catalog/bariloche-curated";

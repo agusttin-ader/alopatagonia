@@ -32,7 +32,7 @@ export function SignatureSection() {
     <section
       id={SECTION_IDS.signature}
       className={cn(
-        "scroll-mt-24 bg-background px-4 py-12 sm:px-8 lg:px-14 2xl:px-20",
+        "scroll-mt-24 bg-background px-4 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-20 2xl:px-20",
         MOBILE_MAGAZINE_G_ENABLED && "max-md:pt-12 max-md:pb-14",
       )}
       aria-labelledby="signature-heading"

@@ -1,0 +1,36 @@
+Dónde poner paisajes del home — Alo Patagonia
+
+Cuatro imágenes de paisaje por destino, en:
+  public/images/destinations/[destino]/paisajes/
+
+Nombres sugeridos: 01.jpg, 02.jpg, 03.jpg, 04.jpg (también sirve main.jpg, .png, .webp).
+Al build se redimensionan (máx. 1920px) y recomprimen automáticamente.
+Después de subir fotos nuevas: npm run catalog:optimize-paisajes && npm run catalog:manifest
+
+── bariloche (Bariloche) ──
+  paisajes/ → 4 fotos de paisaje para el home
+
+── san-martin (San Martín de los Andes) ──
+  paisajes/ → 4 fotos de paisaje para el home
+
+── traful (Traful / Villa Traful) ──
+  paisajes/ → 4 fotos de paisaje para el home
+
+── la-angostura (Villa La Angostura) ──
+  paisajes/ → 4 fotos de paisaje para el home
+
+── esquel-trevelin  (Esquel / Trevelin) ──
+  paisajes/ → 4 fotos de paisaje para el home
+
+── madryn (Puerto Madryn) ──
+  paisajes/ → 4 fotos de paisaje para el home
+
+── calafate (El Calafate) ──
+  paisajes/ → 4 fotos de paisaje para el home
+
+── chalten (El Chaltén) ──
+  paisajes/ → 4 fotos de paisaje para el home
+
+── ushuaia (Ushuaia) ──
+  paisajes/ → 4 fotos de paisaje para el home
+

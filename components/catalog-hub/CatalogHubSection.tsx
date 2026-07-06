@@ -21,7 +21,7 @@ export async function CatalogHubSection() {
     <section
       id={SECTION_IDS.catalogHub}
       className={cn(
-        "scroll-mt-24 bg-background px-4 py-12 sm:px-8 sm:py-16 lg:px-14 2xl:px-20",
+        "scroll-mt-24 bg-background px-4 py-12 sm:px-8 sm:py-16 lg:px-14 lg:py-20 2xl:px-20",
         MOBILE_MAGAZINE_G_ENABLED &&
           "max-md:relative max-md:z-[1] max-md:-mt-px max-md:w-full max-md:max-w-full max-md:overflow-x-clip max-md:rounded-t-[1.75rem] max-md:bg-secondary/35 max-md:px-4 max-md:pb-14 max-md:pt-11 max-md:shadow-[0_-16px_44px_-30px_rgba(0,0,0,0.28)]",
       )}
@@ -34,7 +34,7 @@ export async function CatalogHubSection() {
           </p>
           <h2
             id="catalog-hub-heading"
-            className="font-heading mt-3 text-3xl font-semibold tracking-tight text-foreground max-md:text-[1.65rem] max-md:leading-tight sm:text-4xl 2xl:text-[2.6rem]"
+            className="font-heading mt-3 text-3xl font-semibold tracking-tight text-foreground max-md:text-[1.65rem] max-md:leading-tight sm:text-4xl 2xl:text-5xl"
           >
             {t("title")}
           </h2>

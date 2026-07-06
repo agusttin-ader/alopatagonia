@@ -22,7 +22,7 @@ const LAYOUT_TWEEN = { duration: 0.65, ease: EASE } as const;
 
 /** Altura fija alineada a la sección Indumentaria — no crece al cambiar de promo. */
 const SECTION_SHELL =
-  "min-h-[40rem] lg:h-[37rem] lg:max-h-[37rem] lg:overflow-hidden";
+  "min-h-[32rem] sm:min-h-[40rem] lg:h-[37rem] lg:max-h-[37rem] lg:overflow-hidden";
 
 type EscapadasExpressTimedCarouselProps = {
   promos: EscapadaExpressPromo[];
@@ -137,14 +137,14 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
             )}
           >
             <div className="grid h-full min-h-0 flex-1 items-stretch gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-10 xl:gap-12">
-              <div className="flex min-h-0 flex-col lg:max-w-xl lg:justify-between">
+              <div className="flex min-h-0 flex-col lg:max-w-xl lg:justify-between xl:max-w-2xl 2xl:max-w-3xl">
                 <div className="shrink-0">
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/75">
                     {t("packagesLabel")}
                   </p>
                   <h2
                     id="promos-patagonia-heading"
-                    className="font-heading mt-2 text-2xl font-semibold tracking-tight text-white sm:mt-3 sm:text-3xl lg:text-4xl"
+                    className="font-heading mt-2 text-2xl font-semibold tracking-tight text-white sm:mt-3 sm:text-3xl lg:text-4xl 2xl:text-5xl"
                   >
                     {t("title")}
                   </h2>
@@ -201,7 +201,7 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
                           type="button"
                           onClick={goPrev}
                           aria-label={t("prevPromo")}
-                          className="inline-flex size-9 items-center justify-center rounded-full border border-white/25 bg-black/25 text-white backdrop-blur-sm transition hover:bg-black/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:size-10"
+                          className="inline-flex size-11 items-center justify-center rounded-full border border-white/25 bg-black/25 text-white backdrop-blur-sm transition hover:bg-black/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:size-10 lg:size-11"
                         >
                           <ChevronLeft className="size-4" aria-hidden />
                         </button>
@@ -209,14 +209,14 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
                           type="button"
                           onClick={goNext}
                           aria-label={t("nextPromo")}
-                          className="inline-flex size-9 items-center justify-center rounded-full border border-white/25 bg-black/25 text-white backdrop-blur-sm transition hover:bg-black/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:size-10"
+                          className="inline-flex size-11 items-center justify-center rounded-full border border-white/25 bg-black/25 text-white backdrop-blur-sm transition hover:bg-black/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/50 sm:size-10 lg:size-11"
                         >
                           <ChevronRight className="size-4" aria-hidden />
                         </button>
                       </div>
                       <div className="flex items-center gap-3 text-xs font-medium tabular-nums tracking-[0.12em] text-white/75">
                         <span>{formatIndex(activeIndex + 1)}</span>
-                        <div className="relative h-px w-14 overflow-hidden bg-white/25 sm:w-24">
+                        <div className="relative h-px w-14 overflow-hidden bg-white/25 sm:w-24 lg:w-32">
                           <motion.div
                             className="absolute inset-y-0 left-0 bg-white"
                             animate={{ width: `${((activeIndex + 1) / total) * 100}%` }}

@@ -25,7 +25,7 @@ export function WinterStoreLanding({ heroImage }: WinterStoreLandingProps) {
   return (
     <>
       <section
-        className="relative flex min-h-[78dvh] w-full flex-col items-center justify-center overflow-hidden px-6 py-28 text-center shadow-xl ring-1 ring-black/10 sm:min-h-[80dvh] sm:px-10 sm:py-32 2xl:px-20"
+        className="relative flex min-h-[64dvh] w-full flex-col items-center justify-center overflow-hidden px-6 py-16 text-center shadow-xl ring-1 ring-black/10 sm:min-h-[80dvh] sm:px-10 sm:py-32 2xl:px-20"
         aria-labelledby="winter-landing-heading"
       >
         <BoulderHeroBackdrop

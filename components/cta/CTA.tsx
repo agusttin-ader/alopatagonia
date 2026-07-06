@@ -20,7 +20,7 @@ export async function CTA() {
     >
       <div
         className={cn(
-          "relative flex min-h-[44dvh] w-full items-start justify-center overflow-hidden rounded-none bg-background px-6 pb-14 pt-10 text-center ring-1 ring-border/70 sm:min-h-[62dvh] sm:px-10 sm:pb-24 sm:pt-16 2xl:px-20",
+          "relative flex min-h-[44dvh] w-full items-start justify-center overflow-hidden rounded-none bg-background px-6 pb-14 pt-10 text-center ring-1 ring-border/70 sm:min-h-[62dvh] sm:items-center sm:px-10 sm:pb-24 sm:pt-16 2xl:px-20",
           MOBILE_MAGAZINE_G_ENABLED &&
             "max-md:bg-footer-lake max-md:ring-white/10 max-md:pb-16 max-md:pt-12",
         )}

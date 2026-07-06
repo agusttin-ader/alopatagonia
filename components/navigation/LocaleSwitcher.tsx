@@ -16,6 +16,8 @@ type LocaleSwitcherLayout = "header" | "drawer";
 type LocaleSwitcherProps = {
   className?: string;
   layout?: LocaleSwitcherLayout;
+  /** Clases extra para el disparador (p. ej. texto claro sobre el hero). */
+  triggerClassName?: string;
 };
 
 const MOTION_EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
@@ -118,6 +120,7 @@ function LocaleMenuList({
 export function LocaleSwitcher({
   className,
   layout = "header",
+  triggerClassName,
 }: LocaleSwitcherProps) {
   const locale = useLocale() as AppLocale;
   const pathname = usePathname();
@@ -189,6 +192,7 @@ export function LocaleSwitcher({
           "text-foreground/72 transition-colors hover:text-cta",
           open && "text-cta",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cta/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+          triggerClassName,
         )}
       >
         <LocaleFlagIcon locale={locale} className="size-5" />

@@ -204,7 +204,7 @@ export function HeroBackground() {
   );
 
   const finishTransition = useCallback(
-    (previousActiveSlot: 0 | 1, nextIndex: number, inactiveSlot: 0 | 1) => {
+    (previousActiveSlot: 0 | 1, nextIndex: number) => {
       window.setTimeout(() => {
         videoRefs[previousActiveSlot].current?.pause();
         transitioningRef.current = false;
@@ -262,7 +262,7 @@ export function HeroBackground() {
       });
       setActiveSlot(inactiveSlot);
       carouselIndexRef.current = nextIndex;
-      finishTransition(previousActiveSlot, nextIndex, inactiveSlot);
+      finishTransition(previousActiveSlot, nextIndex);
     },
     [carouselEnabled, finishTransition, resolveSrc, setSlotSrc, videoRefs],
   );
