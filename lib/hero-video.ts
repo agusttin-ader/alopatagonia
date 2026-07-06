@@ -1,5 +1,5 @@
 /**
- * Videos hero — carrusel hero → hero2 → … (sin unificar).
+ * Videos hero — carrusel hero5 → hero → hero2 → … (sin unificar).
  * Regenerar variantes: npm run videos:optimize-hero
  */
 export type HeroVideoCandidate =
@@ -16,14 +16,19 @@ export type HeroVideoTier = "desktop" | "mobile" | "mobileLite";
 export const HERO_VIDEO_CAROUSEL_ENABLED = true;
 
 export const HERO_CAROUSEL_CANDIDATES = [
+  "hero5",
   "hero",
   "hero2",
   "hero3",
   "hero4",
-  "hero5",
   "hero6",
   "hero7",
 ] as const satisfies readonly HeroVideoCandidate[];
+
+/** Índice del clip siguiente en el carrusel (con wrap). */
+export function getNextCarouselIndex(index: number): number {
+  return (index + 1) % HERO_CAROUSEL_CANDIDATES.length;
+}
 
 /** Crossfade entre clips del carrusel (ms). */
 export const HERO_VIDEO_CROSSFADE_MS = 1400;
