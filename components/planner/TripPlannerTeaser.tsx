@@ -116,7 +116,7 @@ export async function TripPlannerTeaser() {
 
           <Reveal
             delay={0.16}
-            className="flex flex-col justify-center gap-4 lg:items-start lg:py-2"
+            className="flex flex-col justify-center gap-4 lg:items-start lg:justify-end lg:py-2"
           >
             <p
               className={cn(

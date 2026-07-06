@@ -28,7 +28,7 @@ export async function CatalogHubSection() {
       aria-labelledby="catalog-hub-heading"
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
-        <div className="max-w-2xl">
+        <div className="max-w-2xl lg:max-w-3xl 2xl:max-w-4xl">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary/85 max-md:tracking-[0.14em]">
             {t("eyebrow")}
           </p>

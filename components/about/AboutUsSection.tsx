@@ -29,7 +29,7 @@ export async function AboutUsSection() {
         aria-hidden
       />
 
-      <div className="relative z-[2] mx-auto flex min-h-[min(72vh,720px)] w-full max-w-3xl flex-col items-center justify-center px-4 py-16 text-center sm:min-h-[min(80vh,820px)] sm:px-8 sm:py-24 lg:max-w-4xl lg:px-12 lg:py-28">
+      <div className="relative z-[2] mx-auto flex min-h-[min(72vh,720px)] w-full max-w-3xl flex-col items-center justify-center px-4 py-16 text-center sm:min-h-[min(80vh,820px)] sm:px-8 sm:py-24 lg:min-h-[min(66vh,700px)] lg:max-w-4xl lg:px-12 lg:py-24">
         <SiteLogo
           linked={false}
           variant="onDark"
@@ -41,7 +41,7 @@ export async function AboutUsSection() {
         </p>
         <h2
           id="about-us-heading"
-          className="font-heading mt-3 text-3xl font-medium tracking-tight text-white sm:text-4xl lg:text-[2.75rem] [text-shadow:0_2px_12px_rgba(0,0,0,0.42)]"
+          className="font-heading mt-3 text-3xl font-medium tracking-tight text-white sm:text-4xl lg:text-[2.75rem] 2xl:text-[3.25rem] [text-shadow:0_2px_12px_rgba(0,0,0,0.42)]"
         >
           {t("title")}
         </h2>

@@ -50,3 +50,10 @@ export function getMobileNavLinks(isHome: boolean): NavLink[] {
     ...NAV_COMPANY_LINKS,
   ];
 }
+
+/** Resalta link de nav cuando la ruta actual coincide (incluye subrutas). */
+export function isNavHrefActive(pathname: string, href: string): boolean {
+  if (href.startsWith("#")) return false;
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}

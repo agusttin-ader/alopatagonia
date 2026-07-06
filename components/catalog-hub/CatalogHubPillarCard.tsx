@@ -127,6 +127,7 @@ function HubPillarPosterCard({
         isMobile
           ? "rounded-[1.35rem]"
           : "rounded-3xl [@media(hover:hover)]:hover:-translate-y-0.5 [@media(hover:hover)]:hover:shadow-lg",
+        !isMobile && isLive && "ring-2 ring-primary/35",
       )}
     >
       <div className="relative aspect-[3/4] overflow-hidden">

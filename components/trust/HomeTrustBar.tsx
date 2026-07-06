@@ -34,8 +34,8 @@ export async function HomeTrustBar() {
       className="relative z-20 border-b border-border/70 bg-background"
       aria-label={t("ariaLabel")}
     >
-      <div className="mx-auto max-w-7xl px-4 py-3.5 sm:px-8 sm:py-5 lg:px-14 2xl:max-w-[90rem] 2xl:px-20">
-        <ul className="grid grid-cols-2 gap-x-4 gap-y-3.5 sm:flex sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-8 sm:gap-y-3 lg:gap-x-10">
+      <div className="mx-auto max-w-7xl px-4 py-3.5 sm:px-8 sm:py-5 lg:px-14 lg:py-6 2xl:max-w-[90rem] 2xl:px-20">
+        <ul className="grid grid-cols-2 gap-x-4 gap-y-3.5 sm:flex sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-8 sm:gap-y-3 lg:flex-nowrap lg:justify-between lg:gap-x-10 xl:gap-x-12">
           <li className="col-span-2 flex min-w-0 flex-wrap items-center justify-center gap-x-3 gap-y-1 sm:col-span-1 sm:flex-nowrap sm:justify-start">
             <TestimonialStars
               rating={averageRating}

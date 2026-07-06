@@ -14,7 +14,7 @@ export async function Footer() {
   const tNav = await getTranslations("nav");
 
   return (
-    <footer className="relative z-30 -mt-6 sm:-mt-12 lg:-mt-20">
+    <footer className="relative z-30 -mt-4 sm:-mt-8 lg:-mt-8">
       <div className="h-22 w-full overflow-hidden sm:h-24" aria-hidden>
         <svg
           className="h-full w-full"

@@ -11,9 +11,8 @@ import { ScrollParallax } from "@/components/motion/scroll-parallax";
 import { buttonVariants } from "@/components/ui/button";
 import {
   IMAGE_SIZES,
-  PLANNER_PATH,
-  SECTION_IDS,
   EXPERIENCE_IMAGE,
+  SECTION_IDS,
 } from "@/lib/constants";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { useCoarseMobile } from "@/lib/use-coarse-mobile";
@@ -97,15 +96,15 @@ export function SignatureSection() {
 
           <Reveal delay={0.12}>
             <Link
-              href={PLANNER_PATH}
+              href={`#${SECTION_IDS.howItWorks}`}
               className={cn(
-                buttonVariants({ variant: "marketing", size: "lg" }),
+                buttonVariants({ variant: "outline", size: "lg" }),
                 "mt-7 inline-flex h-12 w-full px-8 text-base font-semibold sm:w-auto 2xl:h-14 2xl:px-10 2xl:text-lg",
                 MOBILE_MAGAZINE_G_ENABLED &&
                   "max-md:h-11 max-md:w-auto max-md:max-w-[15.5rem] max-md:px-6 max-md:text-sm",
               )}
             >
-              {t("cta")}
+              {t("secondaryCta")}
             </Link>
           </Reveal>
         </div>

@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { ArrowLeft, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 import { CatalogDetailGallery } from "@/components/catalog/CatalogDetailGallery";
 import { buttonVariants } from "@/components/ui/button";
@@ -65,11 +65,37 @@ export async function CatalogItemDetail({ entry: rawEntry }: CatalogItemDetailPr
   return (
     <div className={cn("pb-24 sm:pb-28 min-[1920px]:pb-32 min-[2560px]:pb-36 max-md:pb-28", SHELL_PAGE_PT)}>
       <div className={siteShell()}>
-        <nav className="mb-4 text-sm text-muted-foreground md:mb-5 min-[1920px]:text-[0.9375rem]">
-          <Link href="/destinos" className="inline-flex items-center gap-1.5 hover:text-cta">
-            <ArrowLeft className="size-3.5 min-[1920px]:size-4" aria-hidden />
-            {destination.name}
-          </Link>
+        <nav
+          aria-label={t("breadcrumbNavAria")}
+          className="mb-4 text-sm text-muted-foreground md:mb-5 min-[1920px]:text-[0.9375rem]"
+        >
+          <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <li>
+              <Link href="/" className="hover:text-cta">
+                {t("breadcrumbHome")}
+              </Link>
+            </li>
+            <li aria-hidden className="text-muted-foreground/50">
+              /
+            </li>
+            <li>
+              <Link href="/destinos" className="hover:text-cta">
+                {t("breadcrumbDestinations")}
+              </Link>
+            </li>
+            <li aria-hidden className="text-muted-foreground/50">
+              /
+            </li>
+            <li>
+              <Link href={backHref} className="hover:text-cta">
+                {destination.name}
+              </Link>
+            </li>
+            <li aria-hidden className="text-muted-foreground/50">
+              /
+            </li>
+            <li className="font-medium text-foreground">{item.name}</li>
+          </ol>
         </nav>
       </div>
 

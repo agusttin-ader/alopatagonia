@@ -111,6 +111,10 @@ export function HeroBackground() {
   const warmingRef = useRef(false);
   const slotsRef = useRef<[string | null, string | null]>([null, null]);
 
+  const deferUpdate = useCallback((fn: () => void) => {
+    queueMicrotask(fn);
+  }, []);
+
   useLayoutEffect(() => {
     setFallbackImage(getAboutUsFallbackImage());
     setVideoSupported(canPlayInlineVideo(reduceMotion));
@@ -448,26 +452,32 @@ export function HeroBackground() {
                 preload="auto"
                 poster={fallbackImage.src}
                 onLoadedData={() => {
-                  if (slot === activeSlot && !transitioningRef.current) {
-                    void handleSlotReady(slot);
-                  }
+                  deferUpdate(() => {
+                    if (slot === activeSlot && !transitioningRef.current) {
+                      void handleSlotReady(slot);
+                    }
+                  });
                 }}
                 onCanPlay={() => {
-                  if (slot === activeSlot && !transitioningRef.current) {
-                    void handleSlotReady(slot);
-                  }
+                  deferUpdate(() => {
+                    if (slot === activeSlot && !transitioningRef.current) {
+                      void handleSlotReady(slot);
+                    }
+                  });
                 }}
                 onPlaying={() => {
-                  if (slot === activeSlot) {
-                    setSlotVisible((current) => {
-                      const copy: [boolean, boolean] = [...current];
-                      copy[slot] = true;
-                      return copy;
-                    });
-                  }
+                  deferUpdate(() => {
+                    if (slot === activeSlot) {
+                      setSlotVisible((current) => {
+                        const copy: [boolean, boolean] = [...current];
+                        copy[slot] = true;
+                        return copy;
+                      });
+                    }
+                  });
                 }}
                 onEnded={() => handleVideoEnded(slot)}
-                onError={() => setVideoFailed(true)}
+                onError={() => deferUpdate(() => setVideoFailed(true))}
               />
             );
           })

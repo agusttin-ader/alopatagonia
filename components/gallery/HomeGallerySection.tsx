@@ -473,9 +473,9 @@ export function HomeGallerySection() {
             </div>
 
             {canNavigate ? (
-              <div className="mt-5 flex items-center justify-center">
-                <span className="text-xs font-semibold tabular-nums tracking-[0.12em] text-muted-foreground">
-                  {setIndex + 1} / {selectionSets.length}
+              <div className="mt-5 flex items-center justify-center gap-3">
+                <span className="text-sm tracking-wide text-muted-foreground lg:text-[0.9375rem]">
+                  {t("nextSelection")}
                 </span>
               </div>
             ) : null}

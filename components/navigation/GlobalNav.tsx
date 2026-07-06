@@ -15,6 +15,7 @@ import {
   NAV_DESKTOP_LINKS,
   NAV_PLANNER_LINK,
   getMobileNavLinks,
+  isNavHrefActive,
 } from "@/lib/nav-links";
 import { cn } from "@/lib/utils";
 
@@ -195,7 +196,10 @@ export function GlobalNav() {
       animate={
         reduceMotion
           ? undefined
-          : { y: navHidden ? "-105%" : "0%", opacity: navHidden ? 0.98 : 1 }
+          : {
+              y: navHidden && !isDesktop ? "-105%" : "0%",
+              opacity: navHidden && !isDesktop ? 0.98 : 1,
+            }
       }
       transition={navVisibilityTransition}
     >
@@ -294,52 +298,71 @@ export function GlobalNav() {
       <motion.div className="hidden md:block" transition={headerTransition}>
         <motion.div
           className={cn(
-            "relative flex h-20 items-center gap-6 border-b px-4 transition-[height,box-shadow,border-color,background-color] duration-300 ease-out sm:px-8 lg:px-14 2xl:px-20",
+            "relative border-b px-4 transition-[box-shadow,border-color,background-color] duration-300 ease-out sm:px-8 lg:px-14 2xl:px-20",
             heroHeaderTop
               ? "border-transparent bg-transparent shadow-none"
               : "border-border/75 bg-background",
             scrolled &&
-              "h-18 border-border/80 shadow-[0_10px_24px_-22px_rgba(0,0,0,0.5)]",
+              "border-border/80 shadow-[0_10px_24px_-22px_rgba(0,0,0,0.5)]",
           )}
         >
-          <SiteLogo
-            linked
-            priority
-            showWordmark
-            homeLabel={t("home")}
-            variant={heroHeaderTop ? "onDark" : "onLight"}
-            className="shrink-0"
-          />
+          <div
+            className={cn(
+              "mx-auto flex h-20 max-w-7xl items-center gap-6 transition-[height] duration-300 ease-out 2xl:max-w-[90rem]",
+              scrolled && "h-[4.5rem]",
+            )}
+          >
+            <SiteLogo
+              linked
+              priority
+              showWordmark
+              homeLabel={t("home")}
+              variant={heroHeaderTop ? "onDark" : "onLight"}
+              className="shrink-0"
+            />
 
-          <div className="ml-auto hidden min-w-0 items-center gap-2 md:flex lg:gap-3">
-            {NAV_DESKTOP_LINKS.map((link) => (
+            <div className="ml-auto hidden min-w-0 items-center gap-2 md:flex lg:gap-3">
+              {NAV_DESKTOP_LINKS.map((link) => {
+                const isActive = isNavHrefActive(pathname, link.href);
+                return (
+                  <Link
+                    key={link.id}
+                    href={link.href}
+                    aria-current={isActive ? "page" : undefined}
+                    className={cn(
+                      DESKTOP_LINK_CLASS,
+                      isActive && "font-semibold text-foreground",
+                      heroHeaderTop &&
+                        (isActive
+                          ? "text-white [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]"
+                          : "text-white/82 hover:text-white [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]"),
+                    )}
+                  >
+                    {t(link.labelKey)}
+                  </Link>
+                );
+              })}
               <Link
-                key={link.id}
-                href={link.href}
+                href={NAV_PLANNER_LINK.href}
+                aria-current={
+                  isNavHrefActive(pathname, NAV_PLANNER_LINK.href) ? "page" : undefined
+                }
                 className={cn(
-                  DESKTOP_LINK_CLASS,
+                  buttonVariants({ variant: "marketing", size: "sm" }),
+                  "motion-cta ml-1.5 h-10 rounded-full px-4 text-[0.88rem] font-semibold whitespace-nowrap lg:ml-2 lg:px-5 lg:text-[0.9rem]",
                   heroHeaderTop &&
-                    "text-white/82 hover:text-white [text-shadow:0_1px_12px_rgba(0,0,0,0.35)]",
+                    "border border-white/45 bg-white/10 text-white shadow-none backdrop-blur-sm hover:bg-white/20 hover:text-white",
                 )}
               >
-                {t(link.labelKey)}
+                {t(NAV_PLANNER_LINK.labelKey)}
               </Link>
-            ))}
-            <Link
-              href={NAV_PLANNER_LINK.href}
-              className={cn(
-                buttonVariants({ variant: "marketing", size: "sm" }),
-                "motion-cta ml-1.5 h-10 rounded-full px-4 text-[0.88rem] font-semibold whitespace-nowrap lg:ml-2 lg:px-5 lg:text-[0.9rem]",
-              )}
-            >
-              {t(NAV_PLANNER_LINK.labelKey)}
-            </Link>
-            <LocaleSwitcher
-              className="ml-1 shrink-0"
-              triggerClassName={
-                heroHeaderTop ? "text-white/82 hover:text-white" : undefined
-              }
-            />
+              <LocaleSwitcher
+                className="ml-1 shrink-0"
+                triggerClassName={
+                  heroHeaderTop ? "text-white/82 hover:text-white" : undefined
+                }
+              />
+            </div>
           </div>
         </motion.div>
       </motion.div>
@@ -427,13 +450,20 @@ export function GlobalNav() {
                       <Link
                         ref={index === 0 ? firstMobileLinkRef : undefined}
                         href={link.href}
+                        aria-current={
+                          isNavHrefActive(pathname, link.href) ? "page" : undefined
+                        }
                         onClick={(event) => {
                           onNavLinkClick(event, link.href, link.id);
                           if (!isHome || !link.href.startsWith("#")) {
                             setMobileOpen(false);
                           }
                         }}
-                        className="motion-cta block rounded-xl px-4 py-4 text-[1.32rem] font-semibold leading-tight text-foreground hover:bg-secondary/65 hover:text-cta hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-2"
+                        className={cn(
+                          "motion-cta block rounded-xl px-4 py-4 text-[1.32rem] font-semibold leading-tight text-foreground hover:bg-secondary/65 hover:text-cta hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-2",
+                          isNavHrefActive(pathname, link.href) &&
+                            "bg-secondary/50 text-cta",
+                        )}
                       >
                         {t(link.labelKey)}
                       </Link>

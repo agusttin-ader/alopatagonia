@@ -61,7 +61,7 @@ Thumbs.db
 
 # Hero video masters (desarrollo local; producción usa variantes optimizadas)
 public/videos/hero.mp4
-public/videos/hero[2-7].mp4
+public/videos/hero[2-9].mp4
 public/videos/videos-mobile/
 
 # Certificates / keys

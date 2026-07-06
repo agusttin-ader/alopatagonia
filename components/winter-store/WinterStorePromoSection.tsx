@@ -25,17 +25,17 @@ export async function WinterStorePromoSection() {
   return (
     <section
       id={SECTION_IDS.winterShop}
-      className="scroll-mt-24 bg-winter-promo px-4 py-14 text-winter-promo-foreground sm:px-8 sm:py-16 lg:px-14 2xl:px-20"
+      className="scroll-mt-24 bg-winter-promo px-4 py-14 text-winter-promo-foreground sm:px-8 sm:py-16 lg:px-14 lg:py-20 2xl:px-20"
       aria-labelledby="winter-promo-heading"
     >
       <div className="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-12 2xl:max-w-[90rem] 2xl:gap-16">
-        <div className="max-w-xl lg:max-w-lg">
+        <div className="max-w-xl lg:max-w-none xl:max-w-2xl">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/75">
             {t("eyebrow")}
           </p>
           <h2
             id="winter-promo-heading"
-            className="font-heading mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl 2xl:text-[2.5rem] 2xl:leading-tight"
+            className="font-heading mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl 2xl:text-5xl 2xl:leading-tight"
           >
             {t("heading")}
           </h2>

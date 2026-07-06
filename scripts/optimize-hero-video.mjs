@@ -14,11 +14,19 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const VIDEOS_DIR = path.join(__dirname, "../public/videos");
 
-/** Orden del carrusel — hero primero, luego hero2, hero3… */
-const SOURCES = ["hero", "hero2", "hero3", "hero4", "hero5", "hero6", "hero7"];
+/** Fuentes activas del carrusel (ver orden en lib/hero-video.ts). */
+const SOURCES = ["hero2", "hero3", "hero4", "hero6", "hero7", "hero8", "hero9"];
 
 /** Máximo por clip; los más cortos conservan su duración original. */
 const MAX_CLIP_SECONDS = 11;
+
+/** Overrides por clip (p. ej. el primero del carrusel dura más). */
+const CLIP_MAX_OVERRIDES = { hero9: 26 };
+
+/** Segundos máximos para un stem dado (con override opcional). */
+function maxSecondsFor(stem) {
+  return CLIP_MAX_OVERRIDES[stem] ?? MAX_CLIP_SECONDS;
+}
 
 const VARIANTS = [
   {
@@ -132,14 +140,15 @@ function prepareSource(stem) {
     throw new Error(`No se pudo leer la duración de ${stem}.mp4`);
   }
 
-  if (duration > MAX_CLIP_SECONDS + 0.05) {
+  const maxSeconds = maxSecondsFor(stem);
+  if (duration > maxSeconds + 0.05) {
     console.log(
-      `→ ${stem}.mp4 (${duration.toFixed(2)}s) — recorta a ${MAX_CLIP_SECONDS}s`,
+      `→ ${stem}.mp4 (${duration.toFixed(2)}s) — recorta a ${maxSeconds}s`,
     );
-    trimSourceToMax(inputPath, MAX_CLIP_SECONDS);
+    trimSourceToMax(inputPath, maxSeconds);
     const trimmed = getDurationSeconds(inputPath);
     console.log(`  recortado: ${trimmed?.toFixed(2) ?? "?"}s\n`);
-    return trimmed ?? MAX_CLIP_SECONDS;
+    return trimmed ?? maxSeconds;
   }
 
   console.log(`↷ ${stem}.mp4: ${duration.toFixed(2)}s (sin recorte)\n`);
@@ -196,8 +205,8 @@ function optimizeSource(stem, clipSeconds) {
     `━━ ${stem}.mp4 (${formatBytes(sourceSize)}, ${clipSeconds.toFixed(2)}s) ━━`,
   );
 
-  const encodeMax =
-    clipSeconds > MAX_CLIP_SECONDS + 0.05 ? MAX_CLIP_SECONDS : null;
+  const maxSeconds = maxSecondsFor(stem);
+  const encodeMax = clipSeconds > maxSeconds + 0.05 ? maxSeconds : null;
 
   for (const variant of VARIANTS) {
     const outputName = `${stem}-${variant.suffix}.mp4`;

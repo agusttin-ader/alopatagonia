@@ -69,13 +69,13 @@ export const HOME_GALLERY_GRID_HEIGHT = cn(
   "h-[min(66vh,480px)]",
   "min-[400px]:h-[min(68vh,540px)]",
   "sm:h-[min(72vh,620px)]",
-  "md:h-[min(76vh,700px)]",
-  "lg:h-[min(80vh,780px)]",
-  "xl:h-[min(84vh,860px)]",
-  "2xl:h-[min(86vh,920px)]",
-  "min-[1920px]:h-[min(88vh,1000px)]",
-  "min-[2560px]:h-[min(90vh,1140px)]",
-  "min-[3840px]:h-[min(88vh,1280px)]",
+  "md:h-[min(74vh,680px)]",
+  "lg:h-[min(65vh,720px)]",
+  "xl:h-[min(68vh,780px)]",
+  "2xl:h-[min(70vh,820px)]",
+  "min-[1920px]:h-[min(72vh,880px)]",
+  "min-[2560px]:h-[min(74vh,960px)]",
+  "min-[3840px]:h-[min(72vh,1040px)]",
 );
 
 export const HOME_GALLERY_GAP = cn(
@@ -121,6 +121,21 @@ export const SECTION_TITLE = cn(
   "min-[1920px]:text-[2.1rem]",
   "min-[2560px]:text-4xl",
   "min-[3840px]:text-[2.75rem]",
+);
+
+/** Eyebrow de sección home / catálogo. */
+export const SECTION_EYEBROW =
+  "text-xs font-semibold uppercase tracking-[0.16em] text-primary/85";
+
+/** H2 de sección home (ritmo unificado desktop). */
+export const SECTION_HEADING =
+  "font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl";
+
+/** Shell vertical estándar de secciones home. */
+export const SECTION_SHELL = cn(
+  "scroll-mt-24 bg-background",
+  SHELL_PX,
+  "py-12 sm:py-16 lg:py-20",
 );
 
 export const DETAIL_STICKY_TOP = cn(

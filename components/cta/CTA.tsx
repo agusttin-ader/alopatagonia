@@ -15,12 +15,12 @@ export async function CTA() {
   return (
     <section
       id={SECTION_IDS.cta}
-      className="relative z-0 scroll-mt-24 min-h-[44dvh] px-0 pb-0 sm:min-h-[62dvh]"
+      className="relative z-0 scroll-mt-24 min-h-[44dvh] px-0 pb-0 sm:min-h-[62dvh] lg:min-h-0"
       aria-labelledby="cta-heading"
     >
       <div
         className={cn(
-          "relative flex min-h-[44dvh] w-full items-start justify-center overflow-hidden rounded-none bg-background px-6 pb-14 pt-10 text-center ring-1 ring-border/70 sm:min-h-[62dvh] sm:items-center sm:px-10 sm:pb-24 sm:pt-16 2xl:px-20",
+          "relative flex min-h-[44dvh] w-full items-start justify-center overflow-hidden rounded-none bg-background px-6 pb-16 pt-10 text-center ring-1 ring-border/70 sm:min-h-[62dvh] sm:items-center sm:px-10 sm:pb-24 sm:pt-16 lg:min-h-[28rem] lg:border-t lg:border-brand-forest/10 lg:pb-28 lg:pt-20 lg:ring-0 2xl:px-20 2xl:pb-32 2xl:pt-24",
           MOBILE_MAGAZINE_G_ENABLED &&
             "max-md:bg-footer-lake max-md:ring-white/10 max-md:pb-16 max-md:pt-12",
         )}

@@ -14,7 +14,6 @@ import { Hero } from "@/components/hero/Hero";
 import { HowItWorks } from "@/components/how-it-works/HowItWorks";
 import { HomeSectionHashScroll } from "@/components/home/HomeSectionHashScroll";
 import { PlannerLegacyHashRedirect } from "@/components/planner/PlannerLegacyHashRedirect";
-import { TripPlannerTeaser } from "@/components/planner/TripPlannerTeaser";
 import { SignatureSection } from "@/components/signature/SignatureSection";
 import { Testimonials } from "@/components/testimonials/Testimonials";
 import { WinterStorePromoSection } from "@/components/winter-store/WinterStorePromoSection";
@@ -45,12 +44,11 @@ export default async function Home({
       <main className="min-w-0 flex-1 overflow-x-clip pb-20 sm:pb-0">
         <SignatureSection />
         <HowItWorks />
-        <HomeGallerySection />
         <HomeDestinations />
+        <HomeGallerySection />
         <HomeDestinationsReinforcement />
         <CatalogHubSection />
         <WinterStorePromoSection />
-        <TripPlannerTeaser />
         <EscapadasExpressSection />
         <Testimonials />
         <InstagramStats />

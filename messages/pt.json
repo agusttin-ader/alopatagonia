@@ -52,7 +52,8 @@
       "WhatsApp ativo para acompanhar você durante a viagem.",
       "Roteiro sem custo para aproveitar seu tempo ao máximo."
     ],
-    "cta": "Montar minha consulta"
+    "cta": "Montar minha consulta",
+    "secondaryCta": "Conheça como funciona"
   },
   "gallery": {
     "eyebrow": "Galeria",
@@ -339,6 +340,8 @@
   },
   "catalog": {
     "breadcrumbCatalog": "Catálogo",
+    "breadcrumbDestinations": "Destinos",
+    "breadcrumbNavAria": "Localização no site",
     "alsoExplore": "Você também pode explorar",
     "viewCatalog": "Ver catálogo",
     "viewDestination": "Ver destino",
@@ -382,6 +385,7 @@
     "carRentalCta": "Cote sua reserva",
     "carRentalWhatsAppMessage": "Quero cotar minha reserva de aluguel de carro em {destination}. Podem me ajudar?",
     "excursionWhatsAppCta": "Consultar no WhatsApp",
+    "excursionViewDetailCta": "Ver fotos e detalhes",
     "excursionWhatsAppMessage": "Tenho interesse na excursão \"{excursion}\" em {destination}. Podem me ajudar?",
     "badges": {
       "excursion": "Excursão",

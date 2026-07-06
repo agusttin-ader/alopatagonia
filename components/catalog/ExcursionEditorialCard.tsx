@@ -1,9 +1,11 @@
 "use client";
 
+import { ArrowUpRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { AppImage } from "@/components/media/AppImage";
 import { buttonVariants } from "@/components/ui/button";
+import { Link } from "@/i18n/navigation";
 import type { CatalogItemEntry } from "@/lib/catalog/catalog-items";
 import type { ExcursionCategory } from "@/lib/catalog/types";
 import { getWhatsAppUrl } from "@/lib/constants";
@@ -23,6 +25,7 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
     ? t(`excursionCategories.${item.category as ExcursionCategory}`)
     : undefined;
   const highlights = item.highlights ?? [];
+  const detailHref = `/destinos/${destination.slug}/${item.itemSlug}`;
   const whatsAppHref = getWhatsAppUrl(
     t("excursionWhatsAppMessage", { excursion: item.name, destination: destination.name }),
   );
@@ -31,9 +34,10 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
     <article className="overflow-hidden rounded-2xl border border-border/70 bg-card/40 shadow-[0_18px_40px_-28px_rgba(16,24,40,0.35)] max-md:rounded-xl">
       <div className="grid md:grid-cols-2 md:items-stretch">
         {cover ? (
-          <div
+          <Link
+            href={detailHref}
             className={cn(
-              "relative aspect-[4/3] min-h-[14rem] bg-muted/40 max-md:aspect-[5/4] max-md:min-h-[12rem] md:aspect-auto md:min-h-[18rem]",
+              "group relative block aspect-[4/3] min-h-[14rem] bg-muted/40 max-md:aspect-[5/4] max-md:min-h-[12rem] md:aspect-auto md:min-h-[18rem]",
               reverse && "md:order-2",
             )}
           >
@@ -42,10 +46,10 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
               alt={cover.alt}
               fill
               qualityPreset="card"
-              className="object-cover"
+              className="object-cover transition duration-500 group-hover:scale-[1.02]"
               sizes={IMAGE_SIZES.catalogCard}
             />
-          </div>
+          </Link>
         ) : null}
 
         <div
@@ -75,17 +79,29 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
               ))}
             </ul>
           ) : null}
-          <a
-            href={whatsAppHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              buttonVariants({ variant: "marketing", size: "lg" }),
-              "mt-6 inline-flex w-fit max-md:mt-5 max-md:min-h-11 max-md:w-full max-md:justify-center",
-            )}
-          >
-            {t("excursionWhatsAppCta")}
-          </a>
+          <div className="mt-6 flex flex-wrap items-center gap-3 max-md:mt-5 max-md:flex-col max-md:items-stretch">
+            <Link
+              href={detailHref}
+              className={cn(
+                buttonVariants({ variant: "outline", size: "lg" }),
+                "inline-flex max-md:min-h-11 max-md:w-full max-md:justify-center",
+              )}
+            >
+              {t("excursionViewDetailCta")}
+              <ArrowUpRight className="size-4" aria-hidden />
+            </Link>
+            <a
+              href={whatsAppHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                buttonVariants({ variant: "marketing", size: "lg" }),
+                "inline-flex max-md:min-h-11 max-md:w-full max-md:justify-center",
+              )}
+            >
+              {t("excursionWhatsAppCta")}
+            </a>
+          </div>
         </div>
       </div>
     </article>

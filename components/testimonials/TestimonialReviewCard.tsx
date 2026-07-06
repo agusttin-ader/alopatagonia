@@ -47,7 +47,7 @@ export function TestimonialReviewCard({ testimonial, className }: TestimonialRev
           {testimonial.highlight}
         </p>
 
-        <blockquote className="mt-3 text-[0.9375rem] leading-[1.65] text-foreground/88 sm:text-[0.97rem] sm:leading-[1.7]">
+        <blockquote className="mt-3 text-[0.9375rem] leading-[1.65] text-foreground/88 sm:text-[0.97rem] sm:leading-[1.7] lg:text-base xl:text-[1.0625rem]">
           {testimonial.quote}
         </blockquote>
       </div>

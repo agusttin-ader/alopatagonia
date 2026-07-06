@@ -1,23 +1,23 @@
 /**
- * Videos hero — carrusel hero5 → hero → hero2 → … (sin unificar).
+ * Videos hero — carrusel hero9 → hero8 → hero2 → … (sin unificar).
  * Regenerar variantes: npm run videos:optimize-hero
  */
 export type HeroVideoCandidate =
-  | "hero"
   | "hero2"
   | "hero3"
   | "hero4"
-  | "hero5"
   | "hero6"
-  | "hero7";
+  | "hero7"
+  | "hero8"
+  | "hero9";
 
 export type HeroVideoTier = "desktop" | "mobile" | "mobileLite";
 
 export const HERO_VIDEO_CAROUSEL_ENABLED = true;
 
 export const HERO_CAROUSEL_CANDIDATES = [
-  "hero5",
-  "hero",
+  "hero9",
+  "hero8",
   "hero2",
   "hero3",
   "hero4",
@@ -40,11 +40,6 @@ const PATHS: Record<
   HeroVideoCandidate,
   { desktop: string; mobile: string; mobileLite: string }
 > = {
-  hero: {
-    desktop: "/videos/hero-desktop.mp4",
-    mobile: "/videos/hero-mobile-1080.mp4",
-    mobileLite: "/videos/hero-mobile-720.mp4",
-  },
   hero2: {
     desktop: "/videos/hero2-desktop.mp4",
     mobile: "/videos/hero2-mobile-1080.mp4",
@@ -60,11 +55,6 @@ const PATHS: Record<
     mobile: "/videos/hero4-mobile-1080.mp4",
     mobileLite: "/videos/hero4-mobile-720.mp4",
   },
-  hero5: {
-    desktop: "/videos/hero5-desktop.mp4",
-    mobile: "/videos/hero5-mobile-1080.mp4",
-    mobileLite: "/videos/hero5-mobile-720.mp4",
-  },
   hero6: {
     desktop: "/videos/hero6-desktop.mp4",
     mobile: "/videos/hero6-mobile-1080.mp4",
@@ -74,6 +64,16 @@ const PATHS: Record<
     desktop: "/videos/hero7-desktop.mp4",
     mobile: "/videos/hero7-mobile-1080.mp4",
     mobileLite: "/videos/hero7-mobile-720.mp4",
+  },
+  hero8: {
+    desktop: "/videos/hero8-desktop.mp4",
+    mobile: "/videos/hero8-mobile-1080.mp4",
+    mobileLite: "/videos/hero8-mobile-720.mp4",
+  },
+  hero9: {
+    desktop: "/videos/hero9-desktop.mp4",
+    mobile: "/videos/hero9-mobile-1080.mp4",
+    mobileLite: "/videos/hero9-mobile-720.mp4",
   },
 };
 

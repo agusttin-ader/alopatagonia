@@ -63,7 +63,7 @@ function CatalogLink({
               "bg-footer-lake-foreground text-footer-lake",
               "shadow-[0_12px_28px_-16px_rgba(0,0,0,0.5)]",
               "max-md:focus-visible:ring-white/45 max-md:focus-visible:ring-offset-footer-lake",
-              "lg:mt-4 lg:w-auto lg:justify-start lg:rounded-none lg:bg-transparent lg:px-0 lg:py-0 lg:text-sm lg:font-medium lg:text-primary lg:shadow-none lg:underline-offset-4 lg:hover:underline",
+              "lg:mt-4 lg:inline-flex lg:h-11 lg:w-auto lg:justify-center lg:rounded-full lg:border lg:border-primary/35 lg:bg-transparent lg:px-5 lg:py-0 lg:text-sm lg:font-semibold lg:text-primary lg:shadow-none lg:hover:bg-primary/8 lg:hover:no-underline",
             )
           : "text-sm text-primary underline-offset-4 hover:underline",
         className,
@@ -529,13 +529,13 @@ function DestinationEditorialSpread({
             destinationName={destination.name}
             index={resolveIndex(hero)}
             onImageClick={onImageClick}
-            className="aspect-[16/12] max-h-[min(52vh,420px)] w-full rounded-[1.35rem]"
+            className="aspect-[16/12] max-h-[min(56vh,520px)] w-full rounded-[1.35rem]"
             sizes={IMAGE_SIZES.galleryTile}
             priority
             animated={animated}
           />
         ) : (
-          <div className="relative flex h-[min(46vh,380px)] gap-2.5 xl:gap-3">
+          <div className="relative flex h-[min(52vh,460px)] gap-2.5 xl:h-[min(56vh,520px)] xl:gap-3">
             <div className="relative h-full min-w-0 flex-[1.42]">
               <SpreadImageButton
                 image={hero}
@@ -592,7 +592,7 @@ function DestinationEditorialSpread({
       </div>
 
       <div className="hidden pe-0 sm:pe-8 lg:block lg:pe-12 xl:pe-14">
-        <p className="mt-3 line-clamp-2 text-[0.9375rem] leading-snug text-muted-foreground sm:text-lg lg:mt-4">
+        <p className="mt-3 max-w-prose text-[0.9375rem] leading-relaxed text-muted-foreground sm:text-lg lg:mt-5">
           {destination.description}
         </p>
         <CatalogLink mobileProminent />
@@ -615,6 +615,9 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
   const activeDestination = useMemo(
     () => destinations.find((item) => item.slug === activeSlug) ?? destinations[0],
     [activeSlug, destinations],
+  );
+  const activeDestinationIndex = destinations.findIndex(
+    (item) => item.slug === activeDestination.slug,
   );
 
   const lightboxDestination = useMemo(
@@ -732,6 +735,9 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
           </div>
 
           <Reveal>
+            <p className="mb-3 hidden text-xs font-semibold tabular-nums tracking-[0.12em] text-muted-foreground lg:block">
+              {activeDestinationIndex + 1} / {destinations.length}
+            </p>
             <motion.ul layout className="hidden space-y-0.5 lg:block">
               {destinations.map((item) => {
                 const isActive = item.slug === activeDestination.slug;
@@ -744,17 +750,18 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
                       className={cn(
                         "group relative w-full text-left transition",
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-4",
-                        "rounded-xl px-1 py-1.5",
+                        "rounded-xl px-1 py-1.5 lg:border-l-2 lg:border-transparent lg:pl-4",
+                        isActive && "lg:border-primary",
                       )}
                     >
                       <DestinationName
                         name={item.name}
                         isActive={isActive}
                         className={cn(
-                          "font-heading block text-[clamp(2rem,6.2vw,5.2rem)] font-semibold uppercase leading-[0.88] tracking-[-0.02em] transition-colors",
+                          "font-heading block text-[clamp(2rem,6.2vw,4rem)] font-semibold uppercase leading-[0.88] tracking-[-0.02em] transition-colors",
                           isActive
                             ? "text-primary"
-                            : "text-black/28 group-hover:text-black/60",
+                            : "text-black/45 group-hover:text-black/70",
                         )}
                       />
                       <span
@@ -762,7 +769,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
                           "mt-1 block text-xs font-medium text-muted-foreground transition-colors",
                           isActive
                             ? "text-primary/75"
-                            : "text-black/35 group-hover:text-black/55",
+                            : "text-black/45 group-hover:text-black/65",
                         )}
                       >
                         {item.region}

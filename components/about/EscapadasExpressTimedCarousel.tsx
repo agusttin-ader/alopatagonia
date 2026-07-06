@@ -148,7 +148,7 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
                   >
                     {t("title")}
                   </h2>
-                  <p className="mt-2 line-clamp-2 max-w-lg text-sm leading-relaxed text-white/75 sm:text-base">
+                  <p className="mt-2 line-clamp-2 max-w-lg text-sm leading-relaxed text-white/75 sm:text-base lg:line-clamp-none lg:max-w-xl lg:text-base xl:max-w-2xl">
                     {t("subtitle")}
                   </p>
                 </div>
@@ -179,14 +179,14 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
                           </p>
                         ) : null}
                         <p className="mt-1.5 hidden text-sm leading-relaxed text-white/78 sm:block">
-                          {activePromo.highlights.slice(0, 2).join(" · ")}
+                          {activePromo.highlights.slice(0, 3).join(" · ")}
                         </p>
                         <MagazinePillCta
                           href={whatsappUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           tone="surface"
-                          className="mt-4 max-w-sm sm:mt-5"
+                          className="mt-4 max-w-sm sm:mt-5 lg:max-w-md xl:max-w-lg"
                         >
                           {t("consultCta")}
                         </MagazinePillCta>

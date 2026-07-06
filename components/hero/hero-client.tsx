@@ -54,12 +54,15 @@ export function HeroClient() {
   const t = useTranslations("hero");
   const reduceMotion = useReducedMotion();
   const isCoarseMobile = useCoarseMobile();
-  const [heroRevealed, setHeroRevealed] = useState(() =>
-    typeof window !== "undefined" ? Boolean(window.__aloIntroReveal) : false,
-  );
+  const [heroRevealed, setHeroRevealed] = useState(false);
 
   useEffect(() => {
-    if (reduceMotion || !shouldPlaySiteIntro() || window.__aloIntroReveal) {
+    if (typeof window !== "undefined" && window.__aloIntroReveal) {
+      setHeroRevealed(true);
+      return;
+    }
+
+    if (reduceMotion || !shouldPlaySiteIntro()) {
       setHeroRevealed(true);
       return;
     }
@@ -111,7 +114,7 @@ export function HeroClient() {
         </motion.p>
         <motion.h1
           variants={heroItem}
-          className="font-heading max-w-[min(100%,20rem)] text-balance text-[2.2rem] font-medium leading-[1.06] tracking-tight text-white min-[390px]:text-[2.35rem] sm:max-w-none sm:text-5xl sm:leading-[1.08] lg:text-6xl 2xl:text-7xl"
+          className="font-heading max-w-[min(100%,20rem)] text-balance text-[2.2rem] font-medium leading-[1.06] tracking-tight text-white min-[390px]:text-[2.35rem] sm:max-w-none sm:text-5xl sm:leading-[1.08] lg:text-6xl lg:font-semibold lg:leading-[1.04] 2xl:max-w-[40rem] 2xl:text-7xl"
         >
           <span className="sm:hidden">{t("headlineMobile")}</span>
           <span className="hidden sm:inline">{t("headline")}</span>

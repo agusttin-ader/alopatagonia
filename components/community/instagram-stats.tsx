@@ -293,7 +293,7 @@ export function InstagramStats() {
     >
       <Reveal>
         <div className="relative w-full overflow-hidden bg-footer-lake text-white">
-          <div className="grid lg:grid-cols-2 lg:items-stretch">
+          <div className="mx-auto grid max-w-7xl lg:grid-cols-2 lg:items-stretch 2xl:max-w-[90rem]">
             <div className="flex flex-col justify-center px-6 py-8 sm:px-10 sm:py-10 lg:px-14 lg:py-12 2xl:px-20 2xl:py-14">
               <div className="flex items-center gap-5 sm:gap-6">
                 <InstagramProfileAvatar size="lg" linked />
