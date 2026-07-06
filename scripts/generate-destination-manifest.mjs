@@ -214,13 +214,18 @@ async function listWebImages(relativeFolder) {
   for (const subfolder of subfolders) {
     const subfolderPath = path.join(absoluteFolder, subfolder.name);
 
-    // Una imagen por carpeta de excursión (p. ej. 26 en Bariloche).
+    // Una imagen por excursión; hasta 4 paisajes por destino (home).
     if (subfolder.name === "excursiones") {
       for (const excursionFolder of listSubdirectories(subfolderPath)) {
         const excursionPath = path.join(subfolderPath, excursionFolder.name);
         const images = (await listWebImagesInDirectory(excursionPath)).slice(0, 1);
         results.push(...images);
       }
+      continue;
+    }
+
+    if (subfolder.name === "paisajes") {
+      results.push(...(await listWebImagesInDirectory(subfolderPath)).slice(0, 4));
       continue;
     }
 

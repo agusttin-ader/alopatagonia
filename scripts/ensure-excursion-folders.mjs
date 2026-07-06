@@ -21,7 +21,8 @@ const GUIDE_LINES = [
   "",
   "Una imagen por excursión, dentro de la carpeta con el nombre de la excursión.",
   "Nombre sugerido del archivo: main.jpg (también sirve .jpeg, .png o .webp).",
-  "Después de subir fotos: npm run catalog:manifest",
+  "Al build se redimensionan (máx. 1920px) y recomprimen automáticamente.",
+  "Después de subir fotos nuevas: npm run catalog:optimize-excursions && npm run catalog:manifest",
   "",
 ];
 

@@ -35,7 +35,9 @@ export const CATALOG_EXCURSION_FOLDERS = [
   "excurisiones",
 ] as const;
 
-export const CATALOG_NATURE_FOLDERS = ["naturaleza"] as const;
+export const CATALOG_NATURE_FOLDERS = ["naturaleza", "paisajes"] as const;
+
+export const CATALOG_PAISAJES_FOLDER = "paisajes" as const;
 
 export function pathsInAnyFolder(
   imagePaths: string[],

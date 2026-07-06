@@ -1,0 +1,11 @@
+[
+  { "folder": "bariloche", "slug": "bariloche", "name": "Bariloche" },
+  { "folder": "san-martin", "slug": "san-martin", "name": "San Martín de los Andes" },
+  { "folder": "traful", "slug": "traful", "name": "Traful / Villa Traful" },
+  { "folder": "la-angostura", "slug": "villa-la-angostura", "name": "Villa La Angostura" },
+  { "folder": "esquel-trevelin ", "slug": "esquel", "name": "Esquel / Trevelin" },
+  { "folder": "madryn", "slug": "puerto-madryn", "name": "Puerto Madryn" },
+  { "folder": "calafate", "slug": "el-calafate", "name": "El Calafate" },
+  { "folder": "chalten", "slug": "el-chalten", "name": "El Chaltén" },
+  { "folder": "ushuaia", "slug": "ushuaia", "name": "Ushuaia" }
+]

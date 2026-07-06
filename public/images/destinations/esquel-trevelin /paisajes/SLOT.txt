@@ -1,0 +1,6 @@
+Destino: Esquel / Trevelin
+Carpeta: paisajes
+
+Colocá acá 4 imágenes de paisaje (lagos, montaña, naturaleza).
+Sugerencia: 01.jpg, 02.jpg, 03.jpg, 04.jpg
+Formatos: .jpg, .jpeg, .png, .webp

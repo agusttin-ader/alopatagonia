@@ -1,5 +1,6 @@
-import { BARILOCHE_EDITORIAL_IMAGES } from "@/lib/catalog/bariloche-curated";
+import { BARILOCHE_HERO_IMAGE } from "@/lib/catalog/bariloche-curated";
 import { getDestinationImagePaths } from "@/lib/catalog/destination-images";
+import { pathIncludesFolder } from "@/lib/catalog/path-matching";
 import { sortByDestinationSlugOrder } from "@/lib/catalog/destination-order";
 import type { HomeDestinationEditorial } from "@/lib/home-destinations-types";
 
@@ -13,8 +14,7 @@ const DESTINATION_META = [
     region: "San Carlos de Bariloche · Río Negro",
     description:
       "Lagos, bosque andino y el Nahuel Huapi. La base más elegida para arrancar un viaje por el sur.",
-    fallback: BARILOCHE_EDITORIAL_IMAGES[0],
-    curatedGallery: BARILOCHE_EDITORIAL_IMAGES,
+    fallback: BARILOCHE_HERO_IMAGE,
   },
   {
     slug: "san-martin",
@@ -90,37 +90,26 @@ const DESTINATION_META = [
   },
 ] as const;
 
-/** Fotos en la sección Destinos del home. Más adelante: carpeta `naturaleza` por destino. */
+/** Fotos de paisaje en la sección Destinos del home (4 por destino). */
 export const HOME_DESTINATION_GALLERY_DESKTOP_COUNT = 4;
 
-function buildGalleryImages(
+function buildPaisajeGalleryImages(
   folder: string,
   name: string,
   fallback: string,
-  curated?: readonly string[],
 ): { src: string; alt: string }[] {
-  const paths = curated?.length
-    ? [...curated]
-    : getDestinationImagePaths(folder);
-  const barilocheAlts = [
-    "Departamento en Bariloche",
-    "Cabaña en Bariloche",
-    "Hotel en Bariloche",
-    "Hotel en Bariloche",
-  ];
-  const picked = (
-    paths.length > 0 ? paths.slice(0, HOME_DESTINATION_GALLERY_DESKTOP_COUNT) : [fallback]
-  ).map((src, index) => ({
+  const paths = getDestinationImagePaths(folder)
+    .filter((path) => pathIncludesFolder(path, "paisajes"))
+    .slice(0, HOME_DESTINATION_GALLERY_DESKTOP_COUNT);
+
+  const picked = (paths.length > 0 ? paths : [fallback]).map((src, index) => ({
     src,
-    alt:
-      name === "Bariloche" && curated?.length
-        ? (barilocheAlts[index] ?? `${name} — foto ${index + 1}`)
-        : `${name} — foto ${index + 1}`,
+    alt: `${name} — paisaje ${index + 1}`,
   }));
 
   while (picked.length < HOME_DESTINATION_GALLERY_DESKTOP_COUNT) {
     const src = picked[picked.length - 1]?.src ?? fallback;
-    picked.push({ src, alt: `${name} — foto ${picked.length + 1}` });
+    picked.push({ src, alt: `${name} — paisaje ${picked.length + 1}` });
   }
 
   return picked;
@@ -133,11 +122,6 @@ export const HOME_DESTINATION_EDITORIAL: HomeDestinationEditorial[] = sortByDest
     name: meta.name,
     region: meta.region,
     description: meta.description,
-    galleryImages: buildGalleryImages(
-      meta.folder,
-      meta.name,
-      meta.fallback,
-      "curatedGallery" in meta ? meta.curatedGallery : undefined,
-    ),
+    galleryImages: buildPaisajeGalleryImages(meta.folder, meta.name, meta.fallback),
   })),
 );

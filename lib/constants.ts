@@ -302,23 +302,16 @@ export const HERO_IMAGE: GalleryImage = {
   height: 2560,
 };
 
-/** MP4 en `public/videos/`; conviene exportarlo en alta resolución (p. ej. 4K) para buena nitidez. */
-export const HERO_VIDEO = {
-  src: "/videos/hero-video-final.mp4",
-} as const;
-
-/** Versión liviana para móviles/iOS para mejorar estabilidad de reproducción. */
-export const HERO_VIDEO_MOBILE = {
-  src: "/videos/hero-video-mobile-1080-premium.mp4",
-} as const;
-
-/** Fallback más liviano para móviles muy chicos o con menor rendimiento. */
-export const HERO_VIDEO_MOBILE_LITE = {
-  src: "/videos/hero-video-mobile-720-hq.mp4",
-} as const;
-
-/** Velocidad del video del hero: 1 = normal; valores menores = más lento (más pausado). */
-export const HERO_VIDEO_PLAYBACK_RATE = 1 as const;
+export {
+  HERO_CAROUSEL_CANDIDATES,
+  HERO_VIDEO_CAROUSEL_ENABLED,
+  HERO_VIDEO_CROSSFADE_MS,
+  HERO_VIDEO_PLAYBACK_RATE,
+  getHeroVideoSrc,
+  pickHeroVideoTier,
+  type HeroVideoCandidate,
+  type HeroVideoTier,
+} from "@/lib/hero-video";
 
 /** Video vertical dentro del mockup de iPhone en planear mi viaje. */
 export const PLANNER_PHONE_VIDEO = {

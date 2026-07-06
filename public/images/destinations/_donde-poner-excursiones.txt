@@ -2,7 +2,8 @@ Dónde poner las fotos de excursiones — Alo Patagonia
 
 Una imagen por excursión, dentro de la carpeta con el nombre de la excursión.
 Nombre sugerido del archivo: main.jpg (también sirve .jpeg, .png o .webp).
-Después de subir fotos: npm run catalog:manifest
+Al build se redimensionan (máx. 1920px) y recomprimen automáticamente.
+Después de subir fotos nuevas: npm run catalog:optimize-excursions && npm run catalog:manifest
 
 ── bariloche ──
   excursiones/circuito-chico/ → Circuito Chico Bariloche
