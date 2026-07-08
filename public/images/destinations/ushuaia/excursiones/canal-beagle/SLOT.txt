@@ -1,4 +1,4 @@
-Excursión: Navegación Canal Beagle
+Excursión: Navegación al Faro Les Éclaireurs
 Carpeta: canal-beagle
 
 Colocá acá una sola imagen (ideal: main.jpg).

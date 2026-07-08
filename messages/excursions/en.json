@@ -406,7 +406,7 @@
     },
     "el-calafate": {
       "perito-moreno": {
-        "name": "Perito Moreno Glacier",
+        "name": "Perito Moreno Glacier — Walkways",
         "description": "Walkways facing an ice wall nearly 80 m high above Brazo Rico. Calving events and blue hues that shift with the daylight.",
         "highlights": [
           "Year-round access to Los Glaciares National Park",
@@ -414,13 +414,74 @@
           "Arrive early in January and February"
         ]
       },
+      "navegacion-corta-pasarelas": {
+        "name": "Short navigation with walkways",
+        "description": "Get close to the glacier's rupture zone from the water. A 1-hour navigation in front of the Perito Moreno Glacier's north face, right where the famous calving events occur. Boarding at Puerto Moreno, at the foot of the walkways beside the Iceberg Channel, with a bilingual guide explaining the glacier's formation and unique phenomena.",
+        "highlights": [
+          "~1 h navigation in front of the glacier's north face",
+          "Boarding at Puerto Moreno, next to the walkways",
+          "Rupture zone and Iceberg Channel",
+          "Can be combined with free time on the walkways"
+        ]
+      },
+      "minitrekking": {
+        "name": "Minitrekking — Perito Moreno Glacier",
+        "description": "Guided walk on the Perito Moreno Glacier with crampons. Cross Brazo Rico on a boat, hike through Andean forest to the glacier's base, and explore blue crevasses, sinkholes, and meltwater pools during 90 minutes on firm ice.",
+        "highlights": [
+          "Navigation in front of the glacier's south face",
+          "Crampons, helmet, and bilingual guide included",
+          "Moderate fitness, ages 8 to 65; full-day outing",
+          "Sells out fast in January and February — book ahead"
+        ]
+      },
       "todo-glaciares": {
         "name": "Todo Glaciares Navigation",
-        "description": "Full day on the northern arm of Lake Argentino: Upsala, Spegazzini, and giant icebergs. One of the most comprehensive navigations in the south.",
+        "description": "Full day on the northern arm of Lake Argentino: cross the Devil's Throat, navigate among Upsala icebergs, and reach Spegazzini —the park's tallest glacier— with views of Seco, Heim Sur, and Peineta. Includes a landing at Base Spegazzini with an interpretive trail through Patagonian forest.",
         "highlights": [
-          "Boat to the front of rarely visited glaciers",
-          "Includes transfer from Calafate and deck time",
+          "Five glaciers in a single navigation",
+          "~2 h landing at refuge with viewpoints over Glacier Bay",
+          "Optional transfer from El Calafate (47 km to Punta Bandera)",
           "Book in advance during the austral summer"
+        ]
+      },
+      "nativo-experience": {
+        "name": "Nativo Experience — Lakes & Caverns",
+        "description": "Half-day 4×4 excursion along the shore of Lake Argentino in Punta Walichu Natural Reserve. Anthropological route with cliff viewpoints, rock art over 2,000 years old, and lunch or dinner in a cave facing the lake and the Andes.",
+        "highlights": [
+          "Ideal on arrival or departure day (~3 h)",
+          "Archaeological site with rock art and interpretive guide",
+          "Regional meal included in a cave overlooking Lake Argentino",
+          "Daily AM and PM departures; easy difficulty"
+        ]
+      },
+      "estancia-25-de-mayo": {
+        "name": "Estancia 25 de Mayo — Ranch Afternoon",
+        "description": "Ranch afternoon at a pioneer estancia steps from downtown El Calafate, with 17,000 hectares at the foot of Cerro Calafate. Campfire with fried cakes, sheep herding, shearing demo, organic garden tour, and Patagonian lamb dinner with a folk show.",
+        "highlights": [
+          "Rural traditions: corrals, shearing, and spinners",
+          "Confit lamb tasting at the stream viewpoint",
+          "Regional dinner at the quincho with live music and dance",
+          "Runs September to April; afternoon departures"
+        ]
+      },
+      "dia-de-campo-estancia": {
+        "name": "Ranch Day — National Park",
+        "description": "Ranch day at a pioneer estancia inside Los Glaciares National Park, on the southern arm of Lake Argentino. Over a century of family history, gaucho shearing and herding demos, a hike to La Angostura —where Lake Roca meets Lake Argentino— and Patagonian lamb barbecue with Andes views.",
+        "highlights": [
+          "~5 h at the estancia + transfer from El Calafate (~56 km)",
+          "Welcome with hot drinks and homemade pastries",
+          "Milking, shearing, rein work, and historic ranch buildings",
+          "Optional horseback ride; runs September 15 to May 15"
+        ]
+      },
+      "kayak-rio-santa-cruz": {
+        "name": "Kayak on the Santa Cruz River",
+        "description": "Double-kayak adventure on the Santa Cruz River along a historic Patagonian exploration route. 4×4 transfer on Route 40, guided ~15 km paddle with dry suits and full gear, and lunch at a riverside estancia.",
+        "highlights": [
+          "No prior experience needed; certified instructors",
+          "Includes Gore-Tex dry suit, life jacket, boots, and gloves",
+          "~90 min paddling through steppe, wildlife, and geology",
+          "Weather dependent — cancelled in strong winds"
         ]
       },
       "laguna-nimez": {

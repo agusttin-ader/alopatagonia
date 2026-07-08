@@ -41,10 +41,13 @@ Después de subir fotos nuevas: npm run catalog:optimize-excursions && npm run c
   excursiones/laguna-de-los-tres/ → Laguna de los Tres
   excursiones/condores-aguilas/ → Miradores Cóndores y Águilas
   excursiones/lago-del-desierto/ → Lago del Desierto y Glaciar Huemul
+  excursiones/navegacion-lago-viedma/ → Navegación Lago Viedma
 
 ── esquel-trevelin  ──
   excursiones/los-alerces/ → Parque Nacional Los Alerces
+  excursiones/alerzal-milenario/ → Navegación al Alerzal Milenario
   excursiones/lago-futalaufquen/ → Navegación Lago Futalaufquen
+  excursiones/campo-tulipanes/ → Campo de Tulipanes
   excursiones/trevelin/ → Valle 16 de Octubre y Trevelin
 
 ── la-angostura ──
@@ -55,11 +58,22 @@ Después de subir fotos nuevas: npm run catalog:optimize-excursions && npm run c
 ── madryn ──
   excursiones/peninsula-valdes/ → Península Valdés
   excursiones/ballenas-embarcacion/ → Avistaje de ballenas en embarcación
+  excursiones/buceo-lobos-marinos/ → Buceo con lobos marinos
+  excursiones/punta-tombo/ → Punta Tombo — Pingüinera
   excursiones/punta-loma/ → Punta Loma y reservas costeras
 
 ── calafate ──
-  excursiones/perito-moreno/ → Glaciar Perito Moreno
+  excursiones/perito-moreno/ → Glaciar Perito Moreno — Pasarelas
+  excursiones/navegacion-corta-pasarelas/ → Navegación corta con pasarelas
+  excursiones/parque-nacional-los-glaciares/ → Parque Nacional Los Glaciares
+  excursiones/minitrekking/ → Minitrekking — Glaciar Perito Moreno
   excursiones/todo-glaciares/ → Navegación Todo Glaciares
+  excursiones/nativo-experience/ → Nativo Experience — Lagos y Cavernas
+  excursiones/estancia-25-de-mayo/ → Estancia 25 de Mayo — Tarde de Campo
+  excursiones/dia-de-campo-estancia/ → Día de Campo en Estancia — Parque Nacional
+  excursiones/kayak-rio-santa-cruz/ → Kayak en Río Santa Cruz
+  excursiones/full-day-chalten/ → Full Day El Chaltén desde Calafate
+  excursiones/transfer-aeropuerto/ → Transfer Aeropuerto — El Calafate
   excursiones/laguna-nimez/ → Reserva Laguna Nimez
 
 ── traful ──
@@ -67,7 +81,14 @@ Después de subir fotos nuevas: npm run catalog:optimize-excursions && npm run c
   excursiones/cabalgata/ → Cabalgata en Traful
 
 ── ushuaia ──
-  excursiones/tierra-del-fuego/ → Parque Nacional Tierra del Fuego
-  excursiones/canal-beagle/ → Navegación Canal Beagle
+  excursiones/tierra-del-fuego/ → Tren del Fin del Mundo y Parque Nacional Tierra del Fuego
+  excursiones/canal-beagle/ → Navegación al Faro Les Éclaireurs
   excursiones/laguna-esmeralda/ → Trekking Laguna Esmeralda
+  excursiones/cerro-castor/ → Cerro Castor — Ski y snowboard
+  excursiones/trineos-nieve/ → Trineos en la nieve
+  excursiones/noche-nordica/ → Noche Nórdica
+  excursiones/motos-de-nieve/ → Motos de nieve
+  excursiones/glaciar-martial/ → Glaciar Martial
+  excursiones/puerto-almanza/ → Puerto Almanza
+  excursiones/estancia-harberton/ → Estancia Harberton
 

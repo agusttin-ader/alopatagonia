@@ -179,7 +179,7 @@ function buildExcursionImageGroups(slug: string, imagePaths: string[]) {
   const folderConfigs = getExcursionImageFoldersForSlug(slug);
 
   if (folderConfigs.length > 0) {
-    const namedGroups = folderConfigs.map(({ folderSlug, legacyFolders = [] }) => {
+    return folderConfigs.map(({ folderSlug, legacyFolders = [] }) => {
       const primary = pathsInSubfolder(imagePaths, folderSlug);
       if (primary.length > 0) return primary;
 
@@ -190,10 +190,6 @@ function buildExcursionImageGroups(slug: string, imagePaths: string[]) {
 
       return [];
     });
-
-    if (namedGroups.some((group) => group.length > 0)) {
-      return namedGroups;
-    }
   }
 
   const pool = pathsInAnyFolder(imagePaths, CATALOG_EXCURSION_FOLDERS);

@@ -406,7 +406,7 @@
     },
     "el-calafate": {
       "perito-moreno": {
-        "name": "Glaciar Perito Moreno",
+        "name": "Glaciar Perito Moreno — Passarelas",
         "description": "Passarelas de frente para uma parede de gelo de quase 80 m sobre o Brazo Rico. Desprendimentos e tons azuis que mudam com a luz do dia.",
         "highlights": [
           "Acesso o ano todo ao Parque Nacional Los Glaciares",
@@ -414,13 +414,74 @@
           "Convém chegar cedo em janeiro e fevereiro"
         ]
       },
+      "navegacion-corta-pasarelas": {
+        "name": "Navegação curta com passarelas",
+        "description": "Aproxime-se da zona de ruptura da geleira pela água. Navegação de 1 hora de frente para a parede norte do Glaciar Perito Moreno, exatamente onde ocorrem os famosos desprendimentos. Embarque no Porto Moreno, ao pé das passarelas e junto ao Canal dos Icebergs, com guia bilíngue que explica a formação da geleira e seus fenômenos únicos.",
+        "highlights": [
+          "~1 h de navegação de frente para a parede norte da geleira",
+          "Embarque no Porto Moreno, junto às passarelas",
+          "Zona de ruptura e Canal dos Icebergs",
+          "Combinável com tempo livre nos mirantes"
+        ]
+      },
+      "minitrekking": {
+        "name": "Minitrekking — Glaciar Perito Moreno",
+        "description": "Caminhada guiada sobre o gelo do Glaciar Perito Moreno com crampons. Atravesse o Brazo Rico do Lago Argentino de barco, percorra o bosque andino até a base da geleira e explore fendas azuis, sumidouros e lagoas de degelo durante uma hora e meia sobre gelo firme.",
+        "highlights": [
+          "Navegação de frente para a parede sul da geleira",
+          "Inclui crampons, capacete e guia bilíngue",
+          "Aptidão moderada, de 8 a 65 anos; dia inteiro",
+          "Esgota rápido em janeiro e fevereiro — reserve com antecedência"
+        ]
+      },
       "todo-glaciares": {
         "name": "Navegação Todo Glaciares",
-        "description": "Dia inteiro pelo Braço Norte do Lago Argentino: Upsala, Spegazzini e icebergs gigantes. Uma das navegações mais completas do sul.",
+        "description": "Dia inteiro pelo Braço Norte do Lago Argentino: atravesse a Boca do Diabo, navegue entre icebergs do glaciar Upsala e chegue à frente do Spegazzini —o mais alto do parque— com vistas aos glaciares Seco, Heim Sur e Peineta. Inclui desembarque na Base Spegazzini com trilha interpretativa pelo bosque patagônico.",
         "highlights": [
-          "Barco até a frente de geleiras pouco visitadas",
-          "Inclui traslado desde Calafate e tempo no convés",
+          "Cinco geleiras em uma única navegação",
+          "Desembarque de ~2 h no refúgio com mirantes da Baía dos Glaciares",
+          "Opção com traslado desde El Calafate (47 km até Punta Bandera)",
           "Reserve com antecedência no verão austral"
+        ]
+      },
+      "nativo-experience": {
+        "name": "Nativo Experience — Lagos e Cavernas",
+        "description": "Excursão de meio dia em 4×4 pela costa do Lago Argentino, na Reserva Natural Punta Walichu. Roteiro antropológico com mirantes sobre os penhascos, pinturas rupestres com mais de 2.000 anos e almoço ou jantar em uma caverna com vista ao lago e à cordilheira.",
+        "highlights": [
+          "Ideal no dia de chegada ou de partida (~3 h)",
+          "Sítio arqueológico com arte rupestre e guia interpretativo",
+          "Refeição regional incluída em caverna de frente ao Lago Argentino",
+          "Saídas diárias AM e PM; dificuldade baixa"
+        ]
+      },
+      "estancia-25-de-mayo": {
+        "name": "Estância 25 de Mayo — Tarde de Campo",
+        "description": "Tarde de campo em uma estância pioneira a passos do centro de El Calafate, com 17.000 hectares ao pé do Cerro Calafate. Fogueira com tortas fritas, arreio de ovelhas, demonstração de tosquia, passeio pela horta orgânica e jantar de cordeiro patagônico com show folclórico.",
+        "highlights": [
+          "Tradições rurais: currais, tosquia e fiandeiras",
+          "Degustação de cordeiro confitado no mirante do arroio",
+          "Jantar regional no quincho com música e danças típicas",
+          "Opera de setembro a abril; saídas à tarde"
+        ]
+      },
+      "dia-de-campo-estancia": {
+        "name": "Dia de Campo na Estância — Parque Nacional",
+        "description": "Dia de campo em uma estância pioneira dentro do Parque Nacional Los Glaciares, sobre o braço sul do Lago Argentino. Mais de cem anos de história familiar, demonstrações gaúchas de tosquia e arreio, caminhada até La Angostura —onde se encontram o Lago Roca e o Argentino— e churrasco de cordeiro patagônico com vista à cordilheira.",
+        "highlights": [
+          "~5 h na estância + traslado desde El Calafate (~56 km)",
+          "Recepção com bebidas quentes e pastelaria caseira",
+          "Ordenha, tosquia, prova de rédeas e casco histórico",
+          "Cavalgada opcional; opera de 15 de setembro a 15 de maio"
+        ]
+      },
+      "kayak-rio-santa-cruz": {
+        "name": "Caiaque no Rio Santa Cruz",
+        "description": "Aventura em caiaque duplo pelo Rio Santa Cruz, seguindo a rota histórica de exploração da Patagônia. Traslado em 4×4 pela Rota 40, remada guiada de ~15 km com roupas secas e equipamento completo, e almoço em uma estância às margens do rio.",
+        "highlights": [
+          "Sem experiência prévia; instrutores certificados",
+          "Inclui roupa seca Gore-Tex, colete, botas e luvas",
+          "~90 min de remada entre estepa, fauna e formações geológicas",
+          "Depende do clima — cancela com ventos fortes"
         ]
       },
       "laguna-nimez": {

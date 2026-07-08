@@ -1,0 +1,5 @@
+Excursión: Minitrekking — Glaciar Perito Moreno
+Carpeta: minitrekking
+
+Colocá acá una sola imagen (ideal: main.jpg).
+Formatos: .jpg, .jpeg, .png, .webp

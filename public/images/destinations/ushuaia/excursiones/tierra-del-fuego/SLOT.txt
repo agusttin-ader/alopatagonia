@@ -1,4 +1,4 @@
-Excursión: Parque Nacional Tierra del Fuego
+Excursión: Tren del Fin del Mundo y Parque Nacional Tierra del Fuego
 Carpeta: tierra-del-fuego
 
 Colocá acá una sola imagen (ideal: main.jpg).

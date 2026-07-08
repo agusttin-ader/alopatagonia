@@ -1,4 +1,4 @@
-Excursión: Glaciar Perito Moreno
+Excursión: Glaciar Perito Moreno — Pasarelas
 Carpeta: perito-moreno
 
 Colocá acá una sola imagen (ideal: main.jpg).
