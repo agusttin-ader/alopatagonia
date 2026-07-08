@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, ChevronDown, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { AppImage } from "@/components/media/AppImage";
+import { MobileSnapCarousel } from "@/components/mobile/MobileSnapCarousel";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
@@ -15,7 +16,7 @@ import { getLocalizedHomeSectionHref } from "@/lib/i18n/internal-href";
 import { scrollToHomeSection } from "@/lib/home-sections";
 import { SPREAD_TILE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
-import { cn, horizontalCarouselClass } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 const DESTINATION_NAME_MOTION = {
   active: { scale: 1.06 },
@@ -219,16 +220,11 @@ function DestinationMobileImageCarousel({
 }) {
   const t = useTranslations("homeDestinations");
   const images = useMemo(() => uniqueGalleryImages(destination), [destination]);
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef(0);
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     setActiveIndex(0);
-    if (scrollerRef.current) scrollerRef.current.scrollLeft = 0;
   }, [destination.slug]);
-
-  useEffect(() => () => window.cancelAnimationFrame(rafRef.current), []);
 
   if (images.length === 0) return null;
 
@@ -237,38 +233,14 @@ function DestinationMobileImageCarousel({
 
   const hasMultiple = images.length > 1;
 
-  const slideStride = () => {
-    const scroller = scrollerRef.current;
-    if (!scroller) return 1;
-    return scroller.scrollWidth / images.length;
-  };
-
-  const handleScroll = () => {
-    if (rafRef.current) return;
-    rafRef.current = window.requestAnimationFrame(() => {
-      rafRef.current = 0;
-      const scroller = scrollerRef.current;
-      if (!scroller) return;
-      const index = Math.round(scroller.scrollLeft / slideStride());
-      setActiveIndex(Math.max(0, Math.min(images.length - 1, index)));
-    });
-  };
-
-  const scrollToIndex = (index: number) => {
-    scrollerRef.current?.scrollTo({ left: slideStride() * index, behavior: "smooth" });
-  };
-
   return (
     <div>
-      <div
-        ref={scrollerRef}
-        onScroll={handleScroll}
+      <MobileSnapCarousel
+        activeIndex={activeIndex}
+        onActiveIndexChange={setActiveIndex}
         aria-label={t("photosOf", { destination: destination.name })}
-        className={cn(
-          horizontalCarouselClass,
-          "gap-3 pb-1",
-          "snap-x snap-mandatory",
-        )}
+        trackClassName="gap-3"
+        slideClassName={hasMultiple ? "w-[85%]" : "w-full"}
       >
         {images.map((image, index) => (
           <button
@@ -280,9 +252,8 @@ function DestinationMobileImageCarousel({
             }}
             aria-label={t("expandPhotoN", { n: index + 1, destination: destination.name })}
             className={cn(
-              "relative shrink-0 snap-start overflow-hidden rounded-2xl",
+              "relative overflow-hidden rounded-2xl",
               "aspect-[4/5] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake-foreground/55 focus-visible:ring-offset-2 focus-visible:ring-offset-footer-lake",
-              hasMultiple ? "w-[85%]" : "w-full",
             )}
           >
             <AppImage
@@ -296,7 +267,7 @@ function DestinationMobileImageCarousel({
             />
           </button>
         ))}
-      </div>
+      </MobileSnapCarousel>
 
       {hasMultiple ? (
         <div className="mt-3 flex items-center justify-center gap-1.5">
@@ -306,7 +277,7 @@ function DestinationMobileImageCarousel({
               type="button"
               tabIndex={-1}
               aria-hidden
-              onClick={() => scrollToIndex(index)}
+              onClick={() => setActiveIndex(index)}
               className={cn(
                 "h-1.5 rounded-full transition-all duration-300",
                 index === activeIndex

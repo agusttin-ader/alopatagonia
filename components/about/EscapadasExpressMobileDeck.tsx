@@ -1,13 +1,14 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 import { EscapadasExpressMedia } from "@/components/about/EscapadasExpressMedia";
+import { MobileSnapCarousel } from "@/components/mobile/MobileSnapCarousel";
 import { MagazinePillCta } from "@/components/ui/magazine-pill-cta";
 import { getWhatsAppUrl } from "@/lib/constants";
 import type { EscapadaExpressPromo } from "@/lib/escapadas-express";
-import { cn, horizontalCarouselClass } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 type EscapadasExpressMobileDeckProps = {
   promos: EscapadaExpressPromo[];
@@ -22,46 +23,9 @@ const SECTION_BG =
 
 export function EscapadasExpressMobileDeck({ promos }: EscapadasExpressMobileDeckProps) {
   const t = useTranslations("promosPatagonia");
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef(0);
   const [active, setActive] = useState(0);
 
   const count = promos.length;
-
-  useEffect(() => () => window.cancelAnimationFrame(rafRef.current), []);
-
-  const centerOffsetFor = (index: number) => {
-    const scroller = scrollerRef.current;
-    const child = scroller?.children[index] as HTMLElement | undefined;
-    if (!scroller || !child) return 0;
-    return child.offsetLeft - (scroller.clientWidth - child.clientWidth) / 2;
-  };
-
-  const handleScroll = () => {
-    if (rafRef.current) return;
-    rafRef.current = window.requestAnimationFrame(() => {
-      rafRef.current = 0;
-      const scroller = scrollerRef.current;
-      if (!scroller) return;
-      const viewportCenter = scroller.scrollLeft + scroller.clientWidth / 2;
-      let closest = 0;
-      let minDelta = Infinity;
-      Array.from(scroller.children).forEach((node, index) => {
-        const child = node as HTMLElement;
-        const childCenter = child.offsetLeft + child.clientWidth / 2;
-        const delta = Math.abs(childCenter - viewportCenter);
-        if (delta < minDelta) {
-          minDelta = delta;
-          closest = index;
-        }
-      });
-      setActive(closest);
-    });
-  };
-
-  const scrollToIndex = (index: number) => {
-    scrollerRef.current?.scrollTo({ left: centerOffsetFor(index), behavior: "smooth" });
-  };
 
   if (count === 0) return null;
 
@@ -81,24 +45,20 @@ export function EscapadasExpressMobileDeck({ promos }: EscapadasExpressMobileDec
         </p>
       </header>
 
-      <div
-        ref={scrollerRef}
-        onScroll={handleScroll}
-        aria-roledescription="carousel"
+      <MobileSnapCarousel
+        activeIndex={active}
+        onActiveIndexChange={setActive}
         aria-label={t("sectionAria")}
-        className={cn(
-          horizontalCarouselClass,
-          "-mx-5 gap-3 px-[7vw] pb-1",
-          "snap-x snap-mandatory",
-        )}
+        className="-mx-5"
+        trackClassName="gap-3 px-[7vw]"
+        slideClassName="w-[86vw]"
       >
         {promos.map((promo, index) => (
           <article
             key={promo.id}
             className={cn(
-              "flex shrink-0 snap-center flex-col overflow-hidden rounded-[1.5rem] bg-card",
+              "flex flex-col overflow-hidden rounded-[1.5rem] bg-card",
               "shadow-[0_18px_44px_-28px_rgba(0,0,0,0.5)] ring-1 ring-black/5",
-              "w-[86vw]",
             )}
           >
             <div className="relative aspect-[4/3] w-full overflow-hidden bg-black">
@@ -160,7 +120,7 @@ export function EscapadasExpressMobileDeck({ promos }: EscapadasExpressMobileDec
             </div>
           </article>
         ))}
-      </div>
+      </MobileSnapCarousel>
 
       {hasMultiple ? (
         <div className="mt-4 flex items-center justify-center gap-1.5">
@@ -169,7 +129,7 @@ export function EscapadasExpressMobileDeck({ promos }: EscapadasExpressMobileDec
               key={`dot-${promo.id}`}
               type="button"
               aria-label={t("viewPromo", { title: promo.title })}
-              onClick={() => scrollToIndex(index)}
+              onClick={() => setActive(index)}
               className={cn(
                 "h-1.5 rounded-full transition-all duration-300",
                 index === active ? "w-5 bg-foreground/70" : "w-1.5 bg-foreground/25",
