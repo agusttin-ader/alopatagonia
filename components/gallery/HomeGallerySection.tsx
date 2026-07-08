@@ -19,7 +19,7 @@ import {
   siteShell,
 } from "@/lib/layout-shell";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
-import { cn } from "@/lib/utils";
+import { cn, horizontalCarouselClass } from "@/lib/utils";
 
 const DESKTOP_DISPLAY_COUNT = 7;
 const DISPLAY_COUNT = DESKTOP_DISPLAY_COUNT;
@@ -289,9 +289,9 @@ function MobileGalleryCarousel({
         ref={scrollerRef}
         onScroll={handleScroll}
         className={cn(
-          "flex gap-3 overflow-x-auto scroll-smooth pb-1",
-          "snap-x snap-mandatory touch-pan-x overscroll-x-contain",
-          "[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+          horizontalCarouselClass,
+          "gap-3 pb-1",
+          "snap-x snap-mandatory",
         )}
       >
         {images.map((image, index) => (

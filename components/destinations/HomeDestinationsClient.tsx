@@ -15,7 +15,7 @@ import { getLocalizedHomeSectionHref } from "@/lib/i18n/internal-href";
 import { scrollToHomeSection } from "@/lib/home-sections";
 import { SPREAD_TILE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
-import { cn } from "@/lib/utils";
+import { cn, horizontalCarouselClass } from "@/lib/utils";
 
 const DESTINATION_NAME_MOTION = {
   active: { scale: 1.06 },
@@ -265,9 +265,9 @@ function DestinationMobileImageCarousel({
         onScroll={handleScroll}
         aria-label={t("photosOf", { destination: destination.name })}
         className={cn(
-          "flex gap-3 overflow-x-auto scroll-smooth pb-1",
-          "snap-x snap-mandatory touch-pan-x overscroll-x-contain",
-          "[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+          horizontalCarouselClass,
+          "gap-3 pb-1",
+          "snap-x snap-mandatory",
         )}
       >
         {images.map((image, index) => (

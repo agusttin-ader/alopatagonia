@@ -7,7 +7,7 @@ import { EscapadasExpressMedia } from "@/components/about/EscapadasExpressMedia"
 import { MagazinePillCta } from "@/components/ui/magazine-pill-cta";
 import { getWhatsAppUrl } from "@/lib/constants";
 import type { EscapadaExpressPromo } from "@/lib/escapadas-express";
-import { cn } from "@/lib/utils";
+import { cn, horizontalCarouselClass } from "@/lib/utils";
 
 type EscapadasExpressMobileDeckProps = {
   promos: EscapadaExpressPromo[];
@@ -87,9 +87,9 @@ export function EscapadasExpressMobileDeck({ promos }: EscapadasExpressMobileDec
         aria-roledescription="carousel"
         aria-label={t("sectionAria")}
         className={cn(
-          "-mx-5 flex gap-3 overflow-x-auto scroll-smooth px-[7vw] pb-1",
-          "snap-x snap-mandatory touch-pan-x overscroll-x-contain",
-          "[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+          horizontalCarouselClass,
+          "-mx-5 gap-3 px-[7vw] pb-1",
+          "snap-x snap-mandatory",
         )}
       >
         {promos.map((promo, index) => (
