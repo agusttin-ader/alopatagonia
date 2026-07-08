@@ -11,6 +11,7 @@ import {
   HERO_VIDEO_CAROUSEL_ENABLED,
   HERO_VIDEO_CROSSFADE_MS,
   HERO_VIDEO_PLAYBACK_RATE,
+  getFirstHeroCarouselSrc,
   getHeroVideoSrc,
   getNextCarouselIndex,
   pickHeroVideoTier,
@@ -24,11 +25,11 @@ import {
 import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
-/** Segundos antes del final para empezar a reproducir el clip siguiente (oculto). */
-const PREWARM_LEAD_SEC = HERO_VIDEO_CROSSFADE_MS / 1000 + 2;
+/** Segundos antes del final para precargar el clip siguiente en el slot inactivo. */
+const PRELOAD_LEAD_SECONDS = 4;
 
 /** Segundos antes del final para iniciar el crossfade solapado. */
-const OVERLAP_LEAD_SEC = HERO_VIDEO_CROSSFADE_MS / 1000 + 0.08;
+const OVERLAP_LEAD_SECONDS = HERO_VIDEO_CROSSFADE_MS / 1000 + 0.08;
 
 function canStartHeroVideo(): boolean {
   if (typeof window === "undefined") return false;
@@ -107,18 +108,16 @@ export function HeroBackground() {
   const carouselIndexRef = useRef(0);
   const tierRef = useRef<HeroVideoTier>("desktop");
   const transitioningRef = useRef(false);
-  const inactiveWarmedRef = useRef(false);
-  const warmingRef = useRef(false);
   const slotsRef = useRef<[string | null, string | null]>([null, null]);
-
-  const deferUpdate = useCallback((fn: () => void) => {
-    queueMicrotask(fn);
-  }, []);
+  const skipAttemptsRef = useRef(0);
 
   useLayoutEffect(() => {
     setFallbackImage(getAboutUsFallbackImage());
     setVideoSupported(canPlayInlineVideo(reduceMotion));
     tierRef.current = pickHeroVideoTier(window.innerWidth);
+    if (canPlayInlineVideo(reduceMotion)) {
+      prefetchVideoUrl(getFirstHeroCarouselSrc(window.innerWidth));
+    }
   }, [reduceMotion]);
 
   const showVideo = videoSupported === true && !videoFailed && reduceMotion !== true;
@@ -137,66 +136,25 @@ export function HeroBackground() {
     });
   }, []);
 
-  const prefetchUpcomingUrls = useCallback(
-    (activeIndex: number, tier: HeroVideoTier) => {
-      if (!carouselEnabled) return;
-      prefetchVideoUrl(resolveSrc(getNextCarouselIndex(activeIndex), tier));
-      prefetchVideoUrl(
-        resolveSrc(getNextCarouselIndex(getNextCarouselIndex(activeIndex)), tier),
-      );
-    },
-    [carouselEnabled, resolveSrc],
-  );
-
   const preloadUpcoming = useCallback(
     (activeIndex: number, tier: HeroVideoTier, inactiveSlot: 0 | 1) => {
       if (!carouselEnabled) return;
       const nextIndex = getNextCarouselIndex(activeIndex);
       const nextSrc = resolveSrc(nextIndex, tier);
-      if (slotsRef.current[inactiveSlot] !== nextSrc) {
-        inactiveWarmedRef.current = false;
-        warmingRef.current = false;
-        setSlotSrc(inactiveSlot, nextSrc);
-      }
-      prefetchUpcomingUrls(activeIndex, tier);
+      if (slotsRef.current[inactiveSlot] === nextSrc) return;
+      setSlotSrc(inactiveSlot, nextSrc);
     },
-    [carouselEnabled, prefetchUpcomingUrls, resolveSrc, setSlotSrc],
-  );
-
-  const warmInactiveSlot = useCallback(
-    async (inactiveSlot: 0 | 1) => {
-      if (!carouselEnabled || inactiveWarmedRef.current || warmingRef.current) return;
-
-      const video = videoRefs[inactiveSlot].current;
-      if (!video || !slotsRef.current[inactiveSlot]) return;
-
-      warmingRef.current = true;
-      try {
-        await waitForVideoReady(video);
-        if (video.currentTime > 0.05) {
-          video.currentTime = 0;
-        }
-        const played = await playVideo(video);
-        if (played) {
-          inactiveWarmedRef.current = true;
-        }
-      } finally {
-        warmingRef.current = false;
-      }
-    },
-    [carouselEnabled, videoRefs],
+    [carouselEnabled, resolveSrc, setSlotSrc],
   );
 
   const bootCarousel = useCallback(
     (tier: HeroVideoTier) => {
       carouselIndexRef.current = 0;
       transitioningRef.current = false;
-      inactiveWarmedRef.current = false;
-      warmingRef.current = false;
+      skipAttemptsRef.current = 0;
       setActiveSlot(0);
       setSlotSrc(0, resolveSrc(0, tier));
       setSlotVisible([false, false]);
-      prefetchVideoUrl(resolveSrc(0, tier));
       if (carouselEnabled) {
         preloadUpcoming(0, tier, 1);
       } else {
@@ -207,69 +165,21 @@ export function HeroBackground() {
     [carouselEnabled, preloadUpcoming, resolveSrc, setSlotSrc],
   );
 
-  const finishTransition = useCallback(
-    (previousActiveSlot: 0 | 1, nextIndex: number) => {
-      window.setTimeout(() => {
-        videoRefs[previousActiveSlot].current?.pause();
-        transitioningRef.current = false;
-        inactiveWarmedRef.current = false;
-        preloadUpcoming(nextIndex, tierRef.current, previousActiveSlot);
-      }, HERO_VIDEO_CROSSFADE_MS);
-    },
-    [preloadUpcoming, videoRefs],
-  );
-
-  const startCrossfade = useCallback(
-    async (previousActiveSlot: 0 | 1, inactiveSlot: 0 | 1) => {
-      if (transitioningRef.current || !carouselEnabled) return;
-
-      const nextIndex = getNextCarouselIndex(carouselIndexRef.current);
-      const nextSrc = resolveSrc(nextIndex, tierRef.current);
-      const inactiveVideo = videoRefs[inactiveSlot].current;
-
-      transitioningRef.current = true;
-
-      if (slotsRef.current[inactiveSlot] !== nextSrc) {
-        setSlotSrc(inactiveSlot, nextSrc);
-      }
-
-      if (!inactiveVideo) {
-        transitioningRef.current = false;
-        return;
-      }
-
-      if (!inactiveWarmedRef.current) {
-        await waitForVideoReady(inactiveVideo);
-        inactiveVideo.currentTime = 0;
-        const played = await playVideo(inactiveVideo);
-        if (!played) {
-          transitioningRef.current = false;
-          setVideoFailed(true);
-          return;
-        }
-        inactiveWarmedRef.current = true;
-      } else if (inactiveVideo.paused) {
-        inactiveVideo.currentTime = 0;
-        const played = await playVideo(inactiveVideo);
-        if (!played) {
-          transitioningRef.current = false;
-          setVideoFailed(true);
-          return;
-        }
-      }
-
-      setSlotVisible((current) => {
-        const copy: [boolean, boolean] = [...current];
-        copy[inactiveSlot] = true;
-        copy[previousActiveSlot] = false;
-        return copy;
-      });
-      setActiveSlot(inactiveSlot);
-      carouselIndexRef.current = nextIndex;
-      finishTransition(previousActiveSlot, nextIndex);
-    },
-    [carouselEnabled, finishTransition, resolveSrc, setSlotSrc, videoRefs],
-  );
+  const skipCurrentVideo = useCallback(() => {
+    if (skipAttemptsRef.current >= HERO_CAROUSEL_CANDIDATES.length) {
+      setVideoFailed(true);
+      return false;
+    }
+    skipAttemptsRef.current += 1;
+    const nextIndex = getNextCarouselIndex(carouselIndexRef.current);
+    carouselIndexRef.current = nextIndex;
+    setSlotVisible([false, false]);
+    setSlotSrc(activeSlot, resolveSrc(nextIndex, tierRef.current));
+    if (carouselEnabled) {
+      preloadUpcoming(nextIndex, tierRef.current, (activeSlot === 0 ? 1 : 0) as 0 | 1);
+    }
+    return true;
+  }, [activeSlot, carouselEnabled, preloadUpcoming, resolveSrc, setSlotSrc]);
 
   useEffect(() => {
     if (!showVideo) return;
@@ -321,6 +231,96 @@ export function HeroBackground() {
     }
   }, [showVideo, activated, carouselEnabled, activeSlot, slots, videoRefs]);
 
+  const handleSlotReady = useCallback(
+    async (slot: 0 | 1) => {
+      const video = videoRefs[slot].current;
+      if (!video || transitioningRef.current || slot !== activeSlot) return;
+
+      const played = await playVideo(video);
+      if (!played) {
+        skipCurrentVideo();
+        return;
+      }
+
+      skipAttemptsRef.current = 0;
+      setSlotVisible((current) => {
+        const copy: [boolean, boolean] = [...current];
+        copy[slot] = true;
+        return copy;
+      });
+
+      if (carouselEnabled) {
+        const inactiveSlot = (slot === 0 ? 1 : 0) as 0 | 1;
+        preloadUpcoming(carouselIndexRef.current, tierRef.current, inactiveSlot);
+      }
+    },
+    [activeSlot, carouselEnabled, preloadUpcoming, skipCurrentVideo, videoRefs],
+  );
+
+  const advanceCarousel = useCallback(async () => {
+    if (!carouselEnabled || transitioningRef.current) return;
+
+    const nextIndex = getNextCarouselIndex(carouselIndexRef.current);
+    const inactiveSlot = (activeSlot === 0 ? 1 : 0) as 0 | 1;
+    const nextSrc = resolveSrc(nextIndex, tierRef.current);
+    const previousActiveSlot = activeSlot;
+
+    transitioningRef.current = true;
+
+    if (slotsRef.current[inactiveSlot] !== nextSrc) {
+      setSlotSrc(inactiveSlot, nextSrc);
+    }
+
+    await new Promise<void>((resolve) => {
+      const waitForNode = () => {
+        const video = videoRefs[inactiveSlot].current;
+        if (!video) {
+          window.requestAnimationFrame(waitForNode);
+          return;
+        }
+
+        void waitForVideoReady(video).then(async () => {
+          video.currentTime = 0;
+          const played = await playVideo(video);
+          if (!played) {
+            transitioningRef.current = false;
+            skipAttemptsRef.current += 1;
+            if (skipAttemptsRef.current >= HERO_CAROUSEL_CANDIDATES.length) {
+              setVideoFailed(true);
+              resolve();
+              return;
+            }
+            carouselIndexRef.current = nextIndex;
+            void advanceCarousel();
+            resolve();
+            return;
+          }
+
+          skipAttemptsRef.current = 0;
+
+          setSlotVisible((current) => {
+            const copy: [boolean, boolean] = [...current];
+            copy[inactiveSlot] = true;
+            copy[previousActiveSlot] = false;
+            return copy;
+          });
+          setActiveSlot(inactiveSlot);
+          carouselIndexRef.current = nextIndex;
+
+          window.setTimeout(() => {
+            videoRefs[previousActiveSlot].current?.pause();
+            transitioningRef.current = false;
+            preloadUpcoming(nextIndex, tierRef.current, previousActiveSlot);
+          }, HERO_VIDEO_CROSSFADE_MS);
+
+          resolve();
+        });
+      };
+
+      waitForNode();
+    });
+  }, [activeSlot, carouselEnabled, preloadUpcoming, resolveSrc, setSlotSrc, videoRefs]);
+
   useEffect(() => {
     if (!showVideo || !activated || !carouselEnabled) return;
 
@@ -337,13 +337,12 @@ export function HeroBackground() {
 
       const remaining = duration - activeVideo.currentTime;
 
-      if (remaining <= PREWARM_LEAD_SEC) {
+      if (remaining <= PRELOAD_LEAD_SECONDS) {
         preloadUpcoming(carouselIndexRef.current, tierRef.current, inactiveSlot);
-        void warmInactiveSlot(inactiveSlot);
       }
 
-      if (remaining <= OVERLAP_LEAD_SEC && inactiveWarmedRef.current) {
-        void startCrossfade(activeSlot, inactiveSlot);
+      if (remaining <= OVERLAP_LEAD_SECONDS) {
+        void advanceCarousel();
       }
     };
 
@@ -354,48 +353,33 @@ export function HeroBackground() {
     activated,
     carouselEnabled,
     activeSlot,
+    advanceCarousel,
     preloadUpcoming,
-    startCrossfade,
-    warmInactiveSlot,
     videoRefs,
   ]);
-
-  const handleSlotReady = useCallback(
-    async (slot: 0 | 1) => {
-      const video = videoRefs[slot].current;
-      if (!video || transitioningRef.current || slot !== activeSlot) return;
-
-      const played = await playVideo(video);
-      if (!played) {
-        setVideoFailed(true);
-        return;
-      }
-
-      setSlotVisible((current) => {
-        const copy: [boolean, boolean] = [...current];
-        copy[slot] = true;
-        return copy;
-      });
-
-      if (carouselEnabled) {
-        const inactiveSlot = (slot === 0 ? 1 : 0) as 0 | 1;
-        preloadUpcoming(carouselIndexRef.current, tierRef.current, inactiveSlot);
-      }
-    },
-    [activeSlot, carouselEnabled, preloadUpcoming, videoRefs],
-  );
 
   const handleVideoEnded = useCallback(
     (slot: 0 | 1) => {
       if (slot !== activeSlot || transitioningRef.current) return;
       if (carouselEnabled) {
-        const inactiveSlot = (slot === 0 ? 1 : 0) as 0 | 1;
-        void startCrossfade(slot, inactiveSlot);
+        void advanceCarousel();
         return;
       }
       void videoRefs[slot].current?.play();
     },
-    [activeSlot, carouselEnabled, startCrossfade, videoRefs],
+    [activeSlot, advanceCarousel, carouselEnabled, videoRefs],
+  );
+
+  const handleVideoError = useCallback(
+    (slot: 0 | 1) => {
+      if (slot !== activeSlot) return;
+      if (carouselEnabled) {
+        skipCurrentVideo();
+        return;
+      }
+      setVideoFailed(true);
+    },
+    [activeSlot, carouselEnabled, skipCurrentVideo],
   );
 
   useEffect(() => {
@@ -452,32 +436,26 @@ export function HeroBackground() {
                 preload="auto"
                 poster={fallbackImage.src}
                 onLoadedData={() => {
-                  deferUpdate(() => {
-                    if (slot === activeSlot && !transitioningRef.current) {
-                      void handleSlotReady(slot);
-                    }
-                  });
+                  if (slot === activeSlot && !transitioningRef.current) {
+                    void handleSlotReady(slot);
+                  }
                 }}
                 onCanPlay={() => {
-                  deferUpdate(() => {
-                    if (slot === activeSlot && !transitioningRef.current) {
-                      void handleSlotReady(slot);
-                    }
-                  });
+                  if (slot === activeSlot && !transitioningRef.current) {
+                    void handleSlotReady(slot);
+                  }
                 }}
                 onPlaying={() => {
-                  deferUpdate(() => {
-                    if (slot === activeSlot) {
-                      setSlotVisible((current) => {
-                        const copy: [boolean, boolean] = [...current];
-                        copy[slot] = true;
-                        return copy;
-                      });
-                    }
-                  });
+                  if (slot === activeSlot) {
+                    setSlotVisible((current) => {
+                      const copy: [boolean, boolean] = [...current];
+                      copy[slot] = true;
+                      return copy;
+                    });
+                  }
                 }}
                 onEnded={() => handleVideoEnded(slot)}
-                onError={() => deferUpdate(() => setVideoFailed(true))}
+                onError={() => handleVideoError(slot)}
               />
             );
           })

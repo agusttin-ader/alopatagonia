@@ -93,3 +93,9 @@ export function getHeroVideoSrc(
   return paths.desktop;
 }
 
+/** Primer clip del carrusel según ancho de pantalla (para preload durante la intro). */
+export function getFirstHeroCarouselSrc(viewportWidth: number): string {
+  const candidate = HERO_CAROUSEL_CANDIDATES[0];
+  return getHeroVideoSrc(candidate, pickHeroVideoTier(viewportWidth));
+}
+

@@ -1,5 +1,7 @@
 import { HOME_SECTION_HASH_IDS } from "@/lib/home-sections";
 import { routing } from "@/i18n/routing";
+import { getFirstHeroCarouselSrc } from "@/lib/hero-video";
+import { IMAGE_PRELOAD_WIDTH, buildNextImageUrl } from "@/lib/image-config";
 
 /** Keep in sync with runSiteIntroBoot() (instrumentation-client.ts) */
 export const SITE_INTRO_STORAGE_KEY = "alo-site-intro-seen-v2";
@@ -34,9 +36,28 @@ function preloadIntroImage() {
   const link = document.createElement("link");
   link.rel = "preload";
   link.as = "image";
-  link.href = SITE_INTRO_IMAGE;
+  link.href = buildNextImageUrl(SITE_INTRO_IMAGE, {
+    width: IMAGE_PRELOAD_WIDTH.introDesktop,
+    quality: 82,
+  });
   link.setAttribute("data-alo-intro-preload", "");
   link.fetchPriority = "high";
+  document.head.appendChild(link);
+}
+
+function preloadFirstHeroVideo() {
+  if (typeof document === "undefined") return;
+
+  const href = getFirstHeroCarouselSrc(window.innerWidth);
+  const selector = `link[data-alo-hero-preload][href="${href}"]`;
+  if (document.head.querySelector(selector)) return;
+
+  const link = document.createElement("link");
+  link.rel = "preload";
+  link.as = "fetch";
+  link.href = href;
+  link.type = "video/mp4";
+  link.setAttribute("data-alo-hero-preload", "");
   document.head.appendChild(link);
 }
 
@@ -84,6 +105,7 @@ export function runSiteIntroBoot(): void {
 
     root.classList.add("site-intro-pending");
     preloadIntroImage();
+    preloadFirstHeroVideo();
   } catch {
     document.documentElement.classList.remove("site-intro-pending");
   }
@@ -100,9 +122,9 @@ html.site-intro-placeholder-off #site-intro-placeholder{display:none!important}
 
 /** Logo grande → se achica a la izquierda + wordmark → capa sube */
 export const SITE_INTRO_TIMELINE_MS = {
-  letter: 1500,
-  word: 1500,
-  exit: 900,
+  letter: 1300,
+  word: 1400,
+  exit: 850,
 } as const;
 
 export const SITE_INTRO_HIDE_AFTER_MS =

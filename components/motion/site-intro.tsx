@@ -162,15 +162,15 @@ export function SiteIntro() {
         <div className="flex max-w-[min(100%,20rem)] flex-col items-center gap-4 text-center sm:hidden">
           <motion.div
             className="origin-center"
-            initial={reduceMotion ? false : { opacity: 0, scale: 2.15 }}
+            initial={reduceMotion ? false : { opacity: 0, scale: 2.35 }}
             animate={{
               opacity: 1,
-              scale: isLetter ? 2.55 : 1,
+              scale: isLetter ? 2.45 : 1,
             }}
             transition={{
-              opacity: { duration: 0.5, ease: easeFlow },
+              opacity: { duration: 0.45, ease: easeFlow },
               scale: {
-                duration: isWord ? 0.82 : 0.72,
+                duration: isWord ? 0.78 : 0.68,
                 ease: easeFlow,
               },
             }}
@@ -218,15 +218,15 @@ export function SiteIntro() {
         >
           <motion.div
             className="origin-center justify-self-center"
-            initial={reduceMotion ? false : { opacity: 0, scale: 3.15 }}
+            initial={reduceMotion ? false : { opacity: 0, scale: 3.25 }}
             animate={{
               opacity: 1,
-              scale: isLetter ? 3.45 : 1,
+              scale: isLetter ? 3.35 : 1,
             }}
             transition={{
-              opacity: { duration: 0.65, ease: easeFlow },
+              opacity: { duration: 0.55, ease: easeFlow },
               scale: {
-                duration: isWord ? 0.96 : 0.82,
+                duration: isWord ? 0.88 : 0.75,
                 ease: easeFlow,
               },
             }}

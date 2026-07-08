@@ -20,8 +20,8 @@ const SOURCES = ["hero2", "hero3", "hero4", "hero6", "hero7", "hero8", "hero9"];
 /** Máximo por clip; los más cortos conservan su duración original. */
 const MAX_CLIP_SECONDS = 11;
 
-/** Overrides por clip (p. ej. el primero del carrusel dura más). */
-const CLIP_MAX_OVERRIDES = { hero9: 26 };
+/** Overrides por clip (mantener hero9 acotado como el resto). */
+const CLIP_MAX_OVERRIDES = {};
 
 /** Segundos máximos para un stem dado (con override opcional). */
 function maxSecondsFor(stem) {

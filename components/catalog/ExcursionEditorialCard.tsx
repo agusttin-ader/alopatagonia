@@ -9,6 +9,7 @@ import { Link } from "@/i18n/navigation";
 import type { CatalogItemEntry } from "@/lib/catalog/catalog-items";
 import type { ExcursionCategory } from "@/lib/catalog/types";
 import { getWhatsAppUrl } from "@/lib/constants";
+import { CARD_IMAGE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
 
@@ -37,7 +38,7 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
           <Link
             href={detailHref}
             className={cn(
-              "group relative block aspect-[4/3] min-h-[14rem] bg-muted/40 max-md:aspect-[5/4] max-md:min-h-[12rem] md:aspect-auto md:min-h-[18rem]",
+              "group relative block overflow-hidden aspect-[4/3] min-h-[14rem] bg-muted/40 max-md:aspect-[5/4] max-md:min-h-[12rem] md:aspect-auto md:min-h-[18rem]",
               reverse && "md:order-2",
             )}
           >
@@ -46,7 +47,7 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
               alt={cover.alt}
               fill
               qualityPreset="card"
-              className="object-cover transition duration-500 group-hover:scale-[1.02]"
+              className={CARD_IMAGE_HOVER_EXPAND}
               sizes={IMAGE_SIZES.catalogCard}
             />
           </Link>
