@@ -64,6 +64,8 @@ export function AppImage({
   alt,
   className,
   onLoad,
+  onError,
+  unoptimized,
   fill,
   width,
   height,
@@ -71,6 +73,7 @@ export function AppImage({
 }: AppImageProps) {
   const [loaded, setLoaded] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [optimizerFailed, setOptimizerFailed] = useState(false);
   const useBlur = shouldUseBlur(src, withBlur);
   const usePulse = priority ? false : shouldUseLoadingPulse(src, loadingPulse);
   const resolvedPlaceholder =
@@ -82,6 +85,7 @@ export function AppImage({
 
   useEffect(() => {
     setLoaded(false);
+    setOptimizerFailed(false);
   }, [src]);
 
   const handleLoad = useCallback(
@@ -102,6 +106,18 @@ export function AppImage({
     [mounted],
   );
 
+  const handleError = useCallback(
+    (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+      if (!optimizerFailed) {
+        setOptimizerFailed(true);
+        setLoaded(false);
+        return;
+      }
+      onError?.(event);
+    },
+    [optimizerFailed, onError],
+  );
+
   const imageNode = (
     <Image
       ref={handleRef}
@@ -111,6 +127,7 @@ export function AppImage({
       width={width}
       height={height}
       {...props}
+      unoptimized={optimizerFailed || unoptimized}
       quality={quality ?? IMAGE_QUALITY_BY_PRESET[qualityPreset]}
       priority={priority}
       fetchPriority={priority ? "high" : undefined}
@@ -123,6 +140,7 @@ export function AppImage({
       }
       decoding={decoding}
       onLoad={handleLoad}
+      onError={handleError}
       className={cn(
         className,
         usePulse &&

@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useReducer, useRef, useState } from "react";
 
 import { AppImage } from "@/components/media/AppImage";
+import { MobileSnapCarousel } from "@/components/mobile/MobileSnapCarousel";
 import { ImageLightbox } from "@/components/media/ImageLightbox";
 import { Reveal } from "@/components/motion/reveal";
 import { HOME_GALLERY_IMAGES, SECTION_IDS } from "@/lib/constants";
@@ -262,37 +263,18 @@ function MobileGalleryCarousel({
   onOpen: (index: number) => void;
   labelFor: (n: number) => string;
 }) {
-  const scrollerRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef(0);
   const [active, setActive] = useState(0);
-
-  useEffect(() => () => window.cancelAnimationFrame(rafRef.current), []);
-
   const count = images.length;
-
-  const handleScroll = () => {
-    if (rafRef.current) return;
-    rafRef.current = window.requestAnimationFrame(() => {
-      rafRef.current = 0;
-      const scroller = scrollerRef.current;
-      if (!scroller) return;
-      const stride = scroller.scrollWidth / count;
-      setActive(Math.max(0, Math.min(count - 1, Math.round(scroller.scrollLeft / stride))));
-    });
-  };
 
   if (count === 0) return null;
 
   return (
     <div>
-      <div
-        ref={scrollerRef}
-        onScroll={handleScroll}
-        className={cn(
-          "flex gap-3 overflow-x-auto scroll-smooth pb-1",
-          "snap-x snap-mandatory touch-pan-x overscroll-x-contain",
-          "[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
-        )}
+      <MobileSnapCarousel
+        activeIndex={active}
+        onActiveIndexChange={setActive}
+        trackClassName="gap-3"
+        slideClassName="w-[80%]"
       >
         {images.map((image, index) => (
           <button
@@ -301,7 +283,7 @@ function MobileGalleryCarousel({
             onClick={() => onOpen(index)}
             aria-label={labelFor(index + 1)}
             className={cn(
-              "relative aspect-[4/5] w-[80%] shrink-0 snap-start overflow-hidden rounded-[1.35rem] bg-muted",
+              "relative aspect-[4/5] overflow-hidden rounded-[1.35rem] bg-muted",
               "cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
             )}
           >
@@ -317,7 +299,7 @@ function MobileGalleryCarousel({
             />
           </button>
         ))}
-      </div>
+      </MobileSnapCarousel>
 
       <div className="mt-3 flex items-center justify-center gap-1.5" aria-hidden>
         {images.map((image, index) => (
