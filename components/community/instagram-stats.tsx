@@ -43,10 +43,12 @@ function FeedAvatar() {
 
 function FeedPostCarousel({
   images,
+  priority,
   prevLabel,
   nextLabel,
 }: {
   images: Array<(typeof GALLERY_IMAGES)[number]>;
+  priority?: boolean;
   prevLabel: string;
   nextLabel: string;
 }) {
@@ -81,33 +83,24 @@ function FeedPostCarousel({
           transform: `translateX(-${(activeIndex * 100) / images.length}%)`,
         }}
       >
-        {images.map((image, index) => {
-          const nearActive = Math.abs(index - activeIndex) <= 1
-            || (activeIndex === 0 && index === images.length - 1)
-            || (activeIndex === images.length - 1 && index === 0);
-
-          return (
-            <div
-              key={image.src}
-              className="relative h-full shrink-0 overflow-hidden"
-              style={{ width: `${100 / images.length}%` }}
-            >
-              {nearActive ? (
-                <AppImage
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  sizes={FEED_IMAGE_SIZES}
-                  qualityPreset="gallery"
-                  loading="lazy"
-                  className="object-cover object-center"
-                />
-              ) : (
-                <div className="size-full bg-[#1a1a1a]" aria-hidden />
-              )}
-            </div>
-          );
-        })}
+        {images.map((image, index) => (
+          <div
+            key={image.src}
+            className="relative h-full shrink-0 overflow-hidden"
+            style={{ width: `${100 / images.length}%` }}
+          >
+            <AppImage
+              src={image.src}
+              alt={image.alt}
+              fill
+              sizes={FEED_IMAGE_SIZES}
+              qualityPreset="lightbox"
+              priority={priority && index === 0}
+              loading={index <= 1 ? "eager" : "lazy"}
+              className="object-cover object-center"
+            />
+          </div>
+        ))}
       </div>
 
       {images.length > 1 ? (
@@ -200,6 +193,7 @@ function InstagramFeedPreview({ className }: { className?: string }) {
 
         <FeedPostCarousel
           images={images}
+          priority
           prevLabel={t("feedPrevPhoto")}
           nextLabel={t("feedNextPhoto")}
         />

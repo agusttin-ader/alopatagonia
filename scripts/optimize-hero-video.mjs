@@ -20,19 +20,8 @@ const SOURCES = ["hero2", "hero3", "hero4", "hero6", "hero7", "hero8", "hero9"];
 /** Máximo por clip; los más cortos conservan su duración original. */
 const MAX_CLIP_SECONDS = 11;
 
-/** Overrides por clip — hero9 se mantiene ~26s (más largo que el resto). */
-const CLIP_MAX_OVERRIDES = {
-  hero9: 26,
-};
-
-/** Overrides de encoding por clip (calidad visual similar, menos RAM/banda). */
-const CLIP_VARIANT_OVERRIDES = {
-  hero9: {
-    desktop: { crf: 24, maxrate: "5200k", bufsize: "10400k" },
-    "mobile-1080": { crf: 24, maxrate: "3200k", bufsize: "6400k" },
-    "mobile-720": { crf: 24, maxrate: "1800k", bufsize: "3600k" },
-  },
-};
+/** Overrides por clip (mantener hero9 acotado como el resto). */
+const CLIP_MAX_OVERRIDES = {};
 
 /** Segundos máximos para un stem dado (con override opcional). */
 function maxSecondsFor(stem) {
@@ -218,18 +207,12 @@ function optimizeSource(stem, clipSeconds) {
 
   const maxSeconds = maxSecondsFor(stem);
   const encodeMax = clipSeconds > maxSeconds + 0.05 ? maxSeconds : null;
-  const overrides = CLIP_VARIANT_OVERRIDES[stem] ?? {};
 
   for (const variant of VARIANTS) {
     const outputName = `${stem}-${variant.suffix}.mp4`;
     const outputPath = path.join(VIDEOS_DIR, outputName);
-    const tuned = { ...variant, ...(overrides[variant.suffix] ?? {}) };
-    const forceHeavy =
-      Boolean(overrides[variant.suffix]) &&
-      fs.existsSync(outputPath) &&
-      fs.statSync(outputPath).size > 16_000_000;
 
-    if (!forceHeavy && !needsEncode(input, outputPath)) {
+    if (!needsEncode(input, outputPath)) {
       console.log(
         `↷ ${outputName} ya está al día (${formatBytes(fs.statSync(outputPath).size)})\n`,
       );
@@ -237,15 +220,15 @@ function optimizeSource(stem, clipSeconds) {
     }
 
     console.log(
-      `→ ${tuned.label ?? variant.label} → ${outputName} (CRF ${tuned.crf}, max ${tuned.maxrate})`,
+      `→ ${variant.label} → ${outputName} (CRF ${variant.crf}, max ${variant.maxrate})`,
     );
     runFfmpeg({
       input,
       output: outputPath,
-      scale: tuned.scale,
-      crf: tuned.crf,
-      maxrate: tuned.maxrate,
-      bufsize: tuned.bufsize,
+      scale: variant.scale,
+      crf: variant.crf,
+      maxrate: variant.maxrate,
+      bufsize: variant.bufsize,
       maxSeconds: encodeMax,
     });
     console.log(`  listo: ${formatBytes(fs.statSync(outputPath).size)}\n`);
