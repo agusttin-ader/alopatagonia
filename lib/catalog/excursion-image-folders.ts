@@ -23,3 +23,15 @@ export function getExcursionImageFoldersForSlug(
       ?.excursions ?? []
   );
 }
+
+/** True si el destino figura en excursion-image-folders.json (aunque tenga 0 excursiones). */
+export function hasExplicitExcursionFolderConfig(destinationSlug: string): boolean {
+  return DESTINATION_EXCURSION_FOLDERS.some((entry) => entry.slug === destinationSlug);
+}
+
+/** Destinos sin listado de excursiones todavía (cartel “próximamente”). */
+const DESTINATIONS_EXCURSIONS_COMING_SOON = new Set(["ushuaia"]);
+
+export function hasExcursionsComingSoon(destinationSlug: string): boolean {
+  return DESTINATIONS_EXCURSIONS_COMING_SOON.has(destinationSlug);
+}

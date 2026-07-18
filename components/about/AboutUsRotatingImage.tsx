@@ -26,10 +26,10 @@ export function AboutUsRotatingBackground() {
         src={image.src}
         alt=""
         fill
-        priority
+        loading="lazy"
         withBlur={false}
         loadingPulse={false}
-        qualityPreset="hero"
+        qualityPreset="detail"
         className="object-cover"
         sizes={IMAGE_SIZES.aboutUsBackground}
       />

@@ -48,7 +48,7 @@ export async function CatalogHubSection() {
         <ul className="mt-10 grid list-none gap-6 max-md:mt-6 max-md:grid-cols-1 max-md:gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:items-stretch lg:gap-8">
           {pillars.map((pillar, index) => (
             <li key={pillar.slug} id={`hub-card-${pillar.slug}`} className="min-h-0 scroll-mt-28">
-              <CatalogHubPillarCard pillar={pillar} priority={index === 0} labels={labels} />
+              <CatalogHubPillarCard pillar={pillar} priority={false} labels={labels} />
             </li>
           ))}
         </ul>

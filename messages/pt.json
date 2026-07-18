@@ -153,7 +153,7 @@
       "excursiones": {
         "title": "Excursões",
         "eyebrow": "Por temporada",
-        "description": "Mais de 25 saídas em Bariloche — lagos, montanha e neve — e excursões em Chaltén, Calafate, Madryn e Ushuaia. Veja fotos, detalhes e inclusões e consulte no WhatsApp.",
+        "description": "Mais de 25 saídas em Bariloche — lagos, montanha e neve — e excursões em Chaltén, Calafate e Madryn. Veja fotos, detalhes e inclusões e consulte no WhatsApp.",
         "imageAlt": "Navegação frente à geleira — excursão na Patagônia"
       }
     }
@@ -387,6 +387,11 @@
     "excursionWhatsAppCta": "Consultar no WhatsApp",
     "excursionViewDetailCta": "Ver fotos e detalhes",
     "excursionWhatsAppMessage": "Tenho interesse na excursão \"{excursion}\" em {destination}. Podem me ajudar?",
+    "excursionsComingSoon": {
+      "eyebrow": "Em breve",
+      "title": "Excursões a caminho",
+      "body": "Estamos montando o catálogo de saídas em {destination}. Em breve você vai poder ver fotos, detalhes e o que está incluso aqui."
+    },
     "badges": {
       "excursion": "Excursão",
       "cabana": "Cabana",

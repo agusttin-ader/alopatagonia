@@ -32,7 +32,13 @@ export async function HowItWorks() {
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
         <Reveal className="mx-auto max-w-2xl text-center 2xl:max-w-3xl">
-          <h2 id="como-funciona-heading" className={SECTION_HEADING}>
+          <h2
+            id="como-funciona-heading"
+            className={cn(
+              SECTION_HEADING,
+              MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground",
+            )}
+          >
             {t("heading")}
           </h2>
         </Reveal>
@@ -43,13 +49,20 @@ export async function HowItWorks() {
             return (
               <li key={step.title} className="h-full min-h-0">
                 <Reveal delay={index * 0.09} className="block h-full min-h-0 w-full">
-                  <div className="relative z-0 flex min-h-0 w-full flex-col rounded-2xl bg-card/50 px-6 pb-7 pt-7 shadow-sm ring-1 ring-brand-forest/10 sm:px-8 sm:pb-9 sm:pt-9 md:h-full">
+                  <div
+                    className={cn(
+                      "relative z-0 flex min-h-0 w-full flex-col rounded-2xl px-6 pb-7 pt-7 shadow-sm ring-1 sm:px-8 sm:pb-9 sm:pt-9 md:h-full",
+                      MOBILE_MAGAZINE_G_ENABLED
+                        ? "bg-card/50 ring-brand-forest/10 max-md:bg-card max-md:ring-black/10"
+                        : "bg-card/50 ring-brand-forest/10",
+                    )}
+                  >
                     <div className="flex items-center justify-between gap-4">
-                      <span className="font-heading text-sm font-semibold tabular-nums text-brand-forest/70">
+                      <span className="font-heading text-sm font-semibold tabular-nums text-brand-forest/80">
                         {index + 1}
                       </span>
                       <div
-                        className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-forest/10 text-brand-forest"
+                        className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-forest/12 text-brand-forest"
                         aria-hidden
                       >
                         <Icon className="size-5" strokeWidth={1.9} />
@@ -58,7 +71,14 @@ export async function HowItWorks() {
                     <h3 className="mt-6 font-heading text-xl font-semibold leading-snug tracking-tight text-foreground 2xl:text-2xl">
                       {step.title}
                     </h3>
-                    <p className="mt-4 flex-1 text-[0.95rem] leading-[1.75] text-muted-foreground 2xl:text-[1.05rem]">
+                    <p
+                      className={cn(
+                        "mt-4 flex-1 text-[0.95rem] leading-[1.75] 2xl:text-[1.05rem]",
+                        MOBILE_MAGAZINE_G_ENABLED
+                          ? "text-muted-foreground max-md:text-foreground/82"
+                          : "text-muted-foreground",
+                      )}
+                    >
                       {step.description}
                     </p>
                   </div>

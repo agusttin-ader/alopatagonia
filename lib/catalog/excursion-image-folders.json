@@ -212,47 +212,6 @@
   {
     "folder": "ushuaia",
     "slug": "ushuaia",
-    "excursions": [
-      {
-        "folderSlug": "tierra-del-fuego",
-        "name": "Tren del Fin del Mundo y Parque Nacional Tierra del Fuego"
-      },
-      {
-        "folderSlug": "canal-beagle",
-        "name": "Navegación al Faro Les Éclaireurs"
-      },
-      {
-        "folderSlug": "laguna-esmeralda",
-        "name": "Trekking Laguna Esmeralda"
-      },
-      {
-        "folderSlug": "cerro-castor",
-        "name": "Cerro Castor — Ski y snowboard"
-      },
-      {
-        "folderSlug": "trineos-nieve",
-        "name": "Trineos en la nieve"
-      },
-      {
-        "folderSlug": "noche-nordica",
-        "name": "Noche Nórdica"
-      },
-      {
-        "folderSlug": "motos-de-nieve",
-        "name": "Motos de nieve"
-      },
-      {
-        "folderSlug": "glaciar-martial",
-        "name": "Glaciar Martial"
-      },
-      {
-        "folderSlug": "puerto-almanza",
-        "name": "Puerto Almanza"
-      },
-      {
-        "folderSlug": "estancia-harberton",
-        "name": "Estancia Harberton"
-      }
-    ]
+    "excursions": []
   }
 ]

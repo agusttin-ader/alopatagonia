@@ -6,6 +6,7 @@ import { DestinationExcursionBrowse } from "@/components/catalog/DestinationExcu
 import { FaqSection } from "@/components/seo/FaqSection";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
+import { hasExcursionsComingSoon } from "@/lib/catalog/excursion-image-folders";
 import type { DestinationCatalog } from "@/lib/catalog/types";
 import { PLANNER_PATH, getWhatsAppUrl } from "@/lib/constants";
 import { localizeAccommodationItem } from "@/lib/i18n/localized-accommodations";
@@ -176,6 +177,29 @@ export async function DestinationDetail({
             </div>
 
             <DestinationExcursionBrowse destination={destination} entries={excursionEntries} />
+          </section>
+        ) : hasExcursionsComingSoon(destination.slug) ? (
+          <section aria-labelledby="excursiones-heading" className="scroll-mt-24 sm:scroll-mt-28">
+            <div className="mb-8 min-w-0 max-md:mb-6">
+              <h2 id="excursiones-heading" className={cn("font-heading", SECTION_TITLE, "max-md:text-xl")}>
+                {tCatalog("sections.excursions")}
+              </h2>
+              <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+                {destination.region}
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-border/70 bg-card/60 px-6 py-8 shadow-sm sm:px-8 sm:py-10">
+              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-primary/85">
+                {tCatalog("excursionsComingSoon.eyebrow")}
+              </p>
+              <h3 className="font-heading mt-3 text-2xl font-medium tracking-tight text-foreground sm:text-[1.65rem]">
+                {tCatalog("excursionsComingSoon.title")}
+              </h3>
+              <p className="mt-3 max-w-2xl text-[0.95rem] leading-relaxed text-foreground/78 sm:text-base">
+                {tCatalog("excursionsComingSoon.body", { destination: destination.name })}
+              </p>
+            </div>
           </section>
         ) : null}
 

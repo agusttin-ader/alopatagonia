@@ -7,7 +7,7 @@ import type {
 import { buildDestinationAccommodationItems } from "@/lib/catalog/accommodation-items";
 import { BARILOCHE_HERO_IMAGE } from "@/lib/catalog/bariloche-curated";
 import { getDestinationImagePaths } from "@/lib/catalog/destination-images";
-import { getExcursionImageFoldersForSlug } from "@/lib/catalog/excursion-image-folders";
+import { getExcursionImageFoldersForSlug, hasExplicitExcursionFolderConfig } from "@/lib/catalog/excursion-image-folders";
 import {
   CATALOG_ACCOMMODATION_FOLDERS,
   CATALOG_EXCURSION_FOLDERS,
@@ -110,15 +110,24 @@ function buildExcursions(
   pools: string[][],
   destinationName: string,
 ): CatalogItem[] {
+  const folders = getExcursionImageFoldersForSlug(slug);
+  if (hasExplicitExcursionFolderConfig(slug) && folders.length === 0) {
+    return [];
+  }
+
   const excursionContent = EXCURSION_CONTENT_BY_DESTINATION[slug] ?? [];
   const itemCount =
-    excursionContent.length > 0 ? excursionContent.length : CATALOG_LIMITS.maxExcursions;
+    folders.length > 0
+      ? folders.length
+      : excursionContent.length > 0
+        ? excursionContent.length
+        : CATALOG_LIMITS.maxExcursions;
 
   return pools.slice(0, itemCount).map((pool, index) => {
     const num = index + 1;
     const group = withFallbackImages(pool).slice(0, CATALOG_LIMITS.imagesPerExcursion);
     const content = excursionContent[index];
-    const folderConfig = getExcursionImageFoldersForSlug(slug)[index];
+    const folderConfig = folders[index];
     const name = content?.name ?? `Excursión en ${destinationName}`;
     const cover = group[0]!;
     const itemSlug = folderConfig?.folderSlug ?? `excursion-${num}`;
@@ -178,7 +187,7 @@ function buildExcursionImageGroups(slug: string, imagePaths: string[]) {
   const per = CATALOG_LIMITS.imagesPerExcursion;
   const folderConfigs = getExcursionImageFoldersForSlug(slug);
 
-  if (folderConfigs.length > 0) {
+  if (hasExplicitExcursionFolderConfig(slug)) {
     return folderConfigs.map(({ folderSlug, legacyFolders = [] }) => {
       const primary = pathsInSubfolder(imagePaths, folderSlug);
       if (primary.length > 0) return primary;

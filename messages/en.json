@@ -153,7 +153,7 @@
       "excursiones": {
         "title": "Excursions",
         "eyebrow": "By season",
-        "description": "More than 25 outings in Bariloche — lakes, mountains and snow — plus excursions in Chaltén, Calafate, Madryn and Ushuaia. See photos, details and inclusions and ask on WhatsApp.",
+        "description": "More than 25 outings in Bariloche — lakes, mountains and snow — plus excursions in Chaltén, Calafate and Madryn. See photos, details and inclusions and ask on WhatsApp.",
         "imageAlt": "Boat trip in front of a glacier — Patagonia excursion"
       }
     }
@@ -387,6 +387,11 @@
     "excursionWhatsAppCta": "Ask on WhatsApp",
     "excursionViewDetailCta": "View photos and details",
     "excursionWhatsAppMessage": "I'm interested in the \"{excursion}\" excursion in {destination}. Can you help?",
+    "excursionsComingSoon": {
+      "eyebrow": "Coming soon",
+      "title": "Excursions on the way",
+      "body": "We're putting together the catalog of trips in {destination}. Soon you'll be able to see photos, details and what's included here."
+    },
     "badges": {
       "excursion": "Excursion",
       "cabana": "Cabin",
