@@ -107,14 +107,16 @@ export function EscapadasExpressMedia({
   const imageAlt = media.alt;
 
   return (
-    <AppImage
-      src={imageSrc}
-      alt={imageAlt}
-      fill
-      priority={priority}
-      qualityPreset={qualityPreset}
-      className={cn("object-cover", className)}
-      sizes={sizes}
-    />
+    <div className={cn("relative size-full", className)}>
+      <AppImage
+        src={imageSrc}
+        alt={imageAlt}
+        fill
+        priority={priority}
+        qualityPreset={qualityPreset}
+        className="object-cover"
+        sizes={sizes}
+      />
+    </div>
   );
 }

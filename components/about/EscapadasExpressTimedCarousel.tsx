@@ -88,7 +88,6 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
               <div className="absolute inset-0 brightness-[0.92]">
                 <EscapadasExpressMedia
                   media={activePromo.media}
-                  priority
                   isActive
                   qualityPreset="hero"
                   sizes={IMAGE_SIZES.promoCover}
@@ -108,7 +107,6 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
                 <div className="absolute inset-0 brightness-[0.92]">
                   <EscapadasExpressMedia
                     media={activePromo.media}
-                    priority
                     isActive
                     qualityPreset="hero"
                     sizes={IMAGE_SIZES.promoCover}
