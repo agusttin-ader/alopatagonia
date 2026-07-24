@@ -32,8 +32,8 @@ export function EscapadasExpressMobileDeck({ promos }: EscapadasExpressMobileDec
   const hasMultiple = count > 1;
 
   return (
-    <div className={cn("px-5 pb-14 pt-14", SECTION_BG)}>
-      <header className="mb-6 max-w-md">
+    <div className={cn("pb-14 pt-14", SECTION_BG)}>
+      <header className="mb-6 max-w-md px-5">
         <p className="text-[0.68rem] font-medium uppercase tracking-[0.2em] text-muted-foreground">
           {t("packagesLabel")}
         </p>
@@ -49,15 +49,14 @@ export function EscapadasExpressMobileDeck({ promos }: EscapadasExpressMobileDec
         activeIndex={active}
         onActiveIndexChange={setActive}
         aria-label={t("sectionAria")}
-        className="-mx-5"
-        trackClassName="gap-3 px-[7vw]"
-        slideClassName="w-[86vw]"
+        trackClassName="gap-3 px-5"
+        slideClassName="box-border w-[calc(100vw-2.5rem)]"
       >
         {promos.map((promo, index) => (
           <article
             key={promo.id}
             className={cn(
-              "flex flex-col overflow-hidden rounded-[1.5rem] bg-card",
+              "flex w-full min-w-0 flex-col overflow-hidden rounded-[1.5rem] bg-card",
               "shadow-[0_18px_44px_-28px_rgba(0,0,0,0.5)] ring-1 ring-black/5",
             )}
           >
@@ -67,7 +66,7 @@ export function EscapadasExpressMobileDeck({ promos }: EscapadasExpressMobileDec
                 isActive={index === active}
                 priority={index === 0}
                 qualityPreset="card"
-                sizes="86vw"
+                sizes="(max-width: 767px) calc(100vw - 2.5rem), 400px"
               />
               <div
                 className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"
@@ -80,7 +79,7 @@ export function EscapadasExpressMobileDeck({ promos }: EscapadasExpressMobileDec
               ) : null}
             </div>
 
-            <div className="flex flex-1 flex-col p-4">
+            <div className="flex min-w-0 flex-1 flex-col p-4">
               <p className="text-[0.66rem] font-medium uppercase tracking-[0.2em] text-muted-foreground">
                 {t("promoIndex", { index: formatIndex(index + 1) })}
               </p>
@@ -113,7 +112,7 @@ export function EscapadasExpressMobileDeck({ promos }: EscapadasExpressMobileDec
                 target="_blank"
                 rel="noopener noreferrer"
                 tone="cta"
-                className="mt-4"
+                className="mt-4 max-w-full"
               >
                 {t("consultCta")}
               </MagazinePillCta>
@@ -123,7 +122,7 @@ export function EscapadasExpressMobileDeck({ promos }: EscapadasExpressMobileDec
       </MobileSnapCarousel>
 
       {hasMultiple ? (
-        <div className="mt-4 flex items-center justify-center gap-1.5">
+        <div className="mt-4 flex items-center justify-center gap-1.5 px-5">
           {promos.map((promo, index) => (
             <button
               key={`dot-${promo.id}`}

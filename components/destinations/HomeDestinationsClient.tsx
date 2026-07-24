@@ -14,7 +14,6 @@ import { SECTION_IDS } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import type { HomeDestinationEditorial } from "@/lib/home-destinations-types";
 import { SPREAD_TILE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
-import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { cn } from "@/lib/utils";
 
 const DESTINATION_NAME_MOTION = {
@@ -341,8 +340,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
       id={SECTION_IDS.destinations}
       className={cn(
         "relative scroll-mt-24 bg-background px-4 py-12 sm:px-8 sm:py-20 lg:px-14 2xl:px-20",
-        MOBILE_MAGAZINE_G_ENABLED &&
-          "max-md:bg-footer-lake max-md:px-4 max-md:pb-6 max-md:pt-10 max-md:text-footer-lake-foreground",
+        "max-md:px-4 max-md:pb-14 max-md:pt-14",
       )}
       aria-labelledby="destinos-heading"
     >
@@ -352,16 +350,14 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
             id="destinos-heading"
             className={cn(
               "font-heading text-3xl font-semibold tracking-tight text-foreground sm:text-4xl 2xl:text-5xl",
-              MOBILE_MAGAZINE_G_ENABLED &&
-                "max-md:text-footer-lake-foreground max-md:text-[clamp(1.65rem,6.5vw,1.85rem)] max-md:leading-tight",
+              "max-md:text-[clamp(1.75rem,7vw,2.05rem)] max-md:leading-[1.12] max-md:text-brand-forest",
             )}
           >
             {t("title")}
           </h2>
           <p
             className={cn(
-              "mt-4 text-lg leading-relaxed text-muted-foreground max-md:mt-3 max-md:max-w-[34ch] max-md:text-[0.9375rem] max-md:leading-snug 2xl:text-xl",
-              MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground/78",
+              "mt-4 text-lg leading-relaxed text-muted-foreground max-md:mt-3.5 max-md:max-w-[34ch] max-md:text-[0.9rem] max-md:leading-relaxed 2xl:text-xl",
             )}
           >
             {t("lead")}
@@ -387,12 +383,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
           <div className="mt-6 text-center">
             <Link
               href="/destinos"
-              className={cn(
-                "text-sm font-medium underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2",
-                MOBILE_MAGAZINE_G_ENABLED
-                  ? "text-footer-lake-foreground/72 hover:text-footer-lake-foreground"
-                  : "text-primary",
-              )}
+              className="text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
             >
               {t("viewAll")}
             </Link>

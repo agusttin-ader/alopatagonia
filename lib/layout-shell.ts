@@ -136,7 +136,7 @@ export const SECTION_SHELL = cn(
   "scroll-mt-24 bg-background",
   SHELL_PX,
   "py-12 sm:py-16 lg:py-20",
-  "max-md:py-10",
+  "max-md:py-14",
 );
 
 export const DETAIL_STICKY_TOP = cn(
@@ -172,4 +172,4 @@ export const CATALOG_GRID_GAP = cn(
 );
 
 /** Espacio inferior en mobile para no tapar contenido con el FAB de WhatsApp. */
-export const MOBILE_FAB_CLEARANCE = "max-md:pb-20";
+export const MOBILE_FAB_CLEARANCE = "max-md:pb-[4.75rem]";

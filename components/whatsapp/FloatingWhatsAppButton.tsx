@@ -16,19 +16,24 @@ export function FloatingWhatsAppButton() {
       rel="noopener noreferrer"
       aria-label={t("ariaLabel")}
       className={cn(
-        "floating-whatsapp fixed z-[1100] inline-flex size-[3.5rem] items-center justify-center rounded-full bg-[#25d366] text-white shadow-xl",
-        "bottom-[max(1.15rem,env(safe-area-inset-bottom))] right-[max(1.1rem,env(safe-area-inset-right))]",
+        "floating-whatsapp fixed z-[1100] inline-flex items-center justify-center rounded-full bg-[#25d366] text-white",
+        /* Mobile: más discreto, sin tapar CTAs */
+        "size-12 shadow-[0_8px_20px_-10px_rgba(0,0,0,0.35)]",
+        "bottom-[max(1rem,calc(env(safe-area-inset-bottom)+0.65rem))] right-[max(0.85rem,env(safe-area-inset-right))]",
         "transition-[transform,background-color,box-shadow,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
-        "hover:-translate-y-0.5 hover:scale-[1.04] hover:bg-[#1fb85a] hover:shadow-2xl",
+        "hover:bg-[#1fb85a]",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25d366]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-        "motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100",
-        "md:bottom-[max(1.75rem,env(safe-area-inset-bottom))] md:right-[max(1.75rem,env(safe-area-inset-right))] md:size-16",
+        "motion-reduce:transition-none",
+        /* Desktop / tablet: tamaño original */
+        "md:bottom-[max(1.75rem,env(safe-area-inset-bottom))] md:right-[max(1.75rem,env(safe-area-inset-right))] md:size-16 md:shadow-xl",
+        "md:hover:-translate-y-0.5 md:hover:scale-[1.04] md:hover:shadow-2xl",
+        "md:motion-reduce:hover:translate-y-0 md:motion-reduce:hover:scale-100",
       )}
     >
       <span className="sr-only">{t("srOnly")}</span>
       <svg
         viewBox="0 0 24 24"
-        className="size-7 md:size-9"
+        className="size-6 md:size-9"
         fill="currentColor"
         aria-hidden
       >

@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils";
 
 const FEATURED_COUNT = 1;
 const SECONDARY_COUNT = 3;
+/** Radio editorial 14px — fotos tipo postal, sin pastilla exagerada. */
+const PHOTO_RADIUS = "rounded-[0.875rem]";
 
 function shortLocation(region: string) {
   const parts = region.split("·").map((part) => part.trim()).filter(Boolean);
@@ -25,7 +27,7 @@ type DestinationMobileEditorialProps = {
   destinations: HomeDestinationEditorial[];
 };
 
-/** Home Destinos — layout editorial mobile (1 destacado + 3 filas + CTA). Desktop no usa este bloque. */
+/** Home Destinos — composición editorial mobile. Desktop no usa este bloque. */
 export function DestinationMobileEditorial({ destinations }: DestinationMobileEditorialProps) {
   const t = useTranslations("homeDestinations");
 
@@ -37,34 +39,37 @@ export function DestinationMobileEditorial({ destinations }: DestinationMobileEd
   const total = destinations.length;
 
   return (
-    <div className={cn("md:hidden")}>
+    <div className="md:hidden">
       <article className="min-w-0">
         <Link
           href={`/destinos/${featured.slug}`}
-          className={cn(
-            "group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake-foreground/50 focus-visible:ring-offset-2 focus-visible:ring-offset-footer-lake",
-          )}
+          className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cta/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           {featuredThumb ? (
-            <div className="relative aspect-[5/4] min-h-[12rem] w-full overflow-hidden rounded-[1.35rem] bg-muted/30 ring-1 ring-white/10">
+            <div
+              className={cn(
+                "relative aspect-[5/4] min-h-[13rem] w-full overflow-hidden bg-muted/40",
+                PHOTO_RADIUS,
+              )}
+            >
               <AppImage
                 src={featuredThumb.src}
                 alt={featuredThumb.alt}
                 fill
                 qualityPreset="gallery"
-                className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:group-hover:scale-[1.03]"
+                className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-safe:group-hover:scale-[1.025] motion-reduce:transition-none"
                 sizes="(max-width: 767px) 92vw, 400px"
                 priority
               />
               <div
-                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent"
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-forest/75 via-brand-forest/15 to-transparent"
                 aria-hidden
               />
               <div className="absolute inset-x-0 bottom-0 p-4">
-                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white/75">
+                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white/78">
                   {shortLocation(featured.region)}
                 </p>
-                <h3 className="font-heading mt-1.5 text-[clamp(1.45rem,6vw,1.75rem)] font-semibold leading-tight tracking-tight text-white">
+                <h3 className="font-heading mt-1.5 text-[clamp(1.5rem,6.5vw,1.85rem)] font-semibold leading-[1.05] tracking-tight text-white">
                   {featured.name}
                 </h3>
               </div>
@@ -72,17 +77,18 @@ export function DestinationMobileEditorial({ destinations }: DestinationMobileEd
           ) : null}
         </Link>
 
-        <p className="mt-3.5 text-[0.9375rem] leading-snug text-footer-lake-foreground/82 line-clamp-2">
+        <p className="mt-4 max-w-[34ch] text-[0.9rem] leading-relaxed text-muted-foreground line-clamp-2">
           {featured.description}
         </p>
 
         <Link
           href={`/destinos/${featured.slug}`}
           className={cn(
-            "mt-4 inline-flex min-h-11 items-center justify-center gap-2 rounded-full",
-            "bg-footer-lake-foreground px-5 text-sm font-semibold text-footer-lake",
+            "mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-full",
+            "bg-cta px-6 text-sm font-semibold text-cta-foreground",
+            "shadow-[0_10px_28px_-18px_rgba(212,132,58,0.65)]",
             "transition-opacity hover:opacity-95",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake-foreground/55 focus-visible:ring-offset-2 focus-visible:ring-offset-footer-lake",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cta/50 focus-visible:ring-offset-2",
           )}
         >
           {t("exploreDestination")}
@@ -91,21 +97,24 @@ export function DestinationMobileEditorial({ destinations }: DestinationMobileEd
       </article>
 
       {secondary.length > 0 ? (
-        <ul className="mt-8 divide-y divide-white/12 border-y border-white/12">
+        <ul className="mt-10 space-y-0 border-t border-brand-forest/12">
           {secondary.map((destination) => {
             const thumb = destinationThumb(destination);
             return (
-              <li key={destination.slug}>
+              <li key={destination.slug} className="border-b border-brand-forest/12">
                 <Link
                   href={`/destinos/${destination.slug}`}
                   className={cn(
-                    "group flex min-h-[4.5rem] items-center gap-3.5 py-3.5",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake-foreground/45 focus-visible:ring-offset-2 focus-visible:ring-offset-footer-lake",
+                    "group flex min-h-14 items-center gap-3.5 py-3.5",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2",
                   )}
                 >
                   {thumb ? (
                     <span
-                      className="relative size-[4.75rem] shrink-0 overflow-hidden rounded-xl ring-1 ring-white/12 sm:size-[5.25rem]"
+                      className={cn(
+                        "relative size-[4.5rem] shrink-0 overflow-hidden bg-muted/40",
+                        PHOTO_RADIUS,
+                      )}
                       aria-hidden
                     >
                       <AppImage
@@ -116,20 +125,20 @@ export function DestinationMobileEditorial({ destinations }: DestinationMobileEd
                         loading="lazy"
                         decoding="async"
                         className="object-cover"
-                        sizes="88px"
+                        sizes="72px"
                       />
                     </span>
                   ) : null}
                   <span className="min-w-0 flex-1">
-                    <span className="font-heading block text-[1.05rem] font-semibold leading-snug tracking-tight text-footer-lake-foreground">
+                    <span className="font-heading block text-[1.05rem] font-semibold leading-snug tracking-tight text-foreground">
                       {destination.name}
                     </span>
-                    <span className="mt-1 block text-[0.78rem] font-medium tracking-wide text-footer-lake-foreground/58">
+                    <span className="mt-1 block text-[0.75rem] font-medium text-muted-foreground">
                       {shortLocation(destination.region)}
                     </span>
                   </span>
                   <ArrowRight
-                    className="size-5 shrink-0 text-footer-lake-foreground/40 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-footer-lake-foreground/70"
+                    className="size-4 shrink-0 text-brand-forest/45 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-brand-forest motion-reduce:transition-none"
                     aria-hidden
                   />
                 </Link>
@@ -139,14 +148,13 @@ export function DestinationMobileEditorial({ destinations }: DestinationMobileEd
         </ul>
       ) : null}
 
-      <div className="mt-8 pb-2">
+      <div className="mt-8">
         <Link
           href="/destinos"
           className={cn(
-            "inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full",
-            "border border-footer-lake-foreground/35 px-5 text-sm font-semibold text-footer-lake-foreground",
-            "transition-colors hover:bg-white/8",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-footer-lake-foreground/45 focus-visible:ring-offset-2 focus-visible:ring-offset-footer-lake",
+            "inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-forest",
+            "underline-offset-4 hover:underline",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2",
           )}
         >
           {t("viewAllCount", { count: total })}
