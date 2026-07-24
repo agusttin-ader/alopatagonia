@@ -22,6 +22,7 @@ import {
   getLocalizedPlannerDestinationLabel,
   getLocalizedPlannerDestinationOptions,
 } from "@/lib/i18n/localized-planner";
+import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
 
 const PhoneVideoMockup = dynamic(
@@ -172,32 +173,34 @@ function PlannerProgressBar({
           transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
         />
       </div>
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs font-medium">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs font-medium max-md:justify-between max-md:gap-x-2">
         {steps.map((step, index) => (
-          <span key={step.id} className="inline-flex items-center gap-1.5">
+          <span key={step.id} className="inline-flex min-h-11 items-center gap-1.5 max-md:min-h-0 max-md:flex-1 max-md:justify-center">
             {index > 0 ? (
-              <span className="text-muted-foreground/45" aria-hidden>
+              <span className="text-muted-foreground/45 max-md:hidden" aria-hidden>
                 ·
               </span>
             ) : null}
             <span
               className={cn(
-                "inline-flex items-center gap-1 transition-colors",
+                "inline-flex items-center gap-1 transition-colors max-md:flex-col max-md:gap-1 max-md:text-center",
                 step.done ? "text-primary" : "text-muted-foreground",
               )}
             >
               <span
                 className={cn(
-                  "inline-flex size-4 items-center justify-center rounded-full border transition-colors",
+                  "inline-flex size-4 items-center justify-center rounded-full border transition-colors max-md:size-5",
                   step.done
                     ? "border-primary/30 bg-primary/12 text-primary"
                     : "border-border bg-card text-muted-foreground/70",
                 )}
                 aria-hidden
               >
-                {step.done ? <Check className="size-2.5" strokeWidth={3} /> : null}
+                {step.done ? <Check className="size-2.5 max-md:size-3" strokeWidth={3} /> : (
+                  <span className="text-[0.6rem] font-semibold tabular-nums md:hidden">{index + 1}</span>
+                )}
               </span>
-              {step.label}
+              <span className="max-md:text-[0.68rem] max-md:leading-tight">{step.label}</span>
               {step.done ? (
                 <span className="sr-only"> {stepDone}</span>
               ) : (
@@ -552,12 +555,14 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
       {
         id: "dates",
         label: t("steps.dates"),
-        done: Boolean(fromDate && toDate && !invalidDateRange),
+        done:
+          Boolean(fromDate && toDate && !invalidDateRange) &&
+          travelers.trim().length > 0,
       },
       {
         id: "contact",
         label: t("steps.contact"),
-        done: name.trim().length > 1 && travelers.trim().length > 0,
+        done: name.trim().length > 1,
       },
     ],
     [resolvedDestination, fromDate, invalidDateRange, name, toDate, travelers, t],
@@ -565,6 +570,8 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
 
   const whatsappUrl = getWhatsAppUrl(message);
   const mailUrl = `mailto:${SITE.email}?subject=${encodeURIComponent(t("mailSubject"))}&body=${encodeURIComponent(message)}`;
+  const isMobile = useCoarseMobile();
+  const showStickyCta = isMobile && canSubmit;
 
   useEffect(() => {
     if (destination === "none") return;
@@ -573,6 +580,16 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
       setDestination(normalized);
     }
   }, [destination]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (showStickyCta) {
+      root.classList.add("planner-sticky-cta-active");
+    } else {
+      root.classList.remove("planner-sticky-cta-active");
+    }
+    return () => root.classList.remove("planner-sticky-cta-active");
+  }, [showStickyCta]);
 
   useDismissOnEscapeAndOutside(
     destinationOpen,
@@ -586,12 +603,17 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
     setDestinationOpen(false);
   };
 
+  const nameTrimmed = name.trim();
+  const showNameHint = name.length > 0 && nameTrimmed.length <= 1;
+  const showTravelersHint = travelers.length === 0 && (fromDate.length > 0 || toDate.length > 0);
+
   return (
     <section
       id={showHeading ? SECTION_IDS.planner : undefined}
       className={cn(
         "scroll-mt-24 bg-background px-4 py-12 sm:px-8 sm:py-20 lg:px-14 2xl:px-20",
         !showHeading && "pt-8 sm:pt-10",
+        showStickyCta && "max-md:pb-28",
       )}
       aria-labelledby={showHeading ? "planner-heading" : undefined}
     >
@@ -630,21 +652,11 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
               className="mb-6 h-px w-28 bg-[linear-gradient(to_right,rgba(13,148,136,0.72),rgba(13,148,136,0.08))]"
               aria-hidden
             />
-            <form className="space-y-4">
-              <label className="block space-y-1.5">
-                <span className="text-sm font-semibold text-foreground">{t("form.name")}</span>
-                <input
-                  value={name}
-                  onChange={(e) => setName(e.target.value.slice(0, MAX_NAME_LENGTH))}
-                  placeholder={t("form.namePlaceholder")}
-                  required
-                  maxLength={MAX_NAME_LENGTH}
-                  autoComplete="name"
-                  className={fieldClassName}
-                />
-              </label>
-
-              <label className="block space-y-1.5">
+            <form className="flex flex-col gap-4">
+              <p className="order-1 -mb-1 text-xs font-semibold uppercase tracking-[0.12em] text-primary md:hidden">
+                1 · {t("steps.destination")}
+              </p>
+              <label className="order-1 block space-y-1.5 md:order-2">
                 <span className="text-sm font-semibold text-foreground">{t("form.destination")}</span>
                 <div ref={destinationContainerRef} className="relative">
                   <button
@@ -716,7 +728,10 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                 </div>
               </label>
 
-              <label className="block space-y-1.5">
+              <p className="order-2 -mb-1 text-xs font-semibold uppercase tracking-[0.12em] text-primary md:hidden">
+                2 · {t("steps.dates")}
+              </p>
+              <label className="order-2 block space-y-1.5 md:order-3">
                 <span className="text-sm font-semibold text-foreground">
                   {t("form.travelers")}
                 </span>
@@ -730,15 +745,43 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                   required
                   maxLength={MAX_TRAVELERS_LENGTH}
                   className={fieldClassName}
+                  aria-invalid={showTravelersHint || undefined}
                 />
+                {showTravelersHint ? (
+                  <span className="block text-xs text-muted-foreground md:hidden">
+                    {t("form.incompleteOne", { count: 1 })}
+                  </span>
+                ) : null}
               </label>
 
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="order-2 grid gap-4 sm:grid-cols-2 md:order-4">
                 <DateField label={t("form.from")} value={fromDate} onChange={setFromDate} locale={locale} t={t} />
                 <DateField label={t("form.to")} value={toDate} onChange={setToDate} locale={locale} t={t} />
               </div>
 
-              <label className="block space-y-1.5">
+              <p className="order-3 -mb-1 text-xs font-semibold uppercase tracking-[0.12em] text-primary md:hidden">
+                3 · {t("steps.contact")}
+              </p>
+              <label className="order-3 block space-y-1.5 md:order-1">
+                <span className="text-sm font-semibold text-foreground">{t("form.name")}</span>
+                <input
+                  value={name}
+                  onChange={(e) => setName(e.target.value.slice(0, MAX_NAME_LENGTH))}
+                  placeholder={t("form.namePlaceholder")}
+                  required
+                  maxLength={MAX_NAME_LENGTH}
+                  autoComplete="name"
+                  className={fieldClassName}
+                  aria-invalid={showNameHint || undefined}
+                />
+                {showNameHint ? (
+                  <span className="block text-xs text-muted-foreground">
+                    {t("form.incompleteOne", { count: 1 })}
+                  </span>
+                ) : null}
+              </label>
+
+              <label className="order-3 block space-y-1.5 md:order-5">
                 <span className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
                   <span className="text-sm font-semibold text-foreground">{t("form.userNote")}</span>
                   <span className="text-xs font-medium text-muted-foreground">{t("form.optional")}</span>
@@ -753,7 +796,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                 />
               </label>
 
-              <label className="hidden" aria-hidden>
+              <label className="order-4 hidden md:order-6" aria-hidden>
                 Sitio web
                 <input
                   tabIndex={-1}
@@ -763,10 +806,10 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                 />
               </label>
 
-              <div className="pt-2">
+              <div className="order-4 pt-2 md:order-6">
                 <p className="text-xs text-muted-foreground">{t("form.whatsappHint")}</p>
                 {invalidDateRange ? (
-                  <p className="mt-2 text-xs font-semibold text-destructive">
+                  <p className="mt-2 text-xs font-semibold text-destructive" role="alert">
                     {t("form.invalidDates")}
                   </p>
                 ) : null}
@@ -788,7 +831,16 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
               </div>
             </form>
 
-            <div className="mt-6 flex flex-col gap-2.5 lg:grid lg:grid-cols-2 lg:gap-3">
+            {showStickyCta ? (
+              <div className="mt-6 h-14 md:hidden" aria-hidden />
+            ) : null}
+            <div
+              className={cn(
+                "mt-6 flex flex-col gap-2.5 lg:grid lg:grid-cols-2 lg:gap-3",
+                showStickyCta &&
+                  "max-md:fixed max-md:inset-x-0 max-md:bottom-0 max-md:z-[1050] max-md:mt-0 max-md:border-t max-md:border-border/70 max-md:bg-background/95 max-md:px-4 max-md:pb-[max(0.85rem,env(safe-area-inset-bottom))] max-md:pt-3 max-md:shadow-[0_-12px_28px_-20px_rgba(0,0,0,0.35)] max-md:backdrop-blur-md",
+              )}
+            >
               <a
                 href={whatsappUrl}
                 target="_blank"
@@ -818,6 +870,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                   PLANNER_CTA,
                   "border border-border bg-card text-foreground hover:bg-muted focus-visible:ring-ring/30",
                   !canSubmit && "pointer-events-none opacity-55",
+                  showStickyCta && "max-md:hidden",
                 )}
               >
                 <Mail className="size-4 shrink-0" />

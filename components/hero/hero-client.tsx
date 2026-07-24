@@ -99,7 +99,7 @@ export function HeroClient() {
   const heroItem = isCoarseMobile ? mobileItem : item;
 
   return (
-    <div className="relative z-10 flex min-h-[100dvh] flex-col justify-end px-4 pb-[max(7rem,calc(env(safe-area-inset-bottom)+6rem))] pt-24 max-md:min-h-[88dvh] max-md:pb-[5.25rem] sm:px-8 sm:pb-[max(8rem,calc(env(safe-area-inset-bottom)+6.2rem))] lg:px-14 lg:pb-[max(8.8rem,calc(env(safe-area-inset-bottom)+6.8rem))] 2xl:px-20">
+    <div className="relative z-10 flex min-h-[100dvh] flex-col justify-end px-4 pb-[max(7rem,calc(env(safe-area-inset-bottom)+6rem))] pt-24 max-md:min-h-[88dvh] max-md:justify-end max-md:pb-[max(5.5rem,calc(env(safe-area-inset-bottom)+4.75rem))] sm:px-8 sm:pb-[max(8rem,calc(env(safe-area-inset-bottom)+6.2rem))] lg:px-14 lg:pb-[max(8.8rem,calc(env(safe-area-inset-bottom)+6.8rem))] 2xl:px-20">
       <motion.div
         className="max-w-3xl 2xl:max-w-4xl [text-shadow:0_1px_4px_rgba(0,0,0,0.22)]"
         variants={heroContainer}
@@ -114,14 +114,14 @@ export function HeroClient() {
         </motion.p>
         <motion.h1
           variants={heroItem}
-          className="font-heading max-w-[min(100%,20rem)] text-balance text-[2.2rem] font-medium leading-[1.06] tracking-tight text-white min-[390px]:text-[2.35rem] sm:max-w-none sm:text-5xl sm:leading-[1.08] lg:text-6xl lg:font-semibold lg:leading-[1.04] 2xl:max-w-[40rem] 2xl:text-7xl"
+          className="font-heading max-w-[min(100%,20rem)] text-balance text-[clamp(2rem,8.2vw,2.35rem)] font-medium leading-[1.06] tracking-tight text-white sm:max-w-none sm:text-5xl sm:leading-[1.08] lg:text-6xl lg:font-semibold lg:leading-[1.04] 2xl:max-w-[40rem] 2xl:text-7xl"
         >
           <span className="sm:hidden">{t("headlineMobile")}</span>
           <span className="hidden sm:inline">{t("headline")}</span>
         </motion.h1>
         <motion.p
           variants={heroItem}
-          className="mt-3 max-w-[min(100%,20rem)] text-balance text-[1.0625rem] leading-snug text-white/90 min-[390px]:max-w-[19rem] min-[390px]:text-lg sm:mt-5 sm:max-w-xl sm:text-xl sm:leading-relaxed 2xl:max-w-2xl 2xl:text-2xl"
+          className="mt-3 max-w-[min(100%,20rem)] text-balance text-[clamp(1rem,4.2vw,1.125rem)] leading-snug text-white/92 min-[390px]:max-w-[19rem] sm:mt-5 sm:max-w-xl sm:text-xl sm:leading-relaxed 2xl:max-w-2xl 2xl:text-2xl"
         >
           <span className="sm:hidden">{t("sublineMobile")}</span>
           <span className="hidden sm:inline">{t("subline")}</span>
@@ -134,7 +134,7 @@ export function HeroClient() {
             href={PLANNER_PATH}
             className={cn(
               buttonVariants({ variant: "marketing", size: "lg" }),
-              "motion-cta h-12 px-8 text-base font-semibold sm:w-auto 2xl:h-14 2xl:px-10 2xl:text-lg",
+              "motion-cta h-12 min-h-11 px-8 text-base font-semibold sm:w-auto 2xl:h-14 2xl:px-10 2xl:text-lg",
               MOBILE_MAGAZINE_G_ENABLED
                 ? "max-md:h-11 max-md:w-auto max-md:max-w-[15.5rem] max-md:px-6 max-md:text-sm"
                 : "w-full",

@@ -1,4 +1,5 @@
 import { SECTION_IDS, PLANNER_PATH } from "@/lib/constants";
+import { getHomeSectionHref } from "@/lib/home-sections";
 
 export type NavLabelKey =
   | "home"
@@ -6,6 +7,7 @@ export type NavLabelKey =
   | "accommodations"
   | "excursions"
   | "winterShop"
+  | "promos"
   | "planTrip";
 
 export type NavLink = {
@@ -38,22 +40,28 @@ export const NAV_HOME_LINK: NavLink = {
 
 export const NAV_DESKTOP_LINKS: NavLink[] = [...NAV_EXPLORE_LINKS, ...NAV_COMPANY_LINKS];
 
+/** Accesos del menú mobile (sin CTA; el planner va aparte como acción principal). */
 export function getMobileNavLinks(isHome: boolean): NavLink[] {
+  const promosLink: NavLink = {
+    labelKey: "promos",
+    href: getHomeSectionHref(SECTION_IDS.promosPatagonia, isHome),
+    id: SECTION_IDS.promosPatagonia,
+  };
+
   if (isHome) {
-    return [NAV_HOME_LINK, ...NAV_EXPLORE_LINKS, NAV_PLANNER_LINK, ...NAV_COMPANY_LINKS];
+    return [NAV_HOME_LINK, ...NAV_EXPLORE_LINKS, promosLink];
   }
 
   return [
     { labelKey: "home", href: "/", id: "home" },
     ...NAV_EXPLORE_LINKS,
-    NAV_PLANNER_LINK,
-    ...NAV_COMPANY_LINKS,
+    promosLink,
   ];
 }
 
 /** Resalta link de nav cuando la ruta actual coincide (incluye subrutas). */
 export function isNavHrefActive(pathname: string, href: string): boolean {
-  if (href.startsWith("#")) return false;
+  if (href.startsWith("#") || href.includes("#")) return false;
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(`${href}/`);
 }

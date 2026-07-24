@@ -7,6 +7,7 @@ import { useMemo, useState } from "react";
 import { CatalogItemGrid } from "@/components/catalog/CatalogItemGrid";
 import type { CatalogGridMode } from "@/components/catalog/CatalogItemGrid";
 import { ExcursionEditorialList } from "@/components/catalog/ExcursionEditorialList";
+import { ExcursionsComingSoonPanel } from "@/components/catalog/ExcursionsComingSoonPanel";
 import { EditorialSplitNavItem } from "@/components/catalog/EditorialSplitNavItem";
 import type { CatalogSplitGroup } from "@/lib/catalog/accommodation-types";
 import { CATALOG_SPLIT_SIDEBAR_STICKY } from "@/lib/layout-shell";
@@ -104,7 +105,7 @@ function CatalogSplitTabs({
     <div className="max-w-full overflow-hidden md:hidden">
       <nav
         aria-label={navAriaLabel}
-        className={cn(horizontalScrollRailClass, "mb-6 gap-2 pb-0.5 max-md:mb-4")}
+        className={cn(horizontalScrollRailClass, "mb-5 gap-2 pb-0.5 max-md:mb-4")}
       >
         {groups.map((group) => {
           const isActive = activeId === group.id;
@@ -176,7 +177,11 @@ function CatalogSplitPanel({
         </div>
 
         {mode === "excursion" ? (
-          <ExcursionEditorialList entries={group.entries} />
+          group.comingSoon ? (
+            <ExcursionsComingSoonPanel destinationName={group.title} />
+          ) : (
+            <ExcursionEditorialList entries={group.entries} />
+          )
         ) : (
           <CatalogItemGrid
             entries={group.entries}

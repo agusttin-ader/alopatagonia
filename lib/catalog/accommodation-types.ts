@@ -14,6 +14,8 @@ export type CatalogSplitGroup = {
   panelSubtitle: string;
   meta: string;
   entries: CatalogItemEntry[];
+  /** Sin excursiones publicadas todavía — panel editorial “próximamente”. */
+  comingSoon?: boolean;
 };
 
 export function groupAccommodationEntriesByTypeLocalized(

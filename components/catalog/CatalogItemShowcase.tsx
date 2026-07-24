@@ -53,17 +53,19 @@ function CatalogItemMobilePoster({
           alt={cover.alt}
           fill
           qualityPreset="card"
+          loading="lazy"
+          decoding="async"
           className={CARD_IMAGE_HOVER_EXPAND}
           sizes={IMAGE_SIZES.catalogCard}
         />
         <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-black/90 via-black/38 to-black/10" />
 
-        <div className="absolute inset-x-0 bottom-0 z-[2] flex h-[56%] min-h-[12.5rem] max-h-[17rem] flex-col p-4 max-md:min-h-[11.5rem] max-md:max-h-[16rem] max-md:p-3.5">
-          <span className="mb-3 block h-px w-10 shrink-0 bg-white/55" aria-hidden />
+        <div className="absolute inset-x-0 bottom-0 z-[2] flex h-[56%] min-h-[11rem] max-h-[16rem] flex-col p-4 max-md:min-h-0 max-md:h-auto max-md:max-h-none max-md:justify-end max-md:p-3.5">
+          <span className="mb-3 block h-px w-10 shrink-0 bg-white/55 max-md:mb-2" aria-hidden />
           <p className="shrink-0 text-[0.68rem] font-semibold uppercase tracking-[0.1em] text-white/75">
             {badge}
           </p>
-          <h3 className="font-heading mt-2 shrink-0 text-[1.35rem] font-medium leading-[1.08] tracking-tight text-white">
+          <h3 className="font-heading mt-2 shrink-0 text-[clamp(1.2rem,4.6vw,1.35rem)] font-medium leading-[1.08] tracking-tight text-white line-clamp-2">
             {item.name}
           </h3>
           {categoryLabel ? (
@@ -72,20 +74,18 @@ function CatalogItemMobilePoster({
             </p>
           ) : null}
           {item.description ? (
-            <p className="mt-2 min-h-0 flex-1 text-[0.875rem] leading-[1.55] text-white/88 line-clamp-3">
+            <p className="mt-2 min-h-0 text-[0.875rem] leading-[1.55] text-white/88 line-clamp-2 max-md:mt-1.5">
               {item.description}
             </p>
-          ) : (
-            <div className="flex-1" />
-          )}
-          <div className="mt-auto flex shrink-0 items-end justify-between gap-3 pt-3">
+          ) : null}
+          <div className="mt-3 flex shrink-0 items-end justify-between gap-3 pt-2 max-md:mt-2.5">
             <div className="min-w-0">
               {destinationLabel ? (
                 <p className="truncate text-xs text-white/72">{destinationLabel}</p>
               ) : null}
               <p className="mt-0.5 text-xs text-white/62">{photoCountLabel}</p>
             </div>
-            <span className={cn("inline-flex shrink-0 items-center gap-1 text-sm font-medium text-white", POSTER_LINK_CTA_HOVER)}>
+            <span className={cn("inline-flex min-h-11 shrink-0 items-center gap-1 text-sm font-medium text-white", POSTER_LINK_CTA_HOVER)}>
               {exploreLabel}
               <ArrowUpRight className="size-4" aria-hidden />
             </span>

@@ -420,7 +420,7 @@ export function GlobalNav() {
                   </Button>
                 </div>
                 <motion.div
-                  className="flex flex-1 flex-col gap-2.5 overflow-y-auto pr-1"
+                  className="flex flex-1 flex-col gap-2.5 overflow-y-auto overscroll-y-contain pr-1"
                   initial="hidden"
                   animate="visible"
                   variants={{
@@ -454,13 +454,19 @@ export function GlobalNav() {
                           isNavHrefActive(pathname, link.href) ? "page" : undefined
                         }
                         onClick={(event) => {
-                          onNavLinkClick(event, link.href, link.id);
-                          if (!isHome || !link.href.startsWith("#")) {
+                          const isHashLink =
+                            link.href.startsWith("#") || link.href.includes("#");
+                          if (isHome && link.href.startsWith("#")) {
+                            onNavLinkClick(event, link.href, link.id);
+                          } else {
                             setMobileOpen(false);
+                          }
+                          if (isHome && isHashLink && link.href.startsWith("#")) {
+                            return;
                           }
                         }}
                         className={cn(
-                          "motion-cta block rounded-xl px-4 py-4 text-[1.32rem] font-semibold leading-tight text-foreground hover:bg-secondary/65 hover:text-cta hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-2",
+                          "motion-cta flex min-h-11 items-center rounded-xl px-4 py-3.5 text-[1.2rem] font-semibold leading-tight text-foreground hover:bg-secondary/65 hover:text-cta hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-2",
                           isNavHrefActive(pathname, link.href) &&
                             "bg-secondary/50 text-cta",
                         )}
@@ -470,7 +476,20 @@ export function GlobalNav() {
                     </motion.div>
                   ))}
                 </motion.div>
-                <div className="mt-6 border-t border-border/60 pt-5">
+                <div className="mt-auto space-y-4 border-t border-border/60 pt-5 pb-[max(0.25rem,env(safe-area-inset-bottom))]">
+                  <Link
+                    href={NAV_PLANNER_LINK.href}
+                    aria-current={
+                      isNavHrefActive(pathname, NAV_PLANNER_LINK.href) ? "page" : undefined
+                    }
+                    onClick={() => setMobileOpen(false)}
+                    className={cn(
+                      buttonVariants({ variant: "marketing", size: "lg" }),
+                      "motion-cta flex min-h-12 w-full items-center justify-center rounded-full px-5 text-base font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cta/45 focus-visible:ring-offset-2",
+                    )}
+                  >
+                    {t(NAV_PLANNER_LINK.labelKey)}
+                  </Link>
                   <LocaleSwitcher layout="drawer" />
                 </div>
               </div>

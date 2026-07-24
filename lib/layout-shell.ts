@@ -136,6 +136,7 @@ export const SECTION_SHELL = cn(
   "scroll-mt-24 bg-background",
   SHELL_PX,
   "py-12 sm:py-16 lg:py-20",
+  "max-md:py-10",
 );
 
 export const DETAIL_STICKY_TOP = cn(

@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { AppImage } from "@/components/media/AppImage";
 import { DestinationAccommodationBrowse } from "@/components/catalog/DestinationAccommodationBrowse";
 import { DestinationExcursionBrowse } from "@/components/catalog/DestinationExcursionBrowse";
+import { ExcursionsComingSoonPanel } from "@/components/catalog/ExcursionsComingSoonPanel";
 import { FaqSection } from "@/components/seo/FaqSection";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
@@ -189,17 +190,7 @@ export async function DestinationDetail({
               </p>
             </div>
 
-            <div className="rounded-2xl border border-border/70 bg-card/60 px-6 py-8 shadow-sm sm:px-8 sm:py-10">
-              <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-primary/85">
-                {tCatalog("excursionsComingSoon.eyebrow")}
-              </p>
-              <h3 className="font-heading mt-3 text-2xl font-medium tracking-tight text-foreground sm:text-[1.65rem]">
-                {tCatalog("excursionsComingSoon.title")}
-              </h3>
-              <p className="mt-3 max-w-2xl text-[0.95rem] leading-relaxed text-foreground/78 sm:text-base">
-                {tCatalog("excursionsComingSoon.body", { destination: destination.name })}
-              </p>
-            </div>
+            <ExcursionsComingSoonPanel destinationName={destination.name} />
           </section>
         ) : null}
 

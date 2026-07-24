@@ -47,6 +47,8 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
               alt={cover.alt}
               fill
               qualityPreset="card"
+              loading="lazy"
+              decoding="async"
               className={CARD_IMAGE_HOVER_EXPAND}
               sizes={IMAGE_SIZES.catalogCard}
             />
@@ -64,18 +66,18 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
               {categoryLabel}
             </p>
           ) : null}
-          <h3 className="font-heading mt-2 text-2xl font-medium tracking-tight max-md:text-xl max-md:leading-snug md:text-[1.65rem]">
+          <h3 className="font-heading mt-2 text-2xl font-medium tracking-tight max-md:text-[clamp(1.15rem,4.5vw,1.35rem)] max-md:leading-snug md:text-[1.65rem]">
             {item.name}
           </h3>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground max-md:mt-2.5 max-md:text-[0.9375rem] sm:text-base">
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground max-md:mt-2.5 max-md:line-clamp-3 max-md:text-[0.9375rem] sm:text-base">
             {item.description}
           </p>
           {highlights.length > 0 ? (
-            <ul className="mt-4 space-y-2 text-sm leading-relaxed text-foreground/88 max-md:mt-3 max-md:space-y-1.5">
+            <ul className="mt-4 space-y-2 text-sm leading-relaxed text-foreground/88 max-md:mt-3 max-md:space-y-1.5 max-md:[&>li:nth-child(n+3)]:hidden">
               {highlights.map((highlight) => (
                 <li key={highlight} className="flex gap-2">
                   <span aria-hidden className="mt-2 size-1 shrink-0 rounded-full bg-cta" />
-                  <span>{highlight}</span>
+                  <span className="max-md:line-clamp-2">{highlight}</span>
                 </li>
               ))}
             </ul>
@@ -84,8 +86,29 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
             <Link
               href={detailHref}
               className={cn(
+                buttonVariants({ variant: "marketing", size: "lg" }),
+                "inline-flex max-md:min-h-11 max-md:w-full max-md:justify-center md:hidden",
+              )}
+            >
+              {t("excursionViewDetailCta")}
+              <ArrowUpRight className="size-4" aria-hidden />
+            </Link>
+            <a
+              href={whatsAppHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
-                "inline-flex max-md:min-h-11 max-md:w-full max-md:justify-center",
+                "inline-flex max-md:min-h-11 max-md:w-full max-md:justify-center md:hidden",
+              )}
+            >
+              {t("excursionWhatsAppCta")}
+            </a>
+            <Link
+              href={detailHref}
+              className={cn(
+                buttonVariants({ variant: "outline", size: "lg" }),
+                "hidden md:inline-flex",
               )}
             >
               {t("excursionViewDetailCta")}
@@ -97,7 +120,7 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
               rel="noopener noreferrer"
               className={cn(
                 buttonVariants({ variant: "marketing", size: "lg" }),
-                "inline-flex max-md:min-h-11 max-md:w-full max-md:justify-center",
+                "hidden md:inline-flex",
               )}
             >
               {t("excursionWhatsAppCta")}

@@ -2,13 +2,16 @@ import { getTranslations } from "next-intl/server";
 
 import { buttonVariants } from "@/components/ui/button";
 import { MagazinePillCta } from "@/components/ui/magazine-pill-cta";
-import { SECTION_IDS, getWhatsAppUrl } from "@/lib/constants";
+import { Link } from "@/i18n/navigation";
+import { PLANNER_PATH, SECTION_IDS, getWhatsAppUrl } from "@/lib/constants";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { cn } from "@/lib/utils";
 import { CtaTrailMapClient } from "@/components/cta/CtaTrailMapClient";
 
 export async function CTA() {
   const t = await getTranslations("cta");
+  const tNav = await getTranslations("nav");
+  const tCatalog = await getTranslations("catalog");
   const tWa = await getTranslations("whatsapp");
   const whatsappUrl = getWhatsAppUrl(tWa("primaryMessage"));
 
@@ -30,7 +33,7 @@ export async function CTA() {
           <h2
             id="cta-heading"
             className={cn(
-              "font-heading text-3xl font-medium tracking-tight text-brand-forest sm:text-4xl 2xl:text-5xl",
+              "font-heading text-[clamp(1.65rem,6.5vw,1.875rem)] font-medium tracking-tight text-brand-forest sm:text-4xl 2xl:text-5xl",
               MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground",
             )}
           >
@@ -38,23 +41,53 @@ export async function CTA() {
           </h2>
           <p
             className={cn(
-              "mx-auto mt-5 max-w-xl text-lg text-foreground/82 2xl:max-w-2xl 2xl:text-xl",
+              "mx-auto mt-5 max-w-[36ch] text-base leading-relaxed text-foreground/82 sm:max-w-xl sm:text-lg 2xl:max-w-2xl 2xl:text-xl",
               MOBILE_MAGAZINE_G_ENABLED && "max-md:text-footer-lake-foreground/82",
             )}
           >
             {t("body")}
           </p>
           {MOBILE_MAGAZINE_G_ENABLED ? (
-            <MagazinePillCta
-              href={whatsappUrl}
-              tone="cta"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-auto mt-8 max-w-md md:hidden"
-            >
-              {t("button")}
-            </MagazinePillCta>
-          ) : null}
+            <div className="mx-auto mt-8 flex max-w-md flex-col items-stretch gap-3 md:hidden">
+              <MagazinePillCta href={PLANNER_PATH} tone="cta">
+                {tNav("planTrip")}
+              </MagazinePillCta>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "inline-flex min-h-11 w-full items-center justify-center rounded-full border-white/35 bg-transparent text-footer-lake-foreground hover:bg-white/10 hover:text-footer-lake-foreground",
+                )}
+              >
+                {tCatalog("excursionWhatsAppCta")}
+              </a>
+            </div>
+          ) : (
+            <div className="mx-auto mt-8 flex max-w-md flex-col items-stretch gap-3 md:hidden">
+              <Link
+                href={PLANNER_PATH}
+                className={cn(
+                  buttonVariants({ variant: "marketing", size: "lg" }),
+                  "motion-cta inline-flex min-h-11 w-full items-center justify-center rounded-full text-base font-semibold",
+                )}
+              >
+                {tNav("planTrip")}
+              </Link>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "inline-flex min-h-11 w-full items-center justify-center rounded-full",
+                )}
+              >
+                {tCatalog("excursionWhatsAppCta")}
+              </a>
+            </div>
+          )}
           <a
             href={whatsappUrl}
             target="_blank"
@@ -62,7 +95,7 @@ export async function CTA() {
             className={cn(
               buttonVariants({ variant: "marketing", size: "lg" }),
               "motion-cta mt-8 inline-flex h-12 rounded-full px-10 text-base font-semibold 2xl:h-14 2xl:px-12 2xl:text-lg",
-              MOBILE_MAGAZINE_G_ENABLED && "max-md:hidden",
+              "max-md:hidden",
             )}
           >
             {t("button")}

@@ -14,7 +14,7 @@ export async function HomeDestinationsReinforcement() {
 
   return (
     <section
-      className="border-y border-brand-forest/10 bg-card/35 px-4 py-12 sm:px-8 sm:py-14 lg:px-14 lg:py-16 2xl:px-20"
+      className="border-y border-brand-forest/10 bg-card/35 px-4 py-12 sm:px-8 sm:py-14 lg:px-14 lg:py-16 2xl:px-20 max-md:hidden"
       aria-labelledby="destinos-reinforcement-heading"
     >
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center 2xl:max-w-5xl lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:text-left">

@@ -5,6 +5,7 @@
     "accommodations": "Acomodações",
     "excursions": "Excursões",
     "winterShop": "Indumentária",
+    "promos": "Promos",
     "planTrip": "Planejar minha viagem",
     "openMenu": "Abrir menu",
     "closeMenu": "Fechar menu",
@@ -71,6 +72,8 @@
     "cta": "Se tiver alguma dúvida… fale conosco no WhatsApp.",
     "viewCatalog": "Ver catálogo",
     "viewAll": "Ver todos os destinos",
+    "viewAllCount": "Ver os {count} destinos",
+    "exploreDestination": "Explorar destino",
     "reinforcementTitle": "Já escolheu seu destino?",
     "reinforcementLead": "Montamos carro, acomodação e excursões em um único contato.",
     "reinforcementCta": "Planejar minha viagem",
@@ -387,8 +390,10 @@
     "excursionWhatsAppCta": "Consultar no WhatsApp",
     "excursionViewDetailCta": "Ver fotos e detalhes",
     "excursionWhatsAppMessage": "Tenho interesse na excursão \"{excursion}\" em {destination}. Podem me ajudar?",
+    "showMore": "Ver mais ({count})",
     "excursionsComingSoon": {
       "eyebrow": "Em breve",
+      "navMeta": "Em breve",
       "title": "Excursões a caminho",
       "body": "Estamos montando o catálogo de saídas em {destination}. Em breve você vai poder ver fotos, detalhes e o que está incluso aqui."
     },

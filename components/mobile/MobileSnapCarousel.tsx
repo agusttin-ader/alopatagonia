@@ -142,7 +142,7 @@ export function MobileSnapCarousel({
   return (
     <div
       ref={viewportRef}
-      className={cn("overflow-hidden", className)}
+      className={cn("w-full min-w-0 overflow-hidden", className)}
       aria-roledescription="carousel"
       aria-label={ariaLabel}
       onTouchStart={handleTouchStart}
@@ -153,7 +153,7 @@ export function MobileSnapCarousel({
       <div
         data-carousel-track
         className={cn(
-          "flex w-max will-change-transform",
+          "flex w-max max-w-none will-change-transform",
           dragOffset === null && "transition-transform duration-300 ease-out motion-reduce:transition-none",
           trackClassName,
         )}
@@ -163,7 +163,7 @@ export function MobileSnapCarousel({
           <div
             key={index}
             data-carousel-slide
-            className={cn("shrink-0", slideClassName)}
+            className={cn("relative shrink-0", slideClassName)}
             aria-hidden={index !== activeIndex ? true : undefined}
           >
             {child}

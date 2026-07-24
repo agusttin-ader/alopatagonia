@@ -4,9 +4,14 @@ import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { cn } from "@/lib/utils";
 
 const HERO_OVERLAY = [
-  "linear-gradient(to bottom, rgba(34,38,1,0.42), rgba(34,38,1,0.14), rgba(34,38,1,0.54))",
+  "linear-gradient(to bottom, rgba(34,38,1,0.48), rgba(34,38,1,0.18), rgba(34,38,1,0.62))",
   "linear-gradient(to top right, rgba(217,212,186,0.1), transparent 45%, rgba(113,115,54,0.1))",
   "radial-gradient(circle at 50% 18%, rgba(218,209,156,0.22) 0%, rgba(218,209,156,0.06) 42%, transparent 68%)",
+].join(",");
+
+const HERO_OVERLAY_MOBILE = [
+  "linear-gradient(to bottom, rgba(34,38,1,0.52), rgba(34,38,1,0.22) 42%, rgba(34,38,1,0.72))",
+  "linear-gradient(to top, rgba(34,38,1,0.55), transparent 42%)",
 ].join(",");
 
 const HERO_CRESCENT =
@@ -29,8 +34,13 @@ export function Hero() {
       >
         <HeroBackground />
         <div
-          className="pointer-events-none absolute inset-0 z-[2]"
+          className="pointer-events-none absolute inset-0 z-[2] max-md:hidden"
           style={{ background: HERO_OVERLAY }}
+          aria-hidden
+        />
+        <div
+          className="pointer-events-none absolute inset-0 z-[2] md:hidden"
+          style={{ background: HERO_OVERLAY_MOBILE }}
           aria-hidden
         />
         <HeroClient />

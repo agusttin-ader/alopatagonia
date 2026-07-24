@@ -274,7 +274,7 @@ function MobileGalleryCarousel({
         activeIndex={active}
         onActiveIndexChange={setActive}
         trackClassName="gap-3"
-        slideClassName="w-[80%]"
+        slideClassName="w-[min(20rem,78vw)]"
       >
         {images.map((image, index) => (
           <button
@@ -283,7 +283,7 @@ function MobileGalleryCarousel({
             onClick={() => onOpen(index)}
             aria-label={labelFor(index + 1)}
             className={cn(
-              "relative aspect-[4/5] overflow-hidden rounded-[1.35rem] bg-muted",
+              "relative aspect-[4/5] w-full min-h-[14rem] overflow-hidden rounded-[1.35rem] bg-muted",
               "cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
             )}
           >
@@ -400,7 +400,7 @@ export function HomeGallerySection() {
         delay={0.06}
       >
         <div className="mx-auto w-full">
-          <div className="sm:hidden">
+          <div className="sm:hidden min-h-[16rem]">
             <MobileGalleryCarousel
               images={mobileImages}
               onOpen={setLightboxIndex}

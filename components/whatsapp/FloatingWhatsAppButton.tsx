@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 
 import { getWhatsAppUrl } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 export function FloatingWhatsAppButton() {
   const t = useTranslations("whatsapp");
@@ -14,7 +15,15 @@ export function FloatingWhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t("ariaLabel")}
-      className="fixed bottom-[max(1.15rem,env(safe-area-inset-bottom))] right-[max(1.1rem,env(safe-area-inset-right))] z-[1100] inline-flex size-[3.5rem] items-center justify-center rounded-full bg-[#25d366] text-white shadow-xl transition-[transform,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 hover:scale-[1.04] hover:bg-[#1fb85a] hover:shadow-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25d366]/60 focus-visible:ring-offset-2 motion-reduce:transition-none md:bottom-[max(1.75rem,env(safe-area-inset-bottom))] md:right-[max(1.75rem,env(safe-area-inset-right))] md:size-16"
+      className={cn(
+        "floating-whatsapp fixed z-[1100] inline-flex size-[3.5rem] items-center justify-center rounded-full bg-[#25d366] text-white shadow-xl",
+        "bottom-[max(1.15rem,env(safe-area-inset-bottom))] right-[max(1.1rem,env(safe-area-inset-right))]",
+        "transition-[transform,background-color,box-shadow,opacity] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+        "hover:-translate-y-0.5 hover:scale-[1.04] hover:bg-[#1fb85a] hover:shadow-2xl",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#25d366]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100",
+        "md:bottom-[max(1.75rem,env(safe-area-inset-bottom))] md:right-[max(1.75rem,env(safe-area-inset-right))] md:size-16",
+      )}
     >
       <span className="sr-only">{t("srOnly")}</span>
       <svg

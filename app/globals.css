@@ -154,6 +154,16 @@
         box-shadow: none;
       }
     }
+    html.planner-sticky-cta-active .floating-whatsapp {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px) scale(0.92);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html.planner-sticky-cta-active .floating-whatsapp {
+        transform: none;
+      }
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     html {

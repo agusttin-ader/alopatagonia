@@ -29,7 +29,7 @@ export async function AboutUsSection() {
         aria-hidden
       />
 
-      <div className="relative z-[2] mx-auto flex min-h-[min(72vh,720px)] w-full max-w-3xl flex-col items-center justify-center px-4 py-16 text-center sm:min-h-[min(80vh,820px)] sm:px-8 sm:py-24 lg:min-h-[min(66vh,700px)] lg:max-w-4xl lg:px-12 lg:py-24">
+      <div className="relative z-[2] mx-auto flex min-h-[min(72vh,720px)] w-full max-w-3xl flex-col items-center justify-center px-4 py-16 text-center max-md:min-h-[min(58vh,520px)] max-md:py-12 sm:min-h-[min(80vh,820px)] sm:px-8 sm:py-24 lg:min-h-[min(66vh,700px)] lg:max-w-4xl lg:px-12 lg:py-24">
         <SiteLogo
           linked={false}
           variant="onDark"
@@ -46,7 +46,7 @@ export async function AboutUsSection() {
           {t("title")}
         </h2>
 
-        <div className="mt-8 max-w-2xl space-y-5 text-base leading-relaxed text-white/92 sm:mt-9 sm:space-y-6 sm:text-lg lg:text-[1.125rem] lg:leading-[1.65] [text-shadow:0_1px_6px_rgba(0,0,0,0.38)]">
+        <div className="mt-8 max-w-2xl space-y-5 text-base leading-relaxed text-white/92 max-md:mt-6 max-md:space-y-3 max-md:[&>p:nth-child(n+3)]:hidden sm:mt-9 sm:space-y-6 sm:text-lg lg:text-[1.125rem] lg:leading-[1.65] [text-shadow:0_1px_6px_rgba(0,0,0,0.38)]">
           {paragraphs.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}

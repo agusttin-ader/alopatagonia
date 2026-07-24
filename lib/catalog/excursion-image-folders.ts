@@ -35,3 +35,7 @@ const DESTINATIONS_EXCURSIONS_COMING_SOON = new Set(["ushuaia"]);
 export function hasExcursionsComingSoon(destinationSlug: string): boolean {
   return DESTINATIONS_EXCURSIONS_COMING_SOON.has(destinationSlug);
 }
+
+export function getDestinationsExcursionsComingSoon(): string[] {
+  return [...DESTINATIONS_EXCURSIONS_COMING_SOON];
+}

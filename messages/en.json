@@ -5,6 +5,7 @@
     "accommodations": "Accommodation",
     "excursions": "Excursions",
     "winterShop": "Outdoor gear",
+    "promos": "Deals",
     "planTrip": "Plan my trip",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
@@ -71,6 +72,8 @@
     "cta": "Any questions? Message us on WhatsApp.",
     "viewCatalog": "View catalog",
     "viewAll": "View all destinations",
+    "viewAllCount": "View all {count} destinations",
+    "exploreDestination": "Explore destination",
     "reinforcementTitle": "Already picked a destination?",
     "reinforcementLead": "We'll arrange car, accommodation and excursions in one contact.",
     "reinforcementCta": "Plan my trip",
@@ -387,8 +390,10 @@
     "excursionWhatsAppCta": "Ask on WhatsApp",
     "excursionViewDetailCta": "View photos and details",
     "excursionWhatsAppMessage": "I'm interested in the \"{excursion}\" excursion in {destination}. Can you help?",
+    "showMore": "Show more ({count})",
     "excursionsComingSoon": {
       "eyebrow": "Coming soon",
+      "navMeta": "Coming soon",
       "title": "Excursions on the way",
       "body": "We're putting together the catalog of trips in {destination}. Soon you'll be able to see photos, details and what's included here."
     },

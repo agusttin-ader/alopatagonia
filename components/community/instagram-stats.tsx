@@ -288,7 +288,7 @@ export function InstagramStats() {
     <section
       ref={sectionRef}
       id={SECTION_IDS.community}
-      className="scroll-mt-24 pt-12 sm:pt-16"
+      className="scroll-mt-24 pt-10 sm:pt-16 max-md:pt-10"
       aria-labelledby="comunidad-heading"
     >
       <Reveal>
