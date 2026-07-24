@@ -9,9 +9,9 @@ import { Link } from "@/i18n/navigation";
 import { PLANNER_PATH, SITE } from "@/lib/constants";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import {
+  getSiteIntroRevealFallbackMs,
   isSiteIntroPending,
   shouldPlaySiteIntro,
-  SITE_INTRO_REVEAL_FALLBACK_MS,
 } from "@/lib/site-intro-config";
 import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
@@ -80,7 +80,7 @@ export function HeroClient() {
 
     const fallbackId = window.setTimeout(
       () => setHeroRevealed(true),
-      SITE_INTRO_REVEAL_FALLBACK_MS,
+      getSiteIntroRevealFallbackMs(),
     );
 
     return () => {

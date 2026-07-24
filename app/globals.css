@@ -307,6 +307,23 @@ html.site-intro-exiting #site-intro-placeholder {
   will-change: transform;
 }
 
+/* Mobile: salida por opacity (alineada con SiteIntro mobile, 280 ms) */
+@media (max-width: 767px) {
+  html.site-intro-exiting #site-intro-placeholder {
+    transform: none;
+    opacity: 0;
+    transition: opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.site-intro-exiting #site-intro-placeholder {
+      transition: none;
+      opacity: 0;
+    }
+  }
+}
+
 html.site-intro-pending #site-intro-placeholder,
 html.site-intro-exiting #site-intro-placeholder {
   display: flex;

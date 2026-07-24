@@ -120,7 +120,7 @@ html.site-intro-exiting #site-intro-placeholder{display:flex!important}
 html.site-intro-placeholder-off #site-intro-placeholder{display:none!important}
 `.replace(/\s+/g, " ");
 
-/** Logo grande → se achica a la izquierda + wordmark → capa sube */
+/** Logo grande → se achica a la izquierda + wordmark → capa sube (desktop / tablet). */
 export const SITE_INTRO_TIMELINE_MS = {
   letter: 1300,
   word: 1400,
@@ -132,8 +132,38 @@ export const SITE_INTRO_HIDE_AFTER_MS =
   SITE_INTRO_TIMELINE_MS.word +
   SITE_INTRO_TIMELINE_MS.exit;
 
+/**
+ * Mobile (`max-width: 767px`): splash breve.
+ * - Máximo total 750 ms (hold + fade).
+ * - Si imagen/fuentes ya listos, sale al instante (solo fade de salida).
+ */
+export const SITE_INTRO_MOBILE_MS = {
+  /** Tope absoluto desde el mount hasta ocultar (hold + fade). */
+  maxTotal: 750,
+  /** Fade de salida (opacity). */
+  exit: 280,
+} as const;
+
 /** Fallback del hero si el evento de reveal no llega. */
 export const SITE_INTRO_REVEAL_FALLBACK_MS = SITE_INTRO_HIDE_AFTER_MS + 1200;
+
+export function isSiteIntroMobileViewport(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(max-width: 767px)").matches;
+}
+
+/** Duración máxima efectiva del intro según viewport. */
+export function getSiteIntroHideAfterMs(): number {
+  return isSiteIntroMobileViewport()
+    ? SITE_INTRO_MOBILE_MS.maxTotal
+    : SITE_INTRO_HIDE_AFTER_MS;
+}
+
+export function getSiteIntroRevealFallbackMs(): number {
+  return isSiteIntroMobileViewport()
+    ? SITE_INTRO_MOBILE_MS.maxTotal + 400
+    : SITE_INTRO_REVEAL_FALLBACK_MS;
+}
 
 export function shouldPlaySiteIntro(): boolean {
   if (typeof window === "undefined") return false;

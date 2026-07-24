@@ -19,8 +19,8 @@ import {
 } from "@/lib/hero-video";
 import { canPlayInlineVideo } from "@/lib/media-video-support";
 import {
+  getSiteIntroRevealFallbackMs,
   shouldPlaySiteIntro,
-  SITE_INTRO_REVEAL_FALLBACK_MS,
 } from "@/lib/site-intro-config";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import { cn } from "@/lib/utils";
@@ -221,7 +221,7 @@ export function HeroBackground() {
     }
 
     window.addEventListener("alo-site-intro-reveal", activate, { once: true });
-    const fallbackId = window.setTimeout(activate, SITE_INTRO_REVEAL_FALLBACK_MS);
+    const fallbackId = window.setTimeout(activate, getSiteIntroRevealFallbackMs());
 
     return () => {
       window.removeEventListener("alo-site-intro-reveal", activate);

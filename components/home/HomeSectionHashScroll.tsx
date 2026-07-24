@@ -9,8 +9,8 @@ import {
   scrollToHomeSection,
 } from "@/lib/home-sections";
 import {
+  getSiteIntroRevealFallbackMs,
   isSiteHomePath,
-  SITE_INTRO_REVEAL_FALLBACK_MS,
   shouldPlaySiteIntro,
 } from "@/lib/site-intro-config";
 
@@ -42,7 +42,7 @@ export function HomeSectionHashScroll() {
     }
 
     window.addEventListener("alo-site-intro-reveal", run, { once: true });
-    const fallbackId = window.setTimeout(run, SITE_INTRO_REVEAL_FALLBACK_MS);
+    const fallbackId = window.setTimeout(run, getSiteIntroRevealFallbackMs());
 
     return () => {
       window.removeEventListener("alo-site-intro-reveal", run);

@@ -2,12 +2,13 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { AppImage } from "@/components/media/AppImage";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 import { SITE } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import {
   isSiteHomePath,
+  isSiteIntroMobileViewport,
   setSiteIntroExiting,
   setSiteIntroPending,
   setSiteIntroPlaceholderHidden,
@@ -17,6 +18,7 @@ import {
   SITE_INTRO_HIDE_AFTER_MS,
   SITE_INTRO_IMAGE,
   SITE_INTRO_LOGO,
+  SITE_INTRO_MOBILE_MS,
   SITE_INTRO_OVERLAY_CSS,
   SITE_INTRO_STORAGE_KEY,
   SITE_INTRO_TIMELINE_MS,
@@ -25,6 +27,7 @@ import { cn } from "@/lib/utils";
 
 const easeFlow = [0.22, 0.03, 0.26, 1] as const;
 const easeWipe = [0.4, 0, 0.2, 1] as const;
+const easeFade = [0.22, 1, 0.36, 1] as const;
 
 const LOGO_WIDTH = 591;
 const LOGO_HEIGHT = 586;
@@ -51,10 +54,48 @@ function setIntroExiting(exiting: boolean) {
   setSiteIntroExiting(exiting);
 }
 
+function finishIntro(persistSeen: boolean) {
+  if (persistSeen && !SITE_INTRO_ALWAYS_SHOW) {
+    window.sessionStorage.setItem(SITE_INTRO_STORAGE_KEY, "1");
+  }
+  setIntroExiting(false);
+  setSiteIntroPlaceholderHidden(true);
+  scrollToHeroTop();
+}
+
+function waitForDocumentReady(): Promise<void> {
+  if (document.readyState === "complete" || document.readyState === "interactive") {
+    return Promise.resolve();
+  }
+  return new Promise((resolve) => {
+    document.addEventListener("DOMContentLoaded", () => resolve(), { once: true });
+  });
+}
+
 export function SiteIntro() {
   const reduceMotion = useReducedMotion();
   const [isVisible, setIsVisible] = useState(false);
   const [phase, setPhase] = useState<IntroPhase>("letter");
+  const [isMobileIntro, setIsMobileIntro] = useState(false);
+  const imageReadyRef = useRef(false);
+  const imageReadyResolvers = useRef<Array<() => void>>([]);
+  const exitStartedRef = useRef(false);
+
+  const signalImageReady = () => {
+    if (imageReadyRef.current) return;
+    imageReadyRef.current = true;
+    setSiteIntroPlaceholderHidden(true);
+    imageReadyResolvers.current.splice(0).forEach((resolve) => resolve());
+  };
+
+  const waitForImageReady = () =>
+    new Promise<void>((resolve) => {
+      if (imageReadyRef.current) {
+        resolve();
+        return;
+      }
+      imageReadyResolvers.current.push(resolve);
+    });
 
   useLayoutEffect(() => {
     const home = isSiteHomePath(window.location.pathname);
@@ -85,44 +126,89 @@ export function SiteIntro() {
       return;
     }
 
+    const mobile = isSiteIntroMobileViewport();
+    setIsMobileIntro(mobile);
+    exitStartedRef.current = false;
+    imageReadyRef.current = false;
+    imageReadyResolvers.current = [];
+
     scrollToHeroTop();
     setSiteIntroPending(true);
     setIntroExiting(false);
     setIsVisible(true);
     setPhase("letter");
 
-    const wordAt = SITE_INTRO_TIMELINE_MS.letter;
-    const exitAt = wordAt + SITE_INTRO_TIMELINE_MS.word;
+    const timeouts: number[] = [];
+    let cancelled = false;
 
-    const wordTimeoutId = window.setTimeout(() => setPhase("word"), wordAt);
-    const exitTimeoutId = window.setTimeout(() => {
+    const beginExit = () => {
+      if (exitStartedRef.current || cancelled) return;
+      exitStartedRef.current = true;
       setPhase("exit");
       setIntroExiting(true);
       setSiteIntroPending(false);
       markIntroReveal();
       scrollToHeroTop();
-    }, exitAt);
+    };
 
-    const hideTimeoutId = window.setTimeout(() => {
-      if (!SITE_INTRO_ALWAYS_SHOW) {
-        window.sessionStorage.setItem(SITE_INTRO_STORAGE_KEY, "1");
-      }
+    const hideCompletely = () => {
+      if (cancelled) return;
+      finishIntro(true);
       setIsVisible(false);
-      setIntroExiting(false);
-      setSiteIntroPlaceholderHidden(true);
-      scrollToHeroTop();
-    }, SITE_INTRO_HIDE_AFTER_MS);
+    };
+
+    if (mobile) {
+      const { maxTotal, exit } = SITE_INTRO_MOBILE_MS;
+      const hardCapMs = Math.max(0, maxTotal - exit);
+
+      const runMobileExit = () => {
+        beginExit();
+        timeouts.push(window.setTimeout(hideCompletely, exit));
+      };
+
+      // Sale apenas página + fuentes + imagen están listos; sin espera artificial.
+      // Tope duro: nunca supera maxTotal (hold + fade).
+      void Promise.race([
+        Promise.all([
+          waitForDocumentReady(),
+          document.fonts?.ready ?? Promise.resolve(),
+          waitForImageReady(),
+        ]),
+        new Promise<void>((resolve) => {
+          timeouts.push(window.setTimeout(resolve, hardCapMs));
+        }),
+      ]).then(() => {
+        if (!cancelled) runMobileExit();
+      });
+    } else {
+      const wordAt = SITE_INTRO_TIMELINE_MS.letter;
+      const exitAt = wordAt + SITE_INTRO_TIMELINE_MS.word;
+
+      timeouts.push(window.setTimeout(() => setPhase("word"), wordAt));
+      timeouts.push(
+        window.setTimeout(() => {
+          beginExit();
+        }, exitAt),
+      );
+      timeouts.push(
+        window.setTimeout(() => {
+          hideCompletely();
+        }, SITE_INTRO_HIDE_AFTER_MS),
+      );
+    }
 
     return () => {
-      window.clearTimeout(wordTimeoutId);
-      window.clearTimeout(exitTimeoutId);
-      window.clearTimeout(hideTimeoutId);
+      cancelled = true;
+      timeouts.forEach((id) => window.clearTimeout(id));
       setIntroExiting(false);
     };
   }, [reduceMotion]);
 
   const isLetter = phase === "letter";
   const isWord = phase === "word";
+  const exitDurationSec = isMobileIntro
+    ? SITE_INTRO_MOBILE_MS.exit / 1000
+    : SITE_INTRO_TIMELINE_MS.exit / 1000;
 
   if (!isVisible) return null;
 
@@ -131,11 +217,19 @@ export function SiteIntro() {
       id="site-intro-overlay"
       className="pointer-events-none fixed inset-0 z-[2200] overflow-hidden"
       style={{ backgroundColor: SITE_INTRO_FALLBACK_BG }}
-      initial={{ y: 0 }}
-      animate={phase === "exit" ? { y: "-100%" } : { y: 0 }}
+      initial={isMobileIntro ? { opacity: 1 } : { y: 0 }}
+      animate={
+        phase === "exit"
+          ? isMobileIntro
+            ? { opacity: 0 }
+            : { y: "-100%" }
+          : isMobileIntro
+            ? { opacity: 1 }
+            : { y: 0 }
+      }
       transition={{
-        duration: SITE_INTRO_TIMELINE_MS.exit / 1000,
-        ease: easeWipe,
+        duration: exitDurationSec,
+        ease: isMobileIntro ? easeFade : easeWipe,
       }}
       aria-hidden
     >
@@ -149,7 +243,7 @@ export function SiteIntro() {
         sizes={IMAGE_SIZES.viewport}
         className="object-cover"
         loadingPulse={false}
-        onLoadingComplete={() => setSiteIntroPlaceholderHidden(true)}
+        onLoadingComplete={signalImageReady}
       />
       <div
         className="absolute inset-0"
@@ -158,19 +252,19 @@ export function SiteIntro() {
       />
 
       <div className="absolute inset-0 z-[2] flex items-center justify-center px-6 py-10 sm:px-10">
-        {/* Mobile: logo arriba + wordmark abajo (evita recorte horizontal) */}
+        {/* Mobile: logo centrado (wordmark solo en timeline desktop) */}
         <div className="flex max-w-[min(100%,20rem)] flex-col items-center gap-4 text-center sm:hidden">
           <motion.div
             className="origin-center"
-            initial={reduceMotion ? false : { opacity: 0, scale: 2.35 }}
+            initial={reduceMotion ? false : { opacity: 0, scale: isMobileIntro ? 1.35 : 2.35 }}
             animate={{
               opacity: 1,
-              scale: isLetter ? 2.45 : 1,
+              scale: isMobileIntro ? 1 : isLetter ? 2.45 : 1,
             }}
             transition={{
-              opacity: { duration: 0.45, ease: easeFlow },
+              opacity: { duration: isMobileIntro ? 0.22 : 0.45, ease: easeFlow },
               scale: {
-                duration: isWord ? 0.78 : 0.68,
+                duration: isMobileIntro ? 0.35 : isWord ? 0.78 : 0.68,
                 ease: easeFlow,
               },
             }}
@@ -189,24 +283,26 @@ export function SiteIntro() {
             />
           </motion.div>
 
-          <motion.span
-            className={cn(
-              WORDMARK_BASE,
-              "max-w-[min(100%,18rem)] text-balance text-[clamp(1.65rem,8.5vw,2.35rem)] leading-[1.05]",
-            )}
-            initial={false}
-            animate={{
-              opacity: isWord ? 1 : 0,
-              y: isWord ? 0 : 10,
-            }}
-            transition={{
-              opacity: { duration: 0.55, ease: easeFlow },
-              y: { duration: 0.55, ease: easeFlow },
-            }}
-            aria-hidden={!isWord}
-          >
-            {SITE.name}
-          </motion.span>
+          {!isMobileIntro ? (
+            <motion.span
+              className={cn(
+                WORDMARK_BASE,
+                "max-w-[min(100%,18rem)] text-balance text-[clamp(1.65rem,8.5vw,2.35rem)] leading-[1.05]",
+              )}
+              initial={false}
+              animate={{
+                opacity: isWord ? 1 : 0,
+                y: isWord ? 0 : 10,
+              }}
+              transition={{
+                opacity: { duration: 0.55, ease: easeFlow },
+                y: { duration: 0.55, ease: easeFlow },
+              }}
+              aria-hidden={!isWord}
+            >
+              {SITE.name}
+            </motion.span>
+          ) : null}
         </div>
 
         {/* Desktop: logo + wordmark en fila */}

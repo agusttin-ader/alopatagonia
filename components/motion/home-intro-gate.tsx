@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 
 import { SiteIntro } from "@/components/motion/site-intro";
 import {
+  getSiteIntroHideAfterMs,
   isSiteHomePath,
   setSiteIntroPending,
   setSiteIntroPlaceholderHidden,
-  SITE_INTRO_HIDE_AFTER_MS,
 } from "@/lib/site-intro-config";
 
 /** Intro animada solo en home (/, /en, /pt) — evita costo en /destinos, /invierno, etc. */
@@ -33,7 +33,7 @@ export function HomeIntroGate() {
       setSiteIntroPlaceholderHidden(true);
       window.__aloIntroReveal = true;
       window.dispatchEvent(new CustomEvent("alo-site-intro-reveal"));
-    }, SITE_INTRO_HIDE_AFTER_MS + 800);
+    }, getSiteIntroHideAfterMs() + 400);
 
     return () => window.clearTimeout(fallbackId);
   }, [isHome]);
