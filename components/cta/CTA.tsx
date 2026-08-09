@@ -1,12 +1,13 @@
 import { getTranslations } from "next-intl/server";
 
+import { CtaTrailMapClient } from "@/components/cta/CtaTrailMapClient";
 import { buttonVariants } from "@/components/ui/button";
 import { MagazinePillCta } from "@/components/ui/magazine-pill-cta";
+import { WhatsAppLink } from "@/components/whatsapp/WhatsAppLink";
 import { Link } from "@/i18n/navigation";
 import { PLANNER_PATH, SECTION_IDS, getWhatsAppUrl } from "@/lib/constants";
 import { MOBILE_MAGAZINE_G_ENABLED } from "@/lib/mobile-magazine-g";
 import { cn } from "@/lib/utils";
-import { CtaTrailMapClient } from "@/components/cta/CtaTrailMapClient";
 
 export async function CTA() {
   const t = await getTranslations("cta");
@@ -52,17 +53,15 @@ export async function CTA() {
               <MagazinePillCta href={PLANNER_PATH} tone="cta">
                 {tNav("planTrip")}
               </MagazinePillCta>
-              <a
+              <WhatsAppLink
                 href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
                   "inline-flex min-h-11 w-full items-center justify-center rounded-full border-white/35 bg-transparent text-footer-lake-foreground hover:bg-white/10 hover:text-footer-lake-foreground",
                 )}
               >
                 {tCatalog("excursionWhatsAppCta")}
-              </a>
+              </WhatsAppLink>
             </div>
           ) : (
             <div className="mx-auto mt-8 flex max-w-md flex-col items-stretch gap-3 md:hidden">
@@ -75,23 +74,19 @@ export async function CTA() {
               >
                 {tNav("planTrip")}
               </Link>
-              <a
+              <WhatsAppLink
                 href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
                   "inline-flex min-h-11 w-full items-center justify-center rounded-full",
                 )}
               >
                 {tCatalog("excursionWhatsAppCta")}
-              </a>
+              </WhatsAppLink>
             </div>
           )}
-          <a
+          <WhatsAppLink
             href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
             className={cn(
               buttonVariants({ variant: "marketing", size: "lg" }),
               "motion-cta mt-8 inline-flex h-12 rounded-full px-10 text-base font-semibold 2xl:h-14 2xl:px-12 2xl:text-lg",
@@ -99,7 +94,7 @@ export async function CTA() {
             )}
           >
             {t("button")}
-          </a>
+          </WhatsAppLink>
         </div>
       </div>
     </section>

@@ -7,6 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useId, useMemo, useRef, useState, type RefObject } from "react";
 
 import { Reveal } from "@/components/motion/reveal";
+import { WhatsAppLink } from "@/components/whatsapp/WhatsAppLink";
 import {
   PLANNER_PHONE_VIDEO,
   resolvePlannerDestinationKey,
@@ -841,10 +842,8 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
                   "max-md:fixed max-md:inset-x-0 max-md:bottom-0 max-md:z-[1050] max-md:mt-0 max-md:border-t max-md:border-border/70 max-md:bg-background/95 max-md:px-4 max-md:pb-[max(0.85rem,env(safe-area-inset-bottom))] max-md:pt-3 max-md:shadow-[0_-12px_28px_-20px_rgba(0,0,0,0.35)] max-md:backdrop-blur-md",
               )}
             >
-              <a
+              <WhatsAppLink
                 href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
                 onClick={(event) => {
                   if (canSubmit) return;
                   event.preventDefault();
@@ -858,7 +857,7 @@ export function TripPlannerSection({ showHeading = true }: { showHeading?: boole
               >
                 <WhatsAppIcon />
                 {plannerReady ? t("form.sendWhatsApp") : t("form.completeWhatsApp")}
-              </a>
+              </WhatsAppLink>
               <a
                 href={mailUrl}
                 onClick={(event) => {

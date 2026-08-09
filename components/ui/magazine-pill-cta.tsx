@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import type { MouseEventHandler } from "react";
 
 import { Link } from "@/i18n/navigation";
 import { isInternalAppHref } from "@/lib/i18n/internal-href";
@@ -12,6 +13,7 @@ type MagazinePillCtaProps = {
   tone?: "surface" | "cta" | "inverse";
   target?: string;
   rel?: string;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
 };
 
 const TONE_CLASS = {
@@ -55,6 +57,7 @@ export function MagazinePillCta({
   tone = "surface",
   target,
   rel,
+  onClick,
 }: MagazinePillCtaProps) {
   const pillClassName = cn(
     "motion-cta flex h-14 w-full items-center justify-between gap-3 rounded-full pl-5 pr-2 text-[0.98rem] font-semibold ring-1 transition",
@@ -64,14 +67,14 @@ export function MagazinePillCta({
 
   if (isInternalAppHref(href)) {
     return (
-      <Link href={href} className={pillClassName}>
+      <Link href={href} className={pillClassName} onClick={onClick}>
         <MagazinePillCtaContent tone={tone}>{children}</MagazinePillCtaContent>
       </Link>
     );
   }
 
   return (
-    <a href={href} target={target} rel={rel} className={pillClassName}>
+    <a href={href} target={target} rel={rel} className={pillClassName} onClick={onClick}>
       <MagazinePillCtaContent tone={tone}>{children}</MagazinePillCtaContent>
     </a>
   );

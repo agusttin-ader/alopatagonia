@@ -3,6 +3,7 @@ import { MapPin } from "lucide-react";
 
 import { CatalogDetailGallery } from "@/components/catalog/CatalogDetailGallery";
 import { buttonVariants } from "@/components/ui/button";
+import { WhatsAppLink } from "@/components/whatsapp/WhatsAppLink";
 import { Link } from "@/i18n/navigation";
 import type { CatalogItemEntry } from "@/lib/catalog/catalog-items";
 import { getLocalizedCatalogItemBadge } from "@/lib/i18n/localized-catalog";
@@ -160,17 +161,15 @@ export async function CatalogItemDetail({ entry: rawEntry }: CatalogItemDetailPr
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground min-[1920px]:text-base">
                 {t("itemDetail.askBody")}
               </p>
-              <a
+              <WhatsAppLink
                 href={whatsAppHref}
-                target="_blank"
-                rel="noopener noreferrer"
                 className={cn(
                   buttonVariants({ variant: "marketing", size: "lg" }),
                   "mt-5 w-full min-h-11 min-[1920px]:mt-6 min-[1920px]:h-12 min-[1920px]:text-base",
                 )}
               >
                 {t("itemDetail.askCta")}
-              </a>
+              </WhatsAppLink>
               <div className="mt-6 space-y-2 border-t border-border/70 pt-5 text-sm min-[1920px]:mt-8 min-[1920px]:text-base">
                 <Link href={backHref} className="block text-muted-foreground hover:text-cta">
                   {t("itemDetail.backTo", {

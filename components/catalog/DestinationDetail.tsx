@@ -9,6 +9,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { hasExcursionsComingSoon } from "@/lib/catalog/excursion-image-folders";
 import type { DestinationCatalog } from "@/lib/catalog/types";
+import { WhatsAppLink } from "@/components/whatsapp/WhatsAppLink";
 import { PLANNER_PATH, getWhatsAppUrl } from "@/lib/constants";
 import { localizeAccommodationItem } from "@/lib/i18n/localized-accommodations";
 import { localizeExcursionItem } from "@/lib/i18n/localized-excursions";
@@ -211,14 +212,12 @@ export async function DestinationDetail({
                 </span>
               </p>
             </div>
-            <a
+            <WhatsAppLink
               href={carWhatsApp}
-              target="_blank"
-              rel="noopener noreferrer"
               className={cn(buttonVariants({ variant: "marketing", size: "lg" }), "shrink-0 max-md:w-full max-md:justify-center")}
             >
               {tCatalog("carRentalCta")}
-            </a>
+            </WhatsAppLink>
           </div>
         </section>
 

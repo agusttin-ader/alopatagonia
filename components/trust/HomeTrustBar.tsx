@@ -2,6 +2,7 @@ import { MapPin, MessageCircle } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 
 import { TestimonialStars } from "@/components/testimonials/TestimonialStars";
+import { WhatsAppLink } from "@/components/whatsapp/WhatsAppLink";
 import { TESTIMONIALS, getWhatsAppUrl } from "@/lib/constants";
 import { getDestinationSlugs } from "@/lib/catalog/destinations";
 import { localizeTestimonials } from "@/lib/i18n/localized-home";
@@ -68,17 +69,15 @@ export async function HomeTrustBar() {
           <TrustDivider className="max-sm:hidden" />
 
           <li className="flex min-w-0 items-center max-sm:justify-start sm:justify-start">
-            <a
+            <WhatsAppLink
               href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
               className="group inline-flex min-w-0 items-center gap-2.5 rounded-md transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cta/45 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               <MessageCircle className="size-4 shrink-0 text-brand-forest" aria-hidden />
               <span className="text-sm text-foreground/88 underline-offset-4 group-hover:underline sm:text-[0.9375rem]">
                 {t("whatsapp")}
               </span>
-            </a>
+            </WhatsAppLink>
           </li>
 
           <TrustDivider />

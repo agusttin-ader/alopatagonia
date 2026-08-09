@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { AboutUsRotatingBackground } from "@/components/about/AboutUsRotatingImage";
 import { SiteLogo } from "@/components/brand/SiteLogo";
 import { buttonVariants } from "@/components/ui/button";
+import { WhatsAppLink } from "@/components/whatsapp/WhatsAppLink";
 import { SECTION_IDS, getWhatsAppUrl } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -56,17 +57,15 @@ export async function AboutUsSection() {
           {t("closing")}
         </p>
 
-        <a
+        <WhatsAppLink
           href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
           className={cn(
             buttonVariants({ variant: "marketing", size: "lg" }),
             "motion-cta mt-10 inline-flex h-12 rounded-full px-8 text-base font-semibold sm:mt-12 2xl:h-14 2xl:px-10 2xl:text-lg",
           )}
         >
           {t("cta")}
-        </a>
+        </WhatsAppLink>
       </div>
     </section>
   );

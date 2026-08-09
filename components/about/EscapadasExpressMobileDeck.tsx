@@ -6,6 +6,7 @@ import { useState } from "react";
 import { EscapadasExpressMedia } from "@/components/about/EscapadasExpressMedia";
 import { MobileSnapCarousel } from "@/components/mobile/MobileSnapCarousel";
 import { MagazinePillCta } from "@/components/ui/magazine-pill-cta";
+import { trackWhatsAppClick } from "@/lib/analytics";
 import { getWhatsAppUrl } from "@/lib/constants";
 import type { EscapadaExpressPromo } from "@/lib/escapadas-express";
 import { cn } from "@/lib/utils";
@@ -113,6 +114,7 @@ export function EscapadasExpressMobileDeck({ promos }: EscapadasExpressMobileDec
                 rel="noopener noreferrer"
                 tone="cta"
                 className="mt-4 max-w-full"
+                onClick={trackWhatsAppClick}
               >
                 {t("consultCta")}
               </MagazinePillCta>

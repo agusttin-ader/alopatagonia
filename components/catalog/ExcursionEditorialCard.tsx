@@ -8,6 +8,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import type { CatalogItemEntry } from "@/lib/catalog/catalog-items";
 import type { ExcursionCategory } from "@/lib/catalog/types";
+import { WhatsAppLink } from "@/components/whatsapp/WhatsAppLink";
 import { getWhatsAppUrl } from "@/lib/constants";
 import { CARD_IMAGE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
 import { IMAGE_SIZES } from "@/lib/image-config";
@@ -93,17 +94,15 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
               {t("excursionViewDetailCta")}
               <ArrowUpRight className="size-4" aria-hidden />
             </Link>
-            <a
+            <WhatsAppLink
               href={whatsAppHref}
-              target="_blank"
-              rel="noopener noreferrer"
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
                 "inline-flex max-md:min-h-11 max-md:w-full max-md:justify-center md:hidden",
               )}
             >
               {t("excursionWhatsAppCta")}
-            </a>
+            </WhatsAppLink>
             <Link
               href={detailHref}
               className={cn(
@@ -114,17 +113,15 @@ export function ExcursionEditorialCard({ entry, reverse = false }: ExcursionEdit
               {t("excursionViewDetailCta")}
               <ArrowUpRight className="size-4" aria-hidden />
             </Link>
-            <a
+            <WhatsAppLink
               href={whatsAppHref}
-              target="_blank"
-              rel="noopener noreferrer"
               className={cn(
                 buttonVariants({ variant: "marketing", size: "lg" }),
                 "hidden md:inline-flex",
               )}
             >
               {t("excursionWhatsAppCta")}
-            </a>
+            </WhatsAppLink>
           </div>
         </div>
       </div>

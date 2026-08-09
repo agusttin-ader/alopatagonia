@@ -9,6 +9,7 @@ import { EscapadasExpressMedia } from "@/components/about/EscapadasExpressMedia"
 import { EscapadasExpressThumbnailCard } from "@/components/about/EscapadasExpressThumbnailCard";
 import { MagazinePillCta } from "@/components/ui/magazine-pill-cta";
 import type { EscapadaExpressPromo } from "@/lib/escapadas-express";
+import { trackWhatsAppClick } from "@/lib/analytics";
 import { getWhatsAppUrl } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import { SHELL_MAX, SHELL_PX } from "@/lib/layout-shell";
@@ -185,6 +186,7 @@ export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedC
                           rel="noopener noreferrer"
                           tone="surface"
                           className="mt-4 max-w-sm sm:mt-5 lg:max-w-md xl:max-w-lg"
+                          onClick={trackWhatsAppClick}
                         >
                           {t("consultCta")}
                         </MagazinePillCta>
