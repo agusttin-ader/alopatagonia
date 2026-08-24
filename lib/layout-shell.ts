@@ -173,3 +173,9 @@ export const CATALOG_GRID_GAP = cn(
 
 /** Espacio inferior en mobile para no tapar contenido con el FAB de WhatsApp. */
 export const MOBILE_FAB_CLEARANCE = "max-md:pb-[4.75rem]";
+
+/** Margen derecho en el footer para no tapar contenido con el FAB de WhatsApp. */
+export const FOOTER_FAB_CLEARANCE = cn(
+  "max-md:pr-[calc(3rem+0.85rem+0.75rem)]",
+  "md:pr-[calc(4rem+1.75rem+0.75rem)]",
+);

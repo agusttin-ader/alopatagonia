@@ -1,13 +1,15 @@
 import { Share2 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
-import { FooterDesignerCredit } from "@/components/footer/FooterDesignerCredit";
+import { FooterDevCredit } from "@/components/footer/FooterDevCredit";
 import { SiteLogo } from "@/components/brand/SiteLogo";
 import { Link } from "@/i18n/navigation";
 import { PLANNER_PATH, SECTION_IDS } from "@/lib/constants";
 import { getLocalizedHomeSectionHref } from "@/lib/i18n/internal-href";
+import { FOOTER_FAB_CLEARANCE } from "@/lib/layout-shell";
 import { SEO_POPULAR_DESTINATIONS } from "@/lib/seo-destinations";
 import { SITE } from "@/lib/site";
+import { cn } from "@/lib/utils";
 
 export async function Footer() {
   const t = await getTranslations("footer");
@@ -36,12 +38,6 @@ export async function Footer() {
               {t("about")}
             </p>
             <p className="text-[0.9rem] text-white/78">{t("location")}</p>
-            <div className="hidden border-t border-white/10 pt-5 md:block">
-              <FooterDesignerCredit
-                label={t("designedBy")}
-                ariaLabel={t("designedByAria", { name: SITE.designer.name })}
-              />
-            </div>
           </div>
 
           <div className="space-y-2.5 text-[0.92rem] text-white/88">
@@ -132,18 +128,22 @@ export async function Footer() {
           </div>
         </div>
 
-        <div className="mx-auto mt-7 w-full max-w-7xl border-t border-white/14 pt-5 2xl:max-w-[90rem]">
-          <div className="flex w-full flex-col items-center gap-3.5 text-center md:items-start md:gap-0 md:text-left">
+        <div
+          className={cn(
+            "mx-auto mt-7 w-full max-w-7xl border-t border-white/14 pt-5 2xl:max-w-[90rem]",
+            FOOTER_FAB_CLEARANCE,
+          )}
+        >
+          <div className="flex w-full flex-col items-center gap-3.5 text-center md:flex-row md:items-center md:justify-between md:gap-4 md:text-left">
             <p className="max-w-[min(100%,18rem)] text-[0.72rem] leading-relaxed text-white/62 md:max-w-none">
               {t("copyright", { year: new Date().getFullYear() })}
             </p>
-            <div className="flex w-full justify-center md:hidden">
-              <FooterDesignerCredit
-                label={t("designedBy")}
-                ariaLabel={t("designedByAria", { name: SITE.designer.name })}
-                align="center"
-              />
-            </div>
+            <FooterDevCredit
+              label={t("developedBy")}
+              name={t("developedByName")}
+              ariaLabel={t("developedByAria", { name: t("developedByName") })}
+              className="shrink-0"
+            />
           </div>
         </div>
       </div>

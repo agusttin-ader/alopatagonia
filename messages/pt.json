@@ -26,7 +26,10 @@
     "popularDestinations": "Destinos populares",
     "copyright": "© {year} Alo Patagonia. Todos os direitos reservados.",
     "designedBy": "Site desenvolvido por",
-    "designedByAria": "Site desenvolvido por {name}"
+    "designedByAria": "Site desenvolvido por {name}",
+    "developedBy": "Desenvolvido por",
+    "developedByName": "Agustin Ader",
+    "developedByAria": "Desenvolvido por {name} — abre em uma nova aba"
   },
   "hero": {
     "headline": "Organize conosco sua viagem à Patagônia sem complicações",

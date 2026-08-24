@@ -26,7 +26,10 @@
     "popularDestinations": "Popular destinations",
     "copyright": "© {year} Alo Patagonia. All rights reserved.",
     "designedBy": "Website designed by",
-    "designedByAria": "Website designed by {name}"
+    "designedByAria": "Website designed by {name}",
+    "developedBy": "Developed by",
+    "developedByName": "Agustin Ader",
+    "developedByAria": "Developed by {name} — opens in a new tab"
   },
   "hero": {
     "headline": "Plan your Patagonia trip with us — hassle-free",
