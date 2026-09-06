@@ -310,13 +310,6 @@ function DestinationMobileAccordionItem({
                 />
               </motion.div>
 
-              <motion.p
-                variants={MOBILE_ACCORDION_ITEM_VARIANTS}
-                className="text-[0.9375rem] leading-[1.55] text-footer-lake-foreground/86"
-              >
-                {destination.description}
-              </motion.p>
-
               <motion.div
                 variants={MOBILE_ACCORDION_ITEM_VARIANTS}
                 className="max-w-[calc(100%-3.25rem)]"

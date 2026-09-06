@@ -77,10 +77,6 @@ export function DestinationMobileEditorial({ destinations }: DestinationMobileEd
           ) : null}
         </Link>
 
-        <p className="mt-4 max-w-[34ch] text-[0.9rem] leading-relaxed text-muted-foreground line-clamp-2">
-          {featured.description}
-        </p>
-
         <Link
           href={`/destinos/${featured.slug}`}
           className={cn(

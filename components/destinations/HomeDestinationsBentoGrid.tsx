@@ -100,23 +100,6 @@ function HomeDestinationBentoTile({
           {destination.name}
         </h3>
 
-        <p
-          className={cn(
-            "text-white/88",
-            featured
-              ? cn(
-                  "mt-2 max-w-md text-sm leading-relaxed sm:text-[0.9375rem]",
-                  "line-clamp-3 transition-[opacity,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
-                  "[@media(hover:hover)]:opacity-0 [@media(hover:hover)]:translate-y-2",
-                  "[@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-hover:translate-y-0",
-                  "[@media(hover:hover)]:group-focus-visible:opacity-100 [@media(hover:hover)]:group-focus-visible:translate-y-0",
-                )
-              : "mt-1.5 line-clamp-2 pr-10 text-[0.75rem] leading-snug sm:text-[0.8125rem] sm:leading-snug",
-          )}
-        >
-          {destination.description}
-        </p>
-
         {featured ? (
           <div
             className={cn(
