@@ -70,6 +70,8 @@ const OUTPUT_TRACE_PUBLIC_EXCLUDES = [
   "./public/videos/**",
 ] as const;
 
+const STATIC_ASSET_CACHE = "public, max-age=31536000, immutable";
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   outputFileTracingExcludes: {
@@ -90,6 +92,18 @@ const nextConfig: NextConfig = {
       {
         source: "/(.*)",
         headers: securityHeaders,
+      },
+      {
+        source: "/videos/:path*",
+        headers: [{ key: "Cache-Control", value: STATIC_ASSET_CACHE }],
+      },
+      {
+        source: "/images/:path*",
+        headers: [{ key: "Cache-Control", value: STATIC_ASSET_CACHE }],
+      },
+      {
+        source: "/_next/static/:path*",
+        headers: [{ key: "Cache-Control", value: STATIC_ASSET_CACHE }],
       },
     ];
   },

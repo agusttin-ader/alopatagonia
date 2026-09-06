@@ -32,10 +32,12 @@ function ScrollParallaxActive({
   return (
     <div
       ref={ref}
-      className={cn("relative overflow-hidden", className)}
+      className={cn("relative overflow-hidden motion-gpu", className)}
       style={{ position: "relative" }}
     >
-      <motion.div style={{ y }}>{children}</motion.div>
+      <motion.div className="motion-gpu" style={{ y }}>
+        {children}
+      </motion.div>
     </div>
   );
 }

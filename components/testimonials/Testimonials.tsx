@@ -25,7 +25,7 @@ export async function Testimonials() {
     >
       <div className="mx-auto max-w-7xl 2xl:max-w-[90rem]">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14 xl:gap-16">
-          <Reveal className="lg:sticky lg:top-28 lg:self-start">
+          <Reveal preserveSticky className="lg:sticky lg:top-28 lg:self-start">
             <p className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
               {t("eyebrow")}
             </p>

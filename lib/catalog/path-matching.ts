@@ -4,9 +4,20 @@ export function normalizeCatalogPath(value: string): string {
 }
 
 export function pathIncludesFolder(imagePath: string, folderSegment: string): boolean {
-  const normalizedPath = normalizeCatalogPath(imagePath);
+  const segments = normalizeCatalogPath(imagePath).split("/").filter(Boolean);
   const normalizedSegment = normalizeCatalogPath(folderSegment);
-  return normalizedPath.includes(`/${normalizedSegment}/`);
+  return segments.includes(normalizedSegment);
+}
+
+/** Imagen dentro de `…/excursiones/{folderSlug}/` (o carpeta legacy `excurisiones`). */
+export function pathInExcursionFolder(imagePath: string, folderSlug: string): boolean {
+  const segments = normalizeCatalogPath(imagePath).split("/").filter(Boolean);
+  const normalizedSlug = normalizeCatalogPath(folderSlug);
+  const excursionIndex = segments.findIndex(
+    (segment) => segment === "excursiones" || segment === "excurisiones",
+  );
+  if (excursionIndex === -1) return false;
+  return segments[excursionIndex + 1] === normalizedSlug;
 }
 
 export function pathMatchesAnyFolder(

@@ -31,6 +31,12 @@ export type CarRentalPartner = {
   images?: CatalogImage[];
 };
 
+export type CatalogItemEntry = {
+  destination: DestinationCatalog;
+  item: CatalogItem;
+  kind: CatalogItemKind;
+};
+
 export type DestinationCatalog = {
   slug: string;
   name: string;

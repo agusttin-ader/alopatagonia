@@ -45,6 +45,8 @@ export function GlobalNav() {
   const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
   const lastScrollYRef = useRef(0);
+  const scrolledRef = useRef(false);
+  const navHiddenRef = useRef(false);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -100,16 +102,27 @@ export function GlobalNav() {
       const delta = currentScrollY - lastScrollYRef.current;
       const shouldIgnoreDirection = Math.abs(delta) < 6;
 
-      setScrolled(currentScrollY > 16);
+      const nextScrolled = currentScrollY > 16;
+      let nextNavHidden = navHiddenRef.current;
 
       if (mobileOpen) {
-        setNavHidden(false);
+        nextNavHidden = false;
       } else if (currentScrollY <= 24) {
-        setNavHidden(false);
+        nextNavHidden = false;
       } else if (!shouldIgnoreDirection && delta > 0 && currentScrollY > 96) {
-        setNavHidden(true);
+        nextNavHidden = true;
       } else if (!shouldIgnoreDirection && delta < 0) {
-        setNavHidden(false);
+        nextNavHidden = false;
+      }
+
+      if (nextScrolled !== scrolledRef.current) {
+        scrolledRef.current = nextScrolled;
+        setScrolled(nextScrolled);
+      }
+
+      if (nextNavHidden !== navHiddenRef.current) {
+        navHiddenRef.current = nextNavHidden;
+        setNavHidden(nextNavHidden);
       }
 
       lastScrollYRef.current = currentScrollY;
@@ -191,7 +204,7 @@ export function GlobalNav() {
 
   return (
     <motion.nav
-      className="fixed inset-x-0 top-0 z-[1200]"
+      className="fixed inset-x-0 top-0 z-[1200] motion-gpu"
       initial={reduceMotion ? undefined : { y: -14, opacity: 0 }}
       animate={
         reduceMotion
@@ -205,7 +218,7 @@ export function GlobalNav() {
     >
       <div
         className={cn(
-          "relative transition-[padding,box-shadow,border-color,background-color] duration-300 ease-out md:hidden",
+          "relative transition-[border-color,background-color] duration-300 ease-out md:hidden",
           MOBILE_MAGAZINE_G_ENABLED
             ? cn(
                 "px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)]",
@@ -298,7 +311,7 @@ export function GlobalNav() {
       <motion.div className="hidden md:block" transition={headerTransition}>
         <motion.div
           className={cn(
-            "relative border-b px-4 transition-[box-shadow,border-color,background-color] duration-300 ease-out sm:px-8 lg:px-14 2xl:px-20",
+            "relative border-b px-4 transition-[border-color,background-color] duration-300 ease-out sm:px-8 lg:px-14 2xl:px-20",
             heroHeaderTop
               ? "border-transparent bg-transparent shadow-none"
               : "border-border/75 bg-background",
@@ -308,7 +321,7 @@ export function GlobalNav() {
         >
           <div
             className={cn(
-              "mx-auto flex h-20 max-w-7xl items-center gap-6 transition-[height] duration-300 ease-out 2xl:max-w-[90rem]",
+              "mx-auto flex h-20 max-w-7xl items-center gap-6 2xl:max-w-[90rem]",
               scrolled && "h-[4.5rem]",
             )}
           >
@@ -351,7 +364,7 @@ export function GlobalNav() {
                   buttonVariants({ variant: "marketing", size: "sm" }),
                   "motion-cta ml-1.5 h-10 rounded-full px-4 text-[0.88rem] font-semibold whitespace-nowrap lg:ml-2 lg:px-5 lg:text-[0.9rem]",
                   heroHeaderTop &&
-                    "border border-white/45 bg-white/10 text-white shadow-none backdrop-blur-sm hover:bg-white/20 hover:text-white",
+                    "border border-white/45 bg-white/15 text-white shadow-none hover:bg-white/22 hover:text-white",
                 )}
               >
                 {t(NAV_PLANNER_LINK.labelKey)}

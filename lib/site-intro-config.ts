@@ -1,6 +1,6 @@
 import { HOME_SECTION_HASH_IDS } from "@/lib/home-sections";
 import { routing } from "@/i18n/routing";
-import { getFirstHeroCarouselSrc } from "@/lib/hero-video";
+import { preloadHomeCriticalMedia } from "@/lib/home-media-preload";
 import { IMAGE_PRELOAD_WIDTH, buildNextImageUrl } from "@/lib/image-config";
 
 /** Keep in sync with runSiteIntroBoot() (instrumentation-client.ts) */
@@ -45,22 +45,6 @@ function preloadIntroImage() {
   document.head.appendChild(link);
 }
 
-function preloadFirstHeroVideo() {
-  if (typeof document === "undefined") return;
-
-  const href = getFirstHeroCarouselSrc(window.innerWidth);
-  const selector = `link[data-alo-hero-preload][href="${href}"]`;
-  if (document.head.querySelector(selector)) return;
-
-  const link = document.createElement("link");
-  link.rel = "preload";
-  link.as = "fetch";
-  link.href = href;
-  link.type = "video/mp4";
-  link.setAttribute("data-alo-hero-preload", "");
-  document.head.appendChild(link);
-}
-
 /**
  * Boot de intro: scroll al inicio y clase `site-intro-pending` en <html>.
  * Se ejecuta desde instrumentation-client.ts (antes de hidratar React).
@@ -100,12 +84,14 @@ export function runSiteIntroBoot(): void {
 
     if (!home || reduceMotion || (!SITE_INTRO_ALWAYS_SHOW && seen)) {
       root.classList.remove("site-intro-pending");
-      return;
+    } else {
+      root.classList.add("site-intro-pending");
+      preloadIntroImage();
     }
 
-    root.classList.add("site-intro-pending");
-    preloadIntroImage();
-    preloadFirstHeroVideo();
+    if (home && !reduceMotion) {
+      preloadHomeCriticalMedia(window.innerWidth);
+    }
   } catch {
     document.documentElement.classList.remove("site-intro-pending");
   }

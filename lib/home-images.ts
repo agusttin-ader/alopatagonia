@@ -1,3 +1,4 @@
+import { DEFAULT_IMAGE_FALLBACK } from "@/lib/image-fallbacks";
 import generated from "@/lib/generated/home-images.json";
 
 export type HomeImagesManifest = {
@@ -10,7 +11,7 @@ export type HomeImagesManifest = {
 
 const manifest = generated as HomeImagesManifest;
 
-const FALLBACK = "/images/IMG_1506.jpeg";
+const FALLBACK = DEFAULT_IMAGE_FALLBACK;
 
 export function getHomeImagePaths(): string[] {
   return manifest.home.length > 0 ? manifest.home : [FALLBACK];

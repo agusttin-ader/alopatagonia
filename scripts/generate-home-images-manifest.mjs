@@ -100,9 +100,11 @@ async function listWebImages(folderName) {
   return webPaths.sort((a, b) => b.localeCompare(a));
 }
 
+const DEFAULT_IMAGE_FALLBACK = "/images/destinations/bariloche/banner-bariloche.jpg";
+
 function pickHeroAndExperience(homePaths) {
-  const hero = homePaths[0] ?? "/images/IMG_1506.jpeg";
-  const experience = homePaths[1] ?? homePaths[0] ?? "/images/IMG_1506.jpeg";
+  const hero = homePaths[0] ?? DEFAULT_IMAGE_FALLBACK;
+  const experience = homePaths[1] ?? homePaths[0] ?? DEFAULT_IMAGE_FALLBACK;
   return { hero, experience };
 }
 

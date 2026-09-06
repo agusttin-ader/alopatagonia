@@ -113,8 +113,9 @@
     @apply border-border outline-ring/50;
   }
   html {
-    @apply scroll-smooth font-sans;
+    @apply font-sans;
     overflow-x: clip;
+    scroll-behavior: auto;
     text-rendering: optimizeLegibility;
     -webkit-tap-highlight-color: transparent;
     -webkit-text-size-adjust: 100%;
@@ -151,7 +152,10 @@
       .motion-cta:hover,
       .motion-cta:focus-visible {
         transform: none;
-        box-shadow: none;
+      }
+      .motion-cta:hover::after,
+      .motion-cta:focus-visible::after {
+        opacity: 0;
       }
     }
     html.planner-sticky-cta-active .floating-whatsapp {
@@ -232,26 +236,75 @@
   }
 
   .motion-cta {
-    @apply transition-[transform,box-shadow,background-color,color];
+    @apply relative transition-[transform,background-color,color];
     transition-duration: var(--motion-duration-base);
     transition-timing-function: var(--motion-ease-emphasis);
   }
 
+  .motion-cta::after {
+    content: "";
+    @apply pointer-events-none absolute inset-0 rounded-[inherit] opacity-0 transition-opacity;
+    transition-duration: var(--motion-duration-base);
+    transition-timing-function: var(--motion-ease-emphasis);
+    box-shadow: 0 10px 24px -16px color-mix(in oklch, var(--foreground) 52%, transparent);
+  }
+
   .motion-cta:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 24px -16px color-mix(in oklch, var(--foreground) 52%, transparent);
+  }
+
+  .motion-cta:hover::after {
+    opacity: 1;
   }
 
   .motion-cta:focus-visible {
     transform: translateY(-2px);
-    box-shadow: 0 10px 24px -16px color-mix(in oklch, var(--foreground) 52%, transparent);
+  }
+
+  .motion-cta:focus-visible::after {
+    opacity: 1;
   }
 
   .motion-hover-expand {
-    @apply motion-safe:transition-transform motion-safe:will-change-transform;
+    @apply motion-safe:transition-transform;
     transform: translateZ(0);
     transition-duration: var(--motion-duration-hover-expand);
     transition-timing-function: var(--motion-ease-hover-expand);
+  }
+
+  @media (hover: hover) {
+    .motion-hover-expand:hover,
+    .motion-hover-expand:active {
+      will-change: transform;
+    }
+  }
+
+  .motion-gpu {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  .motion-scroll-layer {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform;
+  }
+
+  .section-defer {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 640px;
+  }
+
+  .section-defer--compact {
+    contain-intrinsic-size: auto 420px;
+  }
+
+  .section-defer--tall {
+    contain-intrinsic-size: auto 880px;
+  }
+
+  .section-defer--hero-adjacent {
+    contain-intrinsic-size: auto 520px;
   }
 
   @media (prefers-reduced-motion: reduce) {

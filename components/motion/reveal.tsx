@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 type RevealProps = HTMLMotionProps<"div"> & {
   delay?: number;
   variant?: "fade" | "up" | "scale-soft";
+  /** Usar en bloques `sticky` — evita animar `transform` en el contenedor. */
+  preserveSticky?: boolean;
   staggerChildren?: boolean;
   once?: boolean;
   amount?: number;
@@ -19,6 +21,7 @@ export function Reveal({
   className,
   delay = 0,
   variant = "up",
+  preserveSticky = false,
   staggerChildren = false,
   once = true,
   amount = 0.16,
@@ -30,7 +33,8 @@ export function Reveal({
   const useStagger = staggerChildren;
   const useLiteMotion = reduceMotion || isCoarseMobile;
 
-  const resolvedVariant = isCoarseMobile && !reduceMotion ? "fade" : variant;
+  const resolvedVariant =
+    preserveSticky || (isCoarseMobile && !reduceMotion) ? "fade" : variant;
 
   const variants = {
     fade: {
@@ -84,7 +88,7 @@ export function Reveal({
               ease: [0.16, 1, 0.3, 1],
             }
       }
-      className={cn(className)}
+      className={cn(!preserveSticky && resolvedVariant !== "fade" && "motion-gpu", className)}
       {...props}
     >
       {children}

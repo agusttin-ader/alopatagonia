@@ -5,18 +5,13 @@ import { useTranslations } from "next-intl";
 
 import { CatalogSplitBrowsePanel } from "@/components/catalog/CatalogSplitBrowsePanel";
 import type { CatalogSplitGroup } from "@/lib/catalog/accommodation-types";
-import {
-  groupEntriesByDestination,
-  type CatalogItemEntry,
-} from "@/lib/catalog/catalog-items";
-import { getAllDestinations } from "@/lib/catalog/destinations";
+import { groupEntriesByDestination } from "@/lib/catalog/catalog-grouping";
+import type { CatalogItemEntry, DestinationCatalog } from "@/lib/catalog/types";
 import { destinationSlugRank } from "@/lib/catalog/destination-order";
-import { getDestinationsExcursionsComingSoon } from "@/lib/catalog/excursion-image-folders";
 import {
   catalogAccommodationCount,
   catalogExcursionCount,
 } from "@/lib/i18n/localized-catalog";
-import { localizeDestinationCatalog } from "@/lib/i18n/localized-destinations-page";
 
 type CatalogBrowseMode = "accommodation" | "excursion";
 
@@ -27,11 +22,16 @@ function destinationSectionHash(mode: CatalogBrowseMode) {
 type CatalogBrowsePageProps = {
   mode: CatalogBrowseMode;
   entries: CatalogItemEntry[];
+  /** Destinos con excursiones “próximamente” (resueltos en el servidor). */
+  comingSoonDestinations?: Pick<DestinationCatalog, "slug" | "name" | "region">[];
 };
 
-export function CatalogBrowsePage({ mode, entries }: CatalogBrowsePageProps) {
+export function CatalogBrowsePage({
+  mode,
+  entries,
+  comingSoonDestinations = [],
+}: CatalogBrowsePageProps) {
   const t = useTranslations("catalog");
-  const tHome = useTranslations("homeDestinations");
 
   const groups = useMemo((): CatalogSplitGroup[] => {
     const grouped = groupEntriesByDestination(entries);
@@ -60,31 +60,22 @@ export function CatalogBrowsePage({ mode, entries }: CatalogBrowsePageProps) {
       return fromEntries.sort((a, b) => destinationSlugRank(a.id) - destinationSlugRank(b.id));
     }
 
-    const comingSoonGroups: CatalogSplitGroup[] = getDestinationsExcursionsComingSoon()
-      .filter((slug) => !grouped.has(slug))
-      .flatMap((slug) => {
-        const raw = getAllDestinations().find((destination) => destination.slug === slug);
-        if (!raw) return [];
-
-        const destination = localizeDestinationCatalog(tHome, raw);
-
-        return [
-          {
-            id: slug,
-            title: destination.name,
-            navSubtitle: destination.region,
-            panelSubtitle: `${destination.region} · ${comingSoonLabel}`,
-            meta: comingSoonLabel,
-            entries: [],
-            comingSoon: true,
-          } satisfies CatalogSplitGroup,
-        ];
-      });
+    const comingSoonGroups: CatalogSplitGroup[] = comingSoonDestinations
+      .filter((destination) => !grouped.has(destination.slug))
+      .map((destination) => ({
+        id: destination.slug,
+        title: destination.name,
+        navSubtitle: destination.region,
+        panelSubtitle: `${destination.region} · ${comingSoonLabel}`,
+        meta: comingSoonLabel,
+        entries: [],
+        comingSoon: true,
+      }));
 
     return [...fromEntries, ...comingSoonGroups].sort(
       (a, b) => destinationSlugRank(a.id) - destinationSlugRank(b.id),
     );
-  }, [entries, mode, t, tHome]);
+  }, [comingSoonDestinations, entries, mode, t]);
 
   return (
     <section className="mt-10 max-md:mt-6">

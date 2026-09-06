@@ -8,15 +8,15 @@ import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 function ScrollProgressBar() {
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, {
-    stiffness: 140,
-    damping: 24,
-    mass: 0.18,
+    stiffness: 220,
+    damping: 32,
+    mass: 0.12,
   });
 
   return (
     <motion.div
       aria-hidden
-      className="pointer-events-none fixed inset-x-0 top-0 z-[1250] h-[2px] origin-left bg-primary/85"
+      className="motion-scroll-layer pointer-events-none fixed inset-x-0 top-0 z-[1250] h-[2px] origin-left bg-primary/85"
       style={{ scaleX: progress }}
     />
   );

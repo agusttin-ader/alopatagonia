@@ -2,17 +2,10 @@ import {
   getAllDestinations,
   getDestinationBySlug,
 } from "@/lib/catalog/destinations";
-import type {
-  CatalogItem,
-  CatalogItemKind,
-  DestinationCatalog,
-} from "@/lib/catalog/types";
+import type { CatalogItemEntry } from "@/lib/catalog/types";
 
-export type CatalogItemEntry = {
-  destination: DestinationCatalog;
-  item: CatalogItem;
-  kind: CatalogItemKind;
-};
+export type { CatalogItemEntry } from "@/lib/catalog/types";
+export { getCatalogItemPath } from "@/lib/catalog/catalog-paths";
 
 export function getCatalogItemEntry(
   destinationSlug: string,
@@ -62,25 +55,4 @@ export function getAllExcursions(): CatalogItemEntry[] {
       kind: "excursion" as const,
     })),
   );
-}
-
-export function groupEntriesByDestination(
-  entries: CatalogItemEntry[],
-): Map<string, CatalogItemEntry[]> {
-  const grouped = new Map<string, CatalogItemEntry[]>();
-
-  for (const destination of getAllDestinations()) {
-    const destinationEntries = entries.filter(
-      (entry) => entry.destination.slug === destination.slug,
-    );
-    if (destinationEntries.length > 0) {
-      grouped.set(destination.slug, destinationEntries);
-    }
-  }
-
-  return grouped;
-}
-
-export function getCatalogItemPath(destinationSlug: string, itemSlug: string): string {
-  return `/destinos/${destinationSlug}/${itemSlug}`;
 }

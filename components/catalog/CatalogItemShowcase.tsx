@@ -2,7 +2,7 @@ import { AppImage } from "@/components/media/AppImage";
 import { Link } from "@/i18n/navigation";
 import { ArrowUpRight } from "lucide-react";
 
-import { getCatalogItemPath } from "@/lib/catalog/catalog-items";
+import { getCatalogItemPath } from "@/lib/catalog/catalog-paths";
 import type { CatalogItem } from "@/lib/catalog/types";
 import { CARD_IMAGE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
 import { EDITORIAL_CARD_ARROW_HOVER, EDITORIAL_CARD_TITLE_HOVER, POSTER_LINK_CTA_HOVER } from "@/lib/interactive-hover";

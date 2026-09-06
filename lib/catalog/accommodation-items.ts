@@ -1,8 +1,9 @@
 import { getClientAccommodationCopy } from "@/lib/client-protected-copy";
+import { getDestinationFolderForSlug } from "@/lib/catalog/destination-folders";
+import { getDestinationImagePaths } from "@/lib/catalog/destination-images";
+import { pickDestinationFallbackImage } from "@/lib/image-fallbacks";
 import manifest from "@/lib/catalog/generated/destination-accommodations.json";
 import type { AccommodationType, CatalogImage, CatalogItem } from "@/lib/catalog/types";
-
-const FALLBACK_IMAGE = "/images/IMG_1506.jpeg";
 
 type AccommodationManifestEntry = {
   name: string;
@@ -15,6 +16,12 @@ type AccommodationManifestEntry = {
 type DestinationAccommodationsManifest = Record<string, AccommodationManifestEntry[]>;
 
 const MANIFEST = manifest as DestinationAccommodationsManifest;
+
+function fallbackImageForDestination(destinationSlug: string): string {
+  const folder = getDestinationFolderForSlug(destinationSlug);
+  const paths = folder ? getDestinationImagePaths(folder) : [];
+  return pickDestinationFallbackImage(paths);
+}
 
 function toCatalogImage(src: string, alt: string): CatalogImage {
   return { src, alt };
@@ -80,7 +87,10 @@ export function buildDestinationAccommodationItems(
     }
     usedSlugs.add(itemSlug);
 
-    const images = entry.images.length > 0 ? entry.images : [FALLBACK_IMAGE];
+    const images =
+      entry.images.length > 0
+        ? entry.images
+        : [fallbackImageForDestination(destinationSlug)];
     const manifestName = entry.name.trim();
     const clientCopy = getClientAccommodationCopy(destinationSlug, itemSlug);
     const name = clientCopy?.name ?? manifestName;

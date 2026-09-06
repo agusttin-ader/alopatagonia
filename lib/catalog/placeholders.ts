@@ -13,6 +13,7 @@ import {
   CATALOG_EXCURSION_FOLDERS,
   CATALOG_NATURE_FOLDERS,
   pathIncludesFolder,
+  pathInExcursionFolder,
   pathMatchesAnyFolder,
   pathsInAnyFolder,
 } from "@/lib/catalog/path-matching";
@@ -24,7 +25,9 @@ export const CATALOG_LIMITS = {
   maxExcursions: 3,
 } as const;
 
-export const CATALOG_PLACEHOLDER_IMAGE = "/images/IMG_1506.jpeg";
+import { DEFAULT_IMAGE_FALLBACK, pickDestinationFallbackImage } from "@/lib/image-fallbacks";
+
+export const CATALOG_PLACEHOLDER_IMAGE = DEFAULT_IMAGE_FALLBACK;
 
 const ACCOMMODATION_LABELS: Record<AccommodationType, string> = {
   cabana: "Cabaña",
@@ -48,8 +51,10 @@ function toCatalogImage(src: string, alt: string): CatalogImage {
   return { src, alt };
 }
 
-function withFallbackImages(paths: string[]): string[] {
-  return paths.length > 0 ? paths : [CATALOG_PLACEHOLDER_IMAGE];
+function withFallbackImages(paths: string[], imagePaths: string[] = []): string[] {
+  if (paths.length > 0) return paths;
+  if (imagePaths.length > 0) return [pickDestinationFallbackImage(imagePaths)];
+  return [DEFAULT_IMAGE_FALLBACK];
 }
 
 function defaultHighlights(type: AccommodationType, destinationName: string): string[] {
@@ -87,9 +92,10 @@ function buildAccommodationItems(
   type: AccommodationType,
   paths: string[],
   destinationName: string,
+  imagePaths: string[],
 ): CatalogItem[] {
   const label = ACCOMMODATION_LABELS[type];
-  const group = withFallbackImages(paths).slice(0, CATALOG_LIMITS.imagesPerCatalogItem);
+  const group = withFallbackImages(paths, imagePaths).slice(0, CATALOG_LIMITS.imagesPerCatalogItem);
   const name = accommodationDisplayName(type, destinationName);
 
   return [
@@ -109,6 +115,7 @@ function buildExcursions(
   slug: string,
   pools: string[][],
   destinationName: string,
+  imagePaths: string[],
 ): CatalogItem[] {
   const folders = getExcursionImageFoldersForSlug(slug);
   if (hasExplicitExcursionFolderConfig(slug) && folders.length === 0) {
@@ -125,7 +132,7 @@ function buildExcursions(
 
   return pools.slice(0, itemCount).map((pool, index) => {
     const num = index + 1;
-    const group = withFallbackImages(pool).slice(0, CATALOG_LIMITS.imagesPerExcursion);
+    const group = withFallbackImages(pool, imagePaths).slice(0, CATALOG_LIMITS.imagesPerExcursion);
     const content = excursionContent[index];
     const folderConfig = folders[index];
     const name = content?.name ?? `Excursión en ${destinationName}`;
@@ -153,6 +160,10 @@ function buildExcursions(
 
 export function pathsInSubfolder(imagePaths: string[], subfolder: string): string[] {
   return imagePaths.filter((path) => pathIncludesFolder(path, subfolder));
+}
+
+function pathsInExcursionFolder(imagePaths: string[], folderSlug: string): string[] {
+  return imagePaths.filter((path) => pathInExcursionFolder(path, folderSlug));
 }
 
 function splitAccommodationPools(imagePaths: string[]) {
@@ -186,18 +197,26 @@ function splitAccommodationPools(imagePaths: string[]) {
 function buildExcursionImageGroups(slug: string, imagePaths: string[]) {
   const per = CATALOG_LIMITS.imagesPerExcursion;
   const folderConfigs = getExcursionImageFoldersForSlug(slug);
+  const paisajePool = pathsInAnyFolder(imagePaths, CATALOG_NATURE_FOLDERS);
+  const accommodationPool = pathsInAnyFolder(imagePaths, CATALOG_ACCOMMODATION_FOLDERS);
+  const contextualPool = [...paisajePool, ...accommodationPool];
+
+  const contextualFallbackForIndex = (index: number): string[] => {
+    if (contextualPool.length === 0) return [];
+    return [contextualPool[index % contextualPool.length]!];
+  };
 
   if (hasExplicitExcursionFolderConfig(slug)) {
-    return folderConfigs.map(({ folderSlug, legacyFolders = [] }) => {
-      const primary = pathsInSubfolder(imagePaths, folderSlug);
+    return folderConfigs.map(({ folderSlug, legacyFolders = [] }, index) => {
+      const primary = pathsInExcursionFolder(imagePaths, folderSlug);
       if (primary.length > 0) return primary;
 
       for (const legacyFolder of legacyFolders) {
-        const legacy = pathsInSubfolder(imagePaths, legacyFolder);
+        const legacy = pathsInExcursionFolder(imagePaths, legacyFolder);
         if (legacy.length > 0) return legacy;
       }
 
-      return [];
+      return contextualFallbackForIndex(index);
     });
   }
 
@@ -213,25 +232,20 @@ function pickCatalogHeroImage(
   imagePaths: string[],
   heroImage?: string,
 ): string {
-  return (
-    heroImage ??
-    pathsInAnyFolder(imagePaths, CATALOG_NATURE_FOLDERS)[0] ??
-    pathsInAnyFolder(imagePaths, CATALOG_ACCOMMODATION_FOLDERS)[0] ??
-    imagePaths[0] ??
-    CATALOG_PLACEHOLDER_IMAGE
-  );
+  return heroImage ?? pickDestinationFallbackImage(imagePaths);
 }
 
 export function buildStandardAccommodations(
   slug: string,
   name: string,
   pools: { cabana: string[]; departamento: string[]; hostel: string[] },
+  imagePaths: string[],
 ): CatalogItem[] {
   const per = CATALOG_LIMITS.imagesPerCatalogItem;
   return [
-    ...buildAccommodationItems(slug, "cabana", pools.cabana.slice(0, per), name),
-    ...buildAccommodationItems(slug, "departamento", pools.departamento.slice(0, per), name),
-    ...buildAccommodationItems(slug, "hostel", pools.hostel.slice(0, per), name),
+    ...buildAccommodationItems(slug, "cabana", pools.cabana.slice(0, per), name, imagePaths),
+    ...buildAccommodationItems(slug, "departamento", pools.departamento.slice(0, per), name, imagePaths),
+    ...buildAccommodationItems(slug, "hostel", pools.hostel.slice(0, per), name, imagePaths),
   ];
 }
 
@@ -244,7 +258,7 @@ function buildDestinationAccommodations(
   if (fromFolders.length > 0) return fromFolders;
 
   const accommodationPools = splitAccommodationPools(imagePaths);
-  return buildStandardAccommodations(slug, name, accommodationPools);
+  return buildStandardAccommodations(slug, name, accommodationPools, imagePaths);
 }
 
 export function buildFlatCatalog(config: {
@@ -272,6 +286,7 @@ export function buildFlatCatalog(config: {
       config.slug,
       buildExcursionImageGroups(config.slug, config.imagePaths),
       config.name,
+      config.imagePaths,
     ),
     carRental: {
       operatorName: "Operador local",
@@ -307,6 +322,7 @@ export function buildStructuredCatalog(config: {
       config.slug,
       buildExcursionImageGroups(config.slug, config.imagePaths),
       config.name,
+      config.imagePaths,
     ),
     carRental: {
       operatorName: "Operador local",
@@ -332,6 +348,7 @@ export function buildBarilocheCatalog(): DestinationCatalog {
       "bariloche",
       buildExcursionImageGroups("bariloche", all),
       "Bariloche",
+      all,
     ),
     carRental: {
       operatorName: "Operador local",

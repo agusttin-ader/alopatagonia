@@ -1,7 +1,7 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { AppImage } from "@/components/media/AppImage";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
@@ -9,245 +9,12 @@ import { useEffect, useMemo, useState } from "react";
 
 import { DestinationMobileEditorial } from "@/components/destinations/DestinationMobileEditorial";
 import { DestinationTabletAccordion } from "@/components/destinations/DestinationTabletAccordion";
+import { HomeDestinationsBentoGrid } from "@/components/destinations/HomeDestinationsBentoGrid";
 import { Reveal } from "@/components/motion/reveal";
 import { SECTION_IDS } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import type { HomeDestinationEditorial } from "@/lib/home-destinations-types";
-import { SPREAD_TILE_HOVER_EXPAND } from "@/lib/hover-expand-motion";
 import { cn } from "@/lib/utils";
-
-const DESTINATION_NAME_MOTION = {
-  active: { scale: 1.06 },
-  idle: { scale: 1 },
-};
-
-function CatalogLink() {
-  const t = useTranslations("homeDestinations");
-
-  return (
-    <Link
-      href={`#${SECTION_IDS.catalogHub}`}
-      className={cn(
-        "mt-4 inline-flex h-11 items-center justify-center gap-2 rounded-full border border-primary/35 px-5 text-sm font-semibold text-primary transition-colors hover:bg-primary/8",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2",
-      )}
-    >
-      {t("viewCatalog")}
-      <ArrowUpRight className="size-4 shrink-0" aria-hidden />
-    </Link>
-  );
-}
-
-function uniqueGalleryImages(destination: HomeDestinationEditorial) {
-  const seen = new Set<string>();
-  return destination.galleryImages.filter((image) => {
-    if (seen.has(image.src)) return false;
-    seen.add(image.src);
-    return true;
-  });
-}
-
-function DestinationName({
-  name,
-  isActive,
-  className,
-  disableScale = false,
-}: {
-  name: string;
-  isActive: boolean;
-  className?: string;
-  disableScale?: boolean;
-}) {
-  const reduceMotion = useReducedMotion();
-
-  if (disableScale || reduceMotion) {
-    return <span className={cn("inline-block", className)}>{name}</span>;
-  }
-
-  return (
-    <motion.span
-      className={cn("inline-block origin-left", className)}
-      initial={false}
-      animate={isActive ? DESTINATION_NAME_MOTION.active : DESTINATION_NAME_MOTION.idle}
-      transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
-    >
-      {name}
-    </motion.span>
-  );
-}
-
-function SpreadImageButton({
-  image,
-  destinationName,
-  index,
-  onImageClick,
-  className,
-  sizes,
-  priority = false,
-  animated = true,
-}: {
-  image: { src: string; alt: string };
-  destinationName: string;
-  index: number;
-  onImageClick: (index: number) => void;
-  className?: string;
-  sizes: string;
-  priority?: boolean;
-  animated?: boolean;
-}) {
-  const t = useTranslations("homeDestinations");
-  const reduceMotion = useReducedMotion();
-  const tileClassName = cn(
-    "relative overflow-hidden bg-muted shadow-[0_16px_30px_-20px_rgba(15,23,42,0.32)]",
-    SPREAD_TILE_HOVER_EXPAND,
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-2",
-    className,
-  );
-
-  const content = (
-    <AppImage
-      src={image.src}
-      alt={image.alt}
-      fill
-      qualityPreset="gallery"
-      className="object-cover"
-      sizes={sizes}
-      priority={priority}
-    />
-  );
-
-  if (!animated || reduceMotion) {
-    return (
-      <button
-        type="button"
-        onClick={() => onImageClick(index)}
-        aria-label={t("expandPhoto", { destination: destinationName })}
-        className={tileClassName}
-      >
-        {content}
-      </button>
-    );
-  }
-
-  return (
-    <motion.button
-      type="button"
-      onClick={() => onImageClick(index)}
-      aria-label={t("expandPhoto", { destination: destinationName })}
-      initial={{ opacity: 0, scale: 0.985 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{
-        duration: 0.34,
-        delay: 0.05 * index,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-      className={tileClassName}
-    >
-      {content}
-    </motion.button>
-  );
-}
-
-function DestinationEditorialSpread({
-  destination,
-  onImageClick,
-  animated = true,
-}: {
-  destination: HomeDestinationEditorial;
-  onImageClick: (index: number) => void;
-  animated?: boolean;
-}) {
-  const images = useMemo(() => uniqueGalleryImages(destination), [destination]);
-  const hero = images[0];
-  const sidePrimary = images[1];
-  const sideSecondary = images[2];
-  const inset = images[3];
-
-  if (!hero) return null;
-
-  const resolveIndex = (image: { src: string; alt: string }) =>
-    destination.galleryImages.findIndex((item) => item.src === image.src);
-
-  return (
-    <>
-      <div className="hidden lg:block">
-        {images.length === 1 ? (
-          <SpreadImageButton
-            image={hero}
-            destinationName={destination.name}
-            index={resolveIndex(hero)}
-            onImageClick={onImageClick}
-            className="aspect-[16/12] max-h-[min(56vh,520px)] w-full rounded-[1.35rem]"
-            sizes={IMAGE_SIZES.galleryTile}
-            priority
-            animated={animated}
-          />
-        ) : (
-          <div className="relative flex h-[min(52vh,460px)] gap-2.5 xl:h-[min(56vh,520px)] xl:gap-3">
-            <div className="relative h-full min-w-0 flex-[1.42]">
-              <SpreadImageButton
-                image={hero}
-                destinationName={destination.name}
-                index={resolveIndex(hero)}
-                onImageClick={onImageClick}
-                className="h-full w-full rounded-[1.35rem]"
-                sizes="(min-width: 1024px) 36vw, 50vw"
-                priority
-                animated={animated}
-              />
-
-              {inset ? (
-                <SpreadImageButton
-                  image={inset}
-                  destinationName={destination.name}
-                  index={resolveIndex(inset)}
-                  onImageClick={onImageClick}
-                  className="absolute bottom-1 -left-2 z-[2] aspect-[3/4] w-[34%] max-w-[132px] rotate-[-2.5deg] rounded-xl shadow-[0_22px_54px_-26px_rgba(15,23,42,0.5)] ring-2 ring-background"
-                  sizes="132px"
-                  animated={animated}
-                />
-              ) : null}
-            </div>
-
-            {(sidePrimary || sideSecondary) && (
-              <div className="flex h-full min-w-0 flex-[0.68] flex-col gap-2.5 xl:gap-3">
-                {sidePrimary ? (
-                  <SpreadImageButton
-                    image={sidePrimary}
-                    destinationName={destination.name}
-                    index={resolveIndex(sidePrimary)}
-                    onImageClick={onImageClick}
-                    className="min-h-0 flex-1 w-full rounded-[1.15rem]"
-                    sizes="(min-width: 1024px) 18vw, 28vw"
-                    animated={animated}
-                  />
-                ) : null}
-                {sideSecondary ? (
-                  <SpreadImageButton
-                    image={sideSecondary}
-                    destinationName={destination.name}
-                    index={resolveIndex(sideSecondary)}
-                    onImageClick={onImageClick}
-                    className="min-h-0 flex-1 w-full rounded-[1.15rem]"
-                    sizes="(min-width: 1024px) 18vw, 28vw"
-                    animated={animated}
-                  />
-                ) : null}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-
-      <div className="hidden pe-0 sm:pe-8 lg:block lg:pe-12 xl:pe-14">
-        <p className="mt-3 max-w-prose text-[0.9375rem] leading-relaxed text-muted-foreground sm:text-lg lg:mt-5">
-          {destination.description}
-        </p>
-        <CatalogLink />
-      </div>
-    </>
-  );
-}
 
 type HomeDestinationsClientProps = {
   destinations: HomeDestinationEditorial[];
@@ -256,17 +23,8 @@ type HomeDestinationsClientProps = {
 export function HomeDestinationsClient({ destinations }: HomeDestinationsClientProps) {
   const t = useTranslations("homeDestinations");
   const tCommon = useTranslations("common");
-  const [activeSlug, setActiveSlug] = useState(destinations[0]?.slug ?? "");
   const [tabletOpenSlug, setTabletOpenSlug] = useState<string | null>(null);
   const [lightbox, setLightbox] = useState<{ slug: string; index: number } | null>(null);
-
-  const activeDestination = useMemo(
-    () => destinations.find((item) => item.slug === activeSlug) ?? destinations[0],
-    [activeSlug, destinations],
-  );
-  const activeDestinationIndex = destinations.findIndex(
-    (item) => item.slug === activeDestination.slug,
-  );
 
   const lightboxDestination = useMemo(
     () =>
@@ -279,18 +37,13 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
       ? lightboxDestination.galleryImages[lightbox.index]
       : null;
 
-  const openDesktopLightbox = (index: number) => {
-    if (!activeDestination) return;
-    setLightbox({ slug: activeDestination.slug, index });
-  };
-
   const openTabletLightbox = (destination: HomeDestinationEditorial, index: number) => {
     setLightbox({ slug: destination.slug, index });
   };
 
   useEffect(() => {
     setLightbox(null);
-  }, [activeSlug, tabletOpenSlug]);
+  }, [tabletOpenSlug]);
 
   useEffect(() => {
     if (lightbox === null || !lightboxDestination) return;
@@ -333,7 +86,7 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
     };
   }, [lightbox, lightboxDestination]);
 
-  if (!activeDestination || destinations.length === 0) return null;
+  if (destinations.length === 0) return null;
 
   return (
     <section
@@ -390,78 +143,16 @@ export function HomeDestinationsClient({ destinations }: HomeDestinationsClientP
           </div>
         </div>
 
-        <div className="mt-5 hidden gap-6 lg:mt-12 lg:grid lg:grid-cols-[minmax(260px,0.9fr)_1.1fr] lg:items-start 2xl:gap-12">
-          <Reveal>
-            <p className="mb-3 text-xs font-semibold tabular-nums tracking-[0.12em] text-muted-foreground">
-              {activeDestinationIndex + 1} / {destinations.length}
-            </p>
-            <motion.ul layout className="space-y-0.5">
-              {destinations.map((item) => {
-                const isActive = item.slug === activeDestination.slug;
-                return (
-                  <motion.li key={item.slug} layout>
-                    <button
-                      type="button"
-                      onClick={() => setActiveSlug(item.slug)}
-                      aria-pressed={isActive}
-                      className={cn(
-                        "group relative w-full text-left transition",
-                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/55 focus-visible:ring-offset-4",
-                        "rounded-xl px-1 py-1.5 lg:border-l-2 lg:border-transparent lg:pl-4",
-                        isActive && "lg:border-primary",
-                      )}
-                    >
-                      <DestinationName
-                        name={item.name}
-                        isActive={isActive}
-                        className={cn(
-                          "font-heading block text-[clamp(2rem,6.2vw,4rem)] font-semibold uppercase leading-[0.88] tracking-[-0.02em] transition-colors",
-                          isActive
-                            ? "text-primary"
-                            : "text-black/45 group-hover:text-black/70",
-                        )}
-                      />
-                      <span
-                        className={cn(
-                          "mt-1 block text-xs font-medium text-muted-foreground transition-colors",
-                          isActive
-                            ? "text-primary/75"
-                            : "text-black/45 group-hover:text-black/65",
-                        )}
-                      >
-                        {item.region}
-                      </span>
-                    </button>
-                  </motion.li>
-                );
-              })}
-            </motion.ul>
-          </Reveal>
-
-          <Reveal className="lg:sticky lg:top-28 lg:self-start">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeDestination.slug}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <DestinationEditorialSpread
-                  destination={activeDestination}
-                  onImageClick={openDesktopLightbox}
-                />
-              </motion.div>
-            </AnimatePresence>
-          </Reveal>
+        <div className="mt-5 hidden lg:mt-12 lg:block">
+          <HomeDestinationsBentoGrid destinations={destinations} />
         </div>
 
-        <Reveal delay={0.1} className="mt-12 hidden text-center lg:block">
+        <Reveal delay={0.1} className="mt-10 hidden text-center lg:block">
           <Link
             href="/destinos"
             className="text-sm font-medium text-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2"
           >
-            {t("viewAll")}
+            {t("viewAllCount", { count: destinations.length })}
           </Link>
         </Reveal>
       </div>

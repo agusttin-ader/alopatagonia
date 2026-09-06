@@ -81,14 +81,4 @@ Después de subir fotos nuevas: npm run catalog:optimize-excursions && npm run c
   excursiones/cabalgata/ → Cabalgata en Traful
 
 ── ushuaia ──
-  excursiones/tierra-del-fuego/ → Tren del Fin del Mundo y Parque Nacional Tierra del Fuego
-  excursiones/canal-beagle/ → Navegación al Faro Les Éclaireurs
-  excursiones/laguna-esmeralda/ → Trekking Laguna Esmeralda
-  excursiones/cerro-castor/ → Cerro Castor — Ski y snowboard
-  excursiones/trineos-nieve/ → Trineos en la nieve
-  excursiones/noche-nordica/ → Noche Nórdica
-  excursiones/motos-de-nieve/ → Motos de nieve
-  excursiones/glaciar-martial/ → Glaciar Martial
-  excursiones/puerto-almanza/ → Puerto Almanza
-  excursiones/estancia-harberton/ → Estancia Harberton
 

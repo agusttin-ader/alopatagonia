@@ -13,6 +13,7 @@ import { trackWhatsAppClick } from "@/lib/analytics";
 import { getWhatsAppUrl } from "@/lib/constants";
 import { IMAGE_SIZES } from "@/lib/image-config";
 import { SHELL_MAX, SHELL_PX } from "@/lib/layout-shell";
+import { useCoarseMobile } from "@/lib/use-coarse-mobile";
 import { cn } from "@/lib/utils";
 
 const ROTATE_MS = 6000;
@@ -36,13 +37,14 @@ function formatIndex(value: number) {
 export function EscapadasExpressTimedCarousel({ promos }: EscapadasExpressTimedCarouselProps) {
   const t = useTranslations("promosPatagonia");
   const reduceMotion = useReducedMotion();
+  const isCoarseMobile = useCoarseMobile();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
   const total = promos.length;
   const activePromo = promos[activeIndex] ?? promos[0];
   const autoRotate = total > 1 && !reduceMotion && !isPaused;
-  const useSharedLayout = !reduceMotion;
+  const useSharedLayout = !reduceMotion && !isCoarseMobile;
 
   const goTo = useCallback(
     (index: number) => {

@@ -345,6 +345,7 @@
     "profileAria": "Perfil de Instagram @{handle}"
   },
   "catalog": {
+    "breadcrumbHome": "Inicio",
     "breadcrumbCatalog": "Catálogo",
     "breadcrumbDestinations": "Destinos",
     "breadcrumbNavAria": "Ubicación en el sitio",

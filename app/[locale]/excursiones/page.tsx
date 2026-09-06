@@ -17,6 +17,8 @@ import { buildHubPageMetadata } from "@/lib/i18n/localized-seo-metadata";
 import { buildExcursionesHubGraphJsonLd } from "@/lib/json-ld";
 import { EXCURSIONES_HUB_FAQ } from "@/lib/seo-destinations";
 import { getSiteUrl } from "@/lib/site-url";
+import { getAllDestinations } from "@/lib/catalog/destinations";
+import { getDestinationsExcursionsComingSoon } from "@/lib/catalog/excursion-image-folders";
 
 const pillar = getCatalogHubPillar("excursiones");
 
@@ -59,11 +61,20 @@ export default async function ExcursionesPage() {
     breadcrumbs: { home: tNav("home"), destinations: tNav("destinations"), excursions: tNav("excursions") },
   });
 
+  const comingSoonDestinations = getDestinationsExcursionsComingSoon()
+    .map((slug) => getAllDestinations().find((destination) => destination.slug === slug))
+    .filter((destination): destination is NonNullable<typeof destination> => Boolean(destination))
+    .map((destination) => localizeDestinationCatalog(tHome, destination));
+
   return (
     <>
       <JsonLdScript id="alo-excursiones-graph-jsonld" data={excursionesGraphJsonLd} />
       <CatalogHubPageShell pillar={pillar}>
-        <CatalogBrowsePage mode="excursion" entries={entries} />
+        <CatalogBrowsePage
+          mode="excursion"
+          entries={entries}
+          comingSoonDestinations={comingSoonDestinations}
+        />
         <FaqSection
           items={faq}
           title={tCatalog("faqExcursions")}
