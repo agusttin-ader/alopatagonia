@@ -74,7 +74,10 @@ function waitForDocumentReady(): Promise<void> {
 
 export function SiteIntro() {
   const reduceMotion = useReducedMotion();
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(() => {
+    if (typeof document === "undefined") return false;
+    return document.documentElement.classList.contains("site-intro-pending");
+  });
   const [phase, setPhase] = useState<IntroPhase>("letter");
   const [isMobileIntro, setIsMobileIntro] = useState(false);
   const imageReadyRef = useRef(false);
@@ -84,7 +87,6 @@ export function SiteIntro() {
   const signalImageReady = () => {
     if (imageReadyRef.current) return;
     imageReadyRef.current = true;
-    setSiteIntroPlaceholderHidden(true);
     imageReadyResolvers.current.splice(0).forEach((resolve) => resolve());
   };
 
@@ -137,6 +139,13 @@ export function SiteIntro() {
     setIntroExiting(false);
     setIsVisible(true);
     setPhase("letter");
+
+    const placeholderImg = document.querySelector(
+      ".site-intro-placeholder-bg",
+    ) as HTMLImageElement | null;
+    if (placeholderImg?.complete && placeholderImg.naturalWidth > 0) {
+      signalImageReady();
+    }
 
     const timeouts: number[] = [];
     let cancelled = false;
@@ -243,7 +252,9 @@ export function SiteIntro() {
         sizes={IMAGE_SIZES.viewport}
         className="object-cover"
         loadingPulse={false}
-        onLoadingComplete={signalImageReady}
+        withBlur={false}
+        unoptimized
+        onLoad={signalImageReady}
       />
       <div
         className="absolute inset-0"
@@ -256,7 +267,7 @@ export function SiteIntro() {
         <div className="flex max-w-[min(100%,20rem)] flex-col items-center gap-4 text-center sm:hidden">
           <motion.div
             className="origin-center"
-            initial={reduceMotion ? false : { opacity: 0, scale: isMobileIntro ? 1.35 : 2.35 }}
+            initial={false}
             animate={{
               opacity: 1,
               scale: isMobileIntro ? 1 : isLetter ? 2.45 : 1,
@@ -314,7 +325,7 @@ export function SiteIntro() {
         >
           <motion.div
             className="origin-center justify-self-center"
-            initial={reduceMotion ? false : { opacity: 0, scale: 3.25 }}
+            initial={false}
             animate={{
               opacity: 1,
               scale: isLetter ? 3.35 : 1,

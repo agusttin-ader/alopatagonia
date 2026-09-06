@@ -329,6 +329,20 @@ html.site-intro-pending #site-app-shell {
   background-color: var(--footer-lake);
 }
 
+.site-intro-placeholder-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.site-intro-placeholder-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
 .site-intro-placeholder-brand {
   display: flex;
   align-items: center;

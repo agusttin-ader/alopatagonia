@@ -18,7 +18,9 @@ import { getSiteUrl } from "@/lib/site-url";
 import { SITE } from "@/lib/site";
 import {
   SITE_INTRO_CRITICAL_CSS,
+  SITE_INTRO_IMAGE,
   SITE_INTRO_LOGO,
+  SITE_INTRO_OVERLAY_CSS,
 } from "@/lib/site-intro-config";
 
 const siteUrl = getSiteUrl();
@@ -70,7 +72,8 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
           id="alo-site-intro-critical"
           dangerouslySetInnerHTML={{ __html: SITE_INTRO_CRITICAL_CSS }}
         />
-        <link rel="preload" href={SITE_INTRO_LOGO} as="image" />
+        <link rel="preload" href={SITE_INTRO_IMAGE} as="image" fetchPriority="high" />
+        <link rel="preload" href={SITE_INTRO_LOGO} as="image" fetchPriority="high" />
         <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="48x48" />
         <link rel="icon" href={SITE.faviconBrand96} type="image/png" sizes="96x96" />
         <link
@@ -96,9 +99,22 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
         <div
           id="site-intro-placeholder"
           suppressHydrationWarning
-          className="pointer-events-none fixed inset-0 z-[2199] flex items-center justify-center bg-[#1a2f26]"
+          className="pointer-events-none fixed inset-0 z-[2199] flex items-center justify-center overflow-hidden bg-[#1a2f26]"
           aria-hidden
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={SITE_INTRO_IMAGE}
+            alt=""
+            decoding="sync"
+            fetchPriority="high"
+            className="site-intro-placeholder-bg"
+          />
+          <div
+            className="site-intro-placeholder-overlay"
+            style={{ background: SITE_INTRO_OVERLAY_CSS }}
+            aria-hidden
+          />
           <div className="site-intro-placeholder-brand relative z-[1]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={SITE_INTRO_LOGO} alt="" decoding="sync" fetchPriority="high" />

@@ -4,7 +4,6 @@ import { AppImage } from "@/components/media/AppImage";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 
-import { getAboutUsFallbackImage } from "@/lib/about-us-images";
 import { HERO_POSTER_SRC } from "@/lib/home-media-preload";
 import {
   HERO_CAROUSEL_CANDIDATES,
@@ -39,6 +38,7 @@ function prepareVideoElement(video: HTMLVideoElement) {
   video.muted = true;
   video.defaultMuted = true;
   video.playsInline = true;
+  video.setAttribute("webkit-playsinline", "true");
   video.playbackRate = HERO_VIDEO_PLAYBACK_RATE;
 }
 
@@ -106,8 +106,9 @@ export function HeroBackground() {
   const [slots, setSlots] = useState<[string | null, string | null]>([null, null]);
   const [slotVisible, setSlotVisible] = useState<[boolean, boolean]>([false, false]);
   const [videoFailed, setVideoFailed] = useState(false);
-  const [videoSupported, setVideoSupported] = useState<boolean | null>(null);
-  const [posterSrc, setPosterSrc] = useState<string>(HERO_POSTER_SRC);
+  const [videoSupported, setVideoSupported] = useState<boolean | null>(() =>
+    typeof window !== "undefined" ? canPlayInlineVideo(false) : null,
+  );
 
   const videoRefs = [useRef<HTMLVideoElement>(null), useRef<HTMLVideoElement>(null)];
   const carouselIndexRef = useRef(0);
@@ -117,7 +118,7 @@ export function HeroBackground() {
   const skipAttemptsRef = useRef(0);
   const activeSlotRef = useRef<0 | 1>(0);
 
-  const showVideo = videoSupported === true && !videoFailed && reduceMotion !== true;
+  const canUseVideo = videoSupported !== false && !videoFailed && reduceMotion !== true;
 
   const resolveSrc = useCallback((index: number, tier: HeroVideoTier) => {
     const candidate = HERO_CAROUSEL_CANDIDATES[index] ?? HERO_CAROUSEL_CANDIDATES[0];
@@ -134,10 +135,10 @@ export function HeroBackground() {
   }, []);
 
   useLayoutEffect(() => {
-    setPosterSrc(getAboutUsFallbackImage().src);
-    setVideoSupported(canPlayInlineVideo(reduceMotion));
+    const supported = canPlayInlineVideo(reduceMotion);
+    setVideoSupported(supported);
     tierRef.current = pickHeroVideoTier(window.innerWidth);
-    if (canPlayInlineVideo(reduceMotion)) {
+    if (supported) {
       setSlotSrc(0, resolveSrc(0, tierRef.current));
     }
   }, [reduceMotion, resolveSrc, setSlotSrc]);
@@ -161,15 +162,10 @@ export function HeroBackground() {
       setActiveSlot(0);
       setSlotSrc(0, resolveSrc(0, tier));
       setSlotVisible([false, false]);
-      if (carouselEnabled) {
-        slotsRef.current[1] = null;
-        setSlots((current) => [current[0], null]);
-      } else {
-        slotsRef.current[1] = null;
-        setSlots((current) => [current[0], null]);
-      }
+      slotsRef.current[1] = null;
+      setSlots((current) => [current[0], null]);
     },
-    [carouselEnabled, resolveSrc, setSlotSrc],
+    [resolveSrc, setSlotSrc],
   );
 
   const skipCurrentVideo = useCallback(() => {
@@ -189,7 +185,7 @@ export function HeroBackground() {
   }, [activeSlot, carouselEnabled, preloadUpcoming, resolveSrc, setSlotSrc]);
 
   useEffect(() => {
-    if (!showVideo) return;
+    if (!canUseVideo || activated) return;
 
     const activate = () => {
       setActivated(true);
@@ -208,10 +204,24 @@ export function HeroBackground() {
       window.removeEventListener("alo-site-intro-reveal", activate);
       window.clearTimeout(fallbackId);
     };
-  }, [showVideo, bootCarousel]);
+  }, [canUseVideo, activated, bootCarousel]);
 
   useEffect(() => {
-    if (!showVideo || !activated) return;
+    if (!canUseVideo || activated) return;
+
+    const video = videoRefs[0].current;
+    const src = slotsRef.current[0];
+    if (!video || !src) return;
+
+    prepareVideoElement(video);
+    video.preload = "auto";
+    if (video.readyState < HTMLMediaElement.HAVE_METADATA) {
+      video.load();
+    }
+  }, [canUseVideo, activated, slots, videoRefs]);
+
+  useEffect(() => {
+    if (!canUseVideo || !activated) return;
 
     const onResize = () => {
       const nextTier = pickHeroVideoTier(window.innerWidth);
@@ -222,10 +232,10 @@ export function HeroBackground() {
 
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
-  }, [showVideo, activated, bootCarousel]);
+  }, [canUseVideo, activated, bootCarousel]);
 
   useEffect(() => {
-    if (!showVideo || !activated || !carouselEnabled) return;
+    if (!canUseVideo || !activated || !carouselEnabled) return;
 
     const inactiveSlot = (activeSlot === 0 ? 1 : 0) as 0 | 1;
     const video = videoRefs[inactiveSlot].current;
@@ -236,7 +246,7 @@ export function HeroBackground() {
     if (video.readyState < HTMLMediaElement.HAVE_FUTURE_DATA) {
       video.load();
     }
-  }, [showVideo, activated, carouselEnabled, activeSlot, slots, videoRefs]);
+  }, [canUseVideo, activated, carouselEnabled, activeSlot, slots, videoRefs]);
 
   const handleSlotReady = useCallback(
     async (slot: 0 | 1) => {
@@ -272,7 +282,7 @@ export function HeroBackground() {
   );
 
   useEffect(() => {
-    if (!showVideo || !activated) return;
+    if (!canUseVideo || !activated) return;
 
     let cancelled = false;
     const slot = activeSlot;
@@ -295,7 +305,7 @@ export function HeroBackground() {
     return () => {
       cancelled = true;
     };
-  }, [showVideo, activated, activeSlot, slots, handleSlotReady, skipCurrentVideo, videoRefs]);
+  }, [canUseVideo, activated, activeSlot, slots, handleSlotReady, skipCurrentVideo, videoRefs]);
 
   const advanceCarousel = useCallback(async () => {
     if (!carouselEnabled || transitioningRef.current) return;
@@ -362,7 +372,7 @@ export function HeroBackground() {
   }, [activeSlot, carouselEnabled, preloadUpcoming, resolveSrc, setSlotSrc, videoRefs]);
 
   useEffect(() => {
-    if (!showVideo || !activated || !carouselEnabled) return;
+    if (!canUseVideo || !activated || !carouselEnabled) return;
 
     const activeVideo = videoRefs[activeSlot].current;
     if (!activeVideo) return;
@@ -389,7 +399,7 @@ export function HeroBackground() {
     activeVideo.addEventListener("timeupdate", onTimeUpdate);
     return () => activeVideo.removeEventListener("timeupdate", onTimeUpdate);
   }, [
-    showVideo,
+    canUseVideo,
     activated,
     carouselEnabled,
     activeSlot,
@@ -423,7 +433,7 @@ export function HeroBackground() {
   );
 
   useEffect(() => {
-    if (!showVideo || !activated || !slots[0]) return;
+    if (!canUseVideo || !activated || !slots[0]) return;
     const slot = activeSlot;
     const fallbackId = window.setTimeout(() => {
       setSlotVisible((current) => {
@@ -434,14 +444,14 @@ export function HeroBackground() {
       });
     }, 4500);
     return () => window.clearTimeout(fallbackId);
-  }, [showVideo, activated, slots, activeSlot]);
+  }, [canUseVideo, activated, slots, activeSlot]);
 
   useEffect(() => {
     activeSlotRef.current = activeSlot;
   }, [activeSlot]);
 
   useEffect(() => {
-    if (!showVideo || !activated) return undefined;
+    if (!canUseVideo || !activated) return undefined;
 
     const hero = document.getElementById("inicio");
     if (!hero) return undefined;
@@ -469,30 +479,12 @@ export function HeroBackground() {
 
     observer.observe(hero);
     return () => observer.disconnect();
-  }, [showVideo, activated, videoRefs]);
-
-  if (!showVideo) {
-    return (
-      <div className="absolute inset-0 z-0">
-        <AppImage
-          src={posterSrc}
-          alt=""
-          fill
-          priority
-          withBlur={false}
-          loadingPulse={false}
-          qualityPreset="hero"
-          sizes={IMAGE_SIZES.viewport}
-          className="object-cover"
-        />
-      </div>
-    );
-  }
+  }, [canUseVideo, activated, videoRefs]);
 
   return (
     <div className="absolute inset-0 z-0" aria-hidden>
       <AppImage
-        src={posterSrc}
+        src={HERO_POSTER_SRC}
         alt=""
         fill
         priority
@@ -500,54 +492,60 @@ export function HeroBackground() {
         loadingPulse={false}
         qualityPreset="hero"
         sizes={IMAGE_SIZES.viewport}
-        className="object-cover"
+        className={cn(
+          "object-cover transition-opacity duration-700 ease-out motion-reduce:transition-none",
+          canUseVideo && slotVisible[activeSlot] ? "opacity-0" : "opacity-100",
+        )}
       />
-      {([0, 1] as const).map((slot) => {
-        const src = slots[slot];
-        if (!src) return null;
+      {canUseVideo &&
+        ([0, 1] as const).map((slot) => {
+          const src = slots[slot];
+          if (!src) return null;
 
-        const isActiveSlot = activated && slot === activeSlot;
+          const isActiveSlot = activated && slot === activeSlot;
+          const shouldPreload = slot === 0 || isActiveSlot;
 
-        return (
-          <video
-            key={`${slot}-${src}`}
-            ref={videoRefs[slot]}
-            src={src}
-            className={cn(
-              "absolute inset-0 z-[1] size-full object-cover will-change-[opacity]",
-              "transition-opacity ease-in-out motion-reduce:transition-none",
-              slotVisible[slot] ? "opacity-100" : "opacity-0",
-            )}
-            style={{ transitionDuration: `${HERO_VIDEO_CROSSFADE_MS}ms` }}
-            autoPlay={isActiveSlot}
-            muted
-            loop={!carouselEnabled}
-            playsInline
-            preload={isActiveSlot ? "auto" : "metadata"}
-            onLoadedData={() => {
-              if (isActiveSlot && !transitioningRef.current) {
-                void handleSlotReady(slot);
-              }
-            }}
-            onCanPlay={() => {
-              if (isActiveSlot && !transitioningRef.current) {
-                void handleSlotReady(slot);
-              }
-            }}
-            onPlaying={() => {
-              if (isActiveSlot) {
-                setSlotVisible((current) => {
-                  const copy: [boolean, boolean] = [...current];
-                  copy[slot] = true;
-                  return copy;
-                });
-              }
-            }}
-            onEnded={() => handleVideoEnded(slot)}
-            onError={() => handleVideoError(slot)}
-          />
-        );
-      })}
+          return (
+            <video
+              key={`${slot}-${src}`}
+              ref={videoRefs[slot]}
+              src={src}
+              poster={HERO_POSTER_SRC}
+              className={cn(
+                "absolute inset-0 z-[1] size-full object-cover will-change-[opacity]",
+                "transition-opacity ease-in-out motion-reduce:transition-none",
+                slotVisible[slot] ? "opacity-100" : "opacity-0",
+              )}
+              style={{ transitionDuration: `${HERO_VIDEO_CROSSFADE_MS}ms` }}
+              autoPlay={isActiveSlot}
+              muted
+              loop={!carouselEnabled}
+              playsInline
+              preload={shouldPreload ? "auto" : "metadata"}
+              onLoadedData={() => {
+                if (isActiveSlot && !transitioningRef.current) {
+                  void handleSlotReady(slot);
+                }
+              }}
+              onCanPlay={() => {
+                if (isActiveSlot && !transitioningRef.current) {
+                  void handleSlotReady(slot);
+                }
+              }}
+              onPlaying={() => {
+                if (isActiveSlot) {
+                  setSlotVisible((current) => {
+                    const copy: [boolean, boolean] = [...current];
+                    copy[slot] = true;
+                    return copy;
+                  });
+                }
+              }}
+              onEnded={() => handleVideoEnded(slot)}
+              onError={() => handleVideoError(slot)}
+            />
+          );
+        })}
     </div>
   );
 }

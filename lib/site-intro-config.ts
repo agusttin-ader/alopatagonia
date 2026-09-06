@@ -31,18 +31,26 @@ export function isSiteHomePath(pathname: string): boolean {
 
 function preloadIntroImage() {
   if (typeof document === "undefined") return;
-  if (document.querySelector('link[data-alo-intro-preload]')) return;
+  if (document.querySelector('link[data-alo-intro-preload="raw"]')) return;
 
-  const link = document.createElement("link");
-  link.rel = "preload";
-  link.as = "image";
-  link.href = buildNextImageUrl(SITE_INTRO_IMAGE, {
+  const raw = document.createElement("link");
+  raw.rel = "preload";
+  raw.as = "image";
+  raw.href = SITE_INTRO_IMAGE;
+  raw.setAttribute("data-alo-intro-preload", "raw");
+  raw.fetchPriority = "high";
+  document.head.appendChild(raw);
+
+  const optimized = document.createElement("link");
+  optimized.rel = "preload";
+  optimized.as = "image";
+  optimized.href = buildNextImageUrl(SITE_INTRO_IMAGE, {
     width: IMAGE_PRELOAD_WIDTH.introDesktop,
     quality: 82,
   });
-  link.setAttribute("data-alo-intro-preload", "");
-  link.fetchPriority = "high";
-  document.head.appendChild(link);
+  optimized.setAttribute("data-alo-intro-preload", "optimized");
+  optimized.fetchPriority = "high";
+  document.head.appendChild(optimized);
 }
 
 /**
